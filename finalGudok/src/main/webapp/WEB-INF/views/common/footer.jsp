@@ -7,7 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<jsp:forward page="home.do"></jsp:forward>
-	
+	<h1>얘는 푸터</h1>
 </body>
 </html>

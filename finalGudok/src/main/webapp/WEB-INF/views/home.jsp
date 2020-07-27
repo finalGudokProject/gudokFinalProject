@@ -6,9 +6,19 @@
 	<title>Home</title>
 </head>
 <body>
-<h1>
-	짜잔
-	<br>승훈 쓰고 감
-</h1>
+<jsp:include page="common/header.jsp"/>
+
+
+
+
+<h1>얘는 메인 페이지</h1>
+
+
+
+
+
+
+
+<jsp:include page="common/footer.jsp"/>
 </body>
 </html>
