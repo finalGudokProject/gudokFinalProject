@@ -17,13 +17,15 @@
 	
 	.paper{
 		margin:2%;
-		width:20%;
+		width:25%;
 		height:auto;
 		float:left;
 		text-align:left;
 		border:1px solid black;
 	}
-	
+	ul.paperUl{
+		align: center;
+	}
 	#cateName{
 		font-size:30px;
 		margin:3% 0 3% 7%;
@@ -116,9 +118,10 @@
 			<a href="#" class="rankDiv">높은 가격순</a>
 			<a href="#" class="rankDiv">낮은 가격순</a>
 		</div>
-		<ul class="paperUl">
+		<div align="center">
+		<ul class="paperUl" align="center">
 			<li class="paper">
-			<a href="#" class="itemListA">
+			<a href="itemDetail.do" class="itemListA">
 				<div id="itemHover">
 				<ul class="listUl">
 					<li><img src="resources/images/spong.jpg" style="width:100%;height:100%;" ></li>
@@ -153,21 +156,8 @@
 				</div>
 			</a>
 			</li>
-			<li class="paper">
-			<a href="#" class="itemListA">
-				<div id="itemHover">
-				<ul class="listUl">
-					<li><img src="resources/images/spong.jpg" style="width:100%;height:100%;" ></li>
-					<li>DB상품명 입니다.</li>
-					<li>DB가격 입니다.</li>
-					<li>DB평점☆☆☆☆☆</li>
-				</ul>
-				</div>
-			</a>
-			</li>
-			
-			
 		</ul>
+		</div>
 	</div>
 	</div>
 </div>

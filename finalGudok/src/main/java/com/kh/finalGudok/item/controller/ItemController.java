@@ -16,4 +16,9 @@ public class ItemController {
 	public String itemPage() {
 		return "items/item";
 	}
+	
+	@RequestMapping("itemDetail.do")
+	public String itemDetailPage() {
+		return "items/itemDetail";
+	}
 }
