@@ -1,91 +1,120 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core %>
+    <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style>
+	a{
+		color:black !important;
+	}
+	ul{
+		list-style: none;
+		display:inline-block;
+	}
+	
+	.paper{
+		margin:2%;
+		width:20%;
+		height:auto;
+		float:left;
+		text-align:left;
+		border:1px solid black;
+	}
+	
+	#cateName{
+		font-size:30px;
+		margin:3% 0 3% 7%;
+	}
+	
+	/* 상품 리스트 정렬 CSS */
+	#rankDiv{
+		float:left;
+		margin-left:2%;
+		width:500px;
+		background:lightblue;
+		height:35px;
+		border:1px solid black;
+	}
+	
+	a.rankDiv{
+		float:left;
+		size:30px;
+		margin:0 3% 0 3%;
+		width:17%;
+		height:35px;
+		display:block;
+		text-align:center;
+		padding-top:4px;
+	}
+	
+	#menu{
+		background:white;
+		width:220px;
+		height:40px;
+		vertical-align:middle !important;
+		padding:2%;
+		border-bottom:1px solid lightgray;
+	}
+	#menu a{
+		display:block;
+		color:black;
+		vertical-align:middle !important;
+	}	
+	
+	div.col-md-9{
+		padding:0 !important;
+	}
+	
+	.paperUl{
+		padding:0px !important;
+	}
+	#menuId{
+		margin-top:10%;
+		padding-left:0;
+		border:1px solid lightgray;
+	}
+	.smallMenu{
+		display:none;
+		width:180px;
+		height:35px;
+		opacity:90%;
+		border: 1px solid black;
+		left:60px;
+		top:20px;
+	}
+	.smallMenu a{
+		display:block;
+	}
+	
+	.menuName{
+		margin-left:10%;
+		font-size:30px;
+	}
+	
+	.listUl{
+		padding:0 !important;
+	}
+	ul li a div ul li{color:black;}
+	ul li a div ul li :hover{color:red;}
+	
+	
+	
+</style>
 </head>
 <body>
+<jsp:include page="../common/header.jsp"/>
 <div class="container">
 	<div class="row">
-	<div class="col-md-3" id="menuId">
-	<div class="menuName">푸드</div>
-		<ul>
-			<li id="menu" class="menu"><div><a href="#">반찬</a></div>
-			</li>
-			
-			<li id="menu" class="menu"><div>유제품</div>
-				<div>
-					<ul>
-						<li class="smallMenu" id="smallMenu1"><a href="#">우유</a></li>
-						<li class="smallMenu" id="smallMenu2"><a href="#">요거트</a></li>
-						<li class="smallMenu" id="smallMenu2"><a href="#">아이스크림</a></li>
-					</ul>
-				</div>
-			</li>
-			<li id="menu"><a href="#">베이커리</a></li>
-			<li id="menu" class="menu"><div>다이어트 식단</div>
-				<div>
-					<ul>
-						<li class="smallMenu" id="smallMenu1"><a href="#">샐러드</a></li>
-						<li class="smallMenu" id="smallMenu2"><a href="#">다이어트 도시락</a></li>
-					</ul>
-				</div>
-			</li>
-			<li id="menu"><div>음료</div>
-				<div>
-					<ul>
-						<li class="smallMenu" id="smallMenu1"><a href="#">물</a></li>
-						<li class="smallMenu" id="smallMenu2"><a href="#">커피</a></li>
-					</ul>
-				</div>
-			</li>
-			<li id="menu"><a href="#">간편식품</a></li>
-			<li id="menu"><a href="#">건강식품</a></li>
-		</ul>
-		
-		
-		<div class="menuName">리빙</div>
-		<ul>
-			<li id="menu" class="menu"><div><a href="#">생활용품</a></div>
-				<div>
-					<ul>
-						<li class="smallMenu" id="smallMenu1"><a href="#">면도기</a></li>
-						<li class="smallMenu" id="smallMenu2"><a href="#">수건</a></li>
-					</ul>
-				</div>
-			</li>
-			
-			<li id="menu" class="menu"><div>바디케어</div>
-				<div>
-					<ul>
-						<li class="smallMenu" id="smallMenu1"><a href="#">마스크</a></li>
-						<li class="smallMenu" id="smallMenu2"><a href="#">생리대</a></li>
-					</ul>
-				</div>
-			</li>
-			<li id="menu" class="menu"><div>홈 데코</div>
-				<div>
-					<ul>
-						<li class="smallMenu" id="smallMenu1"><a href="#">꽃</a></li>
-						<li class="smallMenu" id="smallMenu2"><a href="#">디퓨저</a></li>
-						<li class="smallMenu" id="smallMenu2"><a href="#">이불</a></li>
-					</ul>
-				</div>
-			</li>
-		</ul>
-	
-	</div>
-	<div class="col-md-9">
+	<div class="col-md-12">
 		<div id="cateName">아이스크림</div>
 		<div id="rankDiv">
-			<div id="rankDiv">인기순</div>
-			<div id="rankDiv">최신 등록순</div>
-			<div id="rankDiv">높은 가격순</div>
-			<div id="rankDiv">낮은 가격순</div>
-			<div id="rankDiv"><input type="text">&nbsp;<button>검색</button></div>
+			<a href="#" class="rankDiv">인기순</a>
+			<a href="#" class="rankDiv">최신 등록순</a>
+			<a href="#" class="rankDiv">높은 가격순</a>
+			<a href="#" class="rankDiv">낮은 가격순</a>
 		</div>
 		<ul class="paperUl">
 			<li class="paper">
