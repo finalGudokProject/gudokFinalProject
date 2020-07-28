@@ -67,22 +67,66 @@ div.reviewDC{
 	text-align:right;
 	padding-right:5%;
 	font-size:20px;
-	background:lightgray;
+	background:#F8F9FA;
 	border-radius: 5px;
 }
+   
+  .fa-heart-o {
+  color: black;
+  cursor: pointer;
+}
 
+.fa-heart {
+  color: red;
+  cursor: pointer;
+}
+
+div #mainImg{
+	display:block;
+	width: 100%;
+	height: 100%;
+}
+
+div #logoImg{
+	display:block;
+	width: 100%;
+	height: 100%;
+	border:1px solid lightgray;
+}
+
+input[type=button]{
+	background:#6AAED9;
+	color:white;
+	border-radius:5px;
+	padding:2%;
+	width:40%;
+	transition:800ms ease all;
+  	position:relative;
+  	border:1px solid #6AAED9;
+	margin-bottom:2%;
+}
+input[type=button]:hover{
+  background:#11538C;
+  color:#white;
+  border:1px solid #11538C;
+}
+
+input[type=button]:hover:before,input[type=button]:hover:after{
+  width:100%;
+  transition:800ms ease all;
+}
 </style>
 </head>
 <body>
 	<jsp:include page="../common/header.jsp"/>
 	<div class="container">
 		<div class="row">
-			<div class="col-md-6"><img src="${contextPath }/resources/images/spong.jpg" style="width:500px;height:500px;"></div>
-			<div class="col-md-6">
+			<div class="col-md-6"><img src="${contextPath }/resources/images/breadLogo.jpg" id="logoImg"></div>
+			<div class="col-md-6" style="margin-bottom:2%;">
 					<div style="margin-top:3%;">카테고리명</div>
 					<div class="row">
-					<div class="col-md-10" style="padding:0px 15px;margin:0px;font-size:35px"><b>상품명 상품명 상품명</b></div>
-					<div class="col-md-2" style="padding:0px;margin:0px;text-align:center;font-size:35px;">★</div>
+					<div class="col-md-10" style="padding:0px 15px;margin:0px;font-size:35px;vertical-align:middle;"><b>상품명 상품명 상품명</b></div>
+					<div class="col-md-2" style="padding:0px;margin:0px;text-align:center;font-size:35px;"><span id = heart><i class="fa fa-heart-o" aria-hidden="true" ></i> </span></div>
 				</div>
 				<div class="starRev">
 				  <span class="starR on">별1</span>
@@ -93,23 +137,25 @@ div.reviewDC{
 				</div>
 					<div style="padding:5% 0 5% 0;margin-bottom:3%;font-size:30px;border-bottom:1px dotted lightgray;"><b>10,000원</b></div>
 					<div class="amountDC">
-					<table style="vertical-align:middle;">
-						<tr>
-							<td class="sign"><img src="${contextPath }/resources/images/XSIGN.png" class="signImg" id="signM"></td>
-							<td><input type="text" readonly class="amountT" value="1"></td>
-							<td class="sign"><img src="${contextPath }/resources/images/plus.png" class="signImg" id="signP"></td>
-						</tr>
-					</table>
-					<br>
-					<div class="amountPriceDiv"><b>변동하는 가격</b>
-					<div><input type="button" value="장바구니 담기"><input type="button" value="결제하기"></div>
-					</div>
+						<table style="vertical-align:middle;">
+							<tr>
+								<td class="sign"><img src="${contextPath }/resources/images/XSIGN.png" class="signImg" id="signM"></td>
+								<td><input type="text" readonly class="amountT" value="1"></td>
+								<td class="sign"><img src="${contextPath }/resources/images/plus.png" class="signImg" id="signP"></td>
+							</tr>
+						</table>
+						<br>
+						<div class="amountPriceDiv"><div style="margin-bottom:2%;padding-top:2%;"><b>변동하는 가격</b></div>
+						<div style="padding:1% 0 1% 0;"><input type="button" value="장바구니 담기" style="margin:0 5% 0 5%;"><input type="button" value="결제하기"></div>
+						</div>
 					</div>
 			</div>
 			<br><br>
 			
-			<div class="col-md-12"><img src="${contextPath }/resources/images/spong.jpg" style="width:1100px;height:1000px;"></div>
 		</div>
+			<div class="col-md-12" style="padding:3%;margin:3% 0 3% 0; width:100%;height:auto;">
+				<img src="${contextPath }/resources/images/bread.png" id="mainImg">
+			</div>
 		
 		<!-- 수량 버튼 -->
 		<script>
@@ -125,12 +171,13 @@ div.reviewDC{
 				})
 				$("#signM").click(function(){
 					if(amount > 1){
-					amount = Number(amount) - 1;
-					$(".amountT").val(amount);
-					console.log(amount);
+						amount = Number(amount) - 1;
+						$(".amountT").val(amount);
+						console.log(amount);
+						if(amount < 2){
+							$("#signM").attr("src","${contextPath }/resources/images/XSIGN.png").css("transitionDuration","1s");
+						}
 					}else if(amount == 1){
-						$("#signM").attr("src","${contextPath }/resources/images/XSIGN.png").css("transitionDuration","1s");
-					}else if(amount == 0){
 						alert("1개 미만은 선택하실 수 없습니다.");
 					}
 				})
@@ -178,7 +225,7 @@ div.reviewDC{
 					  <span class="starP on">별5</span>
 					  <span>등록일 : 2020/DB/DB</span>
 					</div>
-					<div style="border:1px solid black;margin-bottom:2%;">
+					<div style="border:1px solid #BBDDF2;margin-bottom:2%;">
 						<span>내용 입력내용 입력내용 입력내용 입력내용 입력내용 입력 가나다라마바사 아자차카타파하</span>
 					</div>
 				</div>
@@ -194,7 +241,7 @@ div.reviewDC{
 					  <span class="starP">별5</span>
 					  <span>등록일 : 2020/DB/DB</span>
 					</div>
-					<div style="border:1px solid black;margin-bottom:2%;">
+					<div style="border:1px solid #BBDDF2;margin-bottom:2%;">
 						<span>내용 입력내용 입력내용 입력내용 입력내용 입력내용 입력 가나다라마바사 아자차카타파하</span>
 					</div>
 				</div>
@@ -207,7 +254,7 @@ div.reviewDC{
 					  <span class="starP">별5</span>
 					  <span>등록일 : 2020/DB/DB</span>
 					</div>
-					<div style="border:1px solid black;margin-bottom:2%;">
+					<div style="border:1px solid #BBDDF2;margin-bottom:2%;">
 						<span>내용 입력내용 입력내용 입력내용 입력내용 입력내용 입력 가나다라마바사 아자차카타파하</span>
 					</div>
 				</div>
@@ -228,6 +275,20 @@ div.reviewDC{
 			return false;
 		});
 		
+	</script>
+	
+	<script>
+	$(document).ready(function(){
+		  $("#heart").click(function(){
+		    if($("#heart").hasClass("liked")){
+		      $("#heart").html('<i class="fa fa-heart-o" aria-hidden="true"></i>');
+		      $("#heart").removeClass("liked");
+		    }else{
+		      $("#heart").html('<i class="fa fa-heart" aria-hidden="true"></i>');
+		      $("#heart").addClass("liked");
+		    }
+		  });
+		});
 	</script>
 </body>
 </html>
