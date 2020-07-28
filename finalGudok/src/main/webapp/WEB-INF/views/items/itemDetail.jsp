@@ -49,10 +49,6 @@ div.reviewDC{
 }
 .starP.on{background-position:0 0;}
 
-input[type=number] {
-     line-height: 27px;
-     width:50px;
-}
 .sign{
 	text-align: center;
 	vertical-align: middle;
@@ -60,6 +56,19 @@ input[type=number] {
 .signImg{
 	width:35px;
 	height:35px;
+}
+.amountT{
+	text-align: center;
+	line-height: 27px;
+    width:50px;
+}
+
+.amountPriceDiv{
+	text-align:right;
+	padding-right:5%;
+	font-size:20px;
+	background:lightgray;
+	border-radius: 5px;
 }
 
 </style>
@@ -83,17 +92,18 @@ input[type=number] {
 				  <span class="starR">별5</span>
 				</div>
 					<div style="padding:5% 0 5% 0;margin-bottom:3%;font-size:30px;border-bottom:1px dotted lightgray;"><b>10,000원</b></div>
-					<div>상품 가격</div>
-					<div>
+					<div class="amountDC">
 					<table style="vertical-align:middle;">
 						<tr>
-							<td class="sign"><img src="${contextPath }/resources/images/minus.png" class="signImg" id="signM"></td>
-							<td><input type="number" readonly class="amountT" value="1"></td>
+							<td class="sign"><img src="${contextPath }/resources/images/XSIGN.png" class="signImg" id="signM"></td>
+							<td><input type="text" readonly class="amountT" value="1"></td>
 							<td class="sign"><img src="${contextPath }/resources/images/plus.png" class="signImg" id="signP"></td>
-							<td><input type="button" value="결제하기"></td>
 						</tr>
-							
 					</table>
+					<br>
+					<div class="amountPriceDiv"><b>변동하는 가격</b>
+					<div><input type="button" value="장바구니 담기"><input type="button" value="결제하기"></div>
+					</div>
 					</div>
 			</div>
 			<br><br>
@@ -105,16 +115,22 @@ input[type=number] {
 		<script>
 			$(function(){
 				var amount = $(".amountT").val();
-				console.log(amount);
 				$("#signP").click(function(){
 					amount = Number(amount) + 1;
+					console.log(amount);
 					$(".amountT").val(amount);
+					if(amount > 1){
+						$("#signM").attr("src","${contextPath }/resources/images/minus.png").css("transitionDuration","1s");
+					}
 				})
 				$("#signM").click(function(){
 					if(amount > 1){
 					amount = Number(amount) - 1;
 					$(".amountT").val(amount);
-					}else if(amount <= 1){
+					console.log(amount);
+					}else if(amount == 1){
+						$("#signM").attr("src","${contextPath }/resources/images/XSIGN.png").css("transitionDuration","1s");
+					}else if(amount == 0){
 						alert("1개 미만은 선택하실 수 없습니다.");
 					}
 				})
