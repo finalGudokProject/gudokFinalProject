@@ -18,6 +18,7 @@
 .starR.on{background-position:0 0;}
 #reviewBtn{
 	margin:0 0 0 1%;
+	font-size:20px;
 }
 
 div.reviewDC{
@@ -47,6 +48,20 @@ div.reviewDC{
   cursor: pointer;
 }
 .starP.on{background-position:0 0;}
+
+input[type=number] {
+     line-height: 27px;
+     width:50px;
+}
+.sign{
+	text-align: center;
+	vertical-align: middle;
+}
+.signImg{
+	width:35px;
+	height:35px;
+}
+
 </style>
 </head>
 <body>
@@ -55,16 +70,56 @@ div.reviewDC{
 		<div class="row">
 			<div class="col-md-6"><img src="${contextPath }/resources/images/spong.jpg" style="width:500px;height:500px;"></div>
 			<div class="col-md-6">
-				<span><input type="radio"></span>
-				<div>상품 이름</div>
-				<div>상품 가격</div>
-				<div>상품 수량</div>
+					<div style="margin-top:3%;">카테고리명</div>
+					<div class="row">
+					<div class="col-md-10" style="padding:0px 15px;margin:0px;font-size:35px"><b>상품명 상품명 상품명</b></div>
+					<div class="col-md-2" style="padding:0px;margin:0px;text-align:center;font-size:35px;">★</div>
+				</div>
+				<div class="starRev">
+				  <span class="starR on">별1</span>
+				  <span class="starR">별2</span>
+				  <span class="starR">별3</span>
+				  <span class="starR">별4</span>
+				  <span class="starR">별5</span>
+				</div>
+					<div style="padding:5% 0 5% 0;margin-bottom:3%;font-size:30px;border-bottom:1px dotted lightgray;"><b>10,000원</b></div>
+					<div>상품 가격</div>
+					<div>
+					<table style="vertical-align:middle;">
+						<tr>
+							<td class="sign"><img src="${contextPath }/resources/images/minus.png" class="signImg" id="signM"></td>
+							<td><input type="number" readonly class="amountT" value="1"></td>
+							<td class="sign"><img src="${contextPath }/resources/images/plus.png" class="signImg" id="signP"></td>
+							<td><input type="button" value="결제하기"></td>
+						</tr>
+							
+					</table>
+					</div>
 			</div>
 			<br><br>
 			
 			<div class="col-md-12"><img src="${contextPath }/resources/images/spong.jpg" style="width:1100px;height:1000px;"></div>
 		</div>
 		
+		<!-- 수량 버튼 -->
+		<script>
+			$(function(){
+				var amount = $(".amountT").val();
+				console.log(amount);
+				$("#signP").click(function(){
+					amount = Number(amount) + 1;
+					$(".amountT").val(amount);
+				})
+				$("#signM").click(function(){
+					if(amount > 1){
+					amount = Number(amount) - 1;
+					$(".amountT").val(amount);
+					}else if(amount <= 1){
+						alert("1개 미만은 선택하실 수 없습니다.");
+					}
+				})
+			})
+		</script>
 		
 		<br>
 		<div class="col-md-12" style="border-top:1px solid lightgray;">
@@ -87,7 +142,7 @@ div.reviewDC{
 				</td>
 			</tr>
 			<tr>
-				<td><input type="file" value="파일 첨부하기"></td>
+				<td><input type="file" name="uploadFile"></td>
 				<td></td>
 			</tr>
 			</table>
@@ -95,33 +150,48 @@ div.reviewDC{
 		</div>
 		<br>
 		
-		<div class="row" style="border-top:1px solid lightgray;border-bottom:1px solid lightgray;padding-bottom:2%;" >
+		<div class="row" style="border-top:1px solid lightgray;border-bottom:1px solid lightgray;" >
 			<div class="col-md-6" class="reviewRC">
 				<p class="reviewRP"><b>긍정 상품평</b></p>
-				<div>OOO님의 리뷰
+				<div><span>OOO님의 리뷰</span>
 					<div class="starPp">
 					  <span class="starP on">별1</span>
-					  <span class="starP">별2</span>
-					  <span class="starP">별3</span>
-					  <span class="starP">별4</span>
-					  <span class="starP">별5</span>
+					  <span class="starP on">별2</span>
+					  <span class="starP on">별3</span>
+					  <span class="starP on">별4</span>
+					  <span class="starP on">별5</span>
+					  <span>등록일 : 2020/DB/DB</span>
 					</div>
-					<div style="border:1px solid black;">
+					<div style="border:1px solid black;margin-bottom:2%;">
 						<span>내용 입력내용 입력내용 입력내용 입력내용 입력내용 입력 가나다라마바사 아자차카타파하</span>
 					</div>
 				</div>
 			</div>
 			<div class="col-md-6" class="reviewRC" style="border-left:1px dashed lightgray;">
 				<p class="reviewRP"><b>부정 상품평</b></p>
-				<div>OOO님의 리뷰
+				<div><span>OOO님의 리뷰</span>
 					<div class="starPp">
 					  <span class="starP on">별1</span>
 					  <span class="starP">별2</span>
 					  <span class="starP">별3</span>
 					  <span class="starP">별4</span>
 					  <span class="starP">별5</span>
+					  <span>등록일 : 2020/DB/DB</span>
 					</div>
-					<div style="border:1px solid black;">
+					<div style="border:1px solid black;margin-bottom:2%;">
+						<span>내용 입력내용 입력내용 입력내용 입력내용 입력내용 입력 가나다라마바사 아자차카타파하</span>
+					</div>
+				</div>
+				<div><span>OOO님의 리뷰</span>
+					<div class="starPp">
+					  <span class="starP on">별1</span>
+					  <span class="starP">별2</span>
+					  <span class="starP">별3</span>
+					  <span class="starP">별4</span>
+					  <span class="starP">별5</span>
+					  <span>등록일 : 2020/DB/DB</span>
+					</div>
+					<div style="border:1px solid black;margin-bottom:2%;">
 						<span>내용 입력내용 입력내용 입력내용 입력내용 입력내용 입력 가나다라마바사 아자차카타파하</span>
 					</div>
 				</div>
