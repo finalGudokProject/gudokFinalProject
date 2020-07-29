@@ -4,6 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js" type="text/javascript"></script>
 <title>Insert title here</title>
 <style>
 .starR{
@@ -297,34 +298,66 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 		});
 	</script>
 	
-	<script>
+	<!-- <script>
 		var count = 1;
+		var removeImgId = null;
 		$(function(){
 			$("#fileAddBtn").click(function(){
 				if(count < 3){
 					console.log(count);
-					$(".fileAddClass > tbody:last").
-					append("<tr><td>"+"<img src='${contextPath }/resources/images/minus.png' style='width:30px;height:30px;' class='fileImgBtn' id='fileRemBtn' onclick='removeBtn();'></td>"+
-							"<td><input type='file' name='uploadFile'></td></tr>");
 					count++;
+					removeImgId = "minusImgId" + count;
+					
+					$(".fileAddClass > tbody:last").
+					append("<tr><td>"+"<img src='${contextPath }/resources/images/minus.png' style='width:30px;height:30px;' class='fileImgBtn' id='"+removeImgId+"' onclick='removeBtn"+count+"();'></td>"+
+							"<td><input type='file' name='uploadFile'></td></tr>");
 				}else{
 					alert("파일은 3개까지 등록 가능합니다.")
 				}
 			});
 		})
-		/* $(function(){
-			$("#fileRemBtn").click(function(){
-				console.log("2");
-				$("#fileRemBtn").parent().parent().remove();
-			})
-		}) */
 		
-		function removeBtn(){
-			console.log("2");
-			$("#fileRemBtn").parent().parent().remove();
+		function removeBtn2(){
+			$("#minusImgId2").parent().parent().remove();
+			count--;
+		}
+		function removeBtn3(){
+			$("#minusImgId3").parent().parent().remove();
+			count--;
+		}
+		
+	</script> -->
+	
+	<script>
+		var count = 1;
+		var removeImgId = null;
+		$(function(){
+			$("#fileAddBtn").click(function(){
+				if(count < 3){
+					console.log(count);
+					count++;
+					removeImgId = "minusImgId" + count;
+					
+					$(".fileAddClass > tbody:last").
+					append("<tr><td>"+"<img src='${contextPath }/resources/images/minus.png' style='width:30px;height:30px;' class='fileImgBtn' id='"+removeImgId+"' onclick='removeBtn"+count+"();'></td>"+
+							"<td><input type='file' name='uploadFile'></td></tr>");
+				}else{
+					alert("파일은 3개까지 등록 가능합니다.")
+				}
+			});
+		})
+		
+		function removeBtn2(){
+			$("#minusImgId2").parent().parent().remove();
+			count--;
+		}
+		function removeBtn3(){
+			$("#minusImgId3").parent().parent().remove();
 			count--;
 		}
 		
 	</script>
+	
+	
 </body>
 </html>

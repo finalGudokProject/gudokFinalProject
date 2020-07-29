@@ -23,9 +23,6 @@
 		text-align:left;
 		border:1px solid black;
 	}
-	ul.paperUl{
-		align: center;
-	}
 	#cateName{
 		font-size:30px;
 		margin:3% 0 3% 7%;
@@ -102,6 +99,11 @@
 	ul li a div ul li{color:black;}
 	ul li a div ul li :hover{color:red;}
 	
+	.itemsRowDiv{
+		padding:2%;
+		margin:2%;
+	}
+	
 	
 	
 </style>
@@ -118,13 +120,116 @@
 			<a href="#" class="rankDiv">높은 가격순</a>
 			<a href="#" class="rankDiv">낮은 가격순</a>
 		</div>
-		<div align="center">
-		<ul class="paperUl" align="center">
-			<li class="paper">
+	</div>
+	<div class="row" class="itemsRowDiv">
+		<div class="col-4">
+			<div class="card">
+				<img src="resources/images/breadLogo.jpg" class="card-img-top" alt="...">
+					<div class="card-body">
+						<h5 class="card-title">제목</h5>
+						<p class="card-text">P태그</p>
+						<a href="#" class="btn btn-primary">A태그</a>
+					</div>
+			</div>
+		</div>
+		<div class="col-4">
+			<div class="card">
+				<img src="resources/images/breadLogo.jpg" class="card-img-top" alt="...">
+					<div class="card-body">
+						<h5 class="card-title">제목</h5>
+						<p class="card-text">P태그</p>
+						<a href="#" class="btn btn-primary">A태그</a>
+					</div>
+			</div>
+		</div>
+		<div class="col-4">
+			<div class="card">
+				<img src="resources/images/breadLogo.jpg" class="card-img-top" alt="...">
+					<div class="card-body">
+						<h5 class="card-title">제목</h5>
+						<p class="card-text">P태그</p>
+						<a href="#" class="btn btn-primary">A태그</a>
+					</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="row" class="itemsRowDiv">
+		<div class="col-4">
+			<div class="card">
+				<img src="resources/images/breadLogo.jpg" class="card-img-top" alt="...">
+					<div class="card-body">
+						<h5 class="card-title">제목</h5>
+						<p class="card-text">P태그</p>
+						<a href="#" class="btn btn-primary">A태그</a>
+					</div>
+			</div>
+		</div>
+		<div class="col-4">
+			<div class="card">
+				<img src="resources/images/breadLogo.jpg" class="card-img-top" alt="...">
+					<div class="card-body">
+						<h5 class="card-title">제목</h5>
+						<p class="card-text">P태그</p>
+						<a href="#" class="btn btn-primary">A태그</a>
+					</div>
+			</div>
+		</div>
+		<div class="col-4">
+			<div class="card">
+				<img src="resources/images/breadLogo.jpg" class="card-img-top" alt="...">
+					<div class="card-body">
+						<h5 class="card-title">제목</h5>
+						<p class="card-text">P태그</p>
+						<a href="#" class="btn btn-primary">A태그</a>
+					</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="row" class="itemsRowDiv">
+		<div class="col-4">
+			<div class="card">
+				<img src="resources/images/breadLogo.jpg" class="card-img-top" alt="...">
+					<div class="card-body">
+						<h5 class="card-title">제목</h5>
+						<p class="card-text">P태그</p>
+						<a href="#" class="btn btn-primary">A태그</a>
+					</div>
+			</div>
+		</div>
+		<div class="col-4">
+			<div class="card">
+				<img src="resources/images/breadLogo.jpg" class="card-img-top" alt="...">
+					<div class="card-body">
+						<h5 class="card-title">제목</h5>
+						<p class="card-text">P태그</p>
+						<a href="#" class="btn btn-primary">A태그</a>
+					</div>
+			</div>
+		</div>
+		<div class="col-4">
+			<div class="card">
+				<img src="resources/images/breadLogo.jpg" class="card-img-top" alt="...">
+					<div class="card-body">
+						<h5 class="card-title">제목</h5>
+						<p class="card-text">P태그</p>
+						<a href="#" class="btn btn-primary">A태그</a>
+					</div>
+			</div>
+		</div>
+	</div>
+	
+	
+	
+	
+	<div class="col-md-12" style="text-align:center;">
+		<ul class="paperUl" style="align:center;">
+			<li class="paper" style="padding:auto;">
 			<a href="itemDetail.do" class="itemListA">
 				<div id="itemHover">
 				<ul class="listUl">
-					<li><img src="resources/images/spong.jpg" style="width:100%;height:100%;" ></li>
+					<li><img src="resources/images/breadLogo.jpg" style="width:100%;height:100%;" ></li>
 					<li>DB상품명 입니다.</li>
 					<li>DB가격 입니다.</li>
 					<li>DB평점☆☆☆☆☆</li>
@@ -132,11 +237,11 @@
 				</div>
 			</a>
 			</li>
-			<li class="paper">
+			<li class="paper" style="padding:auto;">
 			<a href="#" class="itemListA">
 				<div id="itemHover">
 				<ul class="listUl">
-					<li><img src="resources/images/spong.jpg" style="width:100%;height:100%;" ></li>
+					<li><img src="resources/images/breadLogo.jpg" style="width:100%;height:100%;" ></li>
 					<li>DB상품명 입니다.</li>
 					<li>DB가격 입니다.</li>
 					<li>DB평점☆☆☆☆☆</li>
@@ -144,11 +249,11 @@
 				</div>
 			</a>
 			</li>
-			<li class="paper">
+			<li class="paper" style="padding:auto;">
 			<a href="#" class="itemListA">
 				<div id="itemHover">
 				<ul class="listUl">
-					<li><img src="resources/images/spong.jpg" style="width:100%;height:100%;" ></li>
+					<li><img src="resources/images/breadLogo.jpg" style="width:100%;height:100%;" ></li>
 					<li>DB상품명 입니다.</li>
 					<li>DB가격 입니다.</li>
 					<li>DB평점☆☆☆☆☆</li>
@@ -157,7 +262,6 @@
 			</a>
 			</li>
 		</ul>
-		</div>
 	</div>
 	</div>
 </div>
