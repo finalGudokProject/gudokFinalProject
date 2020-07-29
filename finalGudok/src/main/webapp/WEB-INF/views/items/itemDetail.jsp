@@ -115,6 +115,7 @@ input[type=button]:hover:before,input[type=button]:hover:after{
   width:100%;
   transition:800ms ease all;
 }
+
 </style>
 </head>
 <body>
@@ -204,10 +205,15 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 					<input id="reviewBtn" type="button" value="등록하기" style="width:160px;height:120px;">
 				</td>
 			</tr>
-			<tr>
-				<td><input type="file" name="uploadFile"></td>
-				<td></td>
-			</tr>
+			</table>
+			<table class="fileAddClass">
+				<tr>
+					<td><img src="${contextPath }/resources/images/plus.png" style="width:30px;height:30px;" class="fileImgBtn" id="fileAddBtn"></td>
+					<td><input type="file" name="uploadFile"></td>
+				</tr>
+				<tbody>
+				
+				</tbody>
 			</table>
 			
 		</div>
@@ -289,6 +295,36 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 		    }
 		  });
 		});
+	</script>
+	
+	<script>
+		var count = 1;
+		$(function(){
+			$("#fileAddBtn").click(function(){
+				if(count < 3){
+					console.log(count);
+					$(".fileAddClass > tbody:last").
+					append("<tr><td>"+"<img src='${contextPath }/resources/images/minus.png' style='width:30px;height:30px;' class='fileImgBtn' id='fileRemBtn' onclick='removeBtn();'></td>"+
+							"<td><input type='file' name='uploadFile'></td></tr>");
+					count++;
+				}else{
+					alert("파일은 3개까지 등록 가능합니다.")
+				}
+			});
+		})
+		/* $(function(){
+			$("#fileRemBtn").click(function(){
+				console.log("2");
+				$("#fileRemBtn").parent().parent().remove();
+			})
+		}) */
+		
+		function removeBtn(){
+			console.log("2");
+			$("#fileRemBtn").parent().parent().remove();
+			count--;
+		}
+		
 	</script>
 </body>
 </html>
