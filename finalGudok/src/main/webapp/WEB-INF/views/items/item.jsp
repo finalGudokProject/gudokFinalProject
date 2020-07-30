@@ -99,9 +99,9 @@
 	ul li a div ul li{color:black;}
 	ul li a div ul li :hover{color:red;}
 	
-	.itemsRowDiv{
-		padding:2%;
-		margin:2%;
+	#itemsRowDiv{
+		margin:5%;
+		text-align:center;
 	}
 	
 	
@@ -121,7 +121,8 @@
 			<a href="#" class="rankDiv">낮은 가격순</a>
 		</div>
 	</div>
-	<div class="row" class="itemsRowDiv">
+	
+	<div class="row" id="itemsRowDiv">
 		<div class="col-4">
 			<div class="card">
 				<img src="resources/images/breadLogo.jpg" class="card-img-top" alt="...">
@@ -154,7 +155,7 @@
 		</div>
 	</div>
 	
-	<div class="row" class="itemsRowDiv">
+	<div class="row" id="itemsRowDiv">
 		<div class="col-4">
 			<div class="card">
 				<img src="resources/images/breadLogo.jpg" class="card-img-top" alt="...">
@@ -187,7 +188,7 @@
 		</div>
 	</div>
 	
-	<div class="row" class="itemsRowDiv">
+	<div class="row" id="itemsRowDiv">
 		<div class="col-4">
 			<div class="card">
 				<img src="resources/images/breadLogo.jpg" class="card-img-top" alt="...">
