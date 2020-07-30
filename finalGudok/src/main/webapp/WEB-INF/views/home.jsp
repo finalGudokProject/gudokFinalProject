@@ -17,26 +17,8 @@
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 	<!-- 부트스트랩 스크립트(jQuery보다 아래 있어야함) -->
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-	
-	
+	<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
 <style>
-
-        .nav-link{
-            margin : 0 50px 0 50px;
-        }
-
-        .navbar-brand{
-            margin-left : 100px;
-            margin-left : 100px;
-        }
-
-        .navbar-nav{
-            margin-left: 200px;
-        }
-        
-        .form-inline my-2 my-lg-0 > input{
-            margin-left : 50px;
-        }
 
         .cardWrap{
           text-align: center;
@@ -51,9 +33,6 @@
           height: 10px;
         }
         
-        body{
-          font-family: 'Jua', sans-serif;
-        }
     </style>
 <body>
 <jsp:include page="common/header.jsp"/>
@@ -65,10 +44,10 @@
             <img src="${contextPath }/resources/images/mainItemImg.jpg" class="d-block w-100" alt="...">
           </div>
           <div class="carousel-item">
-            <img src="images/flower.jpg" class="d-block w-100" alt="...">
+            <img src="${contextPath }/resources/images/mainItemImg.jpg" class="d-block w-100" alt="...">
           </div>
           <div class="carousel-item">
-            <img src="images/salad3.jpg" class="d-block w-100" alt="...">
+            <img src="${contextPath }/resources/images/mainItemImg.jpg" class="d-block w-100" alt="...">
           </div>
         </div>
         <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
@@ -102,107 +81,97 @@
             <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
           </div>
         </div>
-
         <div class="card" style="width: 18rem;">
-          <img src="images/salad1.jpg" class="card-img-top" alt="...">
+          <img src="${contextPath }/resources/images/mainItemImg.jpg" class="card-img-top" alt="...">
           <div class="card-body">
             <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
           </div>
         </div>
-
         <div class="card" style="width: 18rem;">
-          <img src="images/salad1.jpg" class="card-img-top" alt="...">
+          <img src="${contextPath }/resources/images/mainItemImg.jpg" class="card-img-top" alt="...">
           <div class="card-body">
             <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
           </div>
         </div>
       </div>
-</div>
       <br><br>
-<div class="row">
       <div class="cardWrap">
         <p style="font-size:2em;">베스트 상품</p>
         <br>
-
-        <div class="card" style="width: 18rem;">
-          <img src="images/salad1.jpg" class="card-img-top" alt="...">
+		<div class="card" style="width: 18rem;">
+          <img src="${contextPath }/resources/images/mainItemImg.jpg" class="card-img-top" alt="...">
           <div class="card-body">
             <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
           </div>
         </div>
-
+        
         <div class="card" style="width: 18rem;">
-          <img src="images/salad1.jpg" class="card-img-top" alt="...">
+          <img src="${contextPath }/resources/images/mainItemImg.jpg" class="card-img-top" alt="...">
           <div class="card-body">
             <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
           </div>
         </div>
-
+        
         <div class="card" style="width: 18rem;">
-          <img src="images/salad1.jpg" class="card-img-top" alt="...">
+          <img src="${contextPath }/resources/images/mainItemImg.jpg" class="card-img-top" alt="...">
           <div class="card-body">
             <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
           </div>
         </div>
-
+        
         <div class="card" style="width: 18rem;">
-          <img src="images/salad1.jpg" class="card-img-top" alt="...">
+          <img src="${contextPath }/resources/images/mainItemImg.jpg" class="card-img-top" alt="...">
           <div class="card-body">
             <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
           </div>
         </div>
-      </div>
-</div>
+		</div>
       <br><br>
       
-<div class="row">
       <div class="cardWrap">
         <p style="font-size:2em;">지금 가장 핫한 상품</p>
         <br>
-
-        <div class="card" style="width: 18rem;">
-          <img src="images/salad1.jpg" class="card-img-top" alt="...">
+		<div class="card" style="width: 18rem;">
+          <img src="${contextPath }/resources/images/mainItemImg.jpg" class="card-img-top" alt="...">
           <div class="card-body">
             <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
           </div>
         </div>
-
+        
         <div class="card" style="width: 18rem;">
-          <img src="images/salad1.jpg" class="card-img-top" alt="...">
+          <img src="${contextPath }/resources/images/mainItemImg.jpg" class="card-img-top" alt="...">
           <div class="card-body">
             <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
           </div>
         </div>
-
+        
         <div class="card" style="width: 18rem;">
-          <img src="images/salad1.jpg" class="card-img-top" alt="...">
+          <img src="${contextPath }/resources/images/mainItemImg.jpg" class="card-img-top" alt="...">
           <div class="card-body">
             <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
           </div>
         </div>
-
+        
         <div class="card" style="width: 18rem;">
-          <img src="images/salad1.jpg" class="card-img-top" alt="...">
+          <img src="${contextPath }/resources/images/mainItemImg.jpg" class="card-img-top" alt="...">
           <div class="card-body">
             <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
           </div>
         </div>
-      </div>
 </div>
       <br><br>
-<div class="row">
       <div class="cardWrap">
         <p style="font-size:2em;">베스트 상품</p>
         <br>
         <div class="card" style="width: 18rem;">
-          <img src="images/salad1.jpg" class="card-img-top" alt="...">
+          <img src="${contextPath }/resources/images/mainItemImg.jpg" class="card-img-top" alt="...">
           <div class="card-body">
             <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
           </div>
         </div>
-
+        
         <div class="card" style="width: 18rem;">
-          <img src="images/salad1.jpg" class="card-img-top" alt="...">
+          <img src="${contextPath }/resources/images/mainItemImg.jpg" class="card-img-top" alt="...">
           <div class="card-body">
             <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
           </div>

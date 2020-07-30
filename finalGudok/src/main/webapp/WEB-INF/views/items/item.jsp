@@ -7,9 +7,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-	a{
-		color:black !important;
-	}
+	
 	ul{
 		list-style: none;
 		display:inline-block;
@@ -266,6 +264,7 @@
 	</div>
 	</div>
 </div>
+<jsp:include page="../common/footer.jsp"/>
 	<!-- <script>
 		$(function(){
 			$(".paper").mouseenter(function(){

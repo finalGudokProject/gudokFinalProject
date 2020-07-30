@@ -269,11 +269,6 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 		</div>
 	</div>
 	<br><br><br><br><br><br>
-	<br><br><br><br><br><br>
-	<br><br><br><br><br><br>
-	<br><br><br><br><br><br>
-	<br><br><br><br><br><br>
-	<br><br><br><br><br><br>
 	
 	<script>
 		$('.starRev span').click(function(){
@@ -358,6 +353,7 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 		
 	</script>
 	
+	<jsp:include page="../common/footer.jsp"/>
 	
 </body>
 </html>
