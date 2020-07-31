@@ -121,9 +121,9 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 </head>
 <body>
 	<jsp:include page="../common/header.jsp"/>
-	<div class="container">
+	<div class="container" style="margin-top:3%;">
 		<div class="row">
-			<div class="col-md-6"><img src="${contextPath }/resources/images/breadLogo.jpg" id="logoImg"></div>
+			<div class="col-md-6" style="padding:0 2% 0 2%;"><img src="${contextPath }/resources/images/breadLogo.jpg" id="logoImg"></div>
 			<div class="col-md-6" style="margin-bottom:2%;">
 					<div style="margin-top:3%;">카테고리명</div>
 					<div class="row">
@@ -148,7 +148,7 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 						</table>
 						<br>
 						<div class="amountPriceDiv"><div style="margin-bottom:2%;padding-top:2%;"><b>변동하는 가격</b></div>
-						<div style="padding:1% 0 1% 0;"><input type="button" value="장바구니 담기" style="margin:0 5% 0 5%;"><input type="button" value="결제하기"></div>
+						<div style="padding:1% 0 1% 0;"><input type="button" value="장바구니 담기" id="basketBtn" style="margin:0 5% 0 5%;"><input type="button" value="결제하기"></div>
 						</div>
 					</div>
 			</div>
@@ -271,12 +271,22 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 	<br><br><br><br><br><br>
 	
 	<script>
-		$('.starRev span').click(function(){
-			$(this).parent().children('span').removeClass('on');
-			$(this).addClass('on').prevAll('span').addClass('on');
-			return false;
-		});
+		$(function(){
+			$('.starRev span').click(function(){
+				$(this).parent().children('span').removeClass('on');
+				$(this).addClass('on').prevAll('span').addClass('on');
+				return false;
+			});
+		})
 		
+	</script>
+	
+	<script>
+		$(function(){
+			$("#basketBtn").click(function(){
+				location.href="basket.do";
+			})
+		})
 	</script>
 	
 	<script>

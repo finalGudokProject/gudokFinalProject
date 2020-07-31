@@ -218,50 +218,6 @@
 			</div>
 		</div>
 	</div>
-	
-	
-	
-	
-	<div class="col-md-12" style="text-align:center;">
-		<ul class="paperUl" style="align:center;">
-			<li class="paper" style="padding:auto;">
-			<a href="itemDetail.do" class="itemListA">
-				<div id="itemHover">
-				<ul class="listUl">
-					<li><img src="resources/images/breadLogo.jpg" style="width:100%;height:100%;" ></li>
-					<li>DB상품명 입니다.</li>
-					<li>DB가격 입니다.</li>
-					<li>DB평점☆☆☆☆☆</li>
-				</ul>
-				</div>
-			</a>
-			</li>
-			<li class="paper" style="padding:auto;">
-			<a href="#" class="itemListA">
-				<div id="itemHover">
-				<ul class="listUl">
-					<li><img src="resources/images/breadLogo.jpg" style="width:100%;height:100%;" ></li>
-					<li>DB상품명 입니다.</li>
-					<li>DB가격 입니다.</li>
-					<li>DB평점☆☆☆☆☆</li>
-				</ul>
-				</div>
-			</a>
-			</li>
-			<li class="paper" style="padding:auto;">
-			<a href="#" class="itemListA">
-				<div id="itemHover">
-				<ul class="listUl">
-					<li><img src="resources/images/breadLogo.jpg" style="width:100%;height:100%;" ></li>
-					<li>DB상품명 입니다.</li>
-					<li>DB가격 입니다.</li>
-					<li>DB평점☆☆☆☆☆</li>
-				</ul>
-				</div>
-			</a>
-			</li>
-		</ul>
-	</div>
 	</div>
 </div>
 <jsp:include page="../common/footer.jsp"/>
@@ -284,6 +240,14 @@
 			$(this).find("li").css("display","none");
 		})
 	})
+	</script>
+	
+	<script>
+		$(function(){
+			$("div.card").click(function(){
+				location.href="itemDetail.do";
+			})
+		})
 	</script>
 </body>
 </html>

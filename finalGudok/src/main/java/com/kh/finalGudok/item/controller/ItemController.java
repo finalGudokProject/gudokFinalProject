@@ -21,4 +21,9 @@ public class ItemController {
 	public String itemDetailPage() {
 		return "items/itemDetail";
 	}
+	
+	@RequestMapping("basket.do")
+	public String BasketPage() {
+		return "order/basket";
+	}
 }
