@@ -181,7 +181,6 @@
 </div>
 
 
-<a href="itemPage.do">상품 페이지</a>
 
 
 

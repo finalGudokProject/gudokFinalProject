@@ -54,7 +54,7 @@
     <div class="container">
         <div class="row">
             <div class="col-12" align="center">
-                <img src="${contextPath }/resources/images/mainLogoImg.png" width="300px" height="200px">
+                <a href="home.do"><img src="${contextPath }/resources/images/mainLogoImg.png" width="300px" height="200px"></a>
             </div>
         </div>
     </div>
@@ -69,7 +69,7 @@
           <!-- <ul class="navbar-nav mr-auto"> -->
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="nav-link" href="#">신상품 <span class="sr-only">(current)</span></a>
+              <a class="nav-link" href="itemPage.do">신상품 <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">베스트</a>
