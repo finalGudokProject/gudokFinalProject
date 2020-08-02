@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -101,7 +102,7 @@ input[type=button]{
 	border-radius:5px;
 	padding:2%;
 	width:40%;
-	transition:800ms ease all;
+	transition:0.5s;
   	position:relative;
   	border:1px solid #6AAED9;
 	margin-bottom:2%;
@@ -114,8 +115,27 @@ input[type=button]:hover{
 
 input[type=button]:hover:before,input[type=button]:hover:after{
   width:100%;
-  transition:800ms ease all;
+  transition:0.5s;
 }
+
+
+
+.cycleSpan{
+	display:block;
+	cursor:pointer;
+	background:white;
+	border-radius:5px;
+	border:1px solid #6AAED9;
+	color:#6AAED9;
+	padding:5%;	
+}
+
+
+.cycleTable{
+	text-align:center;
+	width:100%;
+}
+
 
 </style>
 </head>
@@ -129,6 +149,7 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 					<div class="row">
 					<div class="col-md-10" style="padding:0px 15px;margin:0px;font-size:35px;vertical-align:middle;"><b>상품명 상품명 상품명</b></div>
 					<div class="col-md-2" style="padding:0px;margin:0px;text-align:center;font-size:35px;"><span id = heart><i class="fa fa-heart-o" aria-hidden="true" ></i> </span></div>
+					<div style="padding:0 15px;font-size:20px;">상품약식설명</div>
 				</div>
 				<div class="starRev">
 				  <span class="starR on">별1</span>
@@ -150,6 +171,54 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 						<div class="amountPriceDiv"><div style="margin-bottom:2%;padding-top:2%;"><b>변동하는 가격</b></div>
 						<div style="padding:1% 0 1% 0;"><input type="button" value="장바구니 담기" id="basketBtn" style="margin:0 5% 0 5%;"><input type="button" value="결제하기"></div>
 						</div>
+						<div style="margin-top:3%;border-top:1px dotted lightgray;"></div>
+						<div class="cycleListClass" style="margin-top:3%;padding:2%;background:#F8F9FA;">
+							<input type="text" id="cycleText" style="display:none;" name="inputCycle">
+							<table class="cycleTable">
+								<tr>
+									<td style="width:25%;"><span class="cycleSpan" id="1cycle">1주일</span></td>
+									<td style="width:25%;"><span class="cycleSpan" id="2cycle">2주일</span></td>
+									<td style="width:25%;"><span class="cycleSpan" id="3cycle">3주일</span></td>
+									<td style="width:25%;"><span class="cycleSpan" id="4cycle">한 달</span></td>
+								</tr>
+								<tr>
+									<td colspan="4" style="padding:3% 3% 0 0;text-align:right;font-size:20px;" id="cycleChTd">구독 주기를 선택해 주세요.</td>
+								</tr>
+							</table>
+						</div>
+						<script>
+							$(function(){
+								var text = $("#cycleText").val()
+								$(".cycleSpan").click(function(){
+									text = "";
+									var c1 = $(this).text();
+									var $cycle = $(this).text();
+									$(".cycleTable").find("tr td .cycleSpan").not($cycle).css({"background":"white","color":"#6AAED9","border":"1px solid #6AAED9"});
+									$(this).css({"background":"#6AAED9","color":"white"});
+									switch(c1){
+										case "1주일" : 
+											text = text + 1;
+											$("#cycleChTd").text("1주일 구독을 선택하셨습니다.");
+											break;
+										case "2주일" : 
+											text = text + 2;
+											$("#cycleChTd").text("2주일 구독을 선택하셨습니다.");
+											break;
+										case "3주일" : 
+											text = text + 3;
+											$("#cycleChTd").text("3주일 구독을 선택하셨습니다.");
+											break;
+										case "한 달" :
+											text = text + 4;
+											$("#cycleChTd").text("한 달 구독을 선택하셨습니다.");
+											break;
+									}
+									
+									console.log(text)
+									$("#cycleText").val(text);
+								})
+							})
+						</script>
 					</div>
 			</div>
 			<br><br>
@@ -223,7 +292,7 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 		<div class="row" style="border-top:1px solid lightgray;border-bottom:1px solid lightgray;" >
 			<div class="col-md-6" class="reviewRC">
 				<p class="reviewRP"><b>긍정 상품평</b></p>
-				<div><span>OOO님의 리뷰</span>
+				<div><span style="font-size:20px;">OOO님의 리뷰</span>
 					<div class="starPp">
 					  <span class="starP on">별1</span>
 					  <span class="starP on">별2</span>
@@ -239,7 +308,7 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 			</div>
 			<div class="col-md-6" class="reviewRC" style="border-left:1px dashed lightgray;">
 				<p class="reviewRP"><b>부정 상품평</b></p>
-				<div><span>OOO님의 리뷰</span>
+				<div><span style="font-size:20px;">OOO님의 리뷰</span>
 					<div class="starPp">
 					  <span class="starP on">별1</span>
 					  <span class="starP">별2</span>
@@ -252,7 +321,7 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 						<span>내용 입력내용 입력내용 입력내용 입력내용 입력내용 입력 가나다라마바사 아자차카타파하</span>
 					</div>
 				</div>
-				<div><span>OOO님의 리뷰</span>
+				<div><span style="font-size:20px;">OOO님의 리뷰</span>
 					<div class="starPp">
 					  <span class="starP on">별1</span>
 					  <span class="starP">별2</span>

@@ -23,7 +23,7 @@
 	}
 	#cateName{
 		font-size:30px;
-		margin:3% 0 3% 7%;
+		margin:3% 0 1% 7%;
 	}
 	
 	/* 상품 리스트 정렬 CSS */
@@ -31,18 +31,17 @@
 		float:left;
 		margin-left:2%;
 		width:500px;
-		background:lightblue;
-		height:35px;
-		border:1px solid black;
+		height:auto;
+		border:1px solid lightgray;
 	}
 	
-	a.rankDiv{
+	.rankDiv{
 		float:left;
 		size:30px;
 		margin:0 3% 0 3%;
 		width:17%;
 		height:35px;
-		display:block;
+		display:inline-block;
 		text-align:center;
 		padding-top:4px;
 	}
@@ -101,9 +100,44 @@
 		margin:5%;
 		text-align:center;
 	}
+	.sortClass{
+		width:8rem;
+		height:8rem;
+		display:block;
+	}
+	
+	td{
+		text-align:center;
+	}
+	
+	/* .sortDivC :hover{
+		cursor:pointer;
+		background:lightyellow;
+	} */
+	
+	#sortTable td :hover{
+		cursor:pointer;
+		background:lightyellow;
+	}
 	
 	
+	.starR{
+	  background: url('http://miuu227.godohosting.com/images/icon/ico_review.png') no-repeat right 0;
+	  background-size: auto 100%;
+	  width: 30px;
+	  height: 30px;
+	  display: inline-block;
+	  text-indent: -9999px;
+	  cursor: pointer;
+	  margin:0 0 12px;
+	}
+	.starR.on{background-position:0 0;}
 	
+	.itemPriceDiv{
+		font-size:25px;
+		font-weight:bold;
+	}
+
 </style>
 </head>
 <body>
@@ -111,12 +145,96 @@
 <div class="container">
 	<div class="row">
 	<div class="col-md-12">
-		<div id="cateName">아이스크림</div>
-		<div id="rankDiv">
-			<a href="#" class="rankDiv">인기순</a>
-			<a href="#" class="rankDiv">최신 등록순</a>
-			<a href="#" class="rankDiv">높은 가격순</a>
-			<a href="#" class="rankDiv">낮은 가격순</a>
+		<div id="cateName" style="font-size:50px;">푸드</div>
+		<div style="margin:0 0 3% 2%">
+			<table style="display:block;">
+				<tr>
+					<td style="width:10%;">유제품</td>
+					<td style="width:10%;">베이커리</td>
+					<td style="width:10%;">다이어트 식단</td>
+					<td style="width:10%;">음료</td>
+					<td style="width:10%;">간편식품</td>
+					<td style="width:10%;">건강식품</td>
+				</tr>
+			</table>
+		</div>
+			<div style="border-top:1px solid lightgray;border-bottom:1px solid lightgray;">
+			<table align="center" style="margin-bottom:1%;" id="sortTable">
+				<tr>
+					<td><div class="sortDivC">
+					<img src="${contextPath }/resources/images/newItem.png" class="sortClass"><span style="display:block;">신상품순</span>
+					</div></td>
+					<td><div class="sortDivC">
+					<img src="${contextPath }/resources/images/popul.png" class="sortClass"><span style="display:block;">인기순</span>
+					</div></td>
+					<td><div class="sortDivC">
+					<img src="${contextPath }/resources/images/high.png" class="sortClass"><span style="display:block;">높은 가격순</span>
+					</div></td>
+					<td><div class="sortDivC">
+					<img src="${contextPath }/resources/images/low.png" class="sortClass"><span style="display:block;">낮은 가격순</span>
+					</div></td>
+				</tr>
+			</table>
+			</div>
+			
+	</div>
+	
+	<div class="row" id="itemsRowDiv">
+		<div class="col-4">
+			<div class="card" style="position:relative;">
+				<img src="resources/images/breadLogo.jpg" class="card-img-top" alt="...">
+					<div class="card-body">
+						<h3 class="card-title"><b>상품명</b></h3>
+						<h5>상품약식설명</h5>
+						<div class="itemPriceDiv"><s>10,000원</s>→9,000원</div>
+						<div class="starRev">
+						  <span class="starR on">별1</span>
+						  <span class="starR on">별2</span>
+						  <span class="starR on">별3</span>
+						  <span class="starR on">별4</span>
+						  <span class="starR on">별5</span>
+						</div>
+						<a href="#" class="btn btn-primary">미리보기</a>
+					</div>
+			</div>
+		</div>
+		
+		<div class="col-4">
+			<div class="card">
+				<img src="resources/images/breadLogo.jpg" class="card-img-top" alt="...">
+					<div class="card-body">
+						<h3 class="card-title"><b>상품명</b></h3>
+						<h5>상품약식설명</h5>
+						<div class="itemPriceDiv"><s>10,000원</s>→9,000원</div>
+						<div class="starRev">
+						  <span class="starR on">별1</span>
+						  <span class="starR on">별2</span>
+						  <span class="starR on">별3</span>
+						  <span class="starR on">별4</span>
+						  <span class="starR on">별5</span>
+						</div>
+						<a href="#" class="btn btn-primary">미리보기</a>
+					</div>
+			</div>
+		</div>
+		
+		<div class="col-4">
+			<div class="card">
+				<img src="resources/images/breadLogo.jpg" class="card-img-top" alt="...">
+					<div class="card-body">
+						<h3 class="card-title"><b>상품명</b></h3>
+						<h5>상품약식설명</h5>
+						<div class="itemPriceDiv">10,000원</div>
+						<div class="starRev">
+						  <span class="starR on">별1</span>
+						  <span class="starR on">별2</span>
+						  <span class="starR on">별3</span>
+						  <span class="starR on">별4</span>
+						  <span class="starR on">별5</span>
+						</div>
+						<a href="#" class="btn btn-primary">미리보기</a>
+					</div>
+			</div>
 		</div>
 	</div>
 	
@@ -125,29 +243,55 @@
 			<div class="card">
 				<img src="resources/images/breadLogo.jpg" class="card-img-top" alt="...">
 					<div class="card-body">
-						<h5 class="card-title">제목</h5>
-						<p class="card-text">P태그</p>
-						<a href="#" class="btn btn-primary">A태그</a>
+						<h3 class="card-title"><b>상품명</b></h3>
+						<h5>상품약식설명</h5>
+						<div class="itemPriceDiv"><s>10,000원</s>→9,000원</div>
+						<div class="starRev">
+						  <span class="starR on">별1</span>
+						  <span class="starR on">별2</span>
+						  <span class="starR on">별3</span>
+						  <span class="starR on">별4</span>
+						  <span class="starR on">별5</span>
+						</div>
+						<a href="#" class="btn btn-primary">미리보기</a>
 					</div>
 			</div>
 		</div>
+		
 		<div class="col-4">
 			<div class="card">
 				<img src="resources/images/breadLogo.jpg" class="card-img-top" alt="...">
 					<div class="card-body">
-						<h5 class="card-title">제목</h5>
-						<p class="card-text">P태그</p>
-						<a href="#" class="btn btn-primary">A태그</a>
+						<h3 class="card-title"><b>상품명</b></h3>
+						<h5>상품약식설명</h5>
+						<div class="itemPriceDiv">10,000원</div>
+						<div class="starRev">
+						  <span class="starR on">별1</span>
+						  <span class="starR on">별2</span>
+						  <span class="starR on">별3</span>
+						  <span class="starR on">별4</span>
+						  <span class="starR on">별5</span>
+						</div>
+						<a href="#" class="btn btn-primary">미리보기</a>
 					</div>
 			</div>
 		</div>
+		
 		<div class="col-4">
 			<div class="card">
 				<img src="resources/images/breadLogo.jpg" class="card-img-top" alt="...">
 					<div class="card-body">
-						<h5 class="card-title">제목</h5>
-						<p class="card-text">P태그</p>
-						<a href="#" class="btn btn-primary">A태그</a>
+						<h3 class="card-title"><b>상품명</b></h3>
+						<h5>상품약식설명</h5>
+						<div class="itemPriceDiv"><s>10,000원</s>→9,000원</div>
+						<div class="starRev">
+						  <span class="starR on">별1</span>
+						  <span class="starR on">별2</span>
+						  <span class="starR on">별3</span>
+						  <span class="starR on">별4</span>
+						  <span class="starR on">별5</span>
+						</div>
+						<a href="#" class="btn btn-primary">미리보기</a>
 					</div>
 			</div>
 		</div>
@@ -158,66 +302,61 @@
 			<div class="card">
 				<img src="resources/images/breadLogo.jpg" class="card-img-top" alt="...">
 					<div class="card-body">
-						<h5 class="card-title">제목</h5>
-						<p class="card-text">P태그</p>
-						<a href="#" class="btn btn-primary">A태그</a>
+						<h3 class="card-title"><b>상품명</b></h3>
+						<h5>상품약식설명</h5>
+						<div class="itemPriceDiv">10,000원</div>
+						<div class="starRev">
+						  <span class="starR on">별1</span>
+						  <span class="starR on">별2</span>
+						  <span class="starR on">별3</span>
+						  <span class="starR on">별4</span>
+						  <span class="starR on">별5</span>
+						</div>
+						<a href="#" class="btn btn-primary">미리보기</a>
 					</div>
 			</div>
 		</div>
+		
 		<div class="col-4">
 			<div class="card">
 				<img src="resources/images/breadLogo.jpg" class="card-img-top" alt="...">
 					<div class="card-body">
-						<h5 class="card-title">제목</h5>
-						<p class="card-text">P태그</p>
-						<a href="#" class="btn btn-primary">A태그</a>
+						<h3 class="card-title"><b>상품명</b></h3>
+						<h5>상품약식설명</h5>
+						<div class="itemPriceDiv">10,000원</div>
+						<div class="starRev">
+						  <span class="starR on">별1</span>
+						  <span class="starR on">별2</span>
+						  <span class="starR on">별3</span>
+						  <span class="starR on">별4</span>
+						  <span class="starR on">별5</span>
+						</div>
+						<a href="#" class="btn btn-primary">미리보기</a>
 					</div>
 			</div>
 		</div>
+		
 		<div class="col-4">
 			<div class="card">
 				<img src="resources/images/breadLogo.jpg" class="card-img-top" alt="...">
 					<div class="card-body">
-						<h5 class="card-title">제목</h5>
-						<p class="card-text">P태그</p>
-						<a href="#" class="btn btn-primary">A태그</a>
+						<h3 class="card-title"><b>상품명</b></h3>
+						<h5>상품약식설명</h5>
+						<div class="itemPriceDiv"><s>10,000원</s>→9,000원</div>
+						<div class="starRev">
+						  <span class="starR on">별1</span>
+						  <span class="starR on">별2</span>
+						  <span class="starR on">별3</span>
+						  <span class="starR on">별4</span>
+						  <span class="starR on">별5</span>
+						</div>
+						<a href="#" class="btn btn-primary">미리보기</a>
 					</div>
 			</div>
 		</div>
 	</div>
 	
-	<div class="row" id="itemsRowDiv">
-		<div class="col-4">
-			<div class="card">
-				<img src="resources/images/breadLogo.jpg" class="card-img-top" alt="...">
-					<div class="card-body">
-						<h5 class="card-title">제목</h5>
-						<p class="card-text">P태그</p>
-						<a href="#" class="btn btn-primary">A태그</a>
-					</div>
-			</div>
-		</div>
-		<div class="col-4">
-			<div class="card">
-				<img src="resources/images/breadLogo.jpg" class="card-img-top" alt="...">
-					<div class="card-body">
-						<h5 class="card-title">제목</h5>
-						<p class="card-text">P태그</p>
-						<a href="#" class="btn btn-primary">A태그</a>
-					</div>
-			</div>
-		</div>
-		<div class="col-4">
-			<div class="card">
-				<img src="resources/images/breadLogo.jpg" class="card-img-top" alt="...">
-					<div class="card-body">
-						<h5 class="card-title">제목</h5>
-						<p class="card-text">P태그</p>
-						<a href="#" class="btn btn-primary">A태그</a>
-					</div>
-			</div>
-		</div>
-	</div>
+	
 	</div>
 </div>
 <jsp:include page="../common/footer.jsp"/>
@@ -246,6 +385,8 @@
 		$(function(){
 			$("div.card").click(function(){
 				location.href="itemDetail.do";
+			}).mouseenter(function(){
+				$(this).css("cursor","pointer");
 			})
 		})
 	</script>
