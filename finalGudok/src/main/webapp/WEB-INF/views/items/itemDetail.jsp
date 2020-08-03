@@ -161,7 +161,7 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 					<div style="padding:5% 0 5% 0;margin-bottom:3%;font-size:30px;border-bottom:1px dotted lightgray;"><b>10,000원</b></div>
 					<div class="amountDC">
 						<table style="vertical-align:middle;">
-							<tr>
+							<tr class="countTr">
 								<td class="sign"><img src="${contextPath }/resources/images/XSIGN.png" class="signImg" id="signM"></td>
 								<td><input type="text" readonly class="amountT" value="1"></td>
 								<td class="sign"><img src="${contextPath }/resources/images/plus.png" class="signImg" id="signP"></td>
@@ -169,7 +169,7 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 						</table>
 						<br>
 						<div class="amountPriceDiv"><div style="margin-bottom:2%;padding-top:2%;"><b>변동하는 가격</b></div>
-						<div style="padding:1% 0 1% 0;"><input type="button" value="장바구니 담기" id="basketBtn" style="margin:0 5% 0 5%;"><input type="button" value="결제하기"></div>
+						<div style="padding:1% 0 1% 0;"><input type="button" value="장바구니 담기" id="basketBtn" style="margin:0 5% 0 5%;"><input type="button" value="결제하기" id="paymentBtn"></div>
 						</div>
 						<div style="margin-top:3%;border-top:1px dotted lightgray;"></div>
 						<div class="cycleListClass" style="margin-top:3%;padding:2%;background:#F8F9FA;">
@@ -179,46 +179,14 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 									<td style="width:25%;"><span class="cycleSpan" id="1cycle">1주일</span></td>
 									<td style="width:25%;"><span class="cycleSpan" id="2cycle">2주일</span></td>
 									<td style="width:25%;"><span class="cycleSpan" id="3cycle">3주일</span></td>
-									<td style="width:25%;"><span class="cycleSpan" id="4cycle">한 달</span></td>
+									<td style="width:25%;"><span class="cycleSpan" id="4cycle">1개월</span></td>
 								</tr>
 								<tr>
 									<td colspan="4" style="padding:3% 3% 0 0;text-align:right;font-size:20px;" id="cycleChTd">구독 주기를 선택해 주세요.</td>
 								</tr>
 							</table>
 						</div>
-						<script>
-							$(function(){
-								var text = $("#cycleText").val()
-								$(".cycleSpan").click(function(){
-									text = "";
-									var c1 = $(this).text();
-									var $cycle = $(this).text();
-									$(".cycleTable").find("tr td .cycleSpan").not($cycle).css({"background":"white","color":"#6AAED9","border":"1px solid #6AAED9"});
-									$(this).css({"background":"#6AAED9","color":"white"});
-									switch(c1){
-										case "1주일" : 
-											text = text + 1;
-											$("#cycleChTd").text("1주일 구독을 선택하셨습니다.");
-											break;
-										case "2주일" : 
-											text = text + 2;
-											$("#cycleChTd").text("2주일 구독을 선택하셨습니다.");
-											break;
-										case "3주일" : 
-											text = text + 3;
-											$("#cycleChTd").text("3주일 구독을 선택하셨습니다.");
-											break;
-										case "한 달" :
-											text = text + 4;
-											$("#cycleChTd").text("한 달 구독을 선택하셨습니다.");
-											break;
-									}
-									
-									console.log(text)
-									$("#cycleText").val(text);
-								})
-							})
-						</script>
+						
 					</div>
 			</div>
 			<br><br>
@@ -228,32 +196,7 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 				<img src="${contextPath }/resources/images/bread.png" id="mainImg">
 			</div>
 		
-		<!-- 수량 버튼 -->
-		<script>
-			$(function(){
-				var amount = $(".amountT").val();
-				$("#signP").click(function(){
-					amount = Number(amount) + 1;
-					console.log(amount);
-					$(".amountT").val(amount);
-					if(amount > 1){
-						$("#signM").attr("src","${contextPath }/resources/images/minus.png").css("transitionDuration","1s");
-					}
-				})
-				$("#signM").click(function(){
-					if(amount > 1){
-						amount = Number(amount) - 1;
-						$(".amountT").val(amount);
-						console.log(amount);
-						if(amount < 2){
-							$("#signM").attr("src","${contextPath }/resources/images/XSIGN.png").css("transitionDuration","1s");
-						}
-					}else if(amount == 1){
-						alert("1개 미만은 선택하실 수 없습니다.");
-					}
-				})
-			})
-		</script>
+		
 		
 		<br>
 		<div class="col-md-12" style="border-top:1px solid lightgray;">
@@ -339,6 +282,88 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 	</div>
 	<br><br><br><br><br><br>
 	
+	
+	<!-- 수량 버튼 -->
+		<script>
+			$(function(){
+				var amount = $(".amountT").val();
+				$("#signP").click(function(){
+					amount = Number(amount) + 1;
+					console.log(amount);
+					$(".amountT").val(amount);
+					if(amount > 1){
+						$("#signM").attr("src","${contextPath }/resources/images/minus.png").css("transitionDuration","1s");
+					}
+				})
+				$("#signM").click(function(){
+					if(amount > 1){
+						amount = Number(amount) - 1;
+						$(".amountT").val(amount);
+						console.log(amount);
+						if(amount < 2){
+							$("#signM").attr("src","${contextPath }/resources/images/XSIGN.png").css("transitionDuration","1s");
+						}
+					}else if(amount == 1){
+						alert("1개 미만은 선택하실 수 없습니다.");
+					}
+				})
+			})
+		</script>
+		
+		<script>
+			$(function(){
+				var text = $("#cycleText").val()
+				$(".cycleSpan").click(function(){
+					text = "";
+					var c1 = $(this).text();
+					var $cycle = $(this).text();
+					$(".cycleTable").find("tr td .cycleSpan").not($cycle).css({"background":"white","color":"#6AAED9","border":"1px solid #6AAED9"});
+					$(this).css({"background":"#6AAED9","color":"white"});
+					switch(c1){
+						case "1주일" : 
+							text = text + 1;
+							$("#cycleChTd").text("1주일 구독을 선택하셨습니다.");
+							break;
+						case "2주일" : 
+							text = text + 2;
+							$("#cycleChTd").text("2주일 구독을 선택하셨습니다.");
+							break;
+						case "3주일" : 
+							text = text + 3;
+							$("#cycleChTd").text("3주일 구독을 선택하셨습니다.");
+							break;
+						case "1개월" :
+							text = text + 4;
+							$("#cycleChTd").text("1개월 구독을 선택하셨습니다.");
+							break;
+					}
+					
+					console.log(text)
+					$("#cycleText").val(text);
+				})
+			})
+		</script>
+		
+		<script>
+			$(function(){
+				$("#paymentBtn").click(function(){
+					console.log($("#cycleText").val());
+					if($("#cycleText").val() == ""){
+						alert("구독 주기를 선택해 주세요.");
+					}else{
+						alert("값 들어감");
+					}
+				})
+				$("#basketBtn").click(function(){
+					if($("#cycleText").val() == ""){
+						alert("구독 주기를 선택해 주세요.");
+					}else{
+						location.href="basket.do";
+					}
+				})
+			})
+		</script>
+		
 	<script>
 		$(function(){
 			$('.starRev span').click(function(){
@@ -348,14 +373,6 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 			});
 		})
 		
-	</script>
-	
-	<script>
-		$(function(){
-			$("#basketBtn").click(function(){
-				location.href="basket.do";
-			})
-		})
 	</script>
 	
 	<script>
@@ -431,6 +448,8 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 		}
 		
 	</script>
+	
+	
 	
 	<jsp:include page="../common/footer.jsp"/>
 	

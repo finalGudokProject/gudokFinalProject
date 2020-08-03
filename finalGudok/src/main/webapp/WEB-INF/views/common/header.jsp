@@ -69,16 +69,16 @@
           <!-- <ul class="navbar-nav mr-auto"> -->
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="nav-link" href="itemPage.do">신상품 <span class="sr-only">(current)</span></a>
+              <a class="nav-link" href="#">신상품 <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">베스트</a>
             </li>
             <li class="nav-item dropdown">
-              <a class="nav-link" href="#">푸드</a>
+              <a class="nav-link" href="itemFood.do">푸드</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#" tabindex="-1" href="#">리빙</a>
+              <a class="nav-link" href="itemLiving.do" tabindex="-1" href="#">리빙</a>
             </li>
           </ul>
           <!-- </ul> -->

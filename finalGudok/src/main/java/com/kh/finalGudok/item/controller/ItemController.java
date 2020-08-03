@@ -12,9 +12,9 @@ public class ItemController {
 	@Autowired
 	ItemService iService;
 	
-	@RequestMapping(value="itemPage.do")
+	@RequestMapping(value="itemFood.do")
 	public String itemPage() {
-		return "items/item";
+		return "items/itemFood";
 	}
 	
 	@RequestMapping("itemDetail.do")
@@ -25,5 +25,10 @@ public class ItemController {
 	@RequestMapping("basket.do")
 	public String BasketPage() {
 		return "order/basket";
+	}
+
+	@RequestMapping("itemLiving.do")
+	public String livingPage() {
+		return "items/itemLiving";
 	}
 }
