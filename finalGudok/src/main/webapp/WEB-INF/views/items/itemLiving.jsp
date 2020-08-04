@@ -24,8 +24,14 @@
 	#cateName{
 		font-size:30px;
 		margin:3% 0 1% 7%;
+		line-height:100px;
 	}
-	
+	#cateName img{
+		vertical-align:middle;
+	}
+	#cateName span{
+		vertical-align:middle;
+	}
 	/* 상품 리스트 정렬 CSS */
 	#rankDiv{
 		float:left;
@@ -153,6 +159,14 @@
 	.cardFooter{
 	 	padding-bottom:5%;
 	}
+	
+	.starRev{
+		line-height:35px;
+	}
+	.starRev span{
+		vertical-align:bottom;
+	}
+	
 </style>
 </head>
 <body>
@@ -160,7 +174,10 @@
 <div class="container">
 	<div class="row">
 	<div class="col-md-12">
-		<div id="cateName" style="font-size:50px;">리빙</div>
+		<div id="cateName" style="font-size:50px;">
+		<img src="${contextPath }/resources/images/living.png" style="width:70px;height:70px;">
+		<span>리빙</span>
+		</div>
 		<div style="margin:0 0 3% 0%">
 			<table style="display:block;">
 				<tr>
@@ -207,7 +224,8 @@
 					  <span class="starR on">별3</span>
 					  <span class="starR on">별4</span>
 					  <span class="starR on">별5</span>
-					  <div style="display:inline-block;color:gray;">(리뷰수:200)</div>
+					  <div style="display:inline-block;color:gray;">
+					  <span>(리뷰수:200)</span></div>
 					</div>
 					  <div id="rateId">(평점 : 5.0점 / 찜한 사람 : 120명)</div>
 					</div>

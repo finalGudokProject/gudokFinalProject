@@ -282,7 +282,32 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 			</div>
 			<!-- 상세 이미지 끝 -->
 			
-			
+			<script>
+				var modal = document.getElementById("myModal");
+				$(function(){
+					$(".modalAnsBtn").on("click", function(){
+						if($("#ansText").val() <= 10){
+							swal("","10자 이상 입력해 주십시오.","error");
+						}else{
+							swal({
+								text : "상품명 "+"상품을 문의하시겠습니까?",
+								buttons : ["예", "아니오"],
+								dangerMode : true,
+							}).then((result)=>{
+								if(result){
+									modal.style.display = "none";
+								}else{
+									swal("","문의하신 내용은 어디서 확인하실 수 있습니다.","success").then((result)=>{
+										if(result){
+											modal.style.display = "none";
+										}
+									});
+								}
+							})
+						}
+					})
+				})
+			</script>
 			
 			<!-- 모달 시작 -->
 			<div id="myModal" class="modal">
@@ -300,12 +325,12 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 					<div class='modal-body'>
 						<form method="post" id="reasonForm">
 							
-							<textarea placeholder="문의할 내용을 입력해 주세요." style="width:100%;" rows="8"></textarea>
+							<textarea placeholder="문의할 내용을 입력해 주세요." style="width:100%;" rows="8" id="ansText"></textarea>
 							
 							
 							<div class='modal-footer'>
 								<input type='button' class="modalAnsBtn" data-dismiss='modal'
-									value="문의하기" onclick="altFunction(realt);">
+									value="문의하기">
 								<div id='area2' class='area'></div>
 							</div>
 						</form>
@@ -313,6 +338,7 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 				</div>
 			</div>
 			<!-- 모달 끝 -->
+			
 			
 		<br>
 		<!-- 리뷰 시작 -->
@@ -337,15 +363,16 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 				</td>
 			</tr>
 			</table>
-			<table class="fileAddClass">
-				<tr>
-					<td><img src="${contextPath }/resources/images/plus.png" style="width:30px;height:30px;" class="fileImgBtn" id="fileAddBtn"></td>
-					<td><input type="file" name="uploadFile"></td>
-				</tr>
-				<tbody>
-				
-				</tbody>
-			</table>
+			<div class="fileAddClass">
+				<div style="vertical-align:middle;margin-bottom:0.5%;">
+					<img src="${contextPath }/resources/images/plus.png" style="width:30px;height:30px;margin-bottom:0.3rem;" class="fileImgBtn" id="fileAddBtn">
+					<input type="file" name="uploadFile">
+				</div>
+				<div style="display:none;" class="hiddenTr">
+					<img src="${contextPath }/resources/images/minus.png" style="width:30px;height:30px;margin-bottom:0.3rem;" class="fileImgBtn" id="fileRemoveBtn">
+					<input type="file" name="uploadFile">
+				</div>
+			</div>
 			
 		</div>
 		<br>
@@ -628,32 +655,39 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 	</script> -->
 	
 	<script>
-		var count = 1;
-		var removeImgId = null;
 		$(function(){
-			$("#fileAddBtn").click(function(){
-				if(count < 3){
-					console.log(count);
-					count++;
-					removeImgId = "minusImgId" + count;
-					
-					$(".fileAddClass > tbody:last").
-					append("<tr><td>"+"<img src='${contextPath }/resources/images/minus.png' style='width:30px;height:30px;' class='fileImgBtn' id='"+removeImgId+"' onclick='removeBtn"+count+"();'></td>"+
-							"<td><input type='file' name='uploadFile'></td></tr>");
+			$("#fileAddBtn").on("click", function(){
+				if($(".hiddenTr").css("display") == "none"){
+					swal({
+						text:"파일을 추가하시겠습니까?",
+						buttons : ["예","아니오"],
+					}).then((result)=>{
+						if(result){
+							
+						}else{
+							$(".hiddenTr").css("display","inline");
+							$("#fileAddBtn").attr("src","${contextPath }/resources/images/XSIGN.png");
+						}
+					})
 				}else{
-					swal("","파일은 3개까지 등록 가능합니다.","error");
+					swal("","파일은 2개까지 등록이 가능합니다.","warning");
 				}
-			});
+			})
+			$("#fileRemoveBtn").on("click", function(){
+				swal({
+					text:"파일을 삭제하시겠습니까?",
+					buttons : ["예","아니오"],
+				}).then((result)=>{
+					if(result){
+						
+					}else{
+						$(".hiddenTr").css("display","none");
+						$("#fileAddBtn").attr("src","${contextPath }/resources/images/plus.png");
+					}
+				})
+				
+			})
 		})
-		
-		function removeBtn2(){
-			$("#minusImgId2").parent().parent().remove();
-			count--;
-		}
-		function removeBtn3(){
-			$("#minusImgId3").parent().parent().remove();
-			count--;
-		}
 		
 	</script>
 	
@@ -662,7 +696,7 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 		$(function(){
 			$("#reviewBtn").on("click", function(){
 				if($("#reviewTxt").val() < 10){
-					swal("","10자 이상으로 입력해 주세요.","info");
+					swal("","10자 이상으로 입력해 주세요.","warning");
 				}else{
 					swal({
 						text : "상품평을 등록하시겠습니까?",

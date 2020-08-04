@@ -25,6 +25,13 @@
 	#cateName{
 		font-size:30px;
 		margin:3% 0 1% 7%;
+		line-height:100px;
+	}
+	#cateName img{
+		vertical-align:middle;
+	}
+	#cateName span{
+		vertical-align:middle;
 	}
 	
 	/* 상품 리스트 정렬 CSS */
@@ -155,6 +162,13 @@
 	 	padding-bottom:5%;
 	}
 	
+	.starRev{
+		line-height:35px;
+	}
+	.starRev span{
+		vertical-align:bottom;
+	}
+	
 </style>
 </head>
 <body>
@@ -162,7 +176,10 @@
 <div class="container">
 	<div class="row">
 	<div class="col-md-12">
-		<div id="cateName" style="font-size:50px;">푸드</div>
+		<div id="cateName" style="font-size:50px;">
+		<img src="${contextPath }/resources/images/food.png" style="width:70px;height:70px;">
+		<span>푸드</span>
+		</div>
 		<div style="margin:0 0 3% 2%">
 			<table style="display:block;">
 				<tr>
