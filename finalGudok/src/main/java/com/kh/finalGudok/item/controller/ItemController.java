@@ -31,4 +31,11 @@ public class ItemController {
 	public String livingPage() {
 		return "items/itemLiving";
 	}
+	
+	@RequestMapping("itemReview.do")
+	public String reviewPage() {
+		return "items/itemReview";
+	}
+	
+	
 }

@@ -137,7 +137,22 @@
 		font-size:25px;
 		font-weight:bold;
 	}
-
+	
+	#rateId{
+		margin-bottom:3%;
+	}
+	
+	.cardBody {
+	    -ms-flex: 1 1 auto;
+	    flex: 1 1 auto;
+	    min-height: 1px;
+	    padding: 1.25rem;
+	    padding-bottom: 0;
+	}
+	
+	.cardFooter{
+	 	padding-bottom:5%;
+	}
 </style>
 </head>
 <body>
@@ -178,65 +193,92 @@
 	
 	<div class="row" id="itemsRowDiv">
 		<div class="col-4">
-			<div class="card" style="position:relative;">
+			<div class="card">
+				<div class="cardHeader">
 				<img src="resources/images/breadLogo.jpg" class="card-img-top" alt="...">
-					<div class="card-body">
-						<h3 class="card-title"><b>상품명</b></h3>
-						<h5>상품약식설명</h5>
-						<div class="itemPriceDiv"><s style="color:red;">10,000원</s>→9,000원</div>
-						<div class="starRev">
-						  <span class="starR on">별1</span>
-						  <span class="starR on">별2</span>
-						  <span class="starR on">별3</span>
-						  <span class="starR on">별4</span>
-						  <span class="starR on">별5</span>
-						  <div style="display:inline-block;color:gray;">(리뷰수:200)</div>
-						</div>
-						  <div id="rateId">(평점 : 5.0점 / 찜한 사람 : 120명)</div>
-						<a href="#" class="btn btn-primary">미리보기</a>
+				</div>
+				<div class="cardBody">
+					<h3 class="card-title"><b>상품명</b></h3>
+					<h5>상품약식설명</h5>
+					<div class="itemPriceDiv"><s style="color:red;">10,000원</s>→9,000원</div>
+					<div class="starRev">
+					  <span class="starR on">별1</span>
+					  <span class="starR on">별2</span>
+					  <span class="starR on">별3</span>
+					  <span class="starR on">별4</span>
+					  <span class="starR on">별5</span>
+					  <div style="display:inline-block;color:gray;">(리뷰수:200)</div>
 					</div>
+					  <div id="rateId">(평점 : 5.0점 / 찜한 사람 : 120명)</div>
+					</div>
+					<div class="row">
+						<div class="col-4" id="btnBlank"></div>
+						<div class="col-4" style="padding:0px;">
+							<button class="btn btn-primary" style="width:100%;height:100%;">미리보기</button>
+						</div>
+						<div class="col-4" id="btnBlank"></div>
+					</div>
+					<div class="cardFooter"></div>
 			</div>
 		</div>
 		
 		<div class="col-4">
 			<div class="card">
+				<div class="cardHeader">
 				<img src="resources/images/breadLogo.jpg" class="card-img-top" alt="...">
-					<div class="card-body">
-						<h3 class="card-title"><b>상품명</b></h3>
-						<h5>상품약식설명</h5>
-						<div class="itemPriceDiv"><s style="color:red;">10,000원</s>→9,000원</div>
-						<div class="starRev">
-						  <span class="starR on">별1</span>
-						  <span class="starR on">별2</span>
-						  <span class="starR on">별3</span>
-						  <span class="starR on">별4</span>
-						  <span class="starR on">별5</span>
-						  <div style="display:inline-block;color:gray;">(리뷰수:200)</div>
-						</div>
-						  <div id="rateId">(평점 : 5.0점 / 찜한 사람 : 120명)</div>
-						<a href="#" class="btn btn-primary">미리보기</a>
+				</div>
+				<div class="cardBody">
+					<h3 class="card-title"><b>상품명</b></h3>
+					<h5>상품약식설명</h5>
+					<div class="itemPriceDiv">10,000원</div>
+					<div class="starRev">
+					  <span class="starR on">별1</span>
+					  <span class="starR on">별2</span>
+					  <span class="starR on">별3</span>
+					  <span class="starR on">별4</span>
+					  <span class="starR on">별5</span>
+					  <div style="display:inline-block;color:gray;">(리뷰수:200)</div>
 					</div>
+					  <div id="rateId">(평점 : 5.0점 / 찜한 사람 : 120명)</div>
+					</div>
+					<div class="row">
+						<div class="col-4" id="btnBlank"></div>
+						<div class="col-4" style="padding:0px;">
+							<button class="btn btn-primary" style="width:100%;height:100%;">미리보기</button>
+						</div>
+						<div class="col-4" id="btnBlank"></div>
+					</div>
+					<div class="cardFooter"></div>
 			</div>
 		</div>
 		
 		<div class="col-4">
 			<div class="card">
+				<div class="cardHeader">
 				<img src="resources/images/breadLogo.jpg" class="card-img-top" alt="...">
-					<div class="card-body">
-						<h3 class="card-title"><b>상품명</b></h3>
-						<h5>상품약식설명</h5>
-						<div class="itemPriceDiv">10,000원</div>
-						<div class="starRev">
-						  <span class="starR on">별1</span>
-						  <span class="starR on">별2</span>
-						  <span class="starR on">별3</span>
-						  <span class="starR on">별4</span>
-						  <span class="starR on">별5</span>
-						  <div style="display:inline-block;color:gray;">(리뷰수:200)</div>
-						</div>
-						  <div id="rateId">(평점 : 5.0점 / 찜한 사람 : 120명)</div>
-						<a href="#" class="btn btn-primary">미리보기</a>
+				</div>
+				<div class="cardBody">
+					<h3 class="card-title"><b>상품명</b></h3>
+					<h5>상품약식설명</h5>
+					<div class="itemPriceDiv"><s style="color:red;">10,000원</s>→9,000원</div>
+					<div class="starRev">
+					  <span class="starR on">별1</span>
+					  <span class="starR on">별2</span>
+					  <span class="starR on">별3</span>
+					  <span class="starR on">별4</span>
+					  <span class="starR on">별5</span>
+					  <div style="display:inline-block;color:gray;">(리뷰수:200)</div>
 					</div>
+					  <div id="rateId">(평점 : 5.0점 / 찜한 사람 : 120명)</div>
+					</div>
+					<div class="row">
+						<div class="col-4" id="btnBlank"></div>
+						<div class="col-4" style="padding:0px;">
+							<button class="btn btn-primary" style="width:100%;height:100%;">미리보기</button>
+						</div>
+						<div class="col-4" id="btnBlank"></div>
+					</div>
+					<div class="cardFooter"></div>
 			</div>
 		</div>
 	</div>
@@ -244,64 +286,91 @@
 	<div class="row" id="itemsRowDiv">
 		<div class="col-4">
 			<div class="card">
+				<div class="cardHeader">
 				<img src="resources/images/breadLogo.jpg" class="card-img-top" alt="...">
-					<div class="card-body">
-						<h3 class="card-title"><b>상품명</b></h3>
-						<h5>상품약식설명</h5>
-						<div class="itemPriceDiv"><s style="color:red;">10,000원</s>→9,000원</div>
-						<div class="starRev">
-						  <span class="starR on">별1</span>
-						  <span class="starR on">별2</span>
-						  <span class="starR on">별3</span>
-						  <span class="starR on">별4</span>
-						  <span class="starR on">별5</span>
-						  <div style="display:inline-block;color:gray;">(리뷰수:200)</div>
-						</div>
-						  <div id="rateId">(평점 : 5.0점 / 찜한 사람 : 120명)</div>
-						<a href="#" class="btn btn-primary">미리보기</a>
+				</div>
+				<div class="cardBody">
+					<h3 class="card-title"><b>상품명</b></h3>
+					<h5>상품약식설명</h5>
+					<div class="itemPriceDiv">10,000원</div>
+					<div class="starRev">
+					  <span class="starR on">별1</span>
+					  <span class="starR on">별2</span>
+					  <span class="starR on">별3</span>
+					  <span class="starR on">별4</span>
+					  <span class="starR on">별5</span>
+					  <div style="display:inline-block;color:gray;">(리뷰수:200)</div>
 					</div>
+					  <div id="rateId">(평점 : 5.0점 / 찜한 사람 : 120명)</div>
+					</div>
+					<div class="row">
+						<div class="col-4" id="btnBlank"></div>
+						<div class="col-4" style="padding:0px;">
+							<button class="btn btn-primary" style="width:100%;height:100%;">미리보기</button>
+						</div>
+						<div class="col-4" id="btnBlank"></div>
+					</div>
+					<div class="cardFooter"></div>
 			</div>
 		</div>
 		
 		<div class="col-4">
 			<div class="card">
+				<div class="cardHeader">
 				<img src="resources/images/breadLogo.jpg" class="card-img-top" alt="...">
-					<div class="card-body">
-						<h3 class="card-title"><b>상품명</b></h3>
-						<h5>상품약식설명</h5>
-						<div class="itemPriceDiv">10,000원</div>
-						<div class="starRev">
-						  <span class="starR on">별1</span>
-						  <span class="starR on">별2</span>
-						  <span class="starR on">별3</span>
-						  <span class="starR on">별4</span>
-						  <span class="starR on">별5</span>
-						  <div style="display:inline-block;color:gray;">(리뷰수:200)</div>
-						</div>
-						  <div id="rateId">(평점 : 5.0점 / 찜한 사람 : 120명)</div>
-						<a href="#" class="btn btn-primary">미리보기</a>
+				</div>
+				<div class="cardBody">
+					<h3 class="card-title"><b>상품명</b></h3>
+					<h5>상품약식설명</h5>
+					<div class="itemPriceDiv"><s style="color:red;">10,000원</s>→9,000원</div>
+					<div class="starRev">
+					  <span class="starR on">별1</span>
+					  <span class="starR on">별2</span>
+					  <span class="starR on">별3</span>
+					  <span class="starR on">별4</span>
+					  <span class="starR on">별5</span>
+					  <div style="display:inline-block;color:gray;">(리뷰수:200)</div>
 					</div>
+					  <div id="rateId">(평점 : 5.0점 / 찜한 사람 : 120명)</div>
+					</div>
+					<div class="row">
+						<div class="col-4" id="btnBlank"></div>
+						<div class="col-4" style="padding:0px;">
+							<button class="btn btn-primary" style="width:100%;height:100%;">미리보기</button>
+						</div>
+						<div class="col-4" id="btnBlank"></div>
+					</div>
+					<div class="cardFooter"></div>
 			</div>
 		</div>
 		
 		<div class="col-4">
 			<div class="card">
+				<div class="cardHeader">
 				<img src="resources/images/breadLogo.jpg" class="card-img-top" alt="...">
-					<div class="card-body">
-						<h3 class="card-title"><b>상품명</b></h3>
-						<h5>상품약식설명</h5>
-						<div class="itemPriceDiv"><s style="color:red;">10,000원</s>→9,000원</div>
-						<div class="starRev">
-						  <span class="starR on">별1</span>
-						  <span class="starR on">별2</span>
-						  <span class="starR on">별3</span>
-						  <span class="starR on">별4</span>
-						  <span class="starR on">별5</span>
-						  <div style="display:inline-block;color:gray;">(리뷰수:200)</div>
-						</div>
-						  <div id="rateId">(평점 : 5.0점 / 찜한 사람 : 120명)</div>
-						<a href="#" class="btn btn-primary">미리보기</a>
+				</div>
+				<div class="cardBody">
+					<h3 class="card-title"><b>상품명</b></h3>
+					<h5>상품약식설명</h5>
+					<div class="itemPriceDiv">10,000원</div>
+					<div class="starRev">
+					  <span class="starR on">별1</span>
+					  <span class="starR on">별2</span>
+					  <span class="starR on">별3</span>
+					  <span class="starR on">별4</span>
+					  <span class="starR on">별5</span>
+					  <div style="display:inline-block;color:gray;">(리뷰수:200)</div>
 					</div>
+					  <div id="rateId">(평점 : 5.0점 / 찜한 사람 : 120명)</div>
+					</div>
+					<div class="row">
+						<div class="col-4" id="btnBlank"></div>
+						<div class="col-4" style="padding:0px;">
+							<button class="btn btn-primary" style="width:100%;height:100%;">미리보기</button>
+						</div>
+						<div class="col-4" id="btnBlank"></div>
+					</div>
+					<div class="cardFooter"></div>
 			</div>
 		</div>
 	</div>
@@ -309,64 +378,91 @@
 	<div class="row" id="itemsRowDiv">
 		<div class="col-4">
 			<div class="card">
+				<div class="cardHeader">
 				<img src="resources/images/breadLogo.jpg" class="card-img-top" alt="...">
-					<div class="card-body">
-						<h3 class="card-title"><b>상품명</b></h3>
-						<h5>상품약식설명</h5>
-						<div class="itemPriceDiv">10,000원</div>
-						<div class="starRev">
-						  <span class="starR on">별1</span>
-						  <span class="starR on">별2</span>
-						  <span class="starR on">별3</span>
-						  <span class="starR on">별4</span>
-						  <span class="starR on">별5</span>
-						  <div style="display:inline-block;color:gray;">(리뷰수:200)</div>
-						</div>
-						  <div id="rateId">(평점 : 5.0점 / 찜한 사람 : 120명)</div>
-						<a href="#" class="btn btn-primary">미리보기</a>
+				</div>
+				<div class="cardBody">
+					<h3 class="card-title"><b>상품명</b></h3>
+					<h5>상품약식설명</h5>
+					<div class="itemPriceDiv">10,000원</div>
+					<div class="starRev">
+					  <span class="starR on">별1</span>
+					  <span class="starR on">별2</span>
+					  <span class="starR on">별3</span>
+					  <span class="starR on">별4</span>
+					  <span class="starR on">별5</span>
+					  <div style="display:inline-block;color:gray;">(리뷰수:200)</div>
 					</div>
+					  <div id="rateId">(평점 : 5.0점 / 찜한 사람 : 120명)</div>
+					</div>
+					<div class="row">
+						<div class="col-4" id="btnBlank"></div>
+						<div class="col-4" style="padding:0px;">
+							<button class="btn btn-primary" style="width:100%;height:100%;">미리보기</button>
+						</div>
+						<div class="col-4" id="btnBlank"></div>
+					</div>
+					<div class="cardFooter"></div>
 			</div>
 		</div>
 		
 		<div class="col-4">
 			<div class="card">
+				<div class="cardHeader">
 				<img src="resources/images/breadLogo.jpg" class="card-img-top" alt="...">
-					<div class="card-body">
-						<h3 class="card-title"><b>상품명</b></h3>
-						<h5>상품약식설명</h5>
-						<div class="itemPriceDiv">10,000원</div>
-						<div class="starRev">
-						  <span class="starR on">별1</span>
-						  <span class="starR on">별2</span>
-						  <span class="starR on">별3</span>
-						  <span class="starR on">별4</span>
-						  <span class="starR on">별5</span>
-						  <div style="display:inline-block;color:gray;">(리뷰수:200)</div>
-						</div>
-						  <div id="rateId">(평점 : 5.0점 / 찜한 사람 : 120명)</div>
-						<a href="#" class="btn btn-primary">미리보기</a>
+				</div>
+				<div class="cardBody">
+					<h3 class="card-title"><b>상품명</b></h3>
+					<h5>상품약식설명</h5>
+					<div class="itemPriceDiv"><s style="color:red;">10,000원</s>→9,000원</div>
+					<div class="starRev">
+					  <span class="starR on">별1</span>
+					  <span class="starR on">별2</span>
+					  <span class="starR on">별3</span>
+					  <span class="starR on">별4</span>
+					  <span class="starR on">별5</span>
+					  <div style="display:inline-block;color:gray;">(리뷰수:200)</div>
 					</div>
+					  <div id="rateId">(평점 : 5.0점 / 찜한 사람 : 120명)</div>
+					</div>
+					<div class="row">
+						<div class="col-4" id="btnBlank"></div>
+						<div class="col-4" style="padding:0px;">
+							<button class="btn btn-primary" style="width:100%;height:100%;">미리보기</button>
+						</div>
+						<div class="col-4" id="btnBlank"></div>
+					</div>
+					<div class="cardFooter"></div>
 			</div>
 		</div>
 		
 		<div class="col-4">
 			<div class="card">
+				<div class="cardHeader">
 				<img src="resources/images/breadLogo.jpg" class="card-img-top" alt="...">
-					<div class="card-body">
-						<h3 class="card-title"><b>상품명</b></h3>
-						<h5>상품약식설명</h5>
-						<div class="itemPriceDiv"><s style="color:red;">10,000원</s>→9,000원</div>
-						<div class="starRev">
-						  <span class="starR on">별1</span>
-						  <span class="starR on">별2</span>
-						  <span class="starR on">별3</span>
-						  <span class="starR on">별4</span>
-						  <span class="starR on">별5</span>
-						  <div style="display:inline-block;color:gray;">(리뷰수:200)</div>
-						</div>
-						  <div id="rateId">(평점 : 5.0점 / 찜한 사람 : 120명)</div>
-						<a href="#" class="btn btn-primary">미리보기</a>
+				</div>
+				<div class="cardBody">
+					<h3 class="card-title"><b>상품명</b></h3>
+					<h5>상품약식설명</h5>
+					<div class="itemPriceDiv"><s style="color:red;">10,000원</s>→9,000원</div>
+					<div class="starRev">
+					  <span class="starR on">별1</span>
+					  <span class="starR on">별2</span>
+					  <span class="starR on">별3</span>
+					  <span class="starR on">별4</span>
+					  <span class="starR on">별5</span>
+					  <div style="display:inline-block;color:gray;">(리뷰수:200)</div>
 					</div>
+					  <div id="rateId">(평점 : 5.0점 / 찜한 사람 : 120명)</div>
+					</div>
+					<div class="row">
+						<div class="col-4" id="btnBlank"></div>
+						<div class="col-4" style="padding:0px;">
+							<button class="btn btn-primary" style="width:100%;height:100%;">미리보기</button>
+						</div>
+						<div class="col-4" id="btnBlank"></div>
+					</div>
+					<div class="cardFooter"></div>
 			</div>
 		</div>
 	</div>
@@ -374,16 +470,18 @@
 	
 	</div>
 </div>
-<jsp:include page="../common/footer.jsp"/>
-	<!-- <script>
+
+
+	<script>
 		$(function(){
-			$(".paper").mouseenter(function(){
-				$(this).css("border","1px solid black");
-			}).mouseout(function(){
-				$(this).css("border","none");
+			$(".btn-primary").on("click", function(){
+				swal("","확인","warning").then((value)=>{
+					swal("","여기서 값 넣어요","info");
+				});
 			})
 		})
-	</script> -->
+	</script>
+
 	
 	<!-- 사이드 메뉴바 -->
 	<script>
@@ -398,12 +496,13 @@
 	
 	<script>
 		$(function(){
-			$("div.card").click(function(){
+			$(".cardHeader, .cardBody, #btnBlank, .cardFooter").click(function(){
 				location.href="itemDetail.do";
 			}).mouseenter(function(){
 				$(this).css("cursor","pointer");
 			})
 		})
 	</script>
+<jsp:include page="../common/footer.jsp"/>
 </body>
 </html>

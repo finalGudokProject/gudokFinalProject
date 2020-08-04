@@ -28,7 +28,7 @@ div.reviewDC{
 }
 #reviewPI{
 	margin-top:20px;
-	font-size:30px;
+	font-size:35px;
 }
 .reviewRC{
 	display:inline-block;
@@ -37,7 +37,7 @@ div.reviewDC{
 .reviewRP{
 	text-align:center;
 	padding-top:2%;
-	font-size:20px;
+	font-size:25px;
 }
 
 .starP{
@@ -118,6 +118,21 @@ input[type=button]:hover:before,input[type=button]:hover:after{
   transition:0.5s;
 }
 
+#allReviewBtn{
+	  background:white;
+	  color:#6AAED9;
+	  border:1px solid #6AAED9;
+	  border-radius:5px;
+	  padding:1%;
+}
+
+#allReviewBtn:hover{
+	  background:#6AAED9;
+	  color:white;
+	  border:1px solid #11538C;
+	  border-radius:5px;
+	  padding:1%;
+}
 
 
 .cycleSpan{
@@ -140,6 +155,63 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 	margin:0px !important;
 }
 
+/* The Modal (background) */
+.modal {
+	display: none;
+	/* Hidden by default */
+	position: fixed;
+	/* Stay in place */
+	z-index: 1030;
+	/* Sit on top */
+	padding-top: 2%;
+	/* Location of the box */
+	left: 0;
+	top: 0;
+	width: 100%;
+	/* Full width */
+	height: 100%;
+	/* Full height */
+	overflow: auto;
+	/* Enable scroll if needed */
+	background-color: rgb(0, 0, 0);
+	/* Fallback color */
+	background-color: rgba(0, 0, 0, 0.4);
+	/* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+	background-color: #fefefe;
+	margin: auto;
+	padding: 20px;
+	border: 1px solid #888;
+	width: 35% !important;
+}
+
+/* The Close Button */
+.close {
+	color: #aaaaaa;
+	float: right;
+	font-size: 28px;
+	font-weight: bold;
+}
+
+.close:hover, .close:focus {
+	color: #000;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+/* 리뷰 내용 */
+.reviewText{
+	padding:1%;
+}
+
+.reviewTDiv{
+	border:1px solid #BBDDF2;
+	margin:2% 0 6% 0;
+}
+
 </style>
 </head>
 <body>
@@ -152,21 +224,15 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 					<div class="row">
 					<div class="col-md-8" style="padding:0px 15px;margin:0px;font-size:35px;vertical-align:middle;"><b>상품명 상품명 상품명</b></div>
 					<div class="col-md-4" style="padding-right:4%;margin:0px;text-align:right;font-size:35px;">
-						<span id ="heart"><i class="fa fa-heart-o" aria-hidden="true" ></i> </span>
+						<span id ="heart" title="찜하기"><i class="fa fa-heart-o" aria-hidden="true" ></i> </span>
 					</div>
 					<div class="col-md-6" style="padding:0 15px;font-size:20px;">상품약식설명</div>
 					<div class="col-md-6" style="padding-right:4%;text-align:right;">
-						<span style="text-align:right;" id="whatSpan"><img id="whatImg"src="${contextPath }/resources/images/what.png" style="width:35px;height:35px;border:2px solid black;border-radius:5px;display:inline-block;vertical-align:middle;"></span>
+						<span style="text-align:right;" id="whatSpan" data-toggle="modal" data-target="#intro" title="상품 문의"><img id="whatImg"src="${contextPath }/resources/images/what.png" style="width:35px;height:35px;border:2px solid black;border-radius:5px;display:inline-block;vertical-align:middle;"></span>
 					</div>
-					<script>
-						$(function(){
-							$("#whatSpan").on("mouseenter", function(){
-								$("#whatImg").attr("src","${contextPath }/resources/images/whatHover.png");
-							}).on("mouseleave", function(){
-								$("#whatImg").attr("src","${contextPath }/resources/images/what.png");
-							})
-						})
-					</script>
+					
+					
+					
 				</div>
 				<div class="starRev">
 				  <span class="starR on">별1</span>
@@ -196,7 +262,7 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 									<td style="width:25%;"><span class="cycleSpan" id="1cycle">1주일</span></td>
 									<td style="width:25%;"><span class="cycleSpan" id="2cycle">2주일</span></td>
 									<td style="width:25%;"><span class="cycleSpan" id="3cycle">3주일</span></td>
-									<td style="width:25%;"><span class="cycleSpan" id="4cycle">1개월</span></td>
+									<td style="width:25%;"><span class="cycleSpan" id="4cycle">4주일</span></td>
 								</tr>
 								<tr>
 									<td colspan="4" style="padding:3% 3% 0 0;text-align:right;font-size:20px;" id="cycleChTd">구독 주기를 선택해 주세요.</td>
@@ -209,13 +275,47 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 			<br><br>
 			
 		</div>
+		
+			<!-- 상세 이미지 -->
 			<div class="col-md-12" style="padding:3%;margin:3% 0 3% 0; width:100%;height:auto;">
 				<img src="${contextPath }/resources/images/bread.png" id="mainImg">
 			</div>
-		
-		
-		
+			<!-- 상세 이미지 끝 -->
+			
+			
+			
+			<!-- 모달 시작 -->
+			<div id="myModal" class="modal">
+
+				<div class="modal-content">
+					<div class='modal-header'>
+						<div class="row">
+							<div style="font-size:40px;">상품명 상품문의</div>
+							<div style="font-size:15px;padding:2%;">상품에 대한 자세한 문의는 고객 센터를 이용해 주세요.</div>
+						</div>
+						<div><button type='button' class="close" data-dismiss='modal'
+							aria-hidden="='true'" style="font-size:50px;">&times;</button></div>
+					</div>
+					
+					<div class='modal-body'>
+						<form method="post" id="reasonForm">
+							
+							<textarea placeholder="문의할 내용을 입력해 주세요." style="width:100%;" rows="8"></textarea>
+							
+							
+							<div class='modal-footer'>
+								<input type='button' class="modalAnsBtn" data-dismiss='modal'
+									value="문의하기" onclick="altFunction(realt);">
+								<div id='area2' class='area'></div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+			<!-- 모달 끝 -->
+			
 		<br>
+		<!-- 리뷰 시작 -->
 		<div class="col-md-12" style="border-top:1px solid lightgray;">
 		<p id="reviewPI"><b>상품평</b></p>
 			<div class="starRev">
@@ -231,8 +331,9 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 				<td style="width:50%;" align="center">
 					<textarea rows="5" cols="120" id="reviewTxt"></textarea>
 				</td>
+					
 				<td style="width:20%;" align="center">
-					<input id="reviewBtn" type="button" value="등록하기" style="width:160px;height:120px;">
+					<input id="reviewBtn" type="button" value="등록하기" style="width:160px;height:120px;font-size:30px;">
 				</td>
 			</tr>
 			</table>
@@ -261,8 +362,8 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 					  <span class="starP on">별5</span>
 					  <span>등록일 : 2020/DB/DB</span>
 					</div>
-					<div style="border:1px solid #BBDDF2;margin-bottom:2%;">
-						<span>내용 입력내용 입력내용 입력내용 입력내용 입력내용 입력 가나다라마바사 아자차카타파하</span>
+					<div class="reviewTDiv">
+						<div class="reviewText">내용 입력내용 입력내용 입력내용 입력내용 입력내용 입력 가나다라마바사 아자차카타파하</div>
 					</div>
 				</div>
 			</div>
@@ -277,8 +378,8 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 					  <span class="starP">별5</span>
 					  <span>등록일 : 2020/DB/DB</span>
 					</div>
-					<div style="border:1px solid #BBDDF2;margin-bottom:2%;">
-						<span>내용 입력내용 입력내용 입력내용 입력내용 입력내용 입력 가나다라마바사 아자차카타파하</span>
+					<div class="reviewTDiv">
+						<div class="reviewText">내용 입력내용 입력내용 입력내용 입력내용 입력내용 입력 가나다라마바사 아자차카타파하</div>
 					</div>
 				</div>
 				<div><span style="font-size:20px;">OOO님의 리뷰</span>
@@ -290,15 +391,39 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 					  <span class="starP">별5</span>
 					  <span>등록일 : 2020/DB/DB</span>
 					</div>
-					<div style="border:1px solid #BBDDF2;margin-bottom:2%;">
-						<span>내용 입력내용 입력내용 입력내용 입력내용 입력내용 입력 가나다라마바사 아자차카타파하</span>
+					<div class="reviewTDiv">
+						<div class="reviewText">내용 입력내용 입력내용 입력내용 입력내용 입력내용 입력 가나다라마바사 아자차카타파하</div>
 					</div>
 				</div>
 			</div>
 		</div>
+		<!-- 리뷰 끝 -->
+		<div style="text-align:center;margin-top:3%;"><button type="button" style="font-size:30px;height:auto;" id="allReviewBtn">상품명 모든 리뷰 보러가기</button></div>
+		
 	</div>
 	<br><br><br><br><br><br>
-	
+		
+		<!-- 찜하기, 상품문의 툴팁 -->
+		<script type="text/javascript">
+		    $(document).ready(function(){
+		        $("#heart, #whatSpan").tooltip();
+		    });
+		</script>
+		<!-- 찜하기, 상품문의 툴팁 끝 -->
+		
+		
+		<!-- 문의하기 이미지 변경 -->
+		<script>
+			$(function(){
+				$("#whatSpan").on("mouseenter", function(){
+					$("#whatImg").attr("src","${contextPath }/resources/images/whatHover.png").css("cursor","pointer");
+				}).on("mouseleave", function(){
+					$("#whatImg").attr("src","${contextPath }/resources/images/what.png");
+				})
+			})
+		</script>
+		<!-- 문의하기 이미지 변경 끝 -->
+					
 	
 	<!-- 수량 버튼 -->
 		<script>
@@ -321,14 +446,14 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 							$("#signM").attr("src","${contextPath }/resources/images/XSIGN.png").css("transitionDuration","1s");
 						}
 					}else if(amount == 1){
-						alert("1개 미만은 선택하실 수 없습니다.");
+						swal("","1개 미만은 선택하실 수 없습니다.","error");
 					}
 				})
 			})
 		</script>
 		
 		
-		
+		<!-- 구독 주기 선택 -->
 		<script>
 			$(function(){
 				var text = $("#cycleText").val()
@@ -351,9 +476,9 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 							text = text + 3;
 							$("#cycleChTd").text("3주일 구독을 선택하셨습니다.");
 							break;
-						case "1개월" :
+						case "4주일" :
 							text = text + 4;
-							$("#cycleChTd").text("1개월 구독을 선택하셨습니다.");
+							$("#cycleChTd").text("4주일 구독을 선택하셨습니다.");
 							break;
 					}
 					
@@ -362,27 +487,57 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 				})
 			})
 		</script>
+		<!-- 구독 주기 선택 끝 -->
+		
+	
 		
 		<script>
 			$(function(){
 				$("#paymentBtn").click(function(){
 					console.log($("#cycleText").val());
 					if($("#cycleText").val() == ""){
-						alert("구독 주기를 선택해 주세요.");
+						swal("","구독 주기를 선택해 주세요.","error");
 					}else{
-						alert("값 들어감");
+						swal({
+							text : "몇 개를 몇 주일동안 구독하시겠습니까?",
+							icon : "warning",
+							buttons : ["예", "아니오"],
+							dangerMode : true,
+						}).then((result)=>{
+							if(result){
+								
+							}else{
+								swal("","결제 페이지로","info");
+							}
+						})
 					}
 				})
 				$("#basketBtn").click(function(){
 					if($("#cycleText").val() == ""){
-						alert("구독 주기를 선택해 주세요.");
+						swal("","구독 주기를 선택해 주세요.","error");
 					}else{
-						location.href="basket.do";
+						swal("","장바구니에 추가되었습니다.","success").then((result)=>{
+						if(result){
+							swal({
+								text : "장바구니로 이동하시겠습니까?",
+								icon : "warning",
+								buttons : ["예", "아니오"],
+								dangerMode : true,
+								}).then((willDelete)=>{
+								if(willDelete){
+									
+								}else{
+									location.href="basket.do";
+								}
+							})
+						}	
+						})
 					}
 				})
 			})
 		</script>
-		
+	
+	<!-- 상품평 별버튼 -->
 	<script>
 		$(function(){
 			$('.starRev span').click(function(){
@@ -393,17 +548,51 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 		})
 		
 	</script>
+	<!-- 상품평 별버튼 끝 -->
 	
 	<script>
 	$(document).ready(function(){
-		  $("#heart").click(function(){
-		    if($("#heart").hasClass("liked")){
+		$("#heart").click(function(){
+			if($("#heart").hasClass("liked")){
+				swal({
+					text : "찜목록에서 삭제하시겠습니까?",
+					icon : "warning",
+					buttons : ["예", "아니오"],
+					dangerMode : true,
+				  }).then((result)=>{
+					  if(result){
+					      $("#heart").html('<i class="fa fa-heart" aria-hidden="true"></i>');
+					      $("#heart").addClass("liked");
+					  }else{
+						  $("#heart").html('<i class="fa fa-heart-o" aria-hidden="true"></i>');
+					      $("#heart").removeClass("liked");
+					      swal("찜하기","찜목록에서 삭제되었습니다.","success");
+					  }
+				  })
+			}else{
+				swal({
+					text : "찜목록에 추가하시겠습니까?",
+					icon : "warning",
+					buttons : ["예", "아니오"],
+					dangerMode : true,
+				  }).then((result)=>{
+					  if(result){
+						  $("#heart").html('<i class="fa fa-heart-o" aria-hidden="true"></i>');
+					      $("#heart").removeClass("liked");
+					  }else{
+						  $("#heart").html('<i class="fa fa-heart" aria-hidden="true"></i>');
+					      $("#heart").addClass("liked");
+					      swal("찜하기","찜목록에 추가되었습니다.","success");
+					  }
+				  })
+			}
+		    /* if($("#heart").hasClass("liked")){
 		      $("#heart").html('<i class="fa fa-heart-o" aria-hidden="true"></i>');
 		      $("#heart").removeClass("liked");
 		    }else{
 		      $("#heart").html('<i class="fa fa-heart" aria-hidden="true"></i>');
 		      $("#heart").addClass("liked");
-		    }
+		    } */
 		  });
 		});
 	</script>
@@ -452,7 +641,7 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 					append("<tr><td>"+"<img src='${contextPath }/resources/images/minus.png' style='width:30px;height:30px;' class='fileImgBtn' id='"+removeImgId+"' onclick='removeBtn"+count+"();'></td>"+
 							"<td><input type='file' name='uploadFile'></td></tr>");
 				}else{
-					alert("파일은 3개까지 등록 가능합니다.")
+					swal("","파일은 3개까지 등록 가능합니다.","error");
 				}
 			});
 		})
@@ -468,7 +657,65 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 		
 	</script>
 	
+	<!-- 상품평 -->
+	<script>
+		$(function(){
+			$("#reviewBtn").on("click", function(){
+				if($("#reviewTxt").val() < 10){
+					swal("","10자 이상으로 입력해 주세요.","info");
+				}else{
+					swal({
+						text : "상품평을 등록하시겠습니까?",
+						icon : "warning",
+						buttons : ["예","아니오"],
+						dangerMode : true,
+					}).then((result)=>{
+						if(result){
+							
+						}else{
+							swal("상품평","등록 완료되었습니다.","success");
+						}
+					})
+				}
+			})
+		})
+	</script>
+	<!-- 상품평 끝 -->
 	
+	<script>
+		$(function(){
+			$("#allReviewBtn").on("click", function(){
+				swal({
+					text : "상품명\n"+"모든 리뷰를 보러 가시겠습니까?",
+					icon : "warning",
+					buttons : ["예", "아니오"],
+					dangerMode : true,
+				}).then((result)=>{
+					if(result){
+						
+					}else{
+						location.href="itemReview.do";
+					}
+				})
+			})
+		})
+	</script>
+	
+	<!-- 모달 실행(모달 폼보다 밑에 두기) -->
+		<script>
+			var modal = document.getElementById("myModal");
+			var btn = document.getElementById("whatSpan");
+			var span = document.getElementsByClassName("close")[0];
+			btn.onclick = function() {
+				modal.style.display = "block";
+			}
+			span.onclick = function() {
+				modal.style.display = "none";
+			}
+			
+		</script>
+		<!-- 모달 실행 끝 -->
+		
 	
 	<jsp:include page="../common/footer.jsp"/>
 	
