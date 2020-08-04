@@ -90,6 +90,31 @@
         body{
           font-family: 'Jua', sans-serif;
         }
+        
+        .outer{
+        	display:table;
+        	width:100%;
+        	height:100%;
+        }
+        .inner{
+        	display:table-cell;
+        	vertical-align:middle;
+        	text-align:center;
+        }
+        
+        .centered {
+		  position: relative;
+		  display: inline-block;
+		 
+		  width: 100%;
+		  padding: 1em;
+		}
+		
+		.card{
+			margin:0 auto;
+			float:none;
+			margin-bottom:10px;
+		}
     </style>
 <body>
 <jsp:include page="common/menubar.jsp"/>
@@ -117,11 +142,14 @@
       </div>
 
       <br><br><br><br><br>
-	
+	<div class="container-fluid">
+	<div class="outer">
+	<div class="inner">
+	<div class="centered">
       <div class=cardWrap>
         <p style="font-size:2em;"><a href="#">오늘의 신상품 ></a></p>
         <br>
-
+		<div class="row">
         <div class="card" style="width: 18rem;">
           <a href="#"><img src="resources/images/salad1.jpg" class="card-img-top" alt="..."></a>
           <div class="card-body">
@@ -150,13 +178,13 @@
           </div>
         </div>
       </div>
-
+	</div>
       <br><br><br><br><br>
 
       <div class=cardWrap>
         <p style="font-size:2em;"><a href="#">베스트 상품 ></a></p>
         <br>
-
+        <div class="row">
         <div class="card" style="width: 18rem;">
           <a href="#"><img src="resources/images/salad1.jpg" class="card-img-top" alt="..."></a>
           <div class="card-body">
@@ -185,13 +213,13 @@
           </div>
         </div>
       </div>
-
+	</div>
       <br><br><br><br><br>
 
       <div class=cardWrap>
         <p style="font-size:2em;">지금 가장 핫한 상품</p>
         <br>
-
+		<div class="row">
         <div class="card" style="width: 18rem;">
           <a href="#"><img src="resources/images/salad1.jpg" class="card-img-top" alt="..."></a>
           <div class="card-body">
@@ -220,13 +248,13 @@
           </div>
         </div>
       </div>
-
+	</div>
       <br><br><br><br><br>
 
       <div class=cardWrap>
-        <p style="font-size:2em;">JM's 추천</p>
+        <p style="font-size:2em;text-align:center;">JM's 추천</p>
         <br>
-
+		<div class="row" style="text-align:middle;">
         <div class="card" style="width: 18rem;">
           <a href="#"><img src="resources/images/salad1.jpg" class="card-img-top" alt="..."></a>
           <div class="card-body">
@@ -255,7 +283,11 @@
           </div>
         </div>
       </div>
-
+      </div>
+	</div>
+	</div>
+	</div>
+	</div>
       <br><br><br>
       <hr>
 
