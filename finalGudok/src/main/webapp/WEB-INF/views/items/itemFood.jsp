@@ -158,7 +158,7 @@
 </style>
 </head>
 <body>
-<jsp:include page="../common/header.jsp"/>
+<jsp:include page="../common/menubar.jsp"/>
 <div class="container">
 	<div class="row">
 	<div class="col-md-12">

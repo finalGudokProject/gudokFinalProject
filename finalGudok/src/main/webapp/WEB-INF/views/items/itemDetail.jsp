@@ -215,7 +215,7 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 </style>
 </head>
 <body>
-	<jsp:include page="../common/header.jsp"/>
+	<jsp:include page="../common/menubar.jsp"/>
 	<div class="container" style="margin-top:3%;">
 		<div class="row">
 			<div class="col-md-6" style="padding:0 2% 0 2%;"><img src="${contextPath }/resources/images/breadLogo.jpg" id="logoImg"></div>
@@ -353,7 +353,7 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 		<div class="row" style="border-top:1px solid lightgray;border-bottom:1px solid lightgray;" >
 			<div class="col-md-6" class="reviewRC">
 				<p class="reviewRP"><b>긍정 상품평</b></p>
-				<div><span style="font-size:20px;">OOO님의 리뷰</span>
+				<div><span style="font-size:20px;">OOO님의 상품평</span>
 					<div class="starPp">
 					  <span class="starP on">별1</span>
 					  <span class="starP on">별2</span>
@@ -369,7 +369,7 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 			</div>
 			<div class="col-md-6" class="reviewRC" style="border-left:1px dashed lightgray;">
 				<p class="reviewRP"><b>부정 상품평</b></p>
-				<div><span style="font-size:20px;">OOO님의 리뷰</span>
+				<div><span style="font-size:20px;">OOO님의 상품평</span>
 					<div class="starPp">
 					  <span class="starP on">별1</span>
 					  <span class="starP">별2</span>
@@ -382,7 +382,7 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 						<div class="reviewText">내용 입력내용 입력내용 입력내용 입력내용 입력내용 입력 가나다라마바사 아자차카타파하</div>
 					</div>
 				</div>
-				<div><span style="font-size:20px;">OOO님의 리뷰</span>
+				<div><span style="font-size:20px;">OOO님의 상품평</span>
 					<div class="starPp">
 					  <span class="starP on">별1</span>
 					  <span class="starP">별2</span>

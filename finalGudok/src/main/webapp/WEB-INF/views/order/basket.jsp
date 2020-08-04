@@ -71,7 +71,7 @@ jQuery(document).ready(function(){
 	
 </style>
 <body>
-	<jsp:include page="../common/header.jsp"/>
+	<jsp:include page="../common/menubar.jsp"/>
 
 
 		
