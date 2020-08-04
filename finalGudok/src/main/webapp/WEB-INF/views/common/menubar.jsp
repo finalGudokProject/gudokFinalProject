@@ -112,11 +112,20 @@ body {
     </div> 
     <div class="container">
         <div class="row">
-            <div class="col-12" align="center">
-                <a href="#"><img src="resources/images/logo.png" width="220px" height="150px"></a>
+            <div class="col-12" align="center" id="homeLogo">
+                <img src="resources/images/logo.png" width="220px" height="150px">
             </div>
         </div>
     </div>
+    <script>
+    	$(function(){
+    		$("#homeLogo").on("click", function(){
+    			location.href="home.do";
+    		}).mouseenter(function(){
+    			$(this).css("cursor","pointer");
+    		})
+    	})
+    </script>
     <br>
 
     <nav class="navbar navbar-expand-lg sticky-top navbar-light bg-light">
