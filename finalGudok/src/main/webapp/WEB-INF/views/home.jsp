@@ -12,62 +12,6 @@
 
     <title>메인페이지</title>
     <style>
-        /*상단 회원가입, 로그인, 고객센터 메뉴(#menu-list) */
-        #menu-list{
-          line-height: 3;
-          text-align: right;
-        }
-
-        #menu-list > li{
-          display: inline-block;
-          margin-right: 50px;
-        }
-
-        #menu-list a{
-          color:black;
-        }
-
-        /*나비바 각 카테고리(a태그) 간격조정*/
-        .nav-link{
-            margin : 0 60px 0 60px;
-            color:black;
-        }
-
-        .nav-item:hover{
-          cursor:pointer;
-        }
-
-        /*나비바 각 카테고리 간격 설정*/
-        .navbar-nav{
-            margin-left: 50px;
-        }
-
-        /*나비바 각 카테고리(글씨, 아이콘) 가운데 정렬*/
-        .nav-item{
-          text-align: center;
-        }
-
-        /*검색바 마진 설정*/
-        #searchBar{
-          margin-left: 50px;
-          margin-right: 50px;
-        }
-
-        #food-menu, #living-menu{
-          background-color: #f8f9fa;
-          margin-left: 10px;
-          border : none;
-        }
-
-        .dropdown:hover>.dropdown-menu {
-          text-align: center;
-          display: block;
-        }
-        
-        .form-inline my-2 my-lg-0 > input{
-            margin-left : 50px;
-        }
-
         /*메인 */
         .cardWrap{
           text-align: center;
@@ -94,8 +38,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
   </head>
   <body>
+  
+  	<header>
     <jsp:include page="common/menubar.jsp"/>
+    </header>
 
+	<section>
       <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner">
           <div class="carousel-item active">
@@ -260,7 +208,8 @@
 
       <br><br><br>
       <hr>
-
+	</section>
+	
       <!-- Footer -->
     <footer class="page-footer font-small indigo">
 
