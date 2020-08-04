@@ -135,7 +135,10 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 	text-align:center;
 	width:100%;
 }
-
+.ansTable{
+	font-size:15px !important;
+	margin:0px !important;
+}
 
 </style>
 </head>
@@ -147,9 +150,23 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 			<div class="col-md-6" style="margin-bottom:2%;">
 					<div style="margin-top:3%;">카테고리명</div>
 					<div class="row">
-					<div class="col-md-10" style="padding:0px 15px;margin:0px;font-size:35px;vertical-align:middle;"><b>상품명 상품명 상품명</b></div>
-					<div class="col-md-2" style="padding:0px;margin:0px;text-align:center;font-size:35px;"><span id = heart><i class="fa fa-heart-o" aria-hidden="true" ></i> </span></div>
-					<div style="padding:0 15px;font-size:20px;">상품약식설명</div>
+					<div class="col-md-8" style="padding:0px 15px;margin:0px;font-size:35px;vertical-align:middle;"><b>상품명 상품명 상품명</b></div>
+					<div class="col-md-4" style="padding-right:4%;margin:0px;text-align:right;font-size:35px;">
+						<span id ="heart"><i class="fa fa-heart-o" aria-hidden="true" ></i> </span>
+					</div>
+					<div class="col-md-6" style="padding:0 15px;font-size:20px;">상품약식설명</div>
+					<div class="col-md-6" style="padding-right:4%;text-align:right;">
+						<span style="text-align:right;" id="whatSpan"><img id="whatImg"src="${contextPath }/resources/images/what.png" style="width:35px;height:35px;border:2px solid black;border-radius:5px;display:inline-block;vertical-align:middle;"></span>
+					</div>
+					<script>
+						$(function(){
+							$("#whatSpan").on("mouseenter", function(){
+								$("#whatImg").attr("src","${contextPath }/resources/images/whatHover.png");
+							}).on("mouseleave", function(){
+								$("#whatImg").attr("src","${contextPath }/resources/images/what.png");
+							})
+						})
+					</script>
 				</div>
 				<div class="starRev">
 				  <span class="starR on">별1</span>
@@ -309,6 +326,8 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 				})
 			})
 		</script>
+		
+		
 		
 		<script>
 			$(function(){

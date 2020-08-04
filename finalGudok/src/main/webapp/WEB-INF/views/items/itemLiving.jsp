@@ -183,14 +183,16 @@
 					<div class="card-body">
 						<h3 class="card-title"><b>상품명</b></h3>
 						<h5>상품약식설명</h5>
-						<div class="itemPriceDiv"><s>10,000원</s>→9,000원</div>
+						<div class="itemPriceDiv"><s style="color:red;">10,000원</s>→9,000원</div>
 						<div class="starRev">
 						  <span class="starR on">별1</span>
 						  <span class="starR on">별2</span>
 						  <span class="starR on">별3</span>
 						  <span class="starR on">별4</span>
 						  <span class="starR on">별5</span>
+						  <div style="display:inline-block;color:gray;">(리뷰수:200)</div>
 						</div>
+						  <div id="rateId">(평점 : 5.0점 / 찜한 사람 : 120명)</div>
 						<a href="#" class="btn btn-primary">미리보기</a>
 					</div>
 			</div>
@@ -202,14 +204,16 @@
 					<div class="card-body">
 						<h3 class="card-title"><b>상품명</b></h3>
 						<h5>상품약식설명</h5>
-						<div class="itemPriceDiv"><s>10,000원</s>→9,000원</div>
+						<div class="itemPriceDiv"><s style="color:red;">10,000원</s>→9,000원</div>
 						<div class="starRev">
 						  <span class="starR on">별1</span>
 						  <span class="starR on">별2</span>
 						  <span class="starR on">별3</span>
 						  <span class="starR on">별4</span>
 						  <span class="starR on">별5</span>
+						  <div style="display:inline-block;color:gray;">(리뷰수:200)</div>
 						</div>
+						  <div id="rateId">(평점 : 5.0점 / 찜한 사람 : 120명)</div>
 						<a href="#" class="btn btn-primary">미리보기</a>
 					</div>
 			</div>
@@ -228,7 +232,9 @@
 						  <span class="starR on">별3</span>
 						  <span class="starR on">별4</span>
 						  <span class="starR on">별5</span>
+						  <div style="display:inline-block;color:gray;">(리뷰수:200)</div>
 						</div>
+						  <div id="rateId">(평점 : 5.0점 / 찜한 사람 : 120명)</div>
 						<a href="#" class="btn btn-primary">미리보기</a>
 					</div>
 			</div>
@@ -242,14 +248,16 @@
 					<div class="card-body">
 						<h3 class="card-title"><b>상품명</b></h3>
 						<h5>상품약식설명</h5>
-						<div class="itemPriceDiv"><s>10,000원</s>→9,000원</div>
+						<div class="itemPriceDiv"><s style="color:red;">10,000원</s>→9,000원</div>
 						<div class="starRev">
 						  <span class="starR on">별1</span>
 						  <span class="starR on">별2</span>
 						  <span class="starR on">별3</span>
 						  <span class="starR on">별4</span>
 						  <span class="starR on">별5</span>
+						  <div style="display:inline-block;color:gray;">(리뷰수:200)</div>
 						</div>
+						  <div id="rateId">(평점 : 5.0점 / 찜한 사람 : 120명)</div>
 						<a href="#" class="btn btn-primary">미리보기</a>
 					</div>
 			</div>
@@ -268,7 +276,9 @@
 						  <span class="starR on">별3</span>
 						  <span class="starR on">별4</span>
 						  <span class="starR on">별5</span>
+						  <div style="display:inline-block;color:gray;">(리뷰수:200)</div>
 						</div>
+						  <div id="rateId">(평점 : 5.0점 / 찜한 사람 : 120명)</div>
 						<a href="#" class="btn btn-primary">미리보기</a>
 					</div>
 			</div>
@@ -280,14 +290,16 @@
 					<div class="card-body">
 						<h3 class="card-title"><b>상품명</b></h3>
 						<h5>상품약식설명</h5>
-						<div class="itemPriceDiv"><s>10,000원</s>→9,000원</div>
+						<div class="itemPriceDiv"><s style="color:red;">10,000원</s>→9,000원</div>
 						<div class="starRev">
 						  <span class="starR on">별1</span>
 						  <span class="starR on">별2</span>
 						  <span class="starR on">별3</span>
 						  <span class="starR on">별4</span>
 						  <span class="starR on">별5</span>
+						  <div style="display:inline-block;color:gray;">(리뷰수:200)</div>
 						</div>
+						  <div id="rateId">(평점 : 5.0점 / 찜한 사람 : 120명)</div>
 						<a href="#" class="btn btn-primary">미리보기</a>
 					</div>
 			</div>
@@ -308,7 +320,9 @@
 						  <span class="starR on">별3</span>
 						  <span class="starR on">별4</span>
 						  <span class="starR on">별5</span>
+						  <div style="display:inline-block;color:gray;">(리뷰수:200)</div>
 						</div>
+						  <div id="rateId">(평점 : 5.0점 / 찜한 사람 : 120명)</div>
 						<a href="#" class="btn btn-primary">미리보기</a>
 					</div>
 			</div>
@@ -327,7 +341,9 @@
 						  <span class="starR on">별3</span>
 						  <span class="starR on">별4</span>
 						  <span class="starR on">별5</span>
+						  <div style="display:inline-block;color:gray;">(리뷰수:200)</div>
 						</div>
+						  <div id="rateId">(평점 : 5.0점 / 찜한 사람 : 120명)</div>
 						<a href="#" class="btn btn-primary">미리보기</a>
 					</div>
 			</div>
@@ -339,14 +355,16 @@
 					<div class="card-body">
 						<h3 class="card-title"><b>상품명</b></h3>
 						<h5>상품약식설명</h5>
-						<div class="itemPriceDiv"><s>10,000원</s>→9,000원</div>
+						<div class="itemPriceDiv"><s style="color:red;">10,000원</s>→9,000원</div>
 						<div class="starRev">
 						  <span class="starR on">별1</span>
 						  <span class="starR on">별2</span>
 						  <span class="starR on">별3</span>
 						  <span class="starR on">별4</span>
 						  <span class="starR on">별5</span>
+						  <div style="display:inline-block;color:gray;">(리뷰수:200)</div>
 						</div>
+						  <div id="rateId">(평점 : 5.0점 / 찜한 사람 : 120명)</div>
 						<a href="#" class="btn btn-primary">미리보기</a>
 					</div>
 			</div>
