@@ -345,11 +345,18 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 		<div class="col-md-12" style="border-top:1px solid lightgray;">
 		<p id="reviewPI"><b>상품평</b></p>
 			<div class="starRev">
-			  <span class="starR on">별1</span>
-			  <span class="starR">별2</span>
-			  <span class="starR">별3</span>
-			  <span class="starR">별4</span>
-			  <span class="starR">별5</span>
+			<div style="display:none;">
+			<input type="radio" name="reviewRadio" id="radio1" value="1">
+			<input type="radio" name="reviewRadio" id="radio2" value="2">
+			<input type="radio" name="reviewRadio" id="radio3" value="3">
+			<input type="radio" name="reviewRadio" id="radio4" value="4">
+			<input type="radio" name="reviewRadio" id="radio5" checked value="5">
+			</div>
+			  <span class="starR on">1</span>
+			  <span class="starR on">2</span>
+			  <span class="starR on">3</span>
+			  <span class="starR on">4</span>
+			  <span class="starR on">5</span>
 			</div>
 			<br>
 			<table>
@@ -411,11 +418,11 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 				</div>
 				<div><span style="font-size:20px;">OOO님의 상품평</span>
 					<div class="starPp">
-					  <span class="starP on">별1</span>
-					  <span class="starP">별2</span>
-					  <span class="starP">별3</span>
-					  <span class="starP">별4</span>
-					  <span class="starP">별5</span>
+					  <span class="starP on">1</span>
+					  <span class="starP">2</span>
+					  <span class="starP">3</span>
+					  <span class="starP">4</span>
+					  <span class="starP">5</span>
 					  <span>등록일 : 2020/DB/DB</span>
 					</div>
 					<div class="reviewTDiv">
@@ -458,7 +465,7 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 				var amount = $(".amountT").val();
 				$("#signP").click(function(){
 					amount = Number(amount) + 1;
-					console.log(amount);
+					/* console.log(amount); */
 					$(".amountT").val(amount);
 					if(amount > 1){
 						$("#signM").attr("src","${contextPath }/resources/images/minus.png").css("transitionDuration","1s");
@@ -468,7 +475,7 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 					if(amount > 1){
 						amount = Number(amount) - 1;
 						$(".amountT").val(amount);
-						console.log(amount);
+						/* console.log(amount); */
 						if(amount < 2){
 							$("#signM").attr("src","${contextPath }/resources/images/XSIGN.png").css("transitionDuration","1s");
 						}
@@ -509,7 +516,7 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 							break;
 					}
 					
-					console.log(text)
+					/* console.log(text) */
 					$("#cycleText").val(text);
 				})
 			})
@@ -521,7 +528,7 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 		<script>
 			$(function(){
 				$("#paymentBtn").click(function(){
-					console.log($("#cycleText").val());
+					/* console.log($("#cycleText").val()); */
 					if($("#cycleText").val() == ""){
 						swal("","구독 주기를 선택해 주세요.","error");
 					}else{
@@ -529,6 +536,7 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 							text : "몇 개를 몇 주일동안 구독하시겠습니까?",
 							icon : "warning",
 							buttons : ["예", "아니오"],
+							closeOnEsc: false,
 							dangerMode : true,
 						}).then((result)=>{
 							if(result){
@@ -549,6 +557,7 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 								text : "장바구니로 이동하시겠습니까?",
 								icon : "warning",
 								buttons : ["예", "아니오"],
+								closeOnEsc: false,
 								dangerMode : true,
 								}).then((willDelete)=>{
 								if(willDelete){
@@ -570,7 +579,20 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 			$('.starRev span').click(function(){
 				$(this).parent().children('span').removeClass('on');
 				$(this).addClass('on').prevAll('span').addClass('on');
-				return false;
+				/* console.log($(this).text()); */
+				switch($(this).text()){
+				case "1" : $("input:radio[id=radio1]").prop("checked", true);
+					break;
+				case "2" : $("input:radio[id=radio2]").prop("checked", true);
+					break;
+				case "3" : $("input:radio[id=radio3]").prop("checked", true);
+					break;
+				case "4" : $("input:radio[id=radio4]").prop("checked", true);
+					break;
+				case "5" : $("input:radio[id=radio5]").prop("checked", true);
+					break;
+				}
+				
 			});
 		})
 		
@@ -585,6 +607,7 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 					text : "찜목록에서 삭제하시겠습니까?",
 					icon : "warning",
 					buttons : ["예", "아니오"],
+					closeOnEsc: false,
 					dangerMode : true,
 				  }).then((result)=>{
 					  if(result){
@@ -601,6 +624,7 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 					text : "찜목록에 추가하시겠습니까?",
 					icon : "warning",
 					buttons : ["예", "아니오"],
+					closeOnEsc: false,
 					dangerMode : true,
 				  }).then((result)=>{
 					  if(result){
@@ -661,6 +685,7 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 					swal({
 						text:"파일을 추가하시겠습니까?",
 						buttons : ["예","아니오"],
+						closeOnEsc: false,
 					}).then((result)=>{
 						if(result){
 							
@@ -677,6 +702,7 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 				swal({
 					text:"파일을 삭제하시겠습니까?",
 					buttons : ["예","아니오"],
+					closeOnEsc: false,
 				}).then((result)=>{
 					if(result){
 						
@@ -695,18 +721,43 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 	<script>
 		$(function(){
 			$("#reviewBtn").on("click", function(){
-				if($("#reviewTxt").val() < 10){
+				/* console.log($("#reviewTxt").val().length); */
+				if($("#reviewTxt").val().length < 10){
 					swal("","10자 이상으로 입력해 주세요.","warning");
+				}else if($("input[name=reviewRadio]:checked").val() == "1" || $("input[name=reviewRadio]:checked").val() == "2"){
+					swal({
+						text : "무분별한 평점 테러는 다른 사람에게 피해를 줄 수 있습니다.\n 다시 작성하시겠습니까?",
+						icon : "warning",
+						buttons : ["예", "아니오"],
+						closeOnEsc: false,
+						dangerMode : true,
+					}).then((result)=>{
+						if(result){
+							swal("상품평","등록 완료되었습니다.","success").then((result)=>{
+								if(result){
+									$("#reviewTxt").val("");
+								}
+							});
+						}else{
+							$("#reviewTxt").focus();
+						}
+					})	
 				}else{
 					swal({
 						text : "상품평을 등록하시겠습니까?",
 						buttons : ["예","아니오"],
+						closeOnEsc: false,
 						dangerMode : true,
 					}).then((result)=>{
 						if(result){
-							
+
 						}else{
-							swal("상품평","등록 완료되었습니다.","success");
+							swal("상품평","등록 완료되었습니다.","success").then((result)=>{
+								if(result){
+									$("#reviewTxt").val("");
+								}
+							})
+							
 						}
 					})
 				}
@@ -721,6 +772,7 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 				swal({
 					text : "상품명\n"+"모든 리뷰를 보러 가시겠습니까?",
 					buttons : ["예", "아니오"],
+					closeOnEsc: false,
 					dangerMode : true,
 				}).then((result)=>{
 					if(result){

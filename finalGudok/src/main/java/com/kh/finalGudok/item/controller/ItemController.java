@@ -1,10 +1,19 @@
 package com.kh.finalGudok.item.controller;
 
+import static com.kh.finalGudok.common.pagination.getPageInfo;
+
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.finalGudok.item.model.exception.ItemException;
 import com.kh.finalGudok.item.model.service.ItemService;
+import com.kh.finalGudok.item.model.vo.Item;
+import com.kh.finalGudok.item.model.vo.PageInfo;
 
 @Controller
 public class ItemController {
@@ -12,9 +21,27 @@ public class ItemController {
 	@Autowired
 	ItemService iService;
 	
-	@RequestMapping(value="itemFood.do")
-	public String itemPage() {
-		return "items/itemFood";
+	@RequestMapping("itemFood.do")
+	public ModelAndView itemList(ModelAndView mv, @RequestParam(value = "page", required = false) Integer page){
+		int currentPage = 1;
+		if(page != null) {
+			currentPage = page;
+		}
+		int listCount = iService.getItemCount();
+//		System.out.println("listCount : " + listCount);
+		
+		PageInfo pi = getPageInfo(currentPage, listCount);
+		ArrayList<Item> list = iService.selectList(pi);
+//		System.out.println("ArrayList : " + list.size());
+		
+		if(list != null) {
+			mv.addObject("list", list);
+			mv.addObject("pi", pi);
+			mv.setViewName("items/itemFood");
+		}else {
+			throw new ItemException("아이템 조회 실패");
+		}
+		return mv;
 	}
 	
 	@RequestMapping("itemDetail.do")
@@ -29,7 +56,7 @@ public class ItemController {
 
 	@RequestMapping("itemLiving.do")
 	public String livingPage() {
-		return "items/exam";
+		return "items/itemLiving";
 	}
 	
 	@RequestMapping("itemReview.do")

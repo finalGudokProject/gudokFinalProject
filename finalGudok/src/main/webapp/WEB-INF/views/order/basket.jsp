@@ -209,6 +209,7 @@ jQuery(document).ready(function(){
 							text : check + "개의 상품을 장바구니에서 삭제하시겠습니까?",
 							icon : "warning",
 							buttons : ["예", "아니오"],
+							closeOnEsc : false,
 							dangerMode : true,
 						}).then((result)=>{
 							if(result){
@@ -235,6 +236,7 @@ jQuery(document).ready(function(){
 							text : check + "개의 상품 " + "얼마를 결제하시겠습니까?",
 							icon : "warning",
 							buttons : ["예", "아니오"],
+							closeOnEsc : false,
 							dangerMode : true,
 						}).then((result)=>{
 							if(result){

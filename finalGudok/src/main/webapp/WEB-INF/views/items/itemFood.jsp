@@ -180,13 +180,13 @@
 		height:6rem;
 		position:absolute;
 		z-index:1;
-		margin:2% 0 0 2%;
+		margin:3% 0 0 2%;
 	}
 	
 	.circle img{
-		width:100%;
-		height:100%;
-		border-radius:5px;
+		width:90%;
+		height:90%;
+		border-radius:1rem;
 		border:1px solid red;
 	}
 	
@@ -201,6 +201,10 @@
 		font-size:30px;
 		font-weight: bold;
 		opacity: 90%;
+	}
+	
+	.col-4{
+		padding-bottom:8%;
 	}
 </style>
 </head>
@@ -247,97 +251,92 @@
 	</div>
 	
 	<div class="row" id="itemsRowDiv">
-		<div class="col-4">
-			<div class="card">
-				<div class="cardHeader">
-				<img src="resources/images/breadLogo.jpg" class="card-img-top" alt="...">
-				</div>
-				<div class="cardBody">
-					<h3 class="card-title"><b>상품명</b></h3>
-					<h5>상품약식설명</h5>
-					<div class="itemPriceDiv"><s style="color:red;">10,000원</s>→9,000원</div>
-					<div class="starRev">
-					  <span class="starR on">별1</span>
-					  <span class="starR on">별2</span>
-					  <span class="starR on">별3</span>
-					  <span class="starR on">별4</span>
-					  <span class="starR on">별5</span>
-					  <div style="display:inline-block;color:gray;">(리뷰수:200)</div>
-					</div>
-					  <div id="rateId">(평점 : 5.0점 / 찜한 사람 : 120명)</div>
-					</div>
-					<div class="row">
-						<div class="col-4" id="btnBlank"></div>
-						<div class="col-4" style="padding:0px;">
-							<button class="btn btn-primary" style="width:100%;height:100%;">미리보기</button>
+		<c:forEach var="i" items="${list }">
+			<div class="col-4">
+				<div class="card">
+				
+					<c:if test="${empty i.eventNo}">
+					<div class="cardHeader">
+						<div class="circle">
+							<div id="ratePercentId" style="position:absolute;"><span>30%</span></div>
+							<img src="resources/images/sale.png">
 						</div>
-						<div class="col-4" id="btnBlank"></div>
+						<img src="resources/images/breadLogo.jpg" class="card-img-top" alt="..." style="position:relative;">
 					</div>
-					<div class="cardFooter"></div>
+					</c:if>
+					
+					<c:if test="${!empty i.eventNo }">
+					<div class="cardHeader">
+					<img src="resources/images/breadLogo.jpg" class="card-img-top" alt="...">
+					</div>
+					</c:if>
+					<div class="cardBody">
+						<h3 class="card-title"><b>${i.itemName }</b></h3>
+						<h5>${i.itemMemo }</h5>
+						<div class="itemPriceDiv">
+						<c:if test="${!empty i.eventNo  }">
+							<s style="color:red;">${i.itemPrice }</s>→9,000원
+						</c:if>
+						<c:if test="${empty i.eventNo  }">
+							${i.itemPrice }원
+						</c:if>
+						</div>
+						<div class="starRev">
+						  <span class="starR on">별1</span>
+						  <span class="starR on">별2</span>
+						  <span class="starR on">별3</span>
+						  <span class="starR on">별4</span>
+						  <span class="starR on">별5</span>
+						  <div style="display:inline-block;color:gray;">(리뷰수:200)</div>
+						</div>
+						  <div id="rateId">(평점 : 5.0점 / 찜한 사람 : ${i.itemChoice }명)</div>
+						</div>
+						<div class="row">
+							<div class="col-4" id="btnBlank"></div>
+							<div class="col-4" style="padding:0px;">
+								<button class="btn btn-primary" style="width:100%;height:100%;">미리보기</button>
+							</div>
+							<div class="col-4" id="btnBlank"></div>
+						</div>
+						<div class="cardFooter"></div>
+				</div>
+			</div>
+		</c:forEach>
+		</div>
+		<div class="row" id="itemsRowDiv">
+			<div class="col-12">
+				<c:if test = "${pi.currentPage eq 1}">
+					[이전]
+				</c:if>
+				<c:if test = "${pi.currentPage gt 1 }">
+					<c:url var = "ilistBack" value = "itemFood.do">
+						<c:param name="page" value="${pi.currentPage - 1 }"/>
+					</c:url>
+					<a href="${ilistback}">[이전]</a>
+				</c:if>
+				
+				
+				
+				<c:if test = "${pi.currentPage eq pi.maxPage}">
+					[이후]
+				</c:if>
+				<c:if test = "${pi.currentPage lt pi.maxPage}">
+					<c:url var = "ilistAfter" value = "itemFood.do">
+						<c:param name="page" value="${pi.currentPage + 1 }"/>
+					</c:url>
+					<a href="${ilistAfter }">[이후]</a>
+				</c:if>
+				
 			</div>
 		</div>
 		
-		<div class="col-4">
-			<div class="card">
-				<div class="cardHeader">
-				<img src="resources/images/breadLogo.jpg" class="card-img-top" alt="...">
-				</div>
-				<div class="cardBody">
-					<h3 class="card-title"><b>상품명</b></h3>
-					<h5>상품약식설명</h5>
-					<div class="itemPriceDiv">10,000원</div>
-					<div class="starRev">
-					  <span class="starR on">별1</span>
-					  <span class="starR on">별2</span>
-					  <span class="starR on">별3</span>
-					  <span class="starR on">별4</span>
-					  <span class="starR on">별5</span>
-					  <div style="display:inline-block;color:gray;">(리뷰수:200)</div>
-					</div>
-					  <div id="rateId">(평점 : 5.0점 / 찜한 사람 : 120명)</div>
-					</div>
-					<div class="row">
-						<div class="col-4" id="btnBlank"></div>
-						<div class="col-4" style="padding:0px;">
-							<button class="btn btn-primary" style="width:100%;height:100%;">미리보기</button>
-						</div>
-						<div class="col-4" id="btnBlank"></div>
-					</div>
-					<div class="cardFooter"></div>
-			</div>
-		</div>
-		
-		<div class="col-4">
-			<div class="card">
-				<div class="cardHeader">
-				<img src="resources/images/breadLogo.jpg" class="card-img-top" alt="...">
-				</div>
-				<div class="cardBody">
-					<h3 class="card-title"><b>상품명</b></h3>
-					<h5>상품약식설명</h5>
-					<div class="itemPriceDiv"><s style="color:red;">10,000원</s>→9,000원</div>
-					<div class="starRev">
-					  <span class="starR on">별1</span>
-					  <span class="starR on">별2</span>
-					  <span class="starR on">별3</span>
-					  <span class="starR on">별4</span>
-					  <span class="starR on">별5</span>
-					  <div style="display:inline-block;color:gray;">(리뷰수:200)</div>
-					</div>
-					  <div id="rateId">(평점 : 5.0점 / 찜한 사람 : 120명)</div>
-					</div>
-					<div class="row">
-						<div class="col-4" id="btnBlank"></div>
-						<div class="col-4" style="padding:0px;">
-							<button class="btn btn-primary" style="width:100%;height:100%;">미리보기</button>
-						</div>
-						<div class="col-4" id="btnBlank"></div>
-					</div>
-					<div class="cardFooter"></div>
-			</div>
-		</div>
-	</div>
-	
+		<div>ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ경계선ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ</div>
+		<div>ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ경계선ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ</div>
+		<div>ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ경계선ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ</div>
+		<div>ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ경계선ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ</div>
+		<div>ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ경계선ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ</div>
+		<div>ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ경계선ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ</div>
+		<div>ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ경계선ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ</div>
 	<div class="row" id="itemsRowDiv">
 		<div class="col-4">
 			<div class="card">
@@ -347,6 +346,96 @@
 				<div class="cardBody">
 					<h3 class="card-title"><b>상품명</b></h3>
 					<h5>상품약식설명</h5>
+					<div class="itemPriceDiv"><s style="color:red;">10,000원</s>→9,000원</div>
+					<div class="starRev">
+					  <span class="starR on">별1</span>
+					  <span class="starR on">별2</span>
+					  <span class="starR on">별3</span>
+					  <span class="starR on">별4</span>
+					  <span class="starR on">별5</span>
+					  <div style="display:inline-block;color:gray;">(리뷰수:200)</div>
+					</div>
+					  <div id="rateId">(평점 : 5.0점 / 찜한 사람 : 120명)</div>
+					</div>
+					<div class="row">
+						<div class="col-4" id="btnBlank"></div>
+						<div class="col-4" style="padding:0px;">
+							<button class="btn btn-primary" style="width:100%;height:100%;">미리보기</button>
+						</div>
+						<div class="col-4" id="btnBlank"></div>
+					</div>
+					<div class="cardFooter"></div>
+			</div>
+		</div>
+		
+		<div class="col-4">
+			<div class="card">
+				<div class="cardHeader">
+				<img src="resources/images/breadLogo.jpg" class="card-img-top" alt="...">
+				</div>
+				<div class="cardBody">
+					<h3 class="card-title"><b>상품명</b></h3>
+					<h5>상품약식설명</h5>
+					<div class="itemPriceDiv">10,000원</div>
+					<div class="starRev">
+					  <span class="starR on">별1</span>
+					  <span class="starR on">별2</span>
+					  <span class="starR on">별3</span>
+					  <span class="starR on">별4</span>
+					  <span class="starR on">별5</span>
+					  <div style="display:inline-block;color:gray;">(리뷰수:200)</div>
+					</div>
+					  <div id="rateId">(평점 : 5.0점 / 찜한 사람 : 120명)</div>
+					</div>
+					<div class="row">
+						<div class="col-4" id="btnBlank"></div>
+						<div class="col-4" style="padding:0px;">
+							<button class="btn btn-primary" style="width:100%;height:100%;">미리보기</button>
+						</div>
+						<div class="col-4" id="btnBlank"></div>
+					</div>
+					<div class="cardFooter"></div>
+			</div>
+		</div>
+		
+		<div class="col-4">
+			<div class="card">
+				<div class="cardHeader">
+				<img src="resources/images/breadLogo.jpg" class="card-img-top" alt="...">
+				</div>
+				<div class="cardBody">
+					<h3 class="card-title"><b>상품명</b></h3>
+					<h5>상품약식설명</h5>
+					<div class="itemPriceDiv"><s style="color:red;">10,000원</s>→9,000원</div>
+					<div class="starRev">
+					  <span class="starR on">별1</span>
+					  <span class="starR on">별2</span>
+					  <span class="starR on">별3</span>
+					  <span class="starR on">별4</span>
+					  <span class="starR on">별5</span>
+					  <div style="display:inline-block;color:gray;">(리뷰수:200)</div>
+					</div>
+					  <div id="rateId">(평점 : 5.0점 / 찜한 사람 : 120명)</div>
+					</div>
+					<div class="row">
+						<div class="col-4" id="btnBlank"></div>
+						<div class="col-4" style="padding:0px;">
+							<button class="btn btn-primary" style="width:100%;height:100%;">미리보기</button>
+						</div>
+						<div class="col-4" id="btnBlank"></div>
+					</div>
+					<div class="cardFooter"></div>
+			</div>
+		</div>
+	
+		<div class="col-4">
+			<div class="card">
+				<div class="cardHeader">
+				<img src="resources/images/breadLogo.jpg" class="card-img-top" alt="...">
+				</div>
+				<div class="cardBody">
+					<h3 class="card-title"><b>상품명</b></h3>
+					<h5>상품약식설명</h5>
 					<div class="itemPriceDiv">10,000원</div>
 					<div class="starRev">
 					  <span class="starR on">별1</span>
@@ -428,9 +517,7 @@
 					<div class="cardFooter"></div>
 			</div>
 		</div>
-	</div>
 	
-	<div class="row" id="itemsRowDiv">
 		<div class="col-4">
 			<div class="card">
 				<div class="cardHeader">
@@ -525,8 +612,6 @@
 			</div>
 		</div>
 	</div>
-	
-	
 	</div>
 </div>
 
