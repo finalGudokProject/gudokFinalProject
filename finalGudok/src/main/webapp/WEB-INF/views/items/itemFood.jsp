@@ -169,6 +169,39 @@
 		vertical-align:bottom;
 	}
 	
+	.card{
+		margin:0 auto;
+		float:none;
+		margin-bottom:10px;
+	}
+	
+	.circle{
+		width:6rem;
+		height:6rem;
+		position:absolute;
+		z-index:1;
+		margin:2% 0 0 2%;
+	}
+	
+	.circle img{
+		width:100%;
+		height:100%;
+		border-radius:5px;
+		border:1px solid red;
+	}
+	
+	#ratePercentId{
+		line-height:6rem;
+		width:6rem;
+	}
+	#ratePercentId span{
+		vertical-align:middle;
+		text-align:center;
+		width:6rem;
+		font-size:30px;
+		font-weight: bold;
+		opacity: 90%;
+	}
 </style>
 </head>
 <body>
@@ -431,7 +464,7 @@
 		<div class="col-4">
 			<div class="card">
 				<div class="cardHeader">
-				<img src="resources/images/breadLogo.jpg" class="card-img-top" alt="...">
+				<img src="resources/images/breadLogo.jpg" class="card-img-top" alt="..." style="position:relative;">
 				</div>
 				<div class="cardBody">
 					<h3 class="card-title"><b>상품명</b></h3>
@@ -461,7 +494,11 @@
 		<div class="col-4">
 			<div class="card">
 				<div class="cardHeader">
-				<img src="resources/images/breadLogo.jpg" class="card-img-top" alt="...">
+					<div class="circle">
+						<div id="ratePercentId" style="position:absolute;"><span>30%</span></div>
+						<img src="resources/images/sale.png">
+					</div>
+					<img src="resources/images/breadLogo.jpg" class="card-img-top" alt="..." style="position:relative;">
 				</div>
 				<div class="cardBody">
 					<h3 class="card-title"><b>상품명</b></h3>
@@ -480,7 +517,7 @@
 					<div class="row">
 						<div class="col-4" id="btnBlank"></div>
 						<div class="col-4" style="padding:0px;">
-							<button class="btn btn-primary" style="width:100%;height:100%;">미리보기</button>
+							<button class="btn btn-primary" style="width:100%;height:100%;" id="whatSpan" data-toggle="modal" data-target="#intro">미리보기</button>
 						</div>
 						<div class="col-4" id="btnBlank"></div>
 					</div>
@@ -493,6 +530,36 @@
 	</div>
 </div>
 
+			<!-- 모달 시작 -->
+			<div id="myModal" class="modal">
+
+				<div class="modal-content">
+					<div class='modal-header'>
+						<div class="row">
+							<div style="font-size:40px;">상품명 상품문의</div>
+							<div style="font-size:15px;padding:2%;">상품에 대한 자세한 문의는 고객 센터를 이용해 주세요.</div>
+						</div>
+						<div><button type='button' class="close" data-dismiss='modal'
+							aria-hidden="='true'" style="font-size:50px;">&times;</button></div>
+					</div>
+					
+					<div class='modal-body'>
+						<form method="post" id="reasonForm">
+							
+							<textarea placeholder="문의할 내용을 입력해 주세요." style="width:100%;" rows="8" id="ansText"></textarea>
+							
+							
+							<div class='modal-footer'>
+								<input type='button' class="modalAnsBtn" data-dismiss='modal'
+									value="문의하기">
+								<div id='area2' class='area'></div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+			<!-- 모달 끝 -->
+			
 
 	<script>
 		$(function(){
@@ -525,6 +592,21 @@
 			})
 		})
 	</script>
+	
+	<!-- 모달 실행(모달 폼보다 밑에 두기) -->
+		<script>
+			var modal = document.getElementById("myModal");
+			var btn = document.getElementById("whatSpan");
+			var span = document.getElementsByClassName("close")[0];
+			btn.onclick = function() {
+				modal.style.display = "block";
+			}
+			span.onclick = function() {
+				modal.style.display = "none";
+			}
+			
+		</script>
+		<!-- 모달 실행 끝 -->
 <jsp:include page="../common/footer.jsp"/>
 </body>
 </html>

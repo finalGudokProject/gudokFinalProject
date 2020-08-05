@@ -29,7 +29,7 @@ public class ItemController {
 
 	@RequestMapping("itemLiving.do")
 	public String livingPage() {
-		return "items/itemLiving";
+		return "items/exam";
 	}
 	
 	@RequestMapping("itemReview.do")

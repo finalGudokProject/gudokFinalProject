@@ -295,7 +295,7 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 								dangerMode : true,
 							}).then((result)=>{
 								if(result){
-									modal.style.display = "none";
+
 								}else{
 									swal("","문의하신 내용은 어디서 확인하실 수 있습니다.","success").then((result)=>{
 										if(result){
@@ -316,7 +316,7 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 					<div class='modal-header'>
 						<div class="row">
 							<div style="font-size:40px;">상품명 상품문의</div>
-							<div style="font-size:15px;padding:2%;">상품에 대한 자세한 문의는 고객 센터를 이용해 주세요.</div>
+							<div style="font-size:15px;padding:2%;color:gray;">상품에 대한 자세한 문의는 고객 센터를 이용해 주세요.</div>
 						</div>
 						<div><button type='button' class="close" data-dismiss='modal'
 							aria-hidden="='true'" style="font-size:50px;">&times;</button></div>
@@ -700,7 +700,6 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 				}else{
 					swal({
 						text : "상품평을 등록하시겠습니까?",
-						icon : "warning",
 						buttons : ["예","아니오"],
 						dangerMode : true,
 					}).then((result)=>{
@@ -721,7 +720,6 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 			$("#allReviewBtn").on("click", function(){
 				swal({
 					text : "상품명\n"+"모든 리뷰를 보러 가시겠습니까?",
-					icon : "warning",
 					buttons : ["예", "아니오"],
 					dangerMode : true,
 				}).then((result)=>{
