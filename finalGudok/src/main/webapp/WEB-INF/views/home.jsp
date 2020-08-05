@@ -12,283 +12,371 @@
 
     <title>메인페이지</title>
     <style>
-        /*메인 */
-        .cardWrap{
-          text-align: center;
-        }
-
-        .cardWrap a{
-          color: black;
-        }
-
-        .card{
-          margin: 0 30px 0 30px;
-          display: inline-block;
-        }
-
-        .carousel-inner > .item > img{
-          height: 10px;
-        }
+     
         
-        /*폰트 적용*/
-        body{
-          font-family: 'Jua', sans-serif;
-        }
+.table {
+  width: 100%;
+  /* margin-bottom: 1rem; */
+  color: #212529;
+}
+.table th,
+.table td {
+  padding: 0.5rem 1rem;
+  vertical-align: top;
+  border-top: 1px solid #dee2e6;
+  /* border-bottom: 1px solid #dee2e6; */
+}
+
+
+
+
+.box{
+    position:absolute;
+    padding:30px;
+    background-color:white; 
+    top:50%; 
+    left:50%; 
+    transform:translate(-50%,-50%);
+}
+
+        
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
   </head>
   <body>
   
-  	<header>
-    <jsp:include page="common/menubar.jsp"/>
-    </header>
+  
+    <jsp:include page="common/adminMenubar.jsp"/>
 
-	<section>
-      <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-        <div class="carousel-inner">
-          <div class="carousel-item active">
-            <img src="resources/images/carousel2.jpg" class="d-block w-100" alt="...">
-          </div>
-          <div class="carousel-item">
-            <img src="resources/images/flower.jpg" class="d-block w-100" alt="...">
-          </div>
-          <div class="carousel-item">
-            <img src="resources/images/salad.jpg" class="d-block w-100" alt="...">
-          </div>
-        </div>
-        <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="sr-only">Previous</span>
-        </a>
-        <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="sr-only">Next</span>
-        </a>
-      </div>
 
-      <br><br><br><br><br>
+	
+       <!--내용-->
+            <!-- <main class="col-md-9 col-xl-12 py-md-3 pl-md-5 bd-content" role="main">
+                메인
+            </main> -->
+            <div id="content" style="background-color: RGB(237,237,237);">
+            <div class="row" style="height:300px">
+                <div class="col-4" style="position:relative;">
+                    <div class="container box">
+                            <div style="float:left;"><h5><b>미답변 문의</b></h5></div>
+                            <div class="mr-0" style="float:right;">
+                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-right-circle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                            <path fill-rule="evenodd" d="M7.646 11.354a.5.5 0 0 1 0-.708L10.293 8 7.646 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0z"/>
+                            <path fill-rule="evenodd" d="M4.5 8a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5z"/>
+                            </svg></div> 
+                        <table class="table">
+                            
+                            <tr>
+                                <td style="width:70%">
+                                    문의합니다1
+                                </td>
+                                <td style="width:30%;">
+                                    2020-08-01
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    문의합니다2
+                                </td>
+                                <td>
+                                    2020-08-01
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    문의합니다3
+                                </td>
+                                <td>
+                                    2020-08-01
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    문의합니다4
+                                </td>
+                                <td>
+                                    2020-08-01
+                                </td>
+                            </tr>
+                         
+                        
+                        </table>
+                    </div>
+                </div>
+                <div class="col-4" style="position:relative;">
+                    <div class="container box">
+                            <div style="float:left;"><h5><b>미배송 건</b></h5></div>
+                            <div class="mr-0" style="float:right;">
+                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-right-circle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                            <path fill-rule="evenodd" d="M7.646 11.354a.5.5 0 0 1 0-.708L10.293 8 7.646 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0z"/>
+                            <path fill-rule="evenodd" d="M4.5 8a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5z"/>
+                            </svg></div> 
+                        <table class="table">
+                            
+                            <tr>
+                                <td style="width:70%">
+                                    꽃 정기구독
+                                </td>
+                                <td style="width:30%;">
+                                    2020-08-01
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    우유 정기구독
+                                </td>
+                                <td>
+                                    2020-08-01
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    빵 정기구독
+                                </td>
+                                <td>
+                                    2020-08-01
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    반찬 정기구독
+                                </td>
+                                <td>
+                                    2020-08-01
+                                </td>
+                            </tr>
+                         
+                        
+                        </table>
+                    </div>
+                </div>
+                
+                <div class="col-4" style="position:relative;">
+                    <div class="container box">
+                            <div style="float:left;"><h5><b>일일 방문 및 가입 현황</b></h5></div>
+                            <div class="mr-0" style="float:right;">
+                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-right-circle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                            <path fill-rule="evenodd" d="M7.646 11.354a.5.5 0 0 1 0-.708L10.293 8 7.646 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0z"/>
+                            <path fill-rule="evenodd" d="M4.5 8a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5z"/>
+                            </svg></div> 
+                            <br>
+                            <br>
+                        <table  style="text-align: center;" >
+                            <tr>
+                                <td style="padding:5px; background-color:rgb(149, 169, 229);">가입자 수</td>
+                                <td style="padding:5px;background-color:rgb(195, 203, 226)">101 명</td>
+                                <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                <td style="padding:5px;background-color:rgb(149, 169, 229)">방문자 수</td>
+                                <td style="padding:5px;background-color:rgb(195, 203, 226)">434 명</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" style="height:130px"><div>구글차트 삽입예정</div></td>
+                            </tr>
+                        </table>
+                         
+        
+                    </div>
+                </div>
+            </div>
 
-      <div class=cardWrap>
-        <p style="font-size:2em;"><a href="#">오늘의 신상품 ></a></p>
-        <br>
 
-        <div class="card" style="width: 18rem;">
-          <a href="#"><img src="resources/images/salad1.jpg" class="card-img-top" alt="..."></a>
-          <div class="card-body">
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-          </div>
-        </div>
+            <div class="row">
+                <div class="col-8">
+                    <div class="container box ml-0 mr-3 mb-3" style="width:97%; height:875px;">
+                        <div style="float:left;"><h5><b>주간 매출 현황</b></h5></div>
+                            <div class="mr-0" style="float:right;">
+                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-right-circle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                            <path fill-rule="evenodd" d="M7.646 11.354a.5.5 0 0 1 0-.708L10.293 8 7.646 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0z"/>
+                            <path fill-rule="evenodd" d="M4.5 8a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5z"/>
+                            </svg></div> 
+                        <br><br>
+                        <div>구글차트 삽입</div>
+                        <br>
+                        <br>
+                       <table style="border:1px solid lightgrey">
+                        <tr>
+                            <td>거래일자</td>
+                            <td>매출액</td>
+                            <td>거래건수</td>
+                        </tr>
+                        <tr>
+                            <td>2020-08-01</td>
+                            <td>100,000,000</td>
+                            <td>3268</td>
+                        </tr>
+                        <tr>
+                            <td>2020-08-02</td>
+                            <td>21,000,000</td>
+                            <td>652</td>
+                        </tr>
+                         </table>
+                    </div>
+                    
+                </div>
 
-        <div class="card" style="width: 18rem;">
-          <a href="#"><img src="resources/images/salad1.jpg" class="card-img-top" alt="..."></a>
-          <div class="card-body">
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-          </div>
-        </div>
 
-        <div class="card" style="width: 18rem;">
-          <a href="#"><img src="resources/images/salad1.jpg" class="card-img-top" alt="..."></a>
-          <div class="card-body">
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-          </div>
-        </div>
 
-        <div class="card" style="width: 18rem;">
-          <a href="#"><img src="resources/images/salad1.jpg" class="card-img-top" alt="..."></a>
-          <div class="card-body">
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-          </div>
-        </div>
-      </div>
 
-      <br><br><br><br><br>
+                <div class="col-4">
+                    <div class="row" style="position:relative; height:300px;">
+                        <div class="container box">
+                            <div style="float:left;"><h5><b>이벤트 진행 건</b></h5></div>
+                            <div class="mr-0" style="float:right;">
+                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-right-circle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                            <path fill-rule="evenodd" d="M7.646 11.354a.5.5 0 0 1 0-.708L10.293 8 7.646 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0z"/>
+                            <path fill-rule="evenodd" d="M4.5 8a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5z"/>
+                            </svg></div> 
+                        <table class="table">
+                            
+                            <tr>
+                                <td style="width:70%">
+                                    꽃 정기구독
+                                </td>
+                                <td style="width:30%;">
+                                    2020-08-01
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    우유 정기구독
+                                </td>
+                                <td>
+                                    2020-08-01
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    빵 정기구독
+                                </td>
+                                <td>
+                                    2020-08-01
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    반찬 정기구독
+                                </td>
+                                <td>
+                                    2020-08-01
+                                </td>
+                            </tr>
+                         
+                        
+                        </table>
+                    </div>
+                    </div>
+                    <div class="row" style="position:relative; height:300px;">
+                        <div class="container box">
+                            <div style="float:left;"><h5><b>공지사항</b></h5></div>
+                            <div class="mr-0" style="float:right;">
+                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-right-circle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                            <path fill-rule="evenodd" d="M7.646 11.354a.5.5 0 0 1 0-.708L10.293 8 7.646 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0z"/>
+                            <path fill-rule="evenodd" d="M4.5 8a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5z"/>
+                            </svg></div> 
+                        <table class="table">
+                            
+                            <tr>
+                                <td style="width:70%">
+                                    꽃 정기구독
+                                </td>
+                                <td style="width:30%;">
+                                    2020-08-01
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    우유 정기구독
+                                </td>
+                                <td>
+                                    2020-08-01
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    빵 정기구독
+                                </td>
+                                <td>
+                                    2020-08-01
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    반찬 정기구독
+                                </td>
+                                <td>
+                                    2020-08-01
+                                </td>
+                            </tr>
+                         
+                        </table>
+                    </div>
+                    </div>
 
-      <div class=cardWrap>
-        <p style="font-size:2em;"><a href="#">베스트 상품 ></a></p>
-        <br>
 
-        <div class="card" style="width: 18rem;">
-          <a href="#"><img src="resources/images/salad1.jpg" class="card-img-top" alt="..."></a>
-          <div class="card-body">
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-          </div>
-        </div>
 
-        <div class="card" style="width: 18rem;">
-          <a href="#"><img src="resources/images/salad1.jpg" class="card-img-top" alt="..."></a>
-          <div class="card-body">
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-          </div>
-        </div>
-
-        <div class="card" style="width: 18rem;">
-          <a href="#"><img src="resources/images/salad1.jpg" class="card-img-top" alt="..."></a>
-          <div class="card-body">
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-          </div>
-        </div>
-
-        <div class="card" style="width: 18rem;">
-          <a href="#"><img src="resources/images/salad1.jpg" class="card-img-top" alt="..."></a>
-          <div class="card-body">
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-          </div>
-        </div>
-      </div>
-
-      <br><br><br><br><br>
-
-      <div class=cardWrap>
-        <p style="font-size:2em;">지금 가장 핫한 상품</p>
-        <br>
-
-        <div class="card" style="width: 18rem;">
-          <a href="#"><img src="resources/images/salad1.jpg" class="card-img-top" alt="..."></a>
-          <div class="card-body">
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-          </div>
-        </div>
-
-        <div class="card" style="width: 18rem;">
-          <a href="#"><img src="resources/images/salad1.jpg" class="card-img-top" alt="..."></a>
-          <div class="card-body">
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-          </div>
-        </div>
-
-        <div class="card" style="width: 18rem;">
-          <a href="#"><img src="resources/images/salad1.jpg" class="card-img-top" alt="..."></a>
-          <div class="card-body">
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-          </div>
-        </div>
-
-        <div class="card" style="width: 18rem;">
-          <a href="#"><img src="resources/images/salad1.jpg" class="card-img-top" alt="..."></a>
-          <div class="card-body">
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-          </div>
-        </div>
-      </div>
-
-      <br><br><br><br><br>
-
-      <div class=cardWrap>
-        <p style="font-size:2em;">JM's 추천</p>
-        <br>
-
-        <div class="card" style="width: 18rem;">
-          <a href="#"><img src="resources/images/salad1.jpg" class="card-img-top" alt="..."></a>
-          <div class="card-body">
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-          </div>
-        </div>
-
-        <div class="card" style="width: 18rem;">
-          <a href="#"><img src="resources/images/salad1.jpg" class="card-img-top" alt="..."></a>
-          <div class="card-body">
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-          </div>
-        </div>
-
-        <div class="card" style="width: 18rem;">
-          <a href="#"><img src="resources/images/salad1.jpg" class="card-img-top" alt="..."></a>
-          <div class="card-body">
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-          </div>
-        </div>
-
-        <div class="card" style="width: 18rem;">
-          <a href="#"><img src="resources/images/salad1.jpg" class="card-img-top" alt="..."></a>
-          <div class="card-body">
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-          </div>
-        </div>
-      </div>
-
+                    <div class="row" style="position:relative; height:300px;">
+                        <div class="container box">
+                            <div style="float:left;"><h5><b>상품 제안</b></h5></div>
+                            <div class="mr-0" style="float:right;">
+                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-right-circle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                            <path fill-rule="evenodd" d="M7.646 11.354a.5.5 0 0 1 0-.708L10.293 8 7.646 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0z"/>
+                            <path fill-rule="evenodd" d="M4.5 8a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5z"/>
+                            </svg></div> 
+                        <table class="table">
+                            
+                            <tr>
+                                <td style="width:70%">
+                                    꽃 정기구독
+                                </td>
+                                <td style="width:30%;">
+                                    2020-08-01
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    우유 정기구독
+                                </td>
+                                <td>
+                                    2020-08-01
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    빵 정기구독
+                                </td>
+                                <td>
+                                    2020-08-01
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    반찬 정기구독
+                                </td>
+                                <td>
+                                    2020-08-01
+                                </td>
+                            </tr>
+                         
+                        
+                        </table>
+                    </div>
+                    </div>
+                    
+                </div>
+                </div>
+                
       <br><br><br>
       <hr>
-	</section>
+
 	
-      <!-- Footer -->
-    <footer class="page-footer font-small indigo">
-
-      <!-- Footer Links -->
-      <div class="container">
   
-      <!-- Grid row-->
-      <div class="row text-center d-flex justify-content-center pt-5 mb-3">
-  
-          <!-- Grid column -->
-          <div class="col-md-2 mb-3">
-          <h6 class="text-uppercase font-weight-bold">
-              <a href="#!">About Goose</a>
-          </h6>
-          </div>
-          <!-- Grid column -->
-  
-          <!-- Grid column -->
-          <div class="col-md-2 mb-3">
-          <h6 class="text-uppercase font-weight-bold">
-              <a href="#!">이용약관</a>
-          </h6>
-          </div>
-          <!-- Grid column -->
-  
-          <!-- Grid column -->
-          <div class="col-md-2 mb-3">
-          <h6 class="text-uppercase font-weight-bold">
-              <a href="#!">개인정보처리방침</a>
-          </h6>
-          </div>
-          <!-- Grid column -->
-  
-          <!-- Grid column -->
-          <div class="col-md-2 mb-3">
-          <h6 class="text-uppercase font-weight-bold">
-              <a href="#!">고객센터</a>
-          </h6>
-          </div>
-          <!-- Grid column -->
-  
-          <!-- Grid column -->
-          <!-- <div class="col-md-2 mb-3">
-          <h6 class="text-uppercase font-weight-bold">
-              <a href="#!">Contact</a>
-          </h6>
-          </div> -->
-          <!-- Grid column -->
-  
-      </div>
-      <!-- Grid row-->
-      <hr class="rgba-white-light" style="margin: 0 15%;">
-  
-      <!-- Grid row-->
-      <div class="row d-flex text-center justify-content-center mb-md-0 mb-4">
-  
-          <!-- Grid column -->
-          <div class="col-md-8 col-12 mt-5">
-          <p style="line-height: 1.7rem">
-            회사명 : 주식회사 Goose <br>
-            사업자등록번호 : 123-45-7890 <br>
-            주소 : 경기도 동두천시 동두천로 139 부영아파트 902동 1104호 <br>
-            연락처 : 010-1234-5678 <br>
-            개인정보관리 책임자 : 박재명 <br>
-            대표자 : 박재명(JM)
-          </p>
-          </div>
-          <!-- Grid column -->
-
-     </div>
-      <!-- Grid row-->
-      <hr class="clearfix d-md-none rgba-white-light" style="margin: 10% 15% 5%;">
-  
-      <!-- Copyright -->
-      <div class="footer-copyright text-center py-3">© 2020 Copyright : Goose, All rights reserved
-      </div>
-      <!-- Copyright -->
-  
-  </footer>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
