@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="itemListMapper">
+<resultMap type="ItemListView" id="itemResultSet">
+
+		<id property="itemNo" column="ITEM_NO"/>
+		<result property="itemName" column="ITEM_NAME"/>
+		<result property="itemMemo" column="ITEM_MEMO"/>
+		<result property="itemPrice" column="ITEM_PRICE"/>
+		<result property="itemDiscount" column="ITEM_DISCOUNT"/>
+		<result property="itemRate" column="ITEM_RATE"/>
+		<result property="reviewCount" column="REVIEW_COUNT"/>
+		<result property="itemChoice" column="ITEM_CHOICE"/>
+	</resultMap>
+	
+	
+	<select id="getItemCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM ITEM_LIST_VIEW ILV
+		JOIN ITEM I ON(ILV.ITEM_NO = I.ITEM_NO)
+		WHERE CATEGORY_NO LIKE 'F%'
+		AND ITEM_DP_STATUS = 'Y'
+	</select>
+	
+	<select id="getItemList" resultMap="itemResultSet">
+		SELECT *
+		FROM ITEM_LIST_VIEW ILV
+		JOIN ITEM I ON(ILV.ITEM_NO = I.ITEM_NO)
+		WHERE CATEGORY_NO LIKE 'F%'
+		AND ITEM_DP_STATUS = 'Y'
+		ORDER BY ILV.ITEM_NO DESC
+	</select>
+</mapper>

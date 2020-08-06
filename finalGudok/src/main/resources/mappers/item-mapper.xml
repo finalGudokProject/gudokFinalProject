@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="itemMapper">
-	<resultMap type="Item" id="itemResultSet">
+	<!-- <resultMap type="Item" id="itemResultSet">
 		<id property="itemNo" column="ITEM_NO"/>
 		<result property="itemName" column="ITEM_NAME"/>
 		<result property="itemPrice" column="ITEM_PRICE"/>
@@ -32,5 +32,5 @@
 		    FROM ITEM
 		    WHERE CATEGORY_NO LIKE 'F%')
 		ORDER BY ITEM_NO DESC
-	</select>
+	</select> -->
 </mapper>

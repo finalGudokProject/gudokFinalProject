@@ -17,13 +17,13 @@ public class ItemDao {
 	private SqlSessionTemplate sqlSessionTemplate;
 
 	public int getItemCount() {
-		return sqlSessionTemplate.selectOne("itemMapper.getItemCount");
+		return sqlSessionTemplate.selectOne("itemListMapper.getItemCount");
 	}
 
 	public ArrayList<Item> selectList(PageInfo pi) {
 		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
-		return (ArrayList)sqlSessionTemplate.selectList("itemMapper.getItemList", null, rowBounds);
+		return (ArrayList)sqlSessionTemplate.selectList("itemListMapper.getItemList", null, rowBounds);
 	}
 	
 }

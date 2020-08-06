@@ -32,7 +32,7 @@ public class ItemController {
 		
 		PageInfo pi = getPageInfo(currentPage, listCount);
 		ArrayList<Item> list = iService.selectList(pi);
-//		System.out.println("ArrayList : " + list.size());
+		System.out.println("ArrayList : " + list);
 		
 		if(list != null) {
 			mv.addObject("list", list);
