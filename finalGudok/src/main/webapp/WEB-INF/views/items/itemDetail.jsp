@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -40,6 +41,17 @@ div.reviewDC{
 	font-size:25px;
 }
 
+.starRv{
+  background: url('http://miuu227.godohosting.com/images/icon/ico_review.png') no-repeat right 0;
+  background-size: auto 100%;
+  width: 30px;
+  height: 30px;
+  display: inline-block;
+  text-indent: -9999px;
+  cursor: pointer;
+}
+.starRv.on{background-position:0 0;}
+
 .starP{
   background: url('http://miuu227.godohosting.com/images/icon/ico_review.png') no-repeat right 0;
   background-size: auto 100%;
@@ -50,6 +62,8 @@ div.reviewDC{
   cursor: pointer;
 }
 .starP.on{background-position:0 0;}
+
+
 
 .sign{
 	text-align: center;
@@ -212,21 +226,29 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 	margin:2% 0 6% 0;
 }
 
+
+	.starRev{
+		line-height:35px;
+	}
+	.starRev div{
+		vertical-align:bottom;
+	}
 </style>
 </head>
 <body>
 	<jsp:include page="../common/menubar.jsp"/>
+	<fmt:formatNumber var="itemPrice" value="${ilv.itemPrice}" type="number"/>
 	<div class="container" style="margin-top:3%;">
 		<div class="row">
 			<div class="col-md-6" style="padding:0 2% 0 2%;"><img src="${contextPath }/resources/images/breadLogo.jpg" id="logoImg"></div>
 			<div class="col-md-6" style="margin-bottom:2%;">
 					<div style="margin-top:3%;">카테고리명</div>
 					<div class="row">
-					<div class="col-md-8" style="padding:0px 15px;margin:0px;font-size:35px;vertical-align:middle;"><b>상품명 상품명 상품명</b></div>
+					<div class="col-md-8" style="padding:0px 15px;margin:0px;font-size:35px;vertical-align:middle;"><b>${ilv.itemName }</b></div>
 					<div class="col-md-4" style="padding-right:4%;margin:0px;text-align:right;font-size:35px;">
 						<span id ="heart" title="찜하기"><i class="fa fa-heart-o" aria-hidden="true" ></i> </span>
 					</div>
-					<div class="col-md-6" style="padding:0 15px;font-size:20px;">상품약식설명</div>
+					<div class="col-md-6" style="padding:0 15px;font-size:20px;">${ilv.itemMemo }</div>
 					<div class="col-md-6" style="padding-right:4%;text-align:right;">
 						<span style="text-align:right;" id="whatSpan" data-toggle="modal" data-target="#intro" title="상품 문의"><img id="whatImg"src="${contextPath }/resources/images/what.png" style="width:35px;height:35px;border:2px solid black;border-radius:5px;display:inline-block;vertical-align:middle;"></span>
 					</div>
@@ -235,13 +257,55 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 					
 				</div>
 				<div class="starRev">
-				  <span class="starR on">별1</span>
-				  <span class="starR">별2</span>
-				  <span class="starR">별3</span>
-				  <span class="starR">별4</span>
-				  <span class="starR">별5</span>
-				</div>
-					<div style="padding:5% 0 5% 0;margin-bottom:3%;font-size:30px;border-bottom:1px dotted lightgray;"><b>10,000원</b></div>
+							<c:choose>
+								<c:when test="${i.itemRate < 1}">
+									<span class="starRv">1</span>
+									<span class="starRv">2</span>
+									<span class="starRv">3</span>
+									<span class="starRv">4</span>
+									<span class="starRv">5</span>
+								</c:when>
+								<c:when test="${i.itemRate < 2 }">
+									<span class="starRv on">1</span>
+									<span class="starRv">2</span>
+									<span class="starRv">3</span>
+									<span class="starRv">4</span>
+									<span class="starRv">5</span>
+								</c:when>
+								
+								<c:when test="${i.itemRate < 3 }">
+									<span class="starRv on">1</span>
+									<span class="starRv on">2</span>
+									<span class="starRv">3</span>
+									<span class="starRv">4</span>
+									<span class="starRv">5</span>
+								</c:when>
+								
+								<c:when test="${i.itemRate < 4 }">
+									<span class="starRv on">1</span>
+									<span class="starRv on">2</span>
+									<span class="starRv on">3</span>
+									<span class="starRv">4</span>
+									<span class="starRv">5</span>
+								</c:when>
+								
+								<c:when test="${i.itemRate < 5 }">
+									<span class="starRv on">1</span>
+									<span class="starRv on">2</span>
+									<span class="starRv on">3</span>
+									<span class="starRv on">4</span>
+									<span class="starRv">5</span>
+								</c:when>
+								<c:otherwise>
+									<span class="starRv on">1</span>
+									<span class="starRv on">2</span>
+									<span class="starRv on">3</span>
+									<span class="starRv on">4</span>
+									<span class="starRv on">5</span>
+								</c:otherwise>
+							</c:choose>
+						</div>
+					<div style="padding:5% 0 5% 0;margin-bottom:3%;font-size:30px;border-bottom:1px dotted lightgray;"><b>${itemPrice }원</b></div>
 					<div class="amountDC">
 						<table style="vertical-align:middle;">
 							<tr class="countTr">
@@ -251,7 +315,7 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 							</tr>
 						</table>
 						<br>
-						<div class="amountPriceDiv"><div style="margin-bottom:2%;padding-top:2%;"><b>변동하는 가격</b></div>
+						<div class="amountPriceDiv"><div style="margin-bottom:2%;padding-top:2%;font-weight:bold;" id="priceId">${itemPrice }원</div>
 						<div style="padding:1% 0 1% 0;"><input type="button" value="장바구니 담기" id="basketBtn" style="margin:0 5% 0 5%;"><input type="button" value="결제하기" id="paymentBtn"></div>
 						</div>
 						<div style="margin-top:3%;border-top:1px dotted lightgray;"></div>
@@ -311,11 +375,10 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 			
 			<!-- 모달 시작 -->
 			<div id="myModal" class="modal">
-
 				<div class="modal-content">
 					<div class='modal-header'>
 						<div class="row">
-							<div style="font-size:40px;">상품명 상품문의</div>
+							<div style="font-size:40px;">${ilv.itemName} 상품문의</div>
 							<div style="font-size:15px;padding:2%;color:gray;">상품에 대한 자세한 문의는 고객 센터를 이용해 주세요.</div>
 						</div>
 						<div><button type='button' class="close" data-dismiss='modal'
@@ -387,48 +450,128 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 		<div class="row" style="border-top:1px solid lightgray;border-bottom:1px solid lightgray;" >
 			<div class="col-md-6" class="reviewRC">
 				<p class="reviewRP"><b>긍정 상품평</b></p>
-				<div><span style="font-size:20px;">OOO님의 상품평</span>
-					<div class="starPp">
-					  <span class="starP on">별1</span>
-					  <span class="starP on">별2</span>
-					  <span class="starP on">별3</span>
-					  <span class="starP on">별4</span>
-					  <span class="starP on">별5</span>
-					  <span>등록일 : 2020/DB/DB</span>
-					</div>
-					<div class="reviewTDiv">
-						<div class="reviewText">내용 입력내용 입력내용 입력내용 입력내용 입력내용 입력 가나다라마바사 아자차카타파하</div>
-					</div>
-				</div>
+				<c:forEach var="r" items="${review }">
+					<c:if test="${r.reviewRate >=4 }">
+						<div><span style="font-size:20px;">${r.memberId }님의 상품평</span>
+							<div class="starRev">
+								<c:choose>
+									<c:when test="${r.reviewRate < 1}">
+										<span class="starRv">1</span>
+										<span class="starRv">2</span>
+										<span class="starRv">3</span>
+										<span class="starRv">4</span>
+										<span class="starRv">5</span>
+									</c:when>
+									<c:when test="${r.reviewRate  < 2 }">
+										<span class="starRv on">1</span>
+										<span class="starRv">2</span>
+										<span class="starRv">3</span>
+										<span class="starRv">4</span>
+										<span class="starRv">5</span>
+									</c:when>
+									
+									<c:when test="${r.reviewRate  < 3 }">
+										<span class="starRv on">1</span>
+										<span class="starRv on">2</span>
+										<span class="starRv">3</span>
+										<span class="starRv">4</span>
+										<span class="starRv">5</span>
+									</c:when>
+									
+									<c:when test="${r.reviewRate  < 4 }">
+										<span class="starRv on">1</span>
+										<span class="starRv on">2</span>
+										<span class="starRv on">3</span>
+										<span class="starRv">4</span>
+										<span class="starRv">5</span>
+									</c:when>
+									
+									<c:when test="${r.reviewRate  < 5 }">
+										<span class="starRv on">1</span>
+										<span class="starRv on">2</span>
+										<span class="starRv on">3</span>
+										<span class="starRv on">4</span>
+										<span class="starRv">5</span>
+									</c:when>
+									<c:otherwise>
+										<span class="starRv on">1</span>
+										<span class="starRv on">2</span>
+										<span class="starRv on">3</span>
+										<span class="starRv on">4</span>
+										<span class="starRv on">5</span>
+									</c:otherwise>
+								</c:choose>
+								<div style="display:inline-block;color:gray;">등록일 : ${r.reviewDate }</div>
+							</div>
+							<div class="reviewTDiv">
+								<div class="reviewText">${r.reviewContent }</div>
+							</div>
+						</div>
+					</c:if>
+				</c:forEach>
 			</div>
 			<div class="col-md-6" class="reviewRC" style="border-left:1px dashed lightgray;">
 				<p class="reviewRP"><b>부정 상품평</b></p>
-				<div><span style="font-size:20px;">OOO님의 상품평</span>
-					<div class="starPp">
-					  <span class="starP on">별1</span>
-					  <span class="starP">별2</span>
-					  <span class="starP">별3</span>
-					  <span class="starP">별4</span>
-					  <span class="starP">별5</span>
-					  <span>등록일 : 2020/DB/DB</span>
-					</div>
-					<div class="reviewTDiv">
-						<div class="reviewText">내용 입력내용 입력내용 입력내용 입력내용 입력내용 입력 가나다라마바사 아자차카타파하</div>
-					</div>
-				</div>
-				<div><span style="font-size:20px;">OOO님의 상품평</span>
-					<div class="starPp">
-					  <span class="starP on">1</span>
-					  <span class="starP">2</span>
-					  <span class="starP">3</span>
-					  <span class="starP">4</span>
-					  <span class="starP">5</span>
-					  <span>등록일 : 2020/DB/DB</span>
-					</div>
-					<div class="reviewTDiv">
-						<div class="reviewText">내용 입력내용 입력내용 입력내용 입력내용 입력내용 입력 가나다라마바사 아자차카타파하</div>
-					</div>
-				</div>
+				
+				<c:forEach var="r" items="${review }">
+					<c:if test="${r.reviewRate < 3 }">
+						<div><span style="font-size:20px;">${r.memberId }님의 상품평</span>
+							<div class="starRev">
+								<c:choose>
+									<c:when test="${r.reviewRate < 1}">
+										<span class="starRv">1</span>
+										<span class="starRv">2</span>
+										<span class="starRv">3</span>
+										<span class="starRv">4</span>
+										<span class="starRv">5</span>
+									</c:when>
+									<c:when test="${r.reviewRate  < 2 }">
+										<span class="starRv on">1</span>
+										<span class="starRv">2</span>
+										<span class="starRv">3</span>
+										<span class="starRv">4</span>
+										<span class="starRv">5</span>
+									</c:when>
+									
+									<c:when test="${r.reviewRate  < 3 }">
+										<span class="starRv on">1</span>
+										<span class="starRv on">2</span>
+										<span class="starRv">3</span>
+										<span class="starRv">4</span>
+										<span class="starRv">5</span>
+									</c:when>
+									
+									<c:when test="${r.reviewRate  < 4 }">
+										<span class="starRv on">1</span>
+										<span class="starRv on">2</span>
+										<span class="starRv on">3</span>
+										<span class="starRv">4</span>
+										<span class="starRv">5</span>
+									</c:when>
+									
+									<c:when test="${r.reviewRate  < 5 }">
+										<span class="starRv on">1</span>
+										<span class="starRv on">2</span>
+										<span class="starRv on">3</span>
+										<span class="starRv on">4</span>
+										<span class="starRv">5</span>
+									</c:when>
+									<c:otherwise>
+										<span class="starRv on">1</span>
+										<span class="starRv on">2</span>
+										<span class="starRv on">3</span>
+										<span class="starRv on">4</span>
+										<span class="starRv on">5</span>
+									</c:otherwise>
+								</c:choose>
+								<div style="display:inline-block;color:gray;">등록일 : ${r.reviewDate }</div>
+							</div>
+							<div class="reviewTDiv">
+								<div class="reviewText">${r.reviewContent }</div>
+							</div>
+						</div>
+					</c:if>
+				</c:forEach>
 			</div>
 		</div>
 		<!-- 리뷰 끝 -->
@@ -461,12 +604,23 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 	
 	<!-- 수량 버튼 -->
 		<script>
+			function addComma(num) {
+			 	var regexp = /\B(?=(\d{3})+(?!\d))/g;
+				return num.toString().replace(regexp, ',');
+			}
 			$(function(){
+				
 				var amount = $(".amountT").val();
+				var total = ${ilv.itemPrice };
 				$("#signP").click(function(){
 					amount = Number(amount) + 1;
 					/* console.log(amount); */
 					$(".amountT").val(amount);
+					total = total + ${ilv.itemPrice};
+					console.log(total);
+					$("#priceId").text("");
+					$("#priceId").text(addComma(total)+"원");
+					
 					if(amount > 1){
 						$("#signM").attr("src","${contextPath }/resources/images/minus.png").css("transitionDuration","1s");
 					}
@@ -476,6 +630,10 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 						amount = Number(amount) - 1;
 						$(".amountT").val(amount);
 						/* console.log(amount); */
+						total = total - ${ilv.itemPrice};
+						console.log(total);
+						$("#priceId").text("");
+						$("#priceId").text(addComma(total)+"원");
 						if(amount < 2){
 							$("#signM").attr("src","${contextPath }/resources/images/XSIGN.png").css("transitionDuration","1s");
 						}
@@ -576,7 +734,7 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 	<!-- 상품평 별버튼 -->
 	<script>
 		$(function(){
-			$('.starRev span').click(function(){
+			$('.starRev .starR').click(function(){
 				$(this).parent().children('span').removeClass('on');
 				$(this).addClass('on').prevAll('span').addClass('on');
 				/* console.log($(this).text()); */
@@ -631,6 +789,20 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 						  $("#heart").html('<i class="fa fa-heart-o" aria-hidden="true"></i>');
 					      $("#heart").removeClass("liked");
 					  }else{
+						  var itemNo = ${ilv.itemNo};
+						  $.ajax({
+							  url : "choice.do",
+							  data : {itemNo:itemNo},
+							  type : "POST",
+							  success:function(data){
+								  
+							  },
+							  error:function(request, status, errorData){
+				                	alert("error code: " + request.status + "\n"
+				                	+"message: " + request.responseText
+				                	+"error: " + errorData);
+				               }
+						  })
 						  $("#heart").html('<i class="fa fa-heart" aria-hidden="true"></i>');
 					      $("#heart").addClass("liked");
 					      swal("찜하기","찜목록에 추가되었습니다.","success");

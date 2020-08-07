@@ -209,6 +209,8 @@
 	.page-link, .page-item{
 		font-size:30px;
 	}
+	
+
 </style>
 </head>
 <body>
@@ -259,11 +261,14 @@
 	
 	
 	
-	
-		<c:forEach var="i" items="${list }">
+		<c:forEach var="i" items="${list }" varStatus="vs">
+		<c:url var="idetail" value="idetail.do">
+			<c:param name="itemNo" value="${i.itemNo }"/>
+			<c:param name="page" value="${pi.currentPage }"/>
+		</c:url>
 		<fmt:formatNumber var="discountPrice" value="${(i.itemPrice - i.itemPrice*(i.itemDiscount/100))}" type="number"/>
 		<fmt:formatNumber var="itemPrice" value="${i.itemPrice}" type="number"/>
-			<div class="col-4">
+			<div class="col-4" onclick="location.href='${idetail}'">
 				<div class="card">
 					<c:if test="${i.itemDiscount != 0}" >
 					<div class="cardHeader">
@@ -351,7 +356,8 @@
 						<div class="row">
 							<div class="col-4" id="btnBlank"></div>
 							<div class="col-4" style="padding:0px;">
-								<button class="btn btn-primary" style="width:100%;height:100%;">미리보기</button>
+								<button class="btn btn-primary" style="width:100%;height:100%;" id="preview${vs.index}">상품평보기</button>
+								<input type="hidden" value="${i.itemNo }">
 							</div>
 							<div class="col-4" id="btnBlank"></div>
 						</div>
@@ -361,7 +367,20 @@
 		</c:forEach>
 		</div>
 		
+		<c:forEach var="i" items="${list }" varStatus="vs">
+		<script>
+			$(function(){
+				$("#preview${vs.index}").on("click", function(){
+					var preview = $(this).attr("id");
+					console.log(preview);
+					var review = $(this).next().val();
+					console.log(review);
+					
+				})
+			})
 		
+		</script>
+		</c:forEach>
 		
 			<div class="col-12">
 			
@@ -411,44 +430,8 @@
 		</div>
 	</div>
 </div>
-		
 
-
-
-
-
-			<!-- 모달 시작 -->
-			<div id="myModal" class="modal">
-
-				<div class="modal-content">
-					<div class='modal-header'>
-						<div class="row">
-							<div style="font-size:40px;">상품명 상품문의</div>
-							<div style="font-size:15px;padding:2%;">상품에 대한 자세한 문의는 고객 센터를 이용해 주세요.</div>
-						</div>
-						<div><button type='button' class="close" data-dismiss='modal'
-							aria-hidden="='true'" style="font-size:50px;">&times;</button></div>
-					</div>
-					
-					<div class='modal-body'>
-						<form method="post" id="reasonForm">
-							
-							<textarea placeholder="문의할 내용을 입력해 주세요." style="width:100%;" rows="8" id="ansText"></textarea>
-							
-							
-							<div class='modal-footer'>
-								<input type='button' class="modalAnsBtn" data-dismiss='modal'
-									value="문의하기">
-								<div id='area2' class='area'></div>
-							</div>
-						</form>
-					</div>
-				</div>
-			</div>
-			<!-- 모달 끝 -->
-			
-
-	<script>
+	<!-- <script>
 		$(function(){
 			$(".btn-primary").on("click", function(){
 				swal("","확인","warning").then((value)=>{
@@ -456,7 +439,7 @@
 				});
 			})
 		})
-	</script>
+	</script> -->
 
 	
 	<!-- 사이드 메뉴바 -->
@@ -469,31 +452,18 @@
 		})
 	})
 	</script>
-	
 	<script>
 		$(function(){
 			$(".cardHeader, .cardBody, #btnBlank, .cardFooter").click(function(){
-				location.href="itemDetail.do";
+				var itemNo = $(this).find("input[type=hidden]").val();
+				console.log(itemNo);
+				location.href="itemDetail.do?itemNo+" + ${i.itemNo} + "&page="+${pi.currentPage};
 			}).mouseenter(function(){
 				$(this).css("cursor","pointer");
 			})
 		})
 	</script>
 	
-	<!-- 모달 실행(모달 폼보다 밑에 두기) -->
-		<!-- <script>
-			var modal = document.getElementById("myModal");
-			var btn = document.getElementById("whatSpan");
-			var span = document.getElementsByClassName("close")[0];
-			btn.onclick = function() {
-				modal.style.display = "block";
-			}
-			span.onclick = function() {
-				modal.style.display = "none";
-			}
-			
-		</script> -->
-		<!-- 모달 실행 끝 -->
 <jsp:include page="../common/footer.jsp"/>
 </body>
 </html>

@@ -6,13 +6,15 @@
 	</settings>
 	
 	<typeAliases>
-		<!-- <typeAlias type="com.kh.finalGudok.item.model.vo.Item" alias="Item"/> -->
+		<typeAlias type="com.kh.finalGudok.item.model.vo.Item" alias="Item"/>
 		<typeAlias type="com.kh.finalGudok.item.model.vo.ItemListView" alias="ItemListView"/>
+		<typeAlias type="com.kh.finalGudok.item.model.vo.Review" alias="Review"/>
 	</typeAliases>
 	
 	<mappers>
-		<!-- <mapper resource="/mappers/item-mapper.xml"/> -->
+		<mapper resource="/mappers/item-mapper.xml"/>
 		<mapper resource="/mappers/itemList-mapper.xml"/>
+		<mapper resource="/mappers/review-mapper.xml"/>
 	</mappers>
 
 </configuration>

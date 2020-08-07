@@ -13,7 +13,9 @@ import org.springframework.web.servlet.ModelAndView;
 import com.kh.finalGudok.item.model.exception.ItemException;
 import com.kh.finalGudok.item.model.service.ItemService;
 import com.kh.finalGudok.item.model.vo.Item;
+import com.kh.finalGudok.item.model.vo.ItemListView;
 import com.kh.finalGudok.item.model.vo.PageInfo;
+import com.kh.finalGudok.item.model.vo.Review;
 
 @Controller
 public class ItemController {
@@ -32,7 +34,7 @@ public class ItemController {
 		
 		PageInfo pi = getPageInfo(currentPage, listCount);
 		ArrayList<Item> list = iService.selectList(pi);
-		System.out.println("ArrayList : " + list);
+//		System.out.println("ArrayList : " + list);
 		
 		if(list != null) {
 			mv.addObject("list", list);
@@ -44,9 +46,27 @@ public class ItemController {
 		return mv;
 	}
 	
-	@RequestMapping("itemDetail.do")
-	public String itemDetailPage() {
-		return "items/itemDetail";
+	@RequestMapping("idetail.do")
+	public ModelAndView itemDetailPage(ModelAndView mv, Integer itemNo, @RequestParam("page")Integer page) {
+//		System.out.println("itemNo : " + itemNo + ", page : " + page);
+		int currentPage = page;
+		int result = iService.detailCount(itemNo);
+//		System.out.println("증가함? : " + result);
+		if(result > 0) {
+			ItemListView ilv = iService.selectItem(itemNo);
+			if(ilv != null) {
+				mv.addObject("ilv", ilv).addObject("currentPage", currentPage).setViewName("items/itemDetail");
+			}else {
+				throw new ItemException("조회 실패");
+			}
+			ArrayList<Review> review = iService.selectReview(itemNo);
+			System.out.println("review 확인 : " + review);
+			mv.addObject("review",review).setViewName("items/itemDetail");
+			
+		}else {
+			throw new ItemException("조회수 증가 실패");
+		}
+		return mv;
 	}
 	
 	@RequestMapping("basket.do")
@@ -64,5 +84,28 @@ public class ItemController {
 		return "items/itemReview";
 	}
 	
+	
+	
+	
+	
+	@RequestMapping(value="login.do", method=RequestMethod.POST)
+	public String memberLogin(Member m, HttpSession session, Model model) {
+		
+//		System.out.println("id : " + m.getId());
+//		System.out.println("pwd : " + m.getPwd());
+		
+		Member loginUser = mService.loginMember(m);
+//		System.out.println(loginUser);
+		// session과 model을 매개변수에 추가하여 작성하자
+		if(loginUser != null) {		// 로그인 할 멤버 객체가 조회 되었을 시
+			session.setAttribute("loginUser", loginUser);
+			return "home";
+		}else {						// 로그인 실패 시
+			model.addAttribute("msg","로그인 실패");
+			return "common/errorPage";
+		}
+	}
+	
+
 	
 }
