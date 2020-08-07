@@ -98,9 +98,22 @@ body {
         <li>
           <a href="#">회원가입</a>
         </li>
+        <c:if test="${empty loginUser}">
         <li>
-          <a href="login.do">로그인</a>
+        <form action="login.do" method="post">
+        <input type="text" name="memberId">
+        <input type="password" name="memberPwd">
+          <button id="login">로그인</button>
+        </form>
         </li>
+        </c:if>
+        
+        <c:if test="${!empty loginUser}">
+        <li>
+          <button id="login">${loginUser.memberId }</button>
+        </li>
+        </c:if>
+        
         <li>
           <a href="#">고객센터</a>
         </li>

@@ -88,23 +88,7 @@ public class ItemController {
 	
 	
 	
-	@RequestMapping(value="login.do", method=RequestMethod.POST)
-	public String memberLogin(Member m, HttpSession session, Model model) {
-		
-//		System.out.println("id : " + m.getId());
-//		System.out.println("pwd : " + m.getPwd());
-		
-		Member loginUser = mService.loginMember(m);
-//		System.out.println(loginUser);
-		// session과 model을 매개변수에 추가하여 작성하자
-		if(loginUser != null) {		// 로그인 할 멤버 객체가 조회 되었을 시
-			session.setAttribute("loginUser", loginUser);
-			return "home";
-		}else {						// 로그인 실패 시
-			model.addAttribute("msg","로그인 실패");
-			return "common/errorPage";
-		}
-	}
+
 	
 
 	
