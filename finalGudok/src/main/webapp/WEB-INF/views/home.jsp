@@ -42,7 +42,8 @@
   	<header>
     <jsp:include page="common/menubar.jsp"/>
     </header>
-
+	
+	<a href="mypage/memberInfoView.jsp">클릭</a>
 	<section>
       <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner">
