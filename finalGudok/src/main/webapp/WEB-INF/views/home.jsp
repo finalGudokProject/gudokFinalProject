@@ -39,9 +39,8 @@
   </head>
   <body>
   
-  	<header>
     <jsp:include page="common/menubar.jsp"/>
-    </header>
+ 
 
 	<section>
       <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
