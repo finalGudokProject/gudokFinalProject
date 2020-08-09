@@ -19,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.kh.finalGudok.item.model.exception.ItemException;
 import com.kh.finalGudok.item.model.service.ItemService;
 import com.kh.finalGudok.item.model.vo.Board;
+import com.kh.finalGudok.item.model.vo.Cart;
 import com.kh.finalGudok.item.model.vo.Heart;
 import com.kh.finalGudok.item.model.vo.Item;
 import com.kh.finalGudok.item.model.vo.ItemListView;
@@ -141,10 +142,7 @@ public class ItemController {
 		return mv;
 	}
 	
-	@RequestMapping("basket.do")
-	public String BasketPage() {
-		return "order/basket";
-	}
+	
 
 	@RequestMapping("itemReview.do")
 	public ModelAndView reviewPage(ModelAndView mv, int itemNo) {
@@ -152,6 +150,8 @@ public class ItemController {
 		mv.addObject("review",review).setViewName("items/itemReview");
 		return mv;
 	}
+	
+	
 	
 	@RequestMapping("choice.do")
 	@ResponseBody
@@ -175,6 +175,22 @@ public class ItemController {
 		}else {
 			throw new ItemException("찜 삭제 실패");
 		}
+	}
+	
+	@RequestMapping("basket.do")
+	@ResponseBody
+	public String insertCart(HttpServletRequest request, Cart c) {
+		int result = iService.insertCart(c);
+		if(result > 0) {
+			return "success";
+		}else {
+			throw new ItemException("추가 실패");
+		}
+	}
+	
+	@RequestMapping("basketPage.do")
+	public String basketPage() {
+		return "order/basket";
 	}
 	
 	@RequestMapping("inquire.do")

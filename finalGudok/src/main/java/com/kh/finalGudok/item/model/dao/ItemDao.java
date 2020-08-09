@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.finalGudok.item.model.vo.Board;
+import com.kh.finalGudok.item.model.vo.Cart;
 import com.kh.finalGudok.item.model.vo.Heart;
 import com.kh.finalGudok.item.model.vo.Item;
 import com.kh.finalGudok.item.model.vo.ItemListView;
@@ -92,6 +93,10 @@ public class ItemDao {
 		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		return (ArrayList)sqlSessionTemplate.selectList("itemListMapper.selectNewList", null, rowBounds);
+	}
+
+	public int insertCart(Cart c) {
+		return sqlSessionTemplate.insert("cartMapper.insertCart",c);
 	}
 
 

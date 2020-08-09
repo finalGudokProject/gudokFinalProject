@@ -3,6 +3,7 @@ package com.kh.finalGudok.item.model.service;
 import java.util.ArrayList;
 
 import com.kh.finalGudok.item.model.vo.Board;
+import com.kh.finalGudok.item.model.vo.Cart;
 import com.kh.finalGudok.item.model.vo.Heart;
 import com.kh.finalGudok.item.model.vo.Item;
 import com.kh.finalGudok.item.model.vo.ItemListView;
@@ -44,6 +45,8 @@ public interface ItemService {
 	int getNewCount();
 
 	ArrayList<Item> selectNewList(PageInfo pi);
+
+	int insertCart(Cart c);
 
 
 

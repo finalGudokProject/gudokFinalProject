@@ -317,17 +317,21 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 						<table style="vertical-align:middle;">
 							<tr class="countTr">
 								<td class="sign"><img src="${contextPath }/resources/images/XSIGN.png" class="signImg" id="signM"></td>
-								<td><input type="text" readonly class="amountT" value="1"></td>
+								<td><input type="text" readonly class="amountT" value="1" name="cartCount"></td>
 								<td class="sign"><img src="${contextPath }/resources/images/plus.png" class="signImg" id="signP"></td>
 							</tr>
 						</table>
 						<br>
 						<div class="amountPriceDiv"><div style="margin-bottom:2%;padding-top:2%;font-weight:bold;" id="priceId">${itemPrice }원</div>
+						<input type="hidden" value="${ilv.itemNo}" name="${ilv.itemNo}">
+						<input type="hidden" value="${loginUser.memberNo}" name="${loginUser.memberNo}">
+						<input type="hidden" value="${loginUser.memberId}" name="${loginUser.memberId}">
+						<input type="hidden" value="${loginUser.email}" name="${loginUser.email}">
 						<div style="padding:1% 0 1% 0;"><input type="button" value="장바구니 담기" id="basketBtn" style="margin:0 5% 0 5%;"><input type="button" value="결제하기" id="paymentBtn"></div>
 						</div>
 						<div style="margin-top:3%;border-top:1px dotted lightgray;"></div>
 						<div class="cycleListClass" style="margin-top:3%;padding:2%;background:#F8F9FA;">
-							<input type="text" id="cycleText" style="display:none;" name="inputCycle">
+							<input type="text" id="cycleText" style="display:none;" name="cartSubs">
 							<table class="cycleTable">
 								<tr>
 									<td style="width:25%;"><span class="cycleSpan" id="1cycle">1주일</span></td>
@@ -820,6 +824,10 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 		
 		<script>
 			$(function(){
+				var itemNo = "${ilv.itemNo}";
+				var memberNo = "${loginUser.memberNo}";
+				var memberId = "${loginUser.memberId}";
+				var email = "${loginUser.email}";
 				$("#paymentBtn").click(function(){
 					var cycle = $("#cycleText").val();
 					var amount = $(".amountT").val();
@@ -843,28 +851,43 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 					}
 				})
 				$("#basketBtn").click(function(){
+					var cartSubs = $("#cycleText").val();
+					var cartCount = $(".amountT").val();
+					console.log(itemNo + ", " + memberNo + ", " + memberId + ", " + email + ", " + cartSubs + ", " + cartCount);
 					if($("#cycleText").val() == ""){
 						swal("","구독 주기를 선택해 주세요.","error");
 					}else{
-						
-
-						swal("","장바구니에 추가되었습니다.","success").then((result)=>{
-						if(result){
-							swal({
-								text : "장바구니로 이동하시겠습니까?",
-								icon : "warning",
-								buttons : ["예", "아니오"],
-								closeOnEsc: false,
-								dangerMode : true,
-								}).then((willDelete)=>{
-								if(willDelete){
-									
-								}else{
-									location.href="basket.do";
+						$.ajax({
+							  url : "basket.do",
+							  data : {itemNo:itemNo, memberNo:memberNo, memberId:memberId, email:email, cartSubs:cartSubs, cartCount:cartCount},
+							  type : "POST",
+							  success:function(data){
+								if(data == "success"){
+									swal("","장바구니에 추가되었습니다.","success").then((result)=>{
+										if(result){
+											swal({
+												text : "장바구니로 이동하시겠습니까?",
+												icon : "warning",
+												buttons : ["예", "아니오"],
+												closeOnEsc: false,
+												dangerMode : true,
+												}).then((willDelete)=>{
+												if(willDelete){
+													
+												}else{
+													location.href="basketPage.do";
+												}
+											})
+										}	
+										})
 								}
-							})
-						}	
-						})
+							},
+							  error:function(request, status, errorData){
+				                	alert("error code: " + request.status + "\n"
+				                	+"message: " + request.responseText
+				                	+"error: " + errorData);
+				               }
+						  })
 					}
 				})
 			})

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.finalGudok.item.model.dao.ItemDao;
 import com.kh.finalGudok.item.model.vo.Board;
+import com.kh.finalGudok.item.model.vo.Cart;
 import com.kh.finalGudok.item.model.vo.Heart;
 import com.kh.finalGudok.item.model.vo.Item;
 import com.kh.finalGudok.item.model.vo.ItemListView;
@@ -98,6 +99,11 @@ public class ItemServiceImpl implements ItemService {
 	@Override
 	public ArrayList<Item> selectNewList(PageInfo pi) {
 		return iDao.selectNewList(pi);
+	}
+
+	@Override
+	public int insertCart(Cart c) {
+		return iDao.insertCart(c);
 	}
 
 
