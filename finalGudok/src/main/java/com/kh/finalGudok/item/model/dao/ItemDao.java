@@ -85,11 +85,13 @@ public class ItemDao {
 	}
 
 	public int getNewCount() {
-		return sqlSessionTemplate.selectOne("itemMapper.newCount");
+		return sqlSessionTemplate.selectOne("itemListMapper.newCount");
 	}
 
 	public ArrayList<Item> selectNewList(PageInfo pi) {
-		return (ArrayList)sqlSessionTemplate.selectList("itemMapper.selectNewList",pi);
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSessionTemplate.selectList("itemListMapper.selectNewList", null, rowBounds);
 	}
 
 

@@ -57,6 +57,19 @@
 		WHERE ILV.ITEM_NO=#{itemNo} AND ITEM_DP_STATUS='Y'
 	</select>
 	
+	<select id="newCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM ITEM_LIST_VIEW ILV
+		LEFT JOIN ITEM I ON(ILV.ITEM_NO = I.ITEM_NO)
+		WHERE ITEM_DP_STATUS='Y' AND ITEM_DATE BETWEEN SYSDATE-30 AND SYSDATE
+	</select>
+	
+	<select id="selectNewList" resultMap="itemListResultSet">
+		SELECT *
+		FROM ITEM_LIST_VIEW ILV
+		LEFT JOIN ITEM I ON(ILV.ITEM_NO = I.ITEM_NO)
+		WHERE ITEM_DP_STATUS='Y' AND ITEM_DATE BETWEEN SYSDATE-30 AND SYSDATE
+	</select>
 	
 	
 </mapper>

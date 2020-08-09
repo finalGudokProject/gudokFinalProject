@@ -41,7 +41,8 @@ public class ItemController {
 		System.out.println("newListCount : " + listCount);
 		PageInfo pi = getPageInfo(currentPage, listCount);
 		ArrayList<Item> list = iService.selectNewList(pi);
-//		mv.addObject("list",list).addObject("pi", pi).setViewName("items/itemNew");
+		System.out.println("itemNew list : " + list);
+		mv.addObject("list",list).addObject("pi", pi).setViewName("items/itemNew");
 		return mv;
 	}
 	
