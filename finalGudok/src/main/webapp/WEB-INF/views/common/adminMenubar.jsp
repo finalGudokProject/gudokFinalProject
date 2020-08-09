@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-<head>
+ <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -10,14 +10,19 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
-    <title>goose 관리자 페이지</title>    
+    <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+    <title>adminPage</title>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <style>
 body{
     font-family: 'Noto Sans KR', sans-serif;
+    /* font-family: 'Jua', sans-serif;     */
 }
 
 img{
-    max-width: 100%; height: auto;
+    max-width: 100%; 
+    height: auto;
+    padding:0 !important;
 }
 
 .container-fluid {
@@ -27,13 +32,27 @@ img{
     margin-right: 0;
     margin-left: 0;
 
-
 }
+
+
+.box{
+    padding:30px;
+    
+    background-color: #ffffff;
+    height:1100px;
+  
+}
+
+.container {
+    width: 100%;
+    margin-right: auto;
+    margin-left: auto;
+    margin:auto;
+}  
 
 
 div {
     display: block;
-    
 }
 
 .flex-xl-nowrap {
@@ -44,8 +63,8 @@ div {
     display: flex;
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
-    margin-right: -15px;
-    /* margin-left: -15px; */
+    margin-right: 1.5px;
+    margin-left: 1.5px;
 }
 
 
@@ -82,10 +101,7 @@ div {
     overflow-y: auto;
     /* padding-top: 1rem; */
     padding-bottom: 1rem;
-    
-    
-
-
+   
    
 }
 
@@ -98,46 +114,236 @@ div {
     margin-bottom: 0;
     list-style: none;
    
-    
 }
 
-ul {
+.sd_ul {
     margin-top: 0.5rem;
     margin-bottom: 0.5rem;
     display: block;
     list-style-type: disc;
-    margin-block-start: 1.5em;
+    /* margin-block-start: 1.5em;
     margin-block-end: 1.5em;
     margin-inline-start: 0px;
     margin-inline-end: 0px;
-    padding-inline-start: 20px;
-    line-height: 30px;
+    padding-inline-start: 20px; */
+    /* line-height: 30px; */
     
 }
 
-li{
-    padding:0 40px;
+.sd_ul li{
+    padding:5px 0;
     list-style: none;
 }
+
+.sd_ul li a{
+    color:black;
+}
+
+
 
 .sd-btn{
     background-color:rgba(90,148,235,0.8);
     border:none;
+    padding:5px 10px;
+box-shadow: 1px 1px lightgray;
 }
 
- #content{
-    overflow-y: auto;
-    margin-left:250px;
-    
-} 
-</style>
-    <body>
+table {
+  width: 100%;
+  margin-bottom: 1rem;
+  color: #212529;
+}
+table th,
+table td {
+  padding: 0.75rem;
+  vertical-align: top;
+  border-top: 1px solid #dee2e6;
+  border-bottom: 1px solid #dee2e6;
+  text-align:center;
+}
 
-     <div class="container-fluid">
-        <div class="row flex-xl-nowrap">
+.table thead th {
+  vertical-align: bottom;
+  border-bottom: 2px solid #dee2e6;
+}
+.table tbody + tbody {
+  border-top: 2px solid #dee2e6;
+}
+
+
+/*사이드바 css*/
+
+.table {
+  width: 100%;
+  color: #212529;
+}
+.table th,
+.table td {
+  padding: 0.5rem 1rem;
+  vertical-align: top;
+  border-top: 1px solid #dee2e6;
+  /* border-bottom: 1px solid #dee2e6; */
+}
+
+
+
+
+.mainbox{
+    position:absolute; 
+    padding:30px; 
+    top:50%; 
+    left:50%; 
+    background-color:white; 
+    transform:translate(-50%,-50%);
+
+}
+
+
+.content{
+    margin-left:250px;
+    background-color: RGB(237,237,237);
+    padding:30px;
+
+}
+
+
+.nav__list input[type=checkbox]:checked + label + ul {
+  max-height: 1000px;
+}
+
+.nav__list input[type=checkbox]:checked + label > span {
+  -webkit-transform: rotate(90deg);
+      -ms-transform: rotate(90deg);
+          transform: rotate(90deg);
+}
+
+.nav__list li > span {
+  -webkit-transform: rotate(90deg);
+      -ms-transform: rotate(90deg);
+          transform: rotate(90deg);
+}
+
+.group-list,
+.sub-group-list,
+.sub-sub-group-list {
+  height: 100%;
+  max-height: 0;
+  overflow: hidden;
+  -webkit-transition: max-height .5s ease-in-out;
+          transition: max-height .5s ease-in-out;
+}
+
+label > span {
+  float: right;
+  -webkit-transition: -webkit-transform .65s ease;
+          transition: transform .65s ease;
+}
+
+.nav label {
+  cursor: pointer;
+}
+
+
+.nav a,
+.nav label {
+  display: block;
+  color: #fff;
+  background-color: #151515;
+  box-shadow: inset 0 -1px #1d1d1d;
+  -webkit-transition: all .25s ease-in;
+          transition: all .25s ease-in;
+          }
+
+/*페이징 처리용 cs*/
+.pagination-t {
+            display: flex;
+            padding-left: 0;
+            list-style: none;
+            border-radius: 0.25rem;
+        }
+
+        .page-link-t {
+            position: relative;
+            display: block;
+            padding: 0.5rem 0.75rem;
+            margin-left: -1px;
+            line-height: 1.25;
+            color: black;
+            background-color: #fff;
+            border: 1px solid #dee2e6;
+        }
+
+        .page-link-t:hover {
+            z-index: 2;
+            color: #0056b3;
+            text-decoration: none;
+            background-color: #e9ecef;
+            border-color: #dee2e6;
+        }
+
+        .page-link-t:focus {
+            z-index: 3;
+            outline: 0;
+        }
+
+        .page-item-t:first-child .page-link-t {
+            border-top-left-radius: 0.25rem;
+            border-bottom-left-radius: 0.25rem;
+        }
+
+        .page-item-t:last-child .page-link-t {
+            border-top-right-radius: 0.25rem;
+            border-bottom-right-radius: 0.25rem;
+        }
+
+        .page-item-t.active-t .page-link-t {
+            z-index: 3;
+            color: #fff;
+            background-color: rgba(90,148,235,0.8);
+            border-color:  rgba(90,148,235,0.8);
+        }
+
+        .page-item-t.disabled-t .page-link-t {
+            color: #6c757d;
+            pointer-events: none;
+            cursor: auto;
+            background-color: #fff;
+            border-color: #dee2e6;
+        }
+
+
+        .sr-only-t {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        .page-center {
+            display: flex;
+            justify-content: center;
+            /*가운데 정렬*/
+            align-items: center;
+        }
+    </style>
+  </head>
+
+
+
+
+  <body>
+    <!--사이드바-->
+    <div class="container-fluid" style="background-color: red;" >
+        <div class="row">
             <div class="col-md-3 bd-sidebar" style="background-color: #C4C4C4; float:left; overflow-y:hidden; overflow-x:hidden">
-                <img src="images/로고1.png" style="padding:30px 30px;">
-                <h2 style="text-align: center; font-size: 18px;"><b>관리자</b>님, 환영합니다.</h2>
+                <img src="resources/images/logo2.png" style="padding:0;">
+                
+                <h2 style="text-align: center; font-size: 18px; margin-top:35px;"><b>관리자</b>님, 환영합니다.</h2>
                 <br>
                 <div style="text-align:center">
                 <button class="sd-btn" id="nav-home-btn">쇼핑몰 이동</button>
@@ -148,74 +354,114 @@ li{
                     <nav class="collapse bd-links">
 
                      <br>
-                        
                         <div>
-                            <ul><b>
-                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-archive-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd" d="M12.643 15C13.979 15 15 13.845 15 12.5V5H1v7.5C1 13.845 2.021 15 3.357 15h9.286zM6 7a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1H6zM.8 1a.8.8 0 0 0-.8.8V3a.8.8 0 0 0 .8.8h14.4A.8.8 0 0 0 16 3V1.8a.8.8 0 0 0-.8-.8H.8z"/>
-                                  </svg>&nbsp;&nbsp;상품관리</b>
-                                <li>상품 등록</li>
-                                <li>판매 상품 리스트</li>
-                                <li>메인 배너 관리</li>
+                            <ul class="nav__list sd_ul">
+                                <li>
+                                  <input id="group-1" type="checkbox" hidden />
+                                  <label for="group-1">
+                                      <span><b><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-chevron-double-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" d="M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 3.646 2.354a.5.5 0 0 1 0-.708z"/>
+                                        <path fill-rule="evenodd" d="M7.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.646 2.354a.5.5 0 0 1 0-.708z"/>
+                                      </svg></span></b> 
+                                      <b>
+                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-archive-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" d="M12.643 15C13.979 15 15 13.845 15 12.5V5H1v7.5C1 13.845 2.021 15 3.357 15h9.286zM6 7a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1H6zM.8 1a.8.8 0 0 0-.8.8V3a.8.8 0 0 0 .8.8h14.4A.8.8 0 0 0 16 3V1.8a.8.8 0 0 0-.8-.8H.8z"/>
+                                      </svg>&nbsp;&nbsp;상품관리&nbsp;&nbsp;</b></label>
+                                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                  <ul class="group-list sd_ul">
+                                    <li><a href="#">상품 등록</a></li>
+                                    <li><a href="#">판매 상품 리스트</a></li>
+                                    <li><a href="#">메인 배너 관리</a></li>
+                                    
+                                  </ul>
+                                </li>
                             </ul>
-                        </div>
+                        </div>   
+
                         <div>
-                            <ul><b>
-                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-people-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd" d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-5.784 6A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216zM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z"/>
-                                  </svg>&nbsp;&nbsp;회원 관리</b>
-                                <li>회원 리스트</li>
-                                <li>탈퇴 내역</li>
+                            <ul class="nav__list sd_ul">
+                                <li>
+                                  <input id="group-2" type="checkbox" hidden />
+                                  <label for="group-2"><span><b><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-chevron-double-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" d="M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 3.646 2.354a.5.5 0 0 1 0-.708z"/>
+                                    <path fill-rule="evenodd" d="M7.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.646 2.354a.5.5 0 0 1 0-.708z"/>
+                                  </svg></span></b> <b>
+                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-people-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-5.784 6A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216zM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z"/>
+                                      </svg>&nbsp;&nbsp;회원 관리&nbsp;&nbsp;</b></label>
+                                  <ul class="group-list sd_ul">
+                                    <li><a href="#">회원 리스트</a></li>
+                                    <li><a href="#">탈퇴 내역</a></li>
+                                  </ul>
+                                </li>
                             </ul>
-                        </div>
+                        </div>  
+
                         <div>
-                            <ul><b>
-                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-bar-chart-line-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                    <rect width="4" height="5" x="1" y="10" rx="1"/>
-                                    <rect width="4" height="9" x="6" y="6" rx="1"/>
-                                    <rect width="4" height="14" x="11" y="1" rx="1"/>
-                                    <path fill-rule="evenodd" d="M0 14.5a.5.5 0 0 1 .5-.5h15a.5.5 0 0 1 0 1H.5a.5.5 0 0 1-.5-.5z"/>
-                                  </svg>&nbsp;&nbsp;매출 관리</b>
-                                <li>주문 / 배송 내역</li>
-                                <li>교환 요청 내역</li>
-                                <li>매출 통계 내역</li>
+                            <ul class="nav__list  sd_ul">
+                                <li>
+                                  <input id="group-3" type="checkbox" hidden />
+                                  <label for="group-3"><span><b><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-chevron-double-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" d="M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 3.646 2.354a.5.5 0 0 1 0-.708z"/>
+                                    <path fill-rule="evenodd" d="M7.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.646 2.354a.5.5 0 0 1 0-.708z"/>
+                                  </svg></span></b> <b>
+                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-bar-chart-line-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <rect width="4" height="5" x="1" y="10" rx="1"/>
+                                        <rect width="4" height="9" x="6" y="6" rx="1"/>
+                                        <rect width="4" height="14" x="11" y="1" rx="1"/>
+                                        <path fill-rule="evenodd" d="M0 14.5a.5.5 0 0 1 .5-.5h15a.5.5 0 0 1 0 1H.5a.5.5 0 0 1-.5-.5z"/>
+                                      </svg>&nbsp;&nbsp;매출 관리&nbsp;&nbsp;</b></label>
+                                  <ul class="group-list sd_ul">
+                                    <li><a href="#">주문 / 배송 내역</a></li>
+                                    <li><a href="#">교환 요청 내역</a></li>
+                                    <li><a href="#">매출 통계 내역</a></li>
+                                    
+                                  </ul>
+                                </li>
                             </ul>
-                        </div>
+                        </div>  
+
                         <div>
-                            <ul><b>
-                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-volume-up-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M11.536 14.01A8.473 8.473 0 0 0 14.026 8a8.473 8.473 0 0 0-2.49-6.01l-.708.707A7.476 7.476 0 0 1 13.025 8c0 2.071-.84 3.946-2.197 5.303l.708.707z"/>
-                                    <path d="M10.121 12.596A6.48 6.48 0 0 0 12.025 8a6.48 6.48 0 0 0-1.904-4.596l-.707.707A5.483 5.483 0 0 1 11.025 8a5.483 5.483 0 0 1-1.61 3.89l.706.706z"/>
-                                    <path d="M8.707 11.182A4.486 4.486 0 0 0 10.025 8a4.486 4.486 0 0 0-1.318-3.182L8 5.525A3.489 3.489 0 0 1 9.025 8 3.49 3.49 0 0 1 8 10.475l.707.707z"/>
-                                    <path fill-rule="evenodd" d="M6.717 3.55A.5.5 0 0 1 7 4v8a.5.5 0 0 1-.812.39L3.825 10.5H1.5A.5.5 0 0 1 1 10V6a.5.5 0 0 1 .5-.5h2.325l2.363-1.89a.5.5 0 0 1 .529-.06z"/>
-                                  </svg>&nbsp;&nbsp;고객센터 관리</b>
-                                <li>공지사항</li>
-                                <li>FAQ</li>
-                                <li>상품제안</li>
-                                <li>1:1문의</li>
-                                <li>이벤트</li>
+                            <ul class="nav__list sd_ul">
+                                <li>
+                                  <input id="group-4" type="checkbox" hidden />
+                                  <label for="group-4"><span><b><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-chevron-double-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" d="M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 3.646 2.354a.5.5 0 0 1 0-.708z"/>
+                                    <path fill-rule="evenodd" d="M7.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.646 2.354a.5.5 0 0 1 0-.708z"/>
+                                  </svg></span></b><b>
+                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-volume-up-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M11.536 14.01A8.473 8.473 0 0 0 14.026 8a8.473 8.473 0 0 0-2.49-6.01l-.708.707A7.476 7.476 0 0 1 13.025 8c0 2.071-.84 3.946-2.197 5.303l.708.707z"/>
+                                        <path d="M10.121 12.596A6.48 6.48 0 0 0 12.025 8a6.48 6.48 0 0 0-1.904-4.596l-.707.707A5.483 5.483 0 0 1 11.025 8a5.483 5.483 0 0 1-1.61 3.89l.706.706z"/>
+                                        <path d="M8.707 11.182A4.486 4.486 0 0 0 10.025 8a4.486 4.486 0 0 0-1.318-3.182L8 5.525A3.489 3.489 0 0 1 9.025 8 3.49 3.49 0 0 1 8 10.475l.707.707z"/>
+                                        <path fill-rule="evenodd" d="M6.717 3.55A.5.5 0 0 1 7 4v8a.5.5 0 0 1-.812.39L3.825 10.5H1.5A.5.5 0 0 1 1 10V6a.5.5 0 0 1 .5-.5h2.325l2.363-1.89a.5.5 0 0 1 .529-.06z"/>
+                                      </svg>&nbsp;&nbsp;고객센터 관리&nbsp;&nbsp;</b></label>
+                                  <ul class="group-list sd_ul">
+                                    <li><a href="#">공지사항</a></li>
+                                    <li><a href="#">FAQ</a></li>
+                                    <li><a href="#">상품제안</a></li>
+                                    <li><a href="#">1:1 문의</a></li>
+                                    <li><a href="#">이벤트</a></li>
+                                  </ul>
+                                </li>
                             </ul>
-                        </div>
-                        
+                        </div> 
+           
                     </nav>
-           </div>
-        </div>
-        
-        </div>
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        <br><br><br><br><br><br><br><br><br><br><br>
-        <br><br><br><br><br><br><br><br><br><br><br>
-       <!-- Optional JavaScript -->
+      		     </div>
+      		  </div>    
+            </div>
+                
+                
+                
+   
+
+
+   
+
+
+
+
+    <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
