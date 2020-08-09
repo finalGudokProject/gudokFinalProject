@@ -23,9 +23,10 @@
 		border:1px solid black;
 	}
 	#cateName{
-		font-size:30px;
-		margin:3% 0 1% 7%;
+		font-size:50px;
+		margin-right:4rem;
 		line-height:100px;
+		text-align:center;
 	}
 	#cateName img{
 		vertical-align:middle;
@@ -218,20 +219,11 @@
 <div class="container">
 	<div class="row">
 	<div class="col-md-12">
-		<div id="cateName" style="font-size:50px;">
-		<img src="${contextPath }/resources/images/living.png" style="width:70px;height:70px;">
-		<span>리빙</span>
+		<div id="cateName">
+		<img src="${contextPath }/resources/images/new.png" style="width:70px;height:70px;">
+		<span>신상품</span>
 		</div>
-		<div style="margin:0 0 3% 0%">
-			<table style="display:block;">
-				<tr>
-					<td style="width:10%;"><span>생활용품</span></td>
-					<td style="width:10%;"><span>바디케어</span></td>
-					<td style="width:10%;"><span>홈데코</span></td>
-				</tr>
-			</table>
-		</div>
-			<div style="border-top:1px solid lightgray;border-bottom:1px solid lightgray;">
+			<div style="border-bottom:1px solid lightgray;">
 			<table align="center" style="margin-bottom:1%;" id="sortTable">
 				<tr>
 					<td><div class="sortDivC">
@@ -259,7 +251,7 @@
 		<div class="col-2"></div>
 			<div class="col-8" id="emptyDiv" style="margin-top:2%;border:1px solid lightgray;">
 				<div style="text-align:center;width:100%;"><img src="${contextPath }/resources/images/empty.png" style="width:30%;"></div>
-				<div style="text-align:center;width:100%;font-size:40px;">이벤트 상품이 존재하지 않습니다.</div>
+				<div style="text-align:center;width:100%;font-size:40px;">신상품이 존재하지 않습니다.</div>
 			</div>
 		<div class="col-2"></div>	
 		</c:if>
@@ -275,6 +267,7 @@
 		<fmt:formatNumber var="itemPrice" value="${i.itemPrice}" type="number"/>
 			<div class="col-4" onclick="location.href='${idetail}'">
 				<div class="card">
+					<c:if test="${i.itemDiscount != 0}" >
 					<div class="cardHeader">
 						<div class="circle">
 							<div id="ratePercentId" style="position:absolute;"><span>${i.itemDiscount }%</span></div>
@@ -282,6 +275,13 @@
 						</div>
 						<img src="resources/images/breadLogo.jpg" class="card-img-top" alt="..." style="position:relative;">
 					</div>
+					</c:if>
+					
+					<c:if test="${i.itemDiscount == 0}">
+					<div class="cardHeader">
+					<img src="resources/images/breadLogo.jpg" class="card-img-top" alt="...">
+					</div>
+					</c:if>
 					<div class="cardBody">
 						<h3 class="card-title"><b>${i.itemName }</b></h3>
 						<h5>${i.itemMemo }</h5>

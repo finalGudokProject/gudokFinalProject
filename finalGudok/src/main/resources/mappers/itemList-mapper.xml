@@ -72,4 +72,17 @@
 	</select>
 	
 	
+	<select id="getItemEventCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM ITEM_LIST_VIEW ILV
+		LEFT JOIN ITEM I ON(ILV.ITEM_NO = I.ITEM_NO)
+		WHERE ITEM_DP_STATUS='Y'
+	</select>
+	
+	<select id="getItemEventList" resultMap="itemListResultSet">
+		SELECT *
+		FROM ITEM_LIST_VIEW ILV
+		LEFT JOIN ITEM I ON(ILV.ITEM_NO = I.ITEM_NO)
+		WHERE ITEM_DP_STATUS='Y' AND EVENT_NO NOT LIKE 0
+	</select>
 </mapper>

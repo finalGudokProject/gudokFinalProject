@@ -67,13 +67,13 @@ public class ItemDao {
 	}
 
 	public int getItemEventCount() {
-		return sqlSessionTemplate.selectOne("itemMapper.getItemEventCount");
+		return sqlSessionTemplate.selectOne("itemListMapper.getItemEventCount");
 	}
 	
 	public ArrayList<Item> selectEventList(PageInfo pi) {
 		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
-		return (ArrayList)sqlSessionTemplate.selectList("itemMapper.getItemEventList", null, rowBounds);
+		return (ArrayList)sqlSessionTemplate.selectList("itemListMapper.getItemEventList", null, rowBounds);
 	}
 
 	public int insertInquired(Board b) {

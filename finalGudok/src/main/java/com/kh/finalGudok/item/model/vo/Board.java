@@ -17,7 +17,7 @@ public class Board implements Serializable{
 	private String boardCode;
 	private int itemNo;
 	private int memberNo;
-	private int memberId;
+	private String memberId;
 	private String email;
 	
 	public Board() {
@@ -25,7 +25,7 @@ public class Board implements Serializable{
 	}
 
 	public Board(int boardNo, String title, String content, String writeDate, int readNum, String boardCode, int itemNo,
-			int memberNo, int memberId, String email) {
+			int memberNo, String memberId, String email) {
 		super();
 		this.boardNo = boardNo;
 		this.title = title;
@@ -103,11 +103,11 @@ public class Board implements Serializable{
 		this.memberNo = memberNo;
 	}
 
-	public int getMemberId() {
+	public String getMemberId() {
 		return memberId;
 	}
 
-	public void setMemberId(int memberId) {
+	public void setMemberId(String memberId) {
 		this.memberId = memberId;
 	}
 

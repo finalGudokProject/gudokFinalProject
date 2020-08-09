@@ -25,26 +25,14 @@
 		WHERE ITEM_NO=#{itemNo}
 	</update>
 	
-	<select id="getItemEventCount" resultType="_int">
-		SELECT COUNT(*)
-		FROM ITEM
-		WHERE ITEM_DP_STATUS='Y'
-	</select>
-	
-	<select id="getItemEventList" resultMap="itemResultSet">
-		SELECT *
-		FROM ITEM
-		WHERE ITEM_DP_STATUS='Y' AND EVENT_NO NOT LIKE 0
-	</select>
-	
 	<insert id="insertInquired" parameterType="Board">
 		INSERT INTO BOARD
 		VALUES(SEQ_BOARD_NO.NEXTVAL
-		    , DEFAULT
+		    , #{title}
 		    , #{content}
 		    , SYSDATE
 		    , DEFAULT
-		    , DEFAULT
+		    , 1
 		    , #{itemNo}
 		    , #{memberNo}
 		    , #{memberId}

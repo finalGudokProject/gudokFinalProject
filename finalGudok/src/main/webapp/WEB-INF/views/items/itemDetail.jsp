@@ -360,7 +360,7 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 				<div class="modal-content">
 					<div class='modal-header'>
 						<div class="row">
-							<div style="font-size:40px;">${ilv.itemName} 상품문의</div>
+							<div style="font-size:40px;" id="boardTitle">${ilv.itemName} 상품문의</div>
 							<div style="font-size:15px;padding:2%;color:gray;">상품에 대한 자세한 문의는 고객 센터를 이용해 주세요.</div>
 						</div>
 						<div><button type='button' class="close" data-dismiss='modal'
@@ -689,13 +689,14 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 				<script>
 				var modal = document.getElementById("myModal");
 				$(function(){
+					var title = $("#boardTitle").text();
 					var memberNo = "${loginUser.memberNo}";
 					var itemNo = "${ilv.itemNo}";
 					var memberId = "${loginUser.memberId}";
 					var email = "${loginUser.email}";
 					$(".modalAnsBtn").on("click", function(){
 					var content = $(this).parent().prev().val();
-						console.log(content + "," + itemNo + "," + memberId);
+						console.log(title + "," +content + "," + itemNo + "," + memberId);
 						if($("#ansText").val() <= 10){
 							swal("","10자 이상 입력해 주십시오.","error");
 						}else{
@@ -710,7 +711,7 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 								}else{
 									$.ajax({
 										  url : "inquire.do",
-										  data : {itemNo:itemNo, memberNo:memberNo, memberId:memberId, email:email, content:content},
+										  data : {title:title, itemNo:itemNo, memberNo:memberNo, memberId:memberId, email:email, content:content},
 										  type : "POST",
 										  success:function(data){
 											  if(data == "success"){
