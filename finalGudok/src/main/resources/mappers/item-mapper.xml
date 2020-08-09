@@ -2,6 +2,21 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="itemMapper">
 	
+	<resultMap type="ItemListView" id="itemResultSet">
+		<id property="itemNo" column="ITEM_NO"/>
+		<result property="itemName" column="ITEM_NAME"/>
+		<result property="itemPrice" column="ITEM_PRICE"/>
+		<result property="itemCount" column="ITEM_COUNT"/>
+		<result property="itemRate" column="ITEM_RATE"/>
+		<result property="itemDpStatus" column="ITEM_DP_STATUS"/>
+		<result property="itemCmSales" column="ITEM_CM_SALES"/>
+		<result property="itemChoice" column="ITEM_CHOICE"/>
+		<result property="itemDate" column="ITEM_DATE"/>
+		<result property="itemRecommend" column="ITEM_RECOMMEND"/>
+		<result property="CategoryNo" column="CATEGORY_NO"/>
+		<result property="EventNo" column="EVENT_NO"/>
+		<result property="itemMemo" column="ITEM_MEMO"/>
+	</resultMap>
 	
 	
 	<update id="getDetailCount" parameterType="_int">
@@ -9,4 +24,42 @@
 		SET ITEM_COUNT=ITEM_COUNT+1
 		WHERE ITEM_NO=#{itemNo}
 	</update>
+	
+	<select id="getItemEventCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM ITEM
+		WHERE ITEM_DP_STATUS='Y'
+	</select>
+	
+	<select id="getItemEventList" resultMap="itemResultSet">
+		SELECT *
+		FROM ITEM
+		WHERE ITEM_DP_STATUS='Y' AND EVENT_NO NOT LIKE 0
+	</select>
+	
+	<insert id="insertInquired" parameterType="Board">
+		INSERT INTO BOARD
+		VALUES(SEQ_BOARD_NO.NEXTVAL
+		    , DEFAULT
+		    , #{content}
+		    , SYSDATE
+		    , DEFAULT
+		    , DEFAULT
+		    , #{itemNo}
+		    , #{memberNo}
+		    , #{memberId}
+		    , #{email})
+	</insert>
+	
+	<select id="newCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM ITEM
+		WHERE ITEM_DP_STATUS='Y' AND ITEM_DATE BETWEEN SYSDATE-30 AND SYSDATE
+	</select>
+	
+	<select id="selectNewList" resultMap="itemResultSet">
+		SELECT *
+		FROM ITEM
+		WHERE ITEM_DP_STATUS='Y' AND ITEM_DATE BETWEEN SYSDATE-30 AND SYSDATE
+	</select>
 </mapper>

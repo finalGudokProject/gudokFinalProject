@@ -265,6 +265,7 @@
 		<c:url var="idetail" value="idetail.do">
 			<c:param name="itemNo" value="${i.itemNo }"/>
 			<c:param name="page" value="${pi.currentPage }"/>
+			<c:param name="memberNo" value="${loginUser.memberNo }"/>
 		</c:url>
 		<fmt:formatNumber var="discountPrice" value="${(i.itemPrice - i.itemPrice*(i.itemDiscount/100))}" type="number"/>
 		<fmt:formatNumber var="itemPrice" value="${i.itemPrice}" type="number"/>

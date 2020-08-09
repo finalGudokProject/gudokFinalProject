@@ -116,21 +116,12 @@
 					</div>
 					<c:if test="${loginUser.memberId == r.memberId }">
 						<div class="col-3" style="text-align:right;padding-right:2%;">
-							<input type="hidden" value="${r.reviewNo }">
 							<img src="resources/images/retouch.png" class="retouchImgC" style="width:3.5rem;border:1px solid lightgray;" title="상품평 수정하기">
 						</div>
 					</c:if>
 				</div>
 				</td>
 			</tr>
-			<script>
-				$(function(){
-					$(".retouchImgC").on("click", function(){
-						var reviewNo = $(this).prev().val();
-						location.href="reviewUpdate.do";
-					})
-				})
-			</script>
 			<tr>
 				<td>
 					<div class="starRev">
@@ -218,6 +209,29 @@
 	    $(document).ready(function(){
 	        $(".retouchImgC").tooltip();
 	    });
+	</script>
+	
+	<script>
+		$(function(){
+			$('.starRev .starRv').click(function(){
+				$(this).parent().children('span').removeClass('on');
+				$(this).addClass('on').prevAll('span').addClass('on');
+				switch($(this).text()){
+				case "1" : $("input:radio[id=radio1]").prop("checked", true);
+					break;
+				case "2" : $("input:radio[id=radio2]").prop("checked", true);
+					break;
+				case "3" : $("input:radio[id=radio3]").prop("checked", true);
+					break;
+				case "4" : $("input:radio[id=radio4]").prop("checked", true);
+					break;
+				case "5" : $("input:radio[id=radio5]").prop("checked", true);
+					break;
+				}
+				
+			});
+		})
+		
 	</script>
 	
 	<script>

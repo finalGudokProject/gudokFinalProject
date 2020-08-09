@@ -22,4 +22,27 @@
 		LEFT JOIN MEMBER M ON(SR.MEMBER_ID = M.MEMBER_ID)
 		WHERE MEMBER_STATUS='Y' AND ITEM_NO=#{itemNo}
 	</select>
+	
+	<select id="selectAllReview" parameterType="_int" resultMap="reviewResultSet">
+		SELECT *
+		FROM REVIEW R
+		LEFT JOIN MEMBER M ON(R.MEMBER_ID = M.MEMBER_ID)
+		WHERE MEMBER_STATUS='Y' AND ITEM_NO=#{itemNo}
+		ORDER BY REVIEW_NO DESC
+	</select>
+	
+	<insert id="insertReview" parameterType="Review">
+		INSERT INTO REVIEW
+		VALUES(SEQ_REVIEW_NO.NEXTVAL
+			, #{itemNo}
+			, #{reviewContent}
+			, #{reviewRate}
+			, #{reviewImg1}
+			, #{reviewImg2}
+			, SYSDATE
+			, DEFAULT
+			, #{memberNo}
+			, #{memberId}
+			, #{email})
+	</insert>
 </mapper>

@@ -9,6 +9,8 @@
 		<typeAlias type="com.kh.finalGudok.item.model.vo.Item" alias="Item"/>
 		<typeAlias type="com.kh.finalGudok.item.model.vo.ItemListView" alias="ItemListView"/>
 		<typeAlias type="com.kh.finalGudok.item.model.vo.Review" alias="Review"/>
+		<typeAlias type="com.kh.finalGudok.item.model.vo.Heart" alias="Heart"/>
+		<typeAlias type="com.kh.finalGudok.item.model.vo.Board" alias="Board"/>
 		<typeAlias type="com.kh.finalGudok.member.model.vo.Member" alias="Member"/>
 	</typeAliases>
 	
@@ -17,6 +19,7 @@
 		<mapper resource="/mappers/itemList-mapper.xml"/>
 		<mapper resource="/mappers/review-mapper.xml"/>
 		<mapper resource="/mappers/member-mapper.xml"/>
+		<mapper resource="/mappers/heart-mapper.xml"/>
 	</mappers>
 
 </configuration>

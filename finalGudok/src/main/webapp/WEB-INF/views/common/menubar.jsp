@@ -9,10 +9,10 @@
 <title>Insert title here</title>
 </head>
 <link rel="shortcut icon" type="image⁄x-icon" href="<%=request.getContextPath()%>/images/logo.png">
+	<!-- 제이쿼리 -->
+	 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 	<!-- 아이콘 -->
 	<script src="https://kit.fontawesome.com/4b6b63d8f6.js" crossorigin="anonymous"></script>
-	<!-- 제이쿼리 -->
-	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 	<!-- 부트스트랩 -->
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 	<!-- popper 툴팁 -->
@@ -21,11 +21,6 @@
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 	<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
 	
-	<!-- sweetalert시작 -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
-	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-	<link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
-	<!-- sweetalert끝 -->
 <style>
 /*상단 회원가입, 로그인, 고객센터 메뉴(#menu-list) */
 #menu-list {
@@ -151,7 +146,7 @@ body {
           <!-- <ul class="navbar-nav mr-auto"> -->
           <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-              <a class="nav-link" href="#"><img src="resources/images/new.png" width="50px" height="50px"><br>신상품</a>
+              <a class="nav-link" href="itemNew.do"><img src="resources/images/new.png" width="50px" height="50px"><br>신상품</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#"><img src="resources/images/best.png" width="50px" height="50px"><br>베스트</a>
@@ -187,7 +182,7 @@ body {
                 </div>
               </li>
             <li class="nav-item">
-              <a class="nav-link" href="#"><img src="resources/images/event.png" width="50px" height="50px"><br>이벤트</a>
+              <a class="nav-link" href="itemEvent.do"><img src="resources/images/event.png" width="50px" height="50px"><br>이벤트</a>
             </li>
           </ul>
           <!-- </ul> -->
@@ -198,7 +193,6 @@ body {
         </div>
       </nav>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
     

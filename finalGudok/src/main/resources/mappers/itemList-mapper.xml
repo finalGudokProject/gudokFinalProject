@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="itemListMapper">
 
-	<resultMap type="ItemListView" id="itemResultSet">
+	<resultMap type="ItemListView" id="itemListResultSet">
 		<id property="itemNo" column="ITEM_NO"/>
 		<result property="itemName" column="ITEM_NAME"/>
 		<result property="itemMemo" column="ITEM_MEMO"/>
@@ -11,6 +11,7 @@
 		<result property="itemRate" column="ITEM_RATE"/>
 		<result property="reviewCount" column="REVIEW_COUNT"/>
 		<result property="itemChoice" column="ITEM_CHOICE"/>
+		<result property="heartNo" column="HEART_NO"/>
 	</resultMap>
 	
 	
@@ -22,7 +23,15 @@
 		AND ITEM_DP_STATUS = 'Y'
 	</select>
 	
-	<select id="getItemList" resultMap="itemResultSet">
+	<select id="getItemLivingCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM ITEM_LIST_VIEW ILV
+		JOIN ITEM I ON(ILV.ITEM_NO = I.ITEM_NO)
+		WHERE CATEGORY_NO LIKE 'L%'
+		AND ITEM_DP_STATUS = 'Y'
+	</select>
+	
+	<select id="getItemList" resultMap="itemListResultSet">
 		SELECT *
 		FROM ITEM_LIST_VIEW ILV
 		JOIN ITEM I ON(ILV.ITEM_NO = I.ITEM_NO)
@@ -31,11 +40,23 @@
 		ORDER BY ILV.ITEM_NO DESC
 	</select>
 	
-	<select id="selectOne" parameterType="int" resultMap="itemResultSet">
+	<select id="getItemLivingList" resultMap="itemListResultSet">
+		SELECT *
+		FROM ITEM_LIST_VIEW ILV
+		JOIN ITEM I ON(ILV.ITEM_NO = I.ITEM_NO)
+		WHERE CATEGORY_NO LIKE 'L%'
+		AND ITEM_DP_STATUS = 'Y'
+		ORDER BY ILV.ITEM_NO DESC
+	</select>
+	
+	
+	<select id="selectOne" parameterType="int" resultMap="itemListResultSet">
 		SELECT *
 		FROM ITEM_LIST_VIEW ILV
 		LEFT JOIN ITEM I ON(ILV.ITEM_NO = I.ITEM_NO)
 		WHERE ILV.ITEM_NO=#{itemNo} AND ITEM_DP_STATUS='Y'
 	</select>
+	
+	
 	
 </mapper>

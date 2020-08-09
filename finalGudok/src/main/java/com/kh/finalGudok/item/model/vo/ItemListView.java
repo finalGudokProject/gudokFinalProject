@@ -17,13 +17,14 @@ public class ItemListView implements Serializable{
 	private int itemRate;
 	private int reviewCount;
 	private int itemChoice;
+	private int heartNo;
 
 	public ItemListView() {
 		// TODO Auto-generated constructor stub
 	}
 
 	public ItemListView(int itemNo, String itemName, String itemMemo, int itemPrice, int itemDiscount, int itemRate,
-			int reviewCount, int itemChoice) {
+			int reviewCount, int itemChoice, int heartNo) {
 		super();
 		this.itemNo = itemNo;
 		this.itemName = itemName;
@@ -33,6 +34,7 @@ public class ItemListView implements Serializable{
 		this.itemRate = itemRate;
 		this.reviewCount = reviewCount;
 		this.itemChoice = itemChoice;
+		this.heartNo = heartNo;
 	}
 
 	public int getItemNo() {
@@ -99,6 +101,14 @@ public class ItemListView implements Serializable{
 		this.itemChoice = itemChoice;
 	}
 
+	public int getHeartNo() {
+		return heartNo;
+	}
+
+	public void setHeartNo(int heartNo) {
+		this.heartNo = heartNo;
+	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
@@ -107,7 +117,8 @@ public class ItemListView implements Serializable{
 	public String toString() {
 		return "ItemListView [itemNo=" + itemNo + ", itemName=" + itemName + ", itemMemo=" + itemMemo + ", itemPrice="
 				+ itemPrice + ", itemDiscount=" + itemDiscount + ", itemRate=" + itemRate + ", reviewCount="
-				+ reviewCount + ", itemChoice=" + itemChoice + "]";
+				+ reviewCount + ", itemChoice=" + itemChoice + ", heartNo=" + heartNo + "]";
 	}
+
 
 }
