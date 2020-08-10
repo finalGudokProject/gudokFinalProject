@@ -82,7 +82,7 @@
     }
 
     .content_sub table input {
-        border: none;
+        border: 1px solid #ccc;
     }
 
     .button {
@@ -100,130 +100,130 @@
     }
     
     /* 모달 */
-        .panel {
-            background-color: #444;
-            height: 34px;
-            padding: 10px;
-        }
+   .panel {
+       background-color: #444;
+       height: 34px;
+       padding: 10px;
+   }
 
-        a#password_pop {
-            border: 1px solid black;
-            color: black;
-            display: block;
-            padding: 1% 1%;
-            margin-right: 3%;
-            text-decoration: none;
-            width: 17%;
-            font-size: 0.8em;
-            text-align: center;
-        }
+   a#password_pop {
+       border: 1px solid black;
+       color: black;
+       display: block;
+       padding: 1% 1%;
+       margin-right: 3%;
+       text-decoration: none;
+       width: 17%;
+       font-size: 0.8em;
+       text-align: center;
+   }
 
-        a#password_pop:hover {
-            border-color: rgb(155, 150, 150);
-        }
+   a#password_pop:hover {
+       border-color: rgb(155, 150, 150);
+   }
 
-        .overlay {
-            background-color: rgba(0, 0, 0, 0.6);
-            bottom: 0;
-            cursor: default;
-            left: 0;
-            opacity: 0;
-            position: fixed;
-            right: 0;
-            top: 0;
-            visibility: hidden;
-            z-index: 1;
+   .overlay {
+       background-color: rgba(0, 0, 0, 0.6);
+       bottom: 0;
+       cursor: default;
+       left: 0;
+       opacity: 0;
+       position: fixed;
+       right: 0;
+       top: 0;
+       visibility: hidden;
+       z-index: 1;
 
-            -webkit-transition: opacity .5s;
-            -moz-transition: opacity .5s;
-            -ms-transition: opacity .5s;
-            -o-transition: opacity .5s;
-            transition: opacity .5s;
-        }
+       -webkit-transition: opacity .5s;
+       -moz-transition: opacity .5s;
+       -ms-transition: opacity .5s;
+       -o-transition: opacity .5s;
+       transition: opacity .5s;
+   }
 
-        .overlay:target {
-            visibility: visible;
-            opacity: 1;
-        }
+   .overlay:target {
+       visibility: visible;
+       opacity: 1;
+   }
 
-        .popup {
-            background-color: #fff;
-            border: 3px solid #fff;
-            display: inline-block;
-            left: 50%;
-            opacity: 0;
-            padding: 15px;
-            position: fixed;
-            text-align: justify;
-            top: 40%;
-            visibility: hidden;
-            z-index: 10;
+   .popup {
+       background-color: #fff;
+       border: 3px solid #fff;
+       display: inline-block;
+       left: 50%;
+       opacity: 0;
+       padding: 15px;
+       position: fixed;
+       text-align: justify;
+       top: 40%;
+       visibility: hidden;
+       z-index: 10;
 
-            -webkit-transform: translate(-50%, -50%);
-            -moz-transform: translate(-50%, -50%);
-            -ms-transform: translate(-50%, -50%);
-            -o-transform: translate(-50%, -50%);
-            transform: translate(-50%, -50%);
+       -webkit-transform: translate(-50%, -50%);
+       -moz-transform: translate(-50%, -50%);
+       -ms-transform: translate(-50%, -50%);
+       -o-transform: translate(-50%, -50%);
+       transform: translate(-50%, -50%);
 
-            -webkit-transition: opacity .5s, top .5s;
-            -moz-transition: opacity .5s, top .5s;
-            -ms-transition: opacity .5s, top .5s;
-            -o-transition: opacity .5s, top .5s;
-            transition: opacity .5s, top .5s;
-        }
+       -webkit-transition: opacity .5s, top .5s;
+       -moz-transition: opacity .5s, top .5s;
+       -ms-transition: opacity .5s, top .5s;
+       -o-transition: opacity .5s, top .5s;
+       transition: opacity .5s, top .5s;
+   }
 
-        .overlay:target+.popup {
-            top: 50%;
-            opacity: 1;
-            visibility: visible;
-        }
+   .overlay:target+.popup {
+       top: 50%;
+       opacity: 1;
+       visibility: visible;
+   }
 
-        .close {
-            height: 30px;
-            line-height: 30px;
-            position: absolute;
-            right: 0;
-            text-align: center;
-            text-decoration: none;
-            top: 10px;
-            right: 10px;
-            width: 30px;
-        }
+   .close {
+       height: 30px;
+       line-height: 30px;
+       position: absolute;
+       right: 0;
+       text-align: center;
+       text-decoration: none;
+       top: 10px;
+       right: 10px;
+       width: 30px;
+   }
 
-        .close:before {
-            color: black;
-            content: "X";
-            font-size: 24px;
-            text-shadow: 0 -1px rgba(0, 0, 0, 0.9);
-        }
+   .close:before {
+       color: black;
+       content: "X";
+       font-size: 24px;
+       text-shadow: 0 -1px rgba(0, 0, 0, 0.9);
+   }
 
-        .popup p,
-        .popup div {
-            margin-bottom: 10px;
-        }
+   .popup p,
+   .popup div {
+       margin-bottom: 10px;
+   }
 
-        .popup label {
-            display: inline-block;
-            text-align: left;
-            width: 120px;
-        }
+   .popup label {
+       display: inline-block;
+       text-align: left;
+       width: 120px;
+   }
 
-        .popup table tr {
-            height: 40px;
-        }
+   .popup table tr {
+       height: 40px;
+   }
 
-        .popup button {
-            border: none;
-            background: #11538C;
-            color: white;
-            padding: 1% 10%;
-            text-align: center;
-            margin-top: 3%;
-        }
+   .popup button {
+       border: none;
+       background: #11538C;
+       color: white;
+       padding: 1% 10%;
+       text-align: center;
+       margin-top: 3%;
+   }
 
-        .popup input[type="password"]{
-            border: 1px solid gray;
-        }
+   .popup input[type="password"]{
+       border: 1px solid gray;
+   }
 </style>
 </head>
 <body>
@@ -270,49 +270,47 @@
             <br><br>
             <span class="sub_content">회원정보</span>
             <br><br><br>
-            <table>
-                <tr>
-                    <td style="width: 25%;">이름</td>
-                    <td>김수현</td>
-                </tr>
-                <tr>
-                    <td>아이디</td>
-                    <td>asdf1234</td>
-                </tr>
-                <tr>
-                    <td>이메일</td>
-                    <td>asdf1234@naver.com</td>
-                </tr>
-                <tr>
-                    <td>비밀번호</td>
-                    <td><a href="#password_form" id="password_pop">비밀번호 변경</a></td>
-                </tr>
-                <tr>
-                    <td>생년월일</td>
-                    <td>97.09.14</td>
-                </tr>
-                <tr>
-                    <td>우편번호</td>
-                    <td><input type="text" name="post" class="postcodify_postcode5" value="123456" size="6" readonly>
-                        <button type="button" id="postcodify_search_button">주소변경</button>
-                </tr>
-                <tr>
-                    <td>도로명 주소</td>
-                    <td><input type="text" name="address1" class="postcodify_address" value="테헤란로 14길 6" readonly></td>
-                </tr>
-                <tr>
-                    <td>상세 주소</td>
-                    <td><input type="text" name="address2" class="postcodify_extra_info" value="2층" readonly></td>
-                </tr>
-                <tr>
-                    <td>전화번호</td>
-                    <td>010-2487-3430</td>
-                </tr>
-            </table>
-
-            <div class="button">
-                <button class="modify_btn">수정하기</button>
-            </div>
+            <form action="memberModify.do">
+	            <table>
+	                <tr>
+	                    <td style="width: 25%;">이름</td>
+	                    <td>${loginUser.memberName }</td>
+	                </tr>
+	                <tr>
+	                    <td>아이디</td>
+	                    <td>${loginUser.memberId }</td>
+	                </tr>
+	                <tr>
+	                    <td>이메일</td>
+	                    <td>${loginUser.email }</td>
+	                </tr>
+	                <tr>
+	                    <td>비밀번호</td>
+	                    <td><a href="#password_form" id="password_pop">비밀번호 변경</a></td>
+	                </tr>
+	                <tr>
+	                    <td>우편번호</td>
+	                    <td><input type="text" name="post" class="postcodify_postcode5" value="${loginUser.address1 }" size="6">
+	                        <button type="button" id="postcodify_search_button">주소변경</button>
+	                </tr>
+	                <tr>
+	                    <td>도로명 주소</td>
+	                    <td><input type="text" name="address1" class="postcodify_address" value="${loginUser.address2 }"></td>
+	                </tr>
+	                <tr>
+	                    <td>상세 주소</td>
+	                    <td><input type="text" name="address2" class="postcodify_extra_info" value="${loginUser.address3 }"></td>
+	                </tr>
+	                <tr>
+	                    <td>전화번호</td>
+	                    <td><input type="text" value="${loginUser.phone }"></td>
+	                </tr>
+	            </table>
+	
+	            <div class="button">
+	                <button class="modify_btn">수정하기</button>
+	            </div>
+            </form>
             
             <!-- popup form #1 -->
             <a href="#x" class="overlay" id="password_form"></a>
@@ -341,7 +339,7 @@
             </div>
         </div>
     </div>
-    
+    <jsp:include page="../common/footer.jsp"/>
     <!-- Postcodify를 로딩하자 -->
     <script src="//d1p7wdleee1q2z.cloudfront.net/post/search.min.js"></script>
     <script>

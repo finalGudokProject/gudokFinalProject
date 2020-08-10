@@ -209,7 +209,7 @@
         <div class="member_info">
           <div class="member">
             <div class="sub">
-              <span class="name">홍길동 <span class="etc">&nbsp;님</span></span>
+              <span class="name">${loginUser.memberName } <span class="etc">&nbsp;님</span></span>
               <br>
               <span class="grade">알 <span class="etc">&nbsp;등급</span></span>
               <br>
@@ -242,13 +242,14 @@
 
       <div id="check">
         <h3 class="title">본인확인</h3>
-
-        <input type="password" placeholder="비밀번호를 입력해주세요.">
-        <br>
-        <button>확인</button>
+		<form action="memberConfirm.do" method="post">
+			<input type="password" name="memberPwd" placeholder="비밀번호를 입력해주세요.">
+	        <br>
+	        <button>확인</button>
+        </form>
       </div>
     </div>
   </div>
-  
+  <jsp:include page="../common/footer.jsp"/>
 </body>
 </html>

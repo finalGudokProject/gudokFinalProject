@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="reviewMapper">
+	<resultMap type="Review" id="reviewResultSet">
+		<id property="reviewNo" column="REVIEW_NO"/>
+		<result property="itemNo" column="ITEM_NO"/>
+		<result property="reviewContent" column="REVIEW_CONTENT"/>
+		<result property="reviewRate" column="REVIEW_RATE"/>
+		<result property="reviewImg1" column="REVIEW_IMG1"/>
+		<result property="reviewImg2" column="REVIEW_IMG2"/>
+		<result property="reviewDate" column="REVIEW_DATE"/>
+		<result property="reviewModify" column="REVIEW_MODIFY"/>
+		<result property="memberNo" column="MEMBER_NO"/>
+		<result property="memberId" column="MEMBER_ID"/>
+		<result property="email" column="EMAIL"/>
+	</resultMap>
+
+
+	<select id="selectReview" parameterType="int" resultMap="reviewResultSet">
+		SELECT *
+		FROM SELECT_REVIEW SR
+		LEFT JOIN MEMBER M ON(SR.MEMBER_ID = M.MEMBER_ID)
+		WHERE MEMBER_STATUS='Y' AND ITEM_NO=#{itemNo}
+	</select>
+</mapper>

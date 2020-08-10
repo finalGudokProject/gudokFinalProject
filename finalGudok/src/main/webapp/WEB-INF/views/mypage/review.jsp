@@ -279,11 +279,11 @@
 	              <button>삭제</button>
 	            </td>
 	          </tr>
-	
 	        </table>
 	      </div>
 	    </div>
     </div>
-
+    <hr style="margin-top:55%;">
+	<jsp:include page="../common/footer.jsp"/>
 </body>
 </html>

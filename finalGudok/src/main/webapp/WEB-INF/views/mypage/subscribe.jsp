@@ -349,7 +349,7 @@
                 <a href="#about"><img src="resources/images/member_information.png"
                         style="width: 25%; height: 25%; margin-right: 4%;">회원정보</a>
                 <ul>
-                    <li><a href="#">회원정보 확인</a></li>
+                    <li><a href="myInfo.do">회원정보 확인</a></li>
                     <li><a href="#">회원탈퇴</a></li>
                 </ul>
             </li>
@@ -481,5 +481,6 @@
 	      </div>
 	    </div>
     </div>
+    <jsp:include page="../common/footer.jsp"/>
 </body>
 </html>

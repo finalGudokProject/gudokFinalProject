@@ -286,6 +286,6 @@
 	      <button class="inquiry_btn">1:1 문의하기</button>
 	    </div>
     </div>
-   
+   	<jsp:include page="../common/footer.jsp"/>
 </body>
 </html>

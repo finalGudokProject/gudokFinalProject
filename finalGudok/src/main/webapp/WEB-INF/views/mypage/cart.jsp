@@ -365,32 +365,34 @@
 	      </div>
 	    </div>
     </div>
+    <hr style="postion:absolute;">
+    <jsp:include page="../common/footer.jsp"/>
     
     <script>
-    $(function () {
-      $('.minus').click(function (e) {
-        e.preventDefault();
-        var stat = $(this).siblings('.amount').text();
-        var num = parseInt(stat, 10);
-        num--;
-
-        if (num <= 0) {
-          alert('주문 최소 수량은 1개입니다.');
-          num = 1;
-        }
-
-        $(this).siblings('.amount').text(num);
-      });
-
-      $('.plus').click(function (e) {
-        e.preventDefault();
-        var stat = $(this).siblings('.amount').text();
-        var num = parseInt(stat, 10);
-        num++;
-
-        $(this).siblings('.amount').text(num);
-      });
-    });
+	    $(function () {
+	      $('.minus').click(function (e) {
+	        e.preventDefault();
+	        var stat = $(this).siblings('.amount').text();
+	        var num = parseInt(stat, 10);
+	        num--;
+	
+	        if (num <= 0) {
+	          alert('주문 최소 수량은 1개입니다.');
+	          num = 1;
+	        }
+	
+	        $(this).siblings('.amount').text(num);
+	      });
+	
+	      $('.plus').click(function (e) {
+	        e.preventDefault();
+	        var stat = $(this).siblings('.amount').text();
+	        var num = parseInt(stat, 10);
+	        num++;
+	
+	        $(this).siblings('.amount').text(num);
+	      });
+	    });
   </script>
 
   <script>

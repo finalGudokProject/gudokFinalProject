@@ -1,12 +1,31 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="false" language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Insert title here</title>
-<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+</head>
+<link rel="shortcut icon" type="image⁄x-icon" href="<%=request.getContextPath()%>/images/logo.png">
+	<!-- 아이콘 -->
+	<script src="https://kit.fontawesome.com/4b6b63d8f6.js" crossorigin="anonymous"></script>
+	<!-- 제이쿼리 -->
+	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<!-- 부트스트랩 -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	<!-- popper 툴팁 -->
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+	<!-- 부트스트랩 스크립트(jQuery보다 아래 있어야함) -->
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+	<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+	
+	<!-- sweetalert시작 -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	<link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
+	<!-- sweetalert끝 -->
 <style>
 /*상단 회원가입, 로그인, 고객센터 메뉴(#menu-list) */
 #menu-list {
@@ -72,15 +91,30 @@ body {
 	rel="stylesheet">
 </head>
 <body>
+	<c:set var="contextPath" value="${pageContext.servletContext.contextPath }" scope="application"/>
 	
 <div id="userMenu">
       <ul id="menu-list">
         <li>
           <a href="#">회원가입</a>
         </li>
+        <c:if test="${empty loginUser}">
         <li>
-          <a href="#">로그인</a>
+        <form action="login.do" method="post">
+        <input type="text" name="memberId">
+        <input type="password" name="memberPwd">
+          <button id="login">로그인</button>
+        </form>
         </li>
+        </c:if>
+        
+        <c:if test="${!empty loginUser}">
+        <li>
+        	<c:url var="mypage" value="mypage.do"/>
+          <button id="login" onclick="location.href='${mypage}'">${loginUser.memberId }</button>
+        </li>
+        </c:if>
+        
         <li>
           <a href="#">고객센터</a>
         </li>
@@ -92,11 +126,20 @@ body {
     </div> 
     <div class="container">
         <div class="row">
-            <div class="col-12" align="center">
-                <a href="#"><img src="resources/images/logo.png" width="220px" height="150px"></a>
+            <div class="col-12" align="center" id="homeLogo">
+                <img src="resources/images/logo.png" width="220px" height="150px">
             </div>
         </div>
     </div>
+    <script>
+    	$(function(){
+    		$("#homeLogo").on("click", function(){
+    			location.href="home.do";
+    		}).mouseenter(function(){
+    			$(this).css("cursor","pointer");
+    		})
+    	})
+    </script>
     <br>
 
     <nav class="navbar navbar-expand-lg sticky-top navbar-light bg-light">
@@ -115,7 +158,7 @@ body {
               <a class="nav-link" href="#"><img src="resources/images/best.png" width="50px" height="50px"><br>베스트</a>
             </li>
               <li class="nav-item dropdown">
-                <a class="nav-link dropdown" href="#" id="navbarDropdown1" role="button" aria-haspopup="true" aria-expanded="false">
+                <a class="nav-link dropdown" href="itemFood.do" id="navbarDropdown1" role="button" aria-haspopup="true" aria-expanded="false">
                 <img src="resources/images/food.png" width="50px" height="50px"><br>Food
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown1" id="food-menu">
@@ -133,7 +176,7 @@ body {
                 </div>
               </li>
               <li class="nav-item dropdown">
-                <a class="nav-link dropdown" href="#" id="navbarDropdown2" role="button" aria-haspopup="true" aria-expanded="false">
+                <a class="nav-link dropdown" href="itemLiving.do" id="navbarDropdown2" role="button" aria-haspopup="true" aria-expanded="false">
                 <img src="resources/images/living.png" width="50px" height="50px"><br>리빙
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown2" id="living-menu">
@@ -155,8 +198,6 @@ body {
           </form>
         </div>
       </nav>
-<!— Optional JavaScript —>
-    <!— jQuery first, then Popper.js, then Bootstrap JS —>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>

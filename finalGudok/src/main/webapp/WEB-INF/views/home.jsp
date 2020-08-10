@@ -1,31 +1,87 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page session="false" language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<html lang="ko">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<html>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>메인페이지</title>
+</head>
+<link rel="shortcut icon" type="image⁄x-icon" href="<%=request.getContextPath()%>/images/logo.png">
+	<!-- 아이콘 -->
+	<script src="https://kit.fontawesome.com/4b6b63d8f6.js" crossorigin="anonymous"></script>
+	<!-- 제이쿼리 -->
+	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<!-- 부트스트랩 -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	<!-- popper 툴팁 -->
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+	<!-- 부트스트랩 스크립트(jQuery보다 아래 있어야함) -->
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+	<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+   <style>
+        /*상단 회원가입, 로그인, 고객센터 메뉴(#menu-list) */
+        #menu-list{
+          line-height: 3;
+          text-align: right;
+        }
 
-    <title>메인페이지</title>
-    <style>
+		#menu-list > li{
+          display: inline-block;
+          margin-right: 50px;
+        }
+		
+		#menu-list a{
+          color:black;
+        }
+		
+			
+		/*나비바 각 카테고리(a태그) 간격조정*/
+        .nav-link{
+            margin : 0 60px 0 60px;
+            color:black;
+        }
+		
+		.nav-item:hover{
+          cursor:pointer;
+        }
+       /*나비바 각 카테고리 간격 설정*/
+        .navbar-nav{
+            margin-left: 50px;
+        }
+        /*나비바 각 카테고리(글씨, 아이콘) 가운데 정렬*/
+        .nav-item{
+          text-align: center;
+        }
+        /*검색바 마진 설정*/
+        #searchBar{
+          margin-left: 50px;
+          margin-right: 50px;
+        }
+        #food-menu, #living-menu{
+          background-color: #f8f9fa;
+          margin-left: 10px;
+          border : none;
+        }
+        .dropdown:hover>.dropdown-menu {
+          text-align: center;
+          display: block;
+        }
+        
+        .form-inline my-2 my-lg-0 > input{
+            margin-left : 50px;
+        }
         /*메인 */
         .cardWrap{
           text-align: center;
         }
-
         .cardWrap a{
           color: black;
         }
-
         .card{
           margin: 0 30px 0 30px;
           display: inline-block;
         }
-
         .carousel-inner > .item > img{
           height: 10px;
         }
@@ -34,18 +90,36 @@
         body{
           font-family: 'Jua', sans-serif;
         }
+        
+        .outer{
+        	display:table;
+        	width:100%;
+        	height:100%;
+        }
+        .inner{
+        	display:table-cell;
+        	vertical-align:middle;
+        	text-align:center;
+        }
+        
+        .centered {
+		  position: relative;
+		  display: inline-block;
+		 
+		  width: 100%;
+		  padding: 1em;
+		}
+		
+		.card{
+			margin:0 auto;
+			float:none;
+			margin-bottom:10px;
+		}
     </style>
-    <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
-  </head>
-  <body>
-  
-  	<header>
-    <jsp:include page="common/menubar.jsp"/>
-    </header>
-	
-	<a href="mypage/memberInfoView.jsp">클릭</a>
-	<section>
-      <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+<body>
+<jsp:include page="common/menubar.jsp"/>
+
+<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner">
           <div class="carousel-item active">
             <img src="resources/images/carousel2.jpg" class="d-block w-100" alt="...">
@@ -68,11 +142,14 @@
       </div>
 
       <br><br><br><br><br>
-
+	<div class="container-fluid">
+	<div class="outer">
+	<div class="inner">
+	<div class="centered">
       <div class=cardWrap>
         <p style="font-size:2em;"><a href="#">오늘의 신상품 ></a></p>
         <br>
-
+		<div class="row">
         <div class="card" style="width: 18rem;">
           <a href="#"><img src="resources/images/salad1.jpg" class="card-img-top" alt="..."></a>
           <div class="card-body">
@@ -101,13 +178,13 @@
           </div>
         </div>
       </div>
-
+	</div>
       <br><br><br><br><br>
 
       <div class=cardWrap>
         <p style="font-size:2em;"><a href="#">베스트 상품 ></a></p>
         <br>
-
+        <div class="row">
         <div class="card" style="width: 18rem;">
           <a href="#"><img src="resources/images/salad1.jpg" class="card-img-top" alt="..."></a>
           <div class="card-body">
@@ -136,13 +213,13 @@
           </div>
         </div>
       </div>
-
+	</div>
       <br><br><br><br><br>
 
       <div class=cardWrap>
         <p style="font-size:2em;">지금 가장 핫한 상품</p>
         <br>
-
+		<div class="row">
         <div class="card" style="width: 18rem;">
           <a href="#"><img src="resources/images/salad1.jpg" class="card-img-top" alt="..."></a>
           <div class="card-body">
@@ -171,13 +248,13 @@
           </div>
         </div>
       </div>
-
+	</div>
       <br><br><br><br><br>
 
       <div class=cardWrap>
-        <p style="font-size:2em;">JM's 추천</p>
+        <p style="font-size:2em;text-align:center;">JM's 추천</p>
         <br>
-
+		<div class="row" style="text-align:middle;">
         <div class="card" style="width: 18rem;">
           <a href="#"><img src="resources/images/salad1.jpg" class="card-img-top" alt="..."></a>
           <div class="card-body">
@@ -206,94 +283,13 @@
           </div>
         </div>
       </div>
-
-      <br><br><br>
-      <hr>
-	</section>
-	
-      <!-- Footer -->
-    <footer class="page-footer font-small indigo">
-
-      <!-- Footer Links -->
-      <div class="container">
-  
-      <!-- Grid row-->
-      <div class="row text-center d-flex justify-content-center pt-5 mb-3">
-  
-          <!-- Grid column -->
-          <div class="col-md-2 mb-3">
-          <h6 class="text-uppercase font-weight-bold">
-              <a href="#!">About Goose</a>
-          </h6>
-          </div>
-          <!-- Grid column -->
-  
-          <!-- Grid column -->
-          <div class="col-md-2 mb-3">
-          <h6 class="text-uppercase font-weight-bold">
-              <a href="#!">이용약관</a>
-          </h6>
-          </div>
-          <!-- Grid column -->
-  
-          <!-- Grid column -->
-          <div class="col-md-2 mb-3">
-          <h6 class="text-uppercase font-weight-bold">
-              <a href="#!">개인정보처리방침</a>
-          </h6>
-          </div>
-          <!-- Grid column -->
-  
-          <!-- Grid column -->
-          <div class="col-md-2 mb-3">
-          <h6 class="text-uppercase font-weight-bold">
-              <a href="#!">고객센터</a>
-          </h6>
-          </div>
-          <!-- Grid column -->
-  
-          <!-- Grid column -->
-          <!-- <div class="col-md-2 mb-3">
-          <h6 class="text-uppercase font-weight-bold">
-              <a href="#!">Contact</a>
-          </h6>
-          </div> -->
-          <!-- Grid column -->
-  
       </div>
-      <!-- Grid row-->
-      <hr class="rgba-white-light" style="margin: 0 15%;">
-  
-      <!-- Grid row-->
-      <div class="row d-flex text-center justify-content-center mb-md-0 mb-4">
-  
-          <!-- Grid column -->
-          <div class="col-md-8 col-12 mt-5">
-          <p style="line-height: 1.7rem">
-            회사명 : 주식회사 Goose <br>
-            사업자등록번호 : 123-45-7890 <br>
-            주소 : 경기도 동두천시 동두천로 139 부영아파트 902동 1104호 <br>
-            연락처 : 010-1234-5678 <br>
-            개인정보관리 책임자 : 박재명 <br>
-            대표자 : 박재명(JM)
-          </p>
-          </div>
-          <!-- Grid column -->
-
-     </div>
-      <!-- Grid row-->
-      <hr class="clearfix d-md-none rgba-white-light" style="margin: 10% 15% 5%;">
-  
-      <!-- Copyright -->
-      <div class="footer-copyright text-center py-3">© 2020 Copyright : Goose, All rights reserved
-      </div>
-      <!-- Copyright -->
-  
-  </footer>
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-  </body>
+	</div>
+	</div>
+	</div>
+	</div>
+    <br><br><br>
+    <hr>
+<jsp:include page="common/footer.jsp"/>
+</body>
 </html>

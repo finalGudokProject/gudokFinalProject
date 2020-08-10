@@ -339,6 +339,7 @@
 	      </div>
 	    </div>
     </div>
+    <jsp:include page="../common/footer.jsp"/>
     <script>
     var clicked = false;
     $(".selectAll").on("click", function() {
