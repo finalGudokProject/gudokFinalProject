@@ -7,6 +7,7 @@
 	<bean id="dataSource" lazy-init="default"
 		class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close">
+		
 	<!-- destroy-method="close"는 주어진 세션을 자동으로 close하라는 의미
 		(close 메소드 자동 실행) -->
 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></property>
