@@ -253,7 +253,7 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 					<c:if test="${empty loginUser.memberNo || hResult.memberNo != loginUser.memberNo}">
 					<span id ="heart" title="찜하기"><i class="fa fa-heart-o" aria-hidden="true" ></i> </span>
 					</c:if>
-					<c:if test="${hResult.memberNo == loginUser.memberNo && !empty ilv.heartNo}">
+					<c:if test="${!empty loginUser.memberNo && hResult.memberNo == loginUser.memberNo && !empty ilv.heartNo}">
 						<span id ="heart" class="liked" title="찜하기"><i class="fa fa-heart" aria-hidden="true"></i> </span>
 					</c:if>
 					</div>
@@ -859,37 +859,54 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 					if($("#cycleText").val() == ""){
 						swal("","구독 주기를 선택해 주세요.","error");
 					}else{
-						$.ajax({
-							  url : "basket.do",
-							  data : {itemNo:itemNo, memberNo:memberNo, memberId:memberId, email:email, cartSubs:cartSubs, cartCount:cartCount},
-							  type : "POST",
-							  success:function(data){
-								if(data == "success"){
-									swal("","장바구니에 추가되었습니다.","success").then((result)=>{
-										if(result){
-											swal({
-												text : "장바구니로 이동하시겠습니까?",
-												icon : "warning",
-												buttons : ["예", "아니오"],
-												closeOnEsc: false,
-												dangerMode : true,
-												}).then((willDelete)=>{
-												if(willDelete){
-													
-												}else{
-													location.href="basketPage.do";
-												}
-											})
-										}	
-										})
+						if(${loginUser.memberNo == null}){
+							swal({
+								text : "로그인해야 사용 가능한 기능입니다. 로그인 하시겠습니까?",
+								icon : "error",
+								buttons : ["예", "아니오"],
+								closeOnEsc : false,
+								dangerMode : true,
+							}).then((loginCheck)=>{
+								if(loginCheck){
+									
+								}else{
+									swal("","로그인 폼으로","info");
 								}
-							},
-							  error:function(request, status, errorData){
-				                	alert("error code: " + request.status + "\n"
-				                	+"message: " + request.responseText
-				                	+"error: " + errorData);
-				               }
-						  })
+							})
+						}else{
+							$.ajax({
+								  url : "basket.do",
+								  data : {itemNo:itemNo, memberNo:memberNo, memberId:memberId, email:email, cartSubs:cartSubs, cartCount:cartCount},
+								  type : "POST",
+								  success:function(data){
+									if(data == "success"){
+										swal("","장바구니에 추가되었습니다.","success").then((result)=>{
+											if(result){
+												swal({
+													text : "장바구니로 이동하시겠습니까?",
+													icon : "warning",
+													buttons : ["예", "아니오"],
+													closeOnEsc: false,
+													dangerMode : true,
+													}).then((willDelete)=>{
+													if(willDelete){
+														
+													}else{
+														location.href="basketPage.do?memberNo="+memberNo;
+													}
+												})
+											}	
+											})
+									}
+								},
+								  error:function(request, status, errorData){
+					                	alert("error code: " + request.status + "\n"
+					                	+"message: " + request.responseText
+					                	+"error: " + errorData);
+					               }
+							  })
+							
+						}
 					}
 				})
 			})

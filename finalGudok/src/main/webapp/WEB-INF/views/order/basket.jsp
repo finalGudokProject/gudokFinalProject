@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -93,6 +94,7 @@ jQuery(document).ready(function(){
 				</tr>
 				
 				</thead>
+				<c:forEach var="c" items="${list }">
 				<tr style="border-bottom:1px solid lightgray;vertical-align:middle;">
 					<td class="listChk"><input type="checkbox" class="chk"></td>
 					<td colspan="2" style="width:30%;"><img src="${contextPath }/resources/images/breadLogo.jpg" class="basketImg"></td>
@@ -109,22 +111,7 @@ jQuery(document).ready(function(){
 					</select>
 					<td>10,000원</td>
 				</tr>
-				<tr style="border-bottom:1px solid lightgray;vertical-align:middle;">
-					<td class="listChk"><input type="checkbox" class="chk"></td>
-					<td colspan="2" style="width:30%;"><img src="${contextPath }/resources/images/breadLogo.jpg" class="basketImg"></td>
-					<td>상품명상품명상품명상품명상품명상품명상품명상품</td>
-					<td class="countTd"><img src="${contextPath }/resources/images/XSIGN.png" class="signImg" id="signM">
-					<input type="text" readonly class="amountT" value="1" style="width:50px;text-align:center;">
-					<img src="${contextPath }/resources/images/plus.png" class="signImg" id="signP"></td>
-					<td>
-					<select style="width:80px;height:30px;">
-						<option value="1">1주일</option>
-						<option value="2">2주일</option>
-						<option value="3">3주일</option>
-						<option value="4">1개월</option>
-					</select>
-					<td>10,000원</td>
-				</tr>
+				</c:forEach>
 				<tr style="border-bottom:1px solid lightgray;vertical-align:middle;">
 					<td class="listChk"><input type="checkbox" class="chk"></td>
 					<td colspan="2" style="width:30%;"><img src="${contextPath }/resources/images/breadLogo.jpg" class="basketImg"></td>

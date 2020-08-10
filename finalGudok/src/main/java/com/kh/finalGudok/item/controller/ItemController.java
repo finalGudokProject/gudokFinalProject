@@ -195,8 +195,11 @@ public class ItemController {
 	}
 	
 	@RequestMapping("basketPage.do")
-	public String basketPage() {
-		return "order/basket";
+	public ModelAndView basketPage(ModelAndView mv, Integer memberNo) {
+		ArrayList<Cart> list = iService.selectBasket(memberNo);
+		mv.addObject("list", list).setViewName("order/basket");
+		System.out.println("basketList : " + list);
+		return mv;
 	}
 	
 	@RequestMapping("inquire.do")

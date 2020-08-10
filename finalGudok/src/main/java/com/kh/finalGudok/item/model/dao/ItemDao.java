@@ -103,5 +103,9 @@ public class ItemDao {
 		return sqlSessionTemplate.selectOne("heartMapper.selectHeart", itemNo);
 	}
 
+	public ArrayList<Cart> selectBasket(int memberNo) {
+		return (ArrayList)sqlSessionTemplate.selectList("cartMapper.selectCart", memberNo);
+	}
+
 
 }
