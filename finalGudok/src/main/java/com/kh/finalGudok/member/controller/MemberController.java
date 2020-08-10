@@ -13,9 +13,31 @@ import com.kh.finalGudok.member.model.vo.Member;
 
 @Controller
 public class MemberController {
+	
 	@Autowired
 	MemberService mService;
 	
+	@RequestMapping("moveToLogin.do")
+	public String login1() {
+		return "member/login";
+	}
+	
+	@RequestMapping("signUp.do")
+	public String signUp() {
+		return "member/signUp";
+	}
+	
+	@RequestMapping("find.do")
+	public String findId() {
+		return "member/find";
+	}
+	
+	@RequestMapping("payment.do")
+	public String payment() {
+		return "items/payment";
+	}
+	
+//	마이페이지
 	@RequestMapping(value="login.do", method=RequestMethod.POST)
 	public String memberLogin(Member m, HttpSession session, Model model) {
 		
@@ -31,10 +53,10 @@ public class MemberController {
 		}else {	
 			model.addAttribute("msg","로그인 실패");
 			return "common/errorPage";
+		
 		}
 	}
 	
-//	마이페이지
 	@RequestMapping("mypage.do")
 	public String mypageView() {
 		return "mypage/subscribe";
@@ -67,5 +89,5 @@ public class MemberController {
 		}
 	}
 	
-	
 }
+
