@@ -32,10 +32,11 @@
         font-size: 1em;
         font-weight: lighter;
         margin-left: 10%;
+        margin-bottom:5%;
     }
 
     .myPage_Menu>li {
-        margin-bottom: 5%;
+        margin-bottom: 10%;
     }
 
     .myPage_Menu li a {
@@ -163,17 +164,11 @@
 
     .delivery table {
       width: 100%;
+      text-align:center;
     }
-
+    
     .delivery table tr {
       height: 45px;
-    }
-
-    .delivery table button {
-      border: 1px solid black;
-      background: #fff;
-      padding: 1% 5%;
-      margin-right: 3%;
     }
 
     /* 모달 */
@@ -187,12 +182,29 @@
       border: 1px solid black;
       color: black;
       display: block;
-      padding: 1% 1%;
-      margin-right: 3%;
+      width:70%;
+      margin: 0 auto;
       text-decoration: none;
+      height: 35px;
+      line-height:35px;
     }
 
     a#exchange_pop:hover {
+      border-color: rgb(155, 150, 150);
+    }
+    
+    a#destination_pop {
+      border: 1px solid black;
+      color: black;
+      display: block;
+      width:40%;
+      margin: 0 auto;
+      text-decoration: none;
+      height: 35px;
+      line-height:35px;
+    }
+
+    a#destination_pop:hover {
       border-color: rgb(155, 150, 150);
     }
 
@@ -311,7 +323,7 @@
                 </ul>
             </li>
             <li>
-                <a href="#news"><img src="resources/images/benefit.png"
+                <a href="#news"><img src="resources/images/my_benefit.png"
                         style="width: 25%; height: 25%; margin-right: 4%;">나의혜택</a>
                 <ul>
                     <li><a href="#">회원 등급</a></li>
@@ -341,7 +353,7 @@
 	        <div class="member_info">
 	          <div class="member">
 	            <div class="sub">
-	              <span class="name">홍길동 <span class="etc">&nbsp;님</span></span>
+	              <span class="name">${loginUser.memberName } <span class="etc">&nbsp;님</span></span>
 	              <br>
 	              <span class="grade">알 <span class="etc">&nbsp;등급</span></span>
 	              <br>
@@ -387,14 +399,14 @@
 	            <td>2020.08.06</td>
 	            <td>무가당 드링킹 요거트</td>
 	            <td>배송중</td>
-	            <td><button>배송지 변경</button></td>
+	            <td><a href="#destination_form" id="destination_pop">배송지 변경</a></td>
 	            <td><a href="#exchange_form" id="exchange_pop">교환 신청</a></td>
 	          </tr>
 	          <tr>
 	            <td>2020.08.06</td>
 	            <td>무가당 드링킹 요거트</td>
 	            <td>배송중</td>
-	            <td><button>배송지 변경</button></td>
+	            <td><a href="#destination_form" id="destination_pop">배송지 변경</a></td>
 	            <td><a href="#exchange_form" id="exchange_pop">교환 신청</a></td>
 	          </tr>
 	
@@ -432,6 +444,7 @@
 	      </div>
 	    </div>
     </div>
+    <br style="clear:both;">
     <jsp:include page="../common/footer.jsp"/>
 </body>
 </html>

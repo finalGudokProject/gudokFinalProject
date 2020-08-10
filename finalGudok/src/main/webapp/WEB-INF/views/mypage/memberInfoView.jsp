@@ -32,10 +32,11 @@
         font-size: 1em;
         font-weight: lighter;
         margin-left: 10%;
+        margin-bottom:5%;
     }
 
     .myPage_Menu>li {
-        margin-bottom: 5%;
+        margin-bottom: 10%;
     }
 
     .myPage_Menu li a {
@@ -58,6 +59,7 @@
 
     .content_sub {
         margin-left: 15%;
+        margin-bottom:8%;
     }
 
     .sub_content {
@@ -241,7 +243,7 @@
                 </ul>
             </li>
             <li>
-                <a href="#news"><img src="resources/images/benefit.png"
+                <a href="#news"><img src="resources/images/my_benefit.png"
                         style="width: 25%; height: 25%; margin-right: 4%;">나의혜택</a>
                 <ul>
                     <li><a href="#">회원 등급</a></li>
@@ -339,6 +341,7 @@
             </div>
         </div>
     </div>
+    <br style="clear:both;">
     <jsp:include page="../common/footer.jsp"/>
     <!-- Postcodify를 로딩하자 -->
     <script src="//d1p7wdleee1q2z.cloudfront.net/post/search.min.js"></script>
