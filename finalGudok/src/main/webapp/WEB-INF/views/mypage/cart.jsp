@@ -32,10 +32,11 @@
         font-size: 1em;
         font-weight: lighter;
         margin-left: 10%;
+        margin-bottom:5%;
     }
 
     .myPage_Menu>li {
-        margin-bottom: 5%;
+        margin-bottom: 10%;
     }
 
     .myPage_Menu li a {
@@ -237,7 +238,7 @@
                 </ul>
             </li>
             <li>
-                <a href="#news"><img src="resources/images/benefit.png"
+                <a href="#news"><img src="resources/images/my_benefit.png"
                         style="width: 25%; height: 25%; margin-right: 4%;">나의혜택</a>
                 <ul>
                     <li><a href="#">회원 등급</a></li>
@@ -267,7 +268,7 @@
 	        <div class="member_info">
 	          <div class="member">
 	            <div class="sub">
-	              <span class="name">홍길동 <span class="etc">&nbsp;님</span></span>
+	              <span class="name">${loginUser.memberName } <span class="etc">&nbsp;님</span></span>
 	              <br>
 	              <span class="grade">알 <span class="etc">&nbsp;등급</span></span>
 	              <br>
@@ -315,9 +316,9 @@
 	          </td>
 	          <td class="bottom"><span style="float:left; margin-left: 1%;">옳은 유기농 우유</span></td>
 	          <td class="bottom">
-	            <img class="minus" src="resources/images/minus.png" style="width: 10%; height: auto;">
+	            <img class="minus" src="resources/images/my_minus.png" style="width: 10%; height: auto;">
 	            <span class="amount" style="display: inline-block; width: 40px;">1</span>
-	            <img class="plus" src="resources/images/plus.png" style="width: 10%; height: auto;">
+	            <img class="plus" src="resources/images/my_plus.png" style="width: 10%; height: auto;">
 	          </td>
 	          <td class="bottom"><span class="price">4,950</span><span>원</span></td>
 	        </tr>
@@ -330,9 +331,9 @@
 	          </td>
 	          <td class="bottom"><span style="float:left; margin-left: 1%;">옳은 유기농 우유</span></td>
 	          <td class="bottom">
-	            <img class="minus" src="resources/images/minus.png" style="width: 10%; height: auto;">
+	            <img class="minus" src="resources/images/my_minus.png" style="width: 10%; height: auto;">
 	            <span class="amount" style="display: inline-block; width: 40px;">1</span>
-	            <img class="plus" src="resources/images/plus.png" style="width: 10%; height: auto;">
+	            <img class="plus" src="resources/images/my_plus.png" style="width: 10%; height: auto;">
 	          </td>
 	          <td class="bottom"><span class="price">4,950</span><span>원</span></td>
 	        </tr>
@@ -365,7 +366,7 @@
 	      </div>
 	    </div>
     </div>
-    <hr style="postion:absolute;">
+    <br style="clear:both;">
     <jsp:include page="../common/footer.jsp"/>
     
     <script>

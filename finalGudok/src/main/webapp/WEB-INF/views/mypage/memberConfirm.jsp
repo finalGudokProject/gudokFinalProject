@@ -32,10 +32,11 @@
         font-size: 1em;
         font-weight: lighter;
         margin-left: 10%;
+        margin-bottom:5%;
     }
 
     .myPage_Menu>li {
-        margin-bottom: 5%;
+        margin-bottom: 10%;
     }
 
     .myPage_Menu li a {
@@ -184,7 +185,7 @@
         </ul>
       </li>
       <li>
-        <a href="#news"><img src="resources/images/benefit.png" style="width: 25%; height: 25%; margin-right: 4%;">나의혜택</a>
+        <a href="#news"><img src="resources/images/my_benefit.png" style="width: 25%; height: 25%; margin-right: 4%;">나의혜택</a>
         <ul>
           <li><a href="#">회원 등급</a></li>
           <li><a href="#">적립금 내역</a></li>
@@ -241,7 +242,7 @@
       </div>
 
       <div id="check">
-        <h3 class="title">본인확인</h3>
+        <h2 class="title" style="color:black; margin-top:3%;">본인확인</h2>
 		<form action="memberConfirm.do" method="post">
 			<input type="password" name="memberPwd" placeholder="비밀번호를 입력해주세요.">
 	        <br>
@@ -250,6 +251,7 @@
       </div>
     </div>
   </div>
+  <br style="clear:both;">
   <jsp:include page="../common/footer.jsp"/>
 </body>
 </html>

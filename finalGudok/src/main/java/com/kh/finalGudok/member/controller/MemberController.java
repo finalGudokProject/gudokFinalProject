@@ -40,10 +40,7 @@ public class MemberController {
 //	마이페이지
 	@RequestMapping(value="login.do", method=RequestMethod.POST)
 	public String memberLogin(Member m, HttpSession session, Model model) {
-		
-//		System.out.println("id : " + m.getId());
-//		System.out.println("pwd : " + m.getPwd());
-		
+
 		Member loginUser = mService.loginMember(m);
 		
 		System.out.println(loginUser);
