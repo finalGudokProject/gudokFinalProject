@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.finalGudok.item.model.vo.AdminItem;
 import com.kh.finalGudok.item.model.vo.Item;
 import com.kh.finalGudok.item.model.vo.ItemListView;
 import com.kh.finalGudok.item.model.vo.PageInfo;
@@ -38,5 +39,14 @@ public class ItemDao {
 
 	public ArrayList<Review> selectReview(int itemNo) {
 		return (ArrayList)sqlSessionTemplate.selectList("reviewMapper.selectReview", itemNo);
+	}
+
+	public int insertItem(AdminItem i) {
+		
+		return sqlSessionTemplate.insert("adminItemMapper.insertItem",i);
+	}
+
+	public int insertImage(AdminItem i) {
+		return sqlSessionTemplate.insert("adminItemMapper.insertItemImage",i);
 	}
 }

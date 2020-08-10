@@ -2,6 +2,7 @@ package com.kh.finalGudok.item.model.service;
 
 import java.util.ArrayList;
 
+import com.kh.finalGudok.item.model.vo.AdminItem;
 import com.kh.finalGudok.item.model.vo.Item;
 import com.kh.finalGudok.item.model.vo.ItemListView;
 import com.kh.finalGudok.item.model.vo.PageInfo;
@@ -18,6 +19,10 @@ public interface ItemService {
 	ItemListView selectItem(int itemNo);
 
 	ArrayList<Review> selectReview(int itemNo);
+
+	int insertItem(AdminItem i);
+
+	int insertImage(AdminItem i);
 
 
 

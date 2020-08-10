@@ -146,11 +146,11 @@ input, select,textarea{
             <div class="container box">
                 <h3>일반 상품 등록</h3>
                 <br>
-                <button type="button" onclick="location.href='iInsert.do'">일반 상품</button>&nbsp;
-                <button type="button" onclick="location.href='eInsert.do'">이벤트 상품</button>
+                <button type="button" onclick="location.href='iInsertView.do'">일반 상품</button>&nbsp;
+                <button type="button" onclick="location.href='eInsertView.do'">이벤트 상품</button>
                 <br><br>
                 
-          		<form action="" method="post" encType="multipart/form-data" onsubmit="return validate()">
+          		<form action="iInsert.do" method="post" encType="multipart/form-data" onsubmit="return validate()">
                 <table>
               
                     <tr>
@@ -158,7 +158,7 @@ input, select,textarea{
                          	  상품명
                         </td>
                         <td colspan="3">
-                                <select name="product" id="category" style="float:left;">
+                                <select name="categoryNo" id="category" style="float:left;">
                                     <option value="0">카테고리를 선택하세요.</option>
                                     <option value="f1">음료</option>
                                     <option value="f2">유제품</option>
@@ -207,7 +207,7 @@ input, select,textarea{
                             <div class="filebox preview-image"> 
                                 <input class="upload-name" value="파일선택" disabled="disabled" > 
                                 <label for="input-file">업로드</label> 
-                                <input type="file" id="input-file" class="upload-hidden" name="uploadFile"> 
+                                <input type="file" id="input-file" class="upload-hidden" name="uploadFile" multiple accept="image/*" title="이미지 파일만 업로드 가능"> 
                          	</div>
                         </td>
                     </tr>
@@ -271,32 +271,22 @@ input, select,textarea{
     //가격 문자 입력 제한 및 3자리마다 콤마
         $(function() {
 
-         $('input[name=itemPrice]').css('imeMode','disabled').keypress(function(event) {
-          if(event.which && (event.which < 48 || event.which > 57) ) {
+         $('input[name=itemPrice]').css('imeMode','disabled').keypress(function(event){
+          if(event.which && (event.which<48||event.which>57)){
            event.preventDefault();
           }
          }).keyup(function(){
-          if( $(this).val() != null && $(this).val() != '' ) {
-           $(this).val( $(this).val().replace(/[^0-9]/g, '') );
-           $(this).val( comma($(this).val()));
+          if( $(this).val() != null && $(this).val() != '' ){
+           $(this).val( $(this).val().replace(/[^0-9]/g, ''));
+          
           }
          });
          
          
          });
          
-         function comma(str) {
-             str = String(str);
-             return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
-         }
-         function inputNumberFormat(obj) {
-             obj.value = comma(uncomma(obj.value));
-         }
+       
          
-    
-    
-    
-    
     
     
         // 파일 업로드 관련

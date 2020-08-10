@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.finalGudok.item.model.dao.ItemDao;
+import com.kh.finalGudok.item.model.vo.AdminItem;
 import com.kh.finalGudok.item.model.vo.Item;
 import com.kh.finalGudok.item.model.vo.ItemListView;
 import com.kh.finalGudok.item.model.vo.PageInfo;
@@ -40,6 +41,16 @@ public class ItemServiceImpl implements ItemService {
 	@Override
 	public ArrayList<Review> selectReview(int itemNo) {
 		return iDao.selectReview(itemNo);
+	}
+
+	@Override
+	public int insertItem(AdminItem i) {
+		return iDao.insertItem(i);
+	}
+
+	@Override
+	public int insertImage(AdminItem i) {
+		return iDao.insertImage(i);
 	}
 
 
