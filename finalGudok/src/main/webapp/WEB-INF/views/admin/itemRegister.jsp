@@ -44,7 +44,97 @@ input, select,textarea{
     border: 1px solid #CCCCCC;
 }
 
-/*summer note*/
+
+/*파일첨부 이미지*/
+.where {
+  display: block;
+  margin: 25px 15px;
+  font-size: 11px;
+  color: #000;
+  text-decoration: none;
+  font-family: verdana;
+  font-style: italic;
+} 
+
+.filebox input[type="file"] {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip:rect(0,0,0,0);
+    border: 0;
+}
+
+.filebox label {
+    display: inline-block;
+    padding: .5em .75em;
+    color: #999;
+    font-size: inherit;
+    line-height: normal;
+    vertical-align: middle;
+    background-color: #fdfdfd;
+    cursor: pointer;
+    border: 1px solid #ebebeb;
+    border-bottom-color: #e2e2e2;
+    border-radius: .25em;
+    margin-bottom:0px !important;
+}
+
+/* named upload */
+.filebox .upload-name {
+    display: inline-block;
+    padding: .5em .75em;
+    font-size: inherit;
+    font-family: inherit;
+    line-height: normal;
+    vertical-align: middle;
+    background-color: #f5f5f5;
+  border: 1px solid #ebebeb;
+  border-bottom-color: #e2e2e2;
+  border-radius: .25em;
+  -webkit-appearance: none; /* 네이티브 외형 감추기 */
+  -moz-appearance: none;
+  appearance: none;
+}
+
+/* imaged preview */
+.filebox .upload-display {
+    margin-bottom: 5px;
+}
+
+@media(min-width: 768px) {
+    .filebox .upload-display {
+        display: inline-block;
+        margin-right: 5px;
+        margin-bottom: 0;
+    }
+}
+
+.filebox .upload-thumb-wrap {
+    display: inline-block;
+    width: 350px;
+    padding: 2px;
+    vertical-align: middle;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #fff;
+}
+
+.filebox .upload-display img {
+    display: block;
+    max-width: 100%;
+    width: 100% \9;
+    height: auto;
+}
+
+.filebox.bs3-primary label {
+  color: #fff;
+  background-color: #337ab7;
+    border-color: #2e6da4;
+}
+
 
 
 </style>
@@ -56,8 +146,8 @@ input, select,textarea{
             <div class="container box">
                 <h3>일반 상품 등록</h3>
                 <br>
-                <button>일반 상품</button>&nbsp;
-                <button>이벤트 상품</button>
+                <button type="button">일반 상품</button>&nbsp;
+                <button type="button" onclick="location.href='itemEvent.do'">이벤트 상품</button>
                 <br><br>
                 <table>
               
@@ -110,9 +200,13 @@ input, select,textarea{
                     </tr>
 
                     <tr>
-                        <td id="td1">제품 상세 정보</td>
+                        <td id="td1">제품 상세 이미지</td>
                         <td colspan="3">
-                            <textarea id="summernote" name="itemContent"></textarea>
+                            <div class="filebox preview-image"> 
+                                <input class="upload-name" value="파일선택" disabled="disabled" > 
+                                <label for="input-file">업로드</label> 
+                                <input type="file" id="input-file" class="upload-hidden"> 
+                         	</div>
                         </td>
                     </tr>
                
@@ -128,62 +222,57 @@ input, select,textarea{
         
         
     
+  
         <script>
-        
-        $(function() {
-        	//여기 아래 부분
-        	
-        	$('#summernote').summernote({
-        		  height: 300,                 // 에디터 높이
-        		  minHeight: null,             // 최소 높이
-        		  maxHeight: null,             // 최대 높이
-        		  focus: true,                  // 에디터 로딩후 포커스를 맞출지 여부
-        		  lang: "ko-KR",					// 한글 설정
-        		  placeholder: '최대 2048자까지 쓸 수 있습니다'	//placeholder 설정
-                  
-        	});
-        });
-       
         $(function(){
-	        $('#summernote').summernote({
-	  		  toolbar:[
-	  			    ['fontname', ['fontname']],
-	  			    ['fontsize', ['fontsize']],
-	  			    ['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
-	  			    ['color', ['forecolor','backcolor']],
-	  			    ['table', ['table']],
-	  			    ['para', ['ul', 'ol', 'paragraph']],
-	  			    ['height', ['height']],//
-	  			    ['insert',['picture','link','video']],
-	  			    ['view', ['fullscreen', 'help']]
-	  			  ],
-	  			fontNames:['Arial','맑은 고딕','궁서','굴림체','굴림','돋음체','바탕체'],
-	  			fontSizes:['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72']
-  	 	 });
-       });
-        
-        
-     	/* // 서머노트에 text 쓰기
-        $('#summernote').summernote('insertText');
+       var fileTarget = $('.filebox .upload-hidden');
 
+        fileTarget.on('change', function(){
+            if(window.FileReader){
+                // 파일명 추출
+                var filename = $(this)[0].files[0].name;
+            } 
 
-        // 서머노트 쓰기 비활성화
-        $('#summernote').summernote('disable');
+            else {
+                // Old IE 파일명 추출
+                var filename = $(this).val().split('/').pop().split('\\').pop();
+            };
 
-        // 서머노트 쓰기 활성화
-        $('#summernote').summernote('enable');
+            $(this).siblings('.upload-name').val(filename);
+        });
 
+        //preview image 
+        var imgTarget = $('.preview-image .upload-hidden');
 
-        // 서머노트 리셋
-        $('#summernote').summernote('reset');
+        imgTarget.on('change', function(){
+            var parent = $(this).parent();
+            parent.children('.upload-display').remove();
 
+            if(window.FileReader){
+                //image 파일만
+                if (!$(this)[0].files[0].type.match(/image\//)) return;
+                
+                var reader = new FileReader();
+                reader.onload = function(e){
+                    var src = e.target.result;
+                    parent.prepend('<div class="upload-display"><div class="upload-thumb-wrap"><img src="'+src+'" class="upload-thumb"></div></div>');
+                }
+                reader.readAsDataURL($(this)[0].files[0]);
+            }
 
-        // 마지막으로 한 행동 취소 ( 뒤로가기 )
-        $('#summernote').summernote('undo');
-        // 앞으로가기
-        $('#summernote').summernote('redo'); */
-        </script>
-        
+            else {
+                $(this)[0].select();
+                $(this)[0].blur();
+                var imgSrc = document.selection.createRange().text;
+                parent.prepend('<div class="upload-display"><div class="upload-thumb-wrap"><img class="upload-thumb"></div></div>');
+
+                var img = $(this).siblings('.upload-display').find('img');
+                img[0].style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(enable='true',sizingMethod='scale',src=\""+imgSrc+"\")";        
+            }
+        });
+    });
+            </script>
+     
         
        <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
