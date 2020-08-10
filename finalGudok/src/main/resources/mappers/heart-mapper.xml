@@ -32,4 +32,5 @@
 		FROM HEART
 		WHERE ITEM_NO=#{itemNo}
 	</select>
+	
 </mapper>

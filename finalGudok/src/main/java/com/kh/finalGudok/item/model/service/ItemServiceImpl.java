@@ -116,6 +116,16 @@ public class ItemServiceImpl implements ItemService {
 		return iDao.selectBasket(memberNo);
 	}
 
+	@Override
+	public int updatePChoice(int itemNo) {
+		return iDao.updatePChoice(itemNo);
+	}
+
+	@Override
+	public int updateMChoice(int itemNo) {
+		return iDao.updateMChoice(itemNo);
+	}
+
 
 
 

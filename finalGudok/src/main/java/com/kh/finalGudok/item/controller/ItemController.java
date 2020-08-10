@@ -161,10 +161,11 @@ public class ItemController {
 	
 	@RequestMapping("choice.do")
 	@ResponseBody
-	public String choiceInsert(HttpServletRequest request, Heart h) {
+	public String choiceInsert(HttpServletRequest request, Heart h, Integer itemNo) {
 		int result = iService.insertChoice(h);
 		System.out.println("찜 확인 : " + result);
-		if(result > 0) {
+		int result2 = iService.updatePChoice(itemNo);
+		if(result > 0 && result2 > 0) {
 			return "success";
 		}else {
 			throw new ItemException("찜 실패");
@@ -173,10 +174,11 @@ public class ItemController {
 	
 	@RequestMapping("choiceDel.do")
 	@ResponseBody
-	public String choiceDelete(HttpServletRequest request, Heart h) {
+	public String choiceDelete(HttpServletRequest request, Heart h, Integer itemNo) {
 		int result = iService.deleteChoice(h);
 		System.out.println("찜 삭제 확인 : " + result);
-		if(result > 0) {
+		int result2 = iService.updateMChoice(itemNo);
+		if(result > 0 && result > 0) {
 			return "success";
 		}else {
 			throw new ItemException("찜 삭제 실패");

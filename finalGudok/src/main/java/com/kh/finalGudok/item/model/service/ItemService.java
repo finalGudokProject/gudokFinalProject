@@ -52,9 +52,8 @@ public interface ItemService {
 
 	ArrayList<Cart> selectBasket(int memberNo);
 
+	int updatePChoice(int itemNo);
 
-
-
-
+	int updateMChoice(int itemNo);
 
 }

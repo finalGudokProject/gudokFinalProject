@@ -107,5 +107,13 @@ public class ItemDao {
 		return (ArrayList)sqlSessionTemplate.selectList("cartMapper.selectCart", memberNo);
 	}
 
+	public int updatePChoice(int itemNo) {
+		return sqlSessionTemplate.update("itemMapper.updatePChoice",itemNo);
+	}
+
+	public int updateMChoice(int itemNo) {
+		return sqlSessionTemplate.update("itemMapper.updateMChoice",itemNo);
+	}
+
 
 }

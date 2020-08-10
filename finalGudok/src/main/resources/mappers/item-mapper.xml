@@ -39,5 +39,17 @@
 		    , #{email})
 	</insert>
 	
+	<update id="updatePChoice" parameterType="_int">
+		UPDATE ITEM
+		SET ITEM_CHOICE = ITEM_CHOICE+1
+		WHERE ITEM_NO=#{itemNo}
+	</update>
+	
+	<update id="updateMChoice" parameterType="_int">
+		UPDATE ITEM
+		SET ITEM_CHOICE = ITEM_CHOICE-1
+		WHERE ITEM_NO=#{itemNo}
+	</update>
+	
 	
 </mapper>
