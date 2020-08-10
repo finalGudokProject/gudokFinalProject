@@ -15,4 +15,15 @@ public class MemberController {
 	public String signUp() {
 		return "member/signUp";
 	}
+	
+	@RequestMapping("find.do")
+	public String findId() {
+		return "member/find";
+	}
+	
+	@RequestMapping("payment.do")
+	public String payment() {
+		return "items/payment";
+	}
+	
 }

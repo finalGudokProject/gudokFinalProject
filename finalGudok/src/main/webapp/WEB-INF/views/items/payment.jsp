@@ -1,9 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<!doctype html>
-<html lang="ko">
-
+<!DOCTYPE html>
+<html>
 <head>
 <!-- Required meta tags -->
 <meta charset="utf-8">
@@ -16,54 +15,37 @@
 	integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
 	crossorigin="anonymous">
 
-<title>로그인</title>
+<title>Hello, world!</title>
 <style>
 /*폰트 적용*/
 body {
 	font-family: 'Jua', sans-serif;
 }
 
-.card {
-	/* box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23); */
-	text-align: center;
-	border: none;
-}
-
-#find {
-	margin-top: 30px;
-}
-
-#find>a {
-	color: #495057;
-}
-
-#find>a:hover {
-	color: black;
-	cursor: pointer;
-}
-
-#loginBtn, #signInBtn {
-	color: #495057;
-	border: 1px solid lightgray;
-}
-
-#loginBtn:hover, #signInBtn:hover {
-	color: black;
-	cursor: pointer;
-}
-
-#find > a, #find > div{
-	display:inline-block;
-}
-
 .vl {
-  border-left: 3px solid #495057;
-  height: 15px;
-  margin-right:20px;
-  margin-left:20px;
+	border-left: 3px solid #495057;
+	height: 300px;
+	margin-right: 30px;
+	margin-left: 30px;
 }
 
-.container pt-3{
+#paymentInfo>div {
+	display: inline-block;
+}
+
+#infoTable>tr:nth-child(1) {
+	text-align: center;
+}
+
+td {
+	padding: 10px;
+}
+
+tr:nth-child(1) {
+	text-align: center;
+}
+
+h2{
 	margin-top:30px;
 }
 </style>
@@ -72,44 +54,61 @@ body {
 </head>
 
 <body>
-
 	<jsp:include page="../common/menubar.jsp" />
-	
-	<div class="container pt-3">
-		<div class="row justify-content-sm-center">
-			<div class="col-sm-6 col-md-4">
 
-				<div class="card">
-					<div class="card-body">
-						<h2>로그인</h2>
-						<br>
-						<form class="form-signin">
-							<input type="text" class="form-control mb-3" placeholder="ID"
-								required autofocus> <input type="password"
-								class="form-control mb-3" placeholder="Password" required>
-							<br>
-							<button class="btn btn-md btn-block mb-3" type="submit"
-								id="loginBtn">로그인</button>
-							<!-- <label class="checkbox float-left">
-              <input type="checkbox" value="remember-me">
-                아이디 저장하기
-              </label> -->
-						</form>
-						<div id="find">
-							<a href="find.do">계정찾기</a>
-							<div class="vl"></div>
-							<a href="signUp.do">회원가입</a>
-						</div>
-					</div>
-				</div>
+	<section>
+		<h2 align="center">결제 페이지</h2>
+		<div id="paymentInfo" align="center">
+			<div id="customerInfo">
+				<table id="infoTable">
+					<tr>
+						<td colspan="3">배송정보</td>
+					</tr>
+					<tr>
+						<td>받는 사람</td>
+						<td><input type="text" placeholder=""></td>
+					</tr>
+					<tr>
+						<td>연락처</td>
+						<td colspan="2"><input type="tel" placeholder=""></td>
+					</tr>
+					<tr>
+						<td>구독주기</td>
+						<td colspan="2"><input type="text"></td>
+					</tr>
+					<tr>
+						<td>주소</td>
+						<td><input type="text"></td>
+						<td><button type="button" class="btn">주소 변경</button></td>
+					</tr>
+					<tr>
+						<td>배송 요청사항</td>
+						<td colspan="2"><select name="cycle" id="cycle">
+								<option value="0">--</option>
+								<option value="1">1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+						</select></td>
+					</tr>
+				</table>
+			</div>
+			<div class="vl"></div>
+			<div id="itemInfo">
+				<table>
+					<tr>
+						<td></td>
+					</tr>
+				</table>
 			</div>
 		</div>
-	</div>
 
-	<!-- Footer -->
+	</section>
+
 	<footer>
 		<jsp:include page="../common/footer.jsp" />
 	</footer>
+
 	<!-- Optional JavaScript -->
 	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
 	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"

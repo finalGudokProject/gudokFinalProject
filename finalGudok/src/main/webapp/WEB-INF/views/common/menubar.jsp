@@ -4,7 +4,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<!-- <meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+Bootstrap CSS
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+	integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+	crossorigin="anonymous"> -->
+
 <title>Menubar</title>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <style>
@@ -14,19 +24,36 @@
 	text-align: right;
 }
 
-#menu-list>li {
+#menu-list > li {
 	display: inline-block;
 	margin-right: 50px;
 }
 
 #menu-list a {
-	color: black;
+	color: #495057;;
+}
+
+#menu-list a:hover{
+	color:black;
+	cursor:pointer;
+	text-decoration:none;
 }
 
 /*나비바 각 카테고리(a태그) 간격조정*/
 .nav-link {
 	margin: 0 60px 0 60px;
-	color: black;
+	/* color: #495057; */
+	color:red;
+}
+
+.nav-link:hover{
+	color:black;
+}
+
+/*나비바 각 카테고리(글씨, 아이콘) 가운데 정렬*/
+.nav-item {
+	text-align: center;
+	color: #495057;
 }
 
 .nav-item:hover {
@@ -38,9 +65,12 @@
 	margin-left: 50px;
 }
 
-/*나비바 각 카테고리(글씨, 아이콘) 가운데 정렬*/
-.nav-item {
-	text-align: center;
+.nav-link{
+	color:#495057 !important;
+}
+
+.nav-link:hover{
+	color:black !important;
 }
 
 /*검색바 마진 설정*/
@@ -72,19 +102,45 @@
 	margin-left: 50px;
 }
 
-#searchBtn {
+.btn{
+	border-color: #ced4da;
+	color: #495057;
+}
+
+.btn:hover{
 	border-color: black;
-	color: grey;
+	color:black;
+}
+
+/* #searchBtn {
+	border-color: #ced4da;
+	color: #495057;
+} */
+
+/* #searchBtn:hover{
+	border-color: black;
+	color:black;
+} */
+
+::placeholder {
+	font-size: small;
 }
 
 /*폰트 적용*/
 body {
 	font-family: 'Jua', sans-serif;
+	color:#495057;
 }
 
-a {
-	color: black;
+#cardWrap > a{
+	color:#495057 !important;
 }
+
+a:hover{
+	text-decoration:none;
+	color:black;
+}
+
 </style>
 <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap"
 	rel="stylesheet">
@@ -99,6 +155,7 @@ a {
 			<li><a href="moveToLogin.do">로그인</a></li>
 			<li><a href="#">고객센터</a></li>
 			<li><a href="#">Who is JH?</a></li>
+			<li><a href="payment.do">결제페이지</a>
 		</ul>
 
 	</div>
@@ -179,7 +236,7 @@ a {
 			<!-- </ul> -->
 			<form class="form-inline my-2 my-lg-0" id="searchBar">
 				<input class="form-control mr-sm-2" type="search"
-					placeholder="Search" aria-label="Search">
+					placeholder="검색어를 입력하세요" aria-label="Search">
 				<button class="btn" type="submit" id="searchBtn">Search</button>
 			</form>
 		</div>

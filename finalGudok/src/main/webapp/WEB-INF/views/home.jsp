@@ -3,7 +3,7 @@
 	contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <html lang="ko">
 <head>
-<!-- Required meta tags -->
+<!-- <!-- Required meta tags -->
 <meta charset="utf-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -22,7 +22,7 @@
 }
 
 .cardWrap a {
-	color: black;
+	color:#495057;
 }
 
 .card {
@@ -38,6 +38,8 @@
 body {
 	font-family: 'Jua', sans-serif;
 }
+
+
 </style>
 <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap"
 	rel="stylesheet">
@@ -251,7 +253,6 @@ body {
 		</div>
 
 		<br> <br> <br>
-		<hr>
 	</section>
 
 	<!-- Footer -->

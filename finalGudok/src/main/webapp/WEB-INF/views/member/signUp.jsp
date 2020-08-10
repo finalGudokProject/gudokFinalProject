@@ -26,32 +26,40 @@ body {
 	border: none;
 }
 
-table{
-	margin:auto;
+table {
+	margin: auto;
 }
 
-#btnTd {
+/* #btnTd {
 	text-align: center;
+} */
+
+td {
+	padding: 10px;
 }
 
-td{
-  padding:10px;
+::placeholder {
+	font-size: small;
 }
 
-::placeholder{
-  font-size:small;
-}
-
-button {
-	color: #495057;
-	background-color: none;
+.btn {
 	border: 1px solid #ced4da;
+	color: #495057;
 }
 
 button:hover {
-	color: black;
+	border-color: black;
+	color:black;
 }
 
+#submitBtn{
+	margin-right:10px;
+}
+
+#titleTag{
+	margin-left:-30px;
+	margin-top:30px;
+}
 </style>
 <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap"
 	rel="stylesheet">
@@ -59,49 +67,48 @@ button:hover {
 <body>
 	<jsp:include page="../common/menubar.jsp" />
 
-		<br> <br>
-		<h2 align="center">회원가입</h2>
+	<section>
+		<h2 align="center" id="titleTag">회원가입</h2>
 		<br>
-		
+
 		<div>
 			<form action="" method="post" id="signUpForm">
-				<table align="center" cellspacing="5" id="signUpTb">
+				<table align="center" width="500" id="signUpTb">
 					<tr>
 						<td>*아이디</td>
-						<td><input type="text" id="id" placeholder="사용할 아이디를 입력하세요"
+						<td><input type="text" id="id" placeholder="사용할 아이디를 입력하세요."
 							required></td>
 						<td></td>
 					</tr>
 					<tr>
 						<td>*비밀번호</td>
 						<td><input type="password" id="pwd1"
-							placeholder="사용할 비밀번호를 입력하세요" required></td>
+							placeholder="사용할 비밀번호를 입력하세요." required></td>
 						<td></td>
 					</tr>
 					<tr>
 						<td>*비밀번호 확인</td>
 						<td><input type="password" id="pwd"
-							placeholder="사용할 비밀번호를 입력하세요" required></td>
+							placeholder="비밀번호를 한번 더 입력하세요." required></td>
 						<td></td>
 					</tr>
 					<tr>
 						<td>*이름</td>
-						<td><input type="text" id="name" placeholder="이름을 입력하세요"
+						<td><input type="text" id="name" placeholder="이름을 입력하세요."
 							required></td>
 						<td></td>
 					</tr>
 					<tr>
 						<td>*이메일</td>
-						<td colspan="2"><input type="email" class="input-area" id="email"
-							placeholder="email@email.com" required="">&nbsp;<td>
-							<button type="button" id="verifyEmail" required>인증하기</button>
-						</td>
+						<td colspan="2"><input type="email" class="input-area"
+							id="email" placeholder="email@email.com" required="">&nbsp;
+							<button class="btn" type="button" id="verifyEmail" required>인증하기</button></td>
 					</tr>
 					<tr>
 						<td>우편번호</td>
 						<td colspan="2"><input type="text" name="post"
 							class="postcodify_postcode5" value="">&nbsp;
-							<button type="button" id="postcodify_search_button">검색하기</button>
+							<button class="btn" type="button" id="postcodify_search_button">검색하기</button>
 						</td>
 					</tr>
 					<tr>
@@ -125,29 +132,35 @@ button:hover {
 					</script>
 					<tr>
 						<td>성별</td>
-						<td><input type="radio" class="gender" name="gender"
-							value="남자" checked>&nbsp;남자 &nbsp; <input type="radio"
-							class="gender" name="gender" value="여자">&nbsp;여자 &nbsp; <input
-							type="radio" class="gender" name="gender" value="선택안함">&nbsp;선택안함
+						<td><input type="radio" class="gender" name="gender" id="male" value="남자" checked><label for="male">&nbsp;남자</label> &nbsp; 
+							<input type="radio" class="gender" name="gender" id="female" value="여자"><label for="female">&nbsp;여자</label> &nbsp; 
+							<input type="radio" class="gender" name="gender" id="none" value="선택안함"><label for="none">&nbsp;선택안함</label>
 						</td>
 						<td></td>
 					</tr>
 					<tr>
-						<td colspan="3" id="btnTd">
-							<button type="submit">가입하기</button>&nbsp;&nbsp;
-							<button type="reset">취소하기</button>
+						<td></td>
+						<td colspan="2" id="btnTd">
+							<button type="submit" class="btn" id="submitBtn">가입하기</button>
+							<button type="reset" class="btn">취소하기</button>
 						</td>
 					</tr>
 
 				</table>
 			</form>
 		</div>
-	
+
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+	</section>
 	<!-- Footer -->
 	<footer>
 		<jsp:include page="../common/footer.jsp" />
 	</footer>
-	
+
 	<!-- Optional JavaScript -->
 	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
 	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
