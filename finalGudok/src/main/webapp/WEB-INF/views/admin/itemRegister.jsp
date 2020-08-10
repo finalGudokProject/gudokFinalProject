@@ -146,9 +146,11 @@ input, select,textarea{
             <div class="container box">
                 <h3>일반 상품 등록</h3>
                 <br>
-                <button type="button">일반 상품</button>&nbsp;
-                <button type="button" onclick="location.href='itemEvent.do'">이벤트 상품</button>
+                <button type="button" onclick="location.href='iInsert.do'">일반 상품</button>&nbsp;
+                <button type="button" onclick="location.href='eInsert.do'">이벤트 상품</button>
                 <br><br>
+                
+          		<form action="" method="post" encType="multipart/form-data" onsubmit="return validate()">
                 <table>
               
                     <tr>
@@ -156,7 +158,7 @@ input, select,textarea{
                          	  상품명
                         </td>
                         <td colspan="3">
-                                <select name="product" style="float:left;">
+                                <select name="product" id="category" style="float:left;">
                                     <option value="0">카테고리를 선택하세요.</option>
                                     <option value="f1">음료</option>
                                     <option value="f2">유제품</option>
@@ -168,7 +170,7 @@ input, select,textarea{
                                     <option value="l2">바디케어</option>
                                     <option value="l3">생활용품</option>
                                 </select>
-                                <input type="text" name="itemName" style="width:100%; margin:3px;">
+                                <input type="text" name="itemName" id="itemName" style="width:100%; margin:3px;">
                         </td>
                        
                     </tr>
@@ -185,15 +187,15 @@ input, select,textarea{
                           	  가격
                         </td>
                         <td id="td2">
-                            <input type="text" name="itemPrice"  style="width:100%;">
+                            <input type="text" name="itemPrice" id="itemPrice" style="width:100%;">
                         </td>
                         <td id="td3">
                             	추천 선택
                         </td>
                         <td id="td4">
-                            <input type="radio" name="itemRecommend" value="F">&nbsp;여성 &nbsp; &nbsp; &nbsp;
-                            <input type="radio" name="itemRecommend" value="M">&nbsp;남성 &nbsp; &nbsp; &nbsp;
-                            <input type="radio" name="itemRecommend" value="C">&nbsp;공통
+                            <input type="radio" name="itemRecommend" id="itemRecommend" value="F">&nbsp;여성 &nbsp; &nbsp; &nbsp;
+                            <input type="radio" name="itemRecommend" id="itemRecommend" value="M">&nbsp;남성 &nbsp; &nbsp; &nbsp;
+                            <input type="radio" name="itemRecommend" id="itemRecommend" value="C">&nbsp;공통
 
                         </td>
 
@@ -205,18 +207,21 @@ input, select,textarea{
                             <div class="filebox preview-image"> 
                                 <input class="upload-name" value="파일선택" disabled="disabled" > 
                                 <label for="input-file">업로드</label> 
-                                <input type="file" id="input-file" class="upload-hidden"> 
+                                <input type="file" id="input-file" class="upload-hidden" name="uploadFile"> 
                          	</div>
                         </td>
                     </tr>
-               
-
-
                 </table>
+                
                 <br>
                 <br>
-            <div style="text-align: center;"><button>저장하기</button>&nbsp;
-                <button id="btn">취소</button></div>
+                
+            <div style="text-align: center;">
+           		<button type="submit">저장하기</button>&nbsp;
+                <button type="reset">취소</button>
+            </div>
+            </form>
+            
             </div><!--내용담은 컨테이너-->
         </div><!--250px띄운 div-->
         
@@ -224,6 +229,77 @@ input, select,textarea{
     
   
         <script>
+        
+        //상품 등록시 필요정보 공백 제한
+        function validate(){
+        
+    	if($("#category").val().trim().length==1){
+	    		alert('카테고리를 선택해주세요.');
+	    		$("#category").focus();
+    		
+    		return false;
+    		
+    	}else if($("#itemName").val().trim().length==0){
+    			alert('상품명을 입력하세요.')
+    		
+    		return false;
+    		
+    	}else if($("#itemPrice").val().trim().length==0){
+    			alert('가격을 입력하세요.')
+    		
+    		return false;
+    		
+    	}else if($("#itemRecommend").val().trim().length==0){
+    			alert('추천 유형을 선택하세요.')
+    		
+    		return false;
+    			
+    	}else if(!$("#input-file").val()){
+			alert('상품 이미지를 선택하세요.')
+		
+		return false;
+		
+    	}else{
+    		alert('상품이 등록되었습니다.');
+    		return true;
+    	}
+    	
+    	
+    };
+        
+        
+    //가격 문자 입력 제한 및 3자리마다 콤마
+        $(function() {
+
+         $('input[name=itemPrice]').css('imeMode','disabled').keypress(function(event) {
+          if(event.which && (event.which < 48 || event.which > 57) ) {
+           event.preventDefault();
+          }
+         }).keyup(function(){
+          if( $(this).val() != null && $(this).val() != '' ) {
+           $(this).val( $(this).val().replace(/[^0-9]/g, '') );
+           $(this).val( comma($(this).val()));
+          }
+         });
+         
+         
+         });
+         
+         function comma(str) {
+             str = String(str);
+             return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+         }
+         function inputNumberFormat(obj) {
+             obj.value = comma(uncomma(obj.value));
+         }
+         
+    
+    
+    
+    
+    
+    
+        // 파일 업로드 관련
         $(function(){
        var fileTarget = $('.filebox .upload-hidden');
 
@@ -232,7 +308,7 @@ input, select,textarea{
                 // 파일명 추출
                 var filename = $(this)[0].files[0].name;
             } 
-
+            
             else {
                 // Old IE 파일명 추출
                 var filename = $(this).val().split('/').pop().split('\\').pop();
@@ -241,7 +317,7 @@ input, select,textarea{
             $(this).siblings('.upload-name').val(filename);
         });
 
-        //preview image 
+       		 //preview image 
         var imgTarget = $('.preview-image .upload-hidden');
 
         imgTarget.on('change', function(){
