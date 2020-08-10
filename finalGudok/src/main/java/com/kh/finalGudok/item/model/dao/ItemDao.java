@@ -99,5 +99,9 @@ public class ItemDao {
 		return sqlSessionTemplate.insert("cartMapper.insertCart",c);
 	}
 
+	public Heart detailHeart(int itemNo) {
+		return sqlSessionTemplate.selectOne("heartMapper.selectHeart", itemNo);
+	}
+
 
 }

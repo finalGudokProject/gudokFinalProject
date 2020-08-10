@@ -136,6 +136,12 @@ public class ItemController {
 			mv.addObject("review",review).setViewName("items/itemDetail");
 			
 			
+			// Integer 형변환 오류 해결해야 됨
+			Heart hResult = iService.detailHeart(itemNo);
+			System.out.println("hResult : " +  hResult);
+			mv.addObject("hResult", hResult).setViewName("items/itemDetail");
+			
+			
 		}else {
 			throw new ItemException("조회수 증가 실패");
 		}

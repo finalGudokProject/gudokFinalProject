@@ -48,6 +48,8 @@ public interface ItemService {
 
 	int insertCart(Cart c);
 
+	Heart detailHeart(int itemNo);
+
 
 
 

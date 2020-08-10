@@ -105,10 +105,16 @@ body {
         
         <c:if test="${!empty loginUser}">
         <li>
-          <button id="login">${loginUser.memberId }</button>
+          <button id="login" class="logoutBtn">${loginUser.memberId } + 로그아웃</button>
         </li>
         </c:if>
-        
+        <script>
+        	$(function(){
+        		$(".logoutBtn").on("click", function(){
+        			location.href="logout.do"
+        		})
+        	})
+        </script>
         <li>
           <a href="#">고객센터</a>
         </li>

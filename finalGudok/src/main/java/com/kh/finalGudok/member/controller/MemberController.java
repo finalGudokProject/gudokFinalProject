@@ -33,4 +33,10 @@ public class MemberController {
 			return "common/errorPage";
 		}
 	}
+	
+	@RequestMapping("logout.do")
+	public String memberLogout(HttpSession session) {
+		session.invalidate();
+		return "home";
+	}
 }

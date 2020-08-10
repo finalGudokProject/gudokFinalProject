@@ -250,10 +250,12 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 					<div class="row">
 					<div class="col-md-8" style="padding:0px 15px;margin:0px;font-size:35px;vertical-align:middle;"><b>${ilv.itemName }</b></div>
 					<div class="col-md-4" style="padding-right:4%;margin:0px;text-align:right;font-size:35px;">
+					<c:if test="${empty loginUser.memberNo || hResult.memberNo != loginUser.memberNo}">
 					<span id ="heart" title="찜하기"><i class="fa fa-heart-o" aria-hidden="true" ></i> </span>
-					<%-- <c:if test="${!empty ilv.heartNo}">
+					</c:if>
+					<c:if test="${hResult.memberNo == loginUser.memberNo && !empty ilv.heartNo}">
 						<span id ="heart" class="liked" title="찜하기"><i class="fa fa-heart" aria-hidden="true"></i> </span>
-					</c:if> --%>
+					</c:if>
 					</div>
 					<div class="col-md-6" style="padding:0 15px;font-size:20px;">${ilv.itemMemo }</div>
 					<div class="col-md-6" style="padding-right:4%;text-align:right;">

@@ -106,6 +106,11 @@ public class ItemServiceImpl implements ItemService {
 		return iDao.insertCart(c);
 	}
 
+	@Override
+	public Heart detailHeart(int itemNo) {
+		return iDao.detailHeart(itemNo);
+	}
+
 
 
 
