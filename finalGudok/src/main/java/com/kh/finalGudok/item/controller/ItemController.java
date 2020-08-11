@@ -245,13 +245,19 @@ public class ItemController {
 	}
 	
 	@RequestMapping(value="reviewInsert.do", method=RequestMethod.POST)
-	public String reviewInsert(Review r, HttpServletRequest request, @RequestParam(value="uploadFile1", required=false)MultipartFile file1, @RequestParam(value="uploadFile2", required=false)MultipartFile file2) {
+	public String reviewInsert(Review r, HttpServletRequest request, @RequestParam(value = "page", required = false)Integer page
+			, @RequestParam(value = "memberNo", required = false)int memberNo
+			, @RequestParam(value = "itemNo", required = false)int itemNo
+			, @RequestParam(value="uploadFile1", required=false)MultipartFile file1
+			, @RequestParam(value="uploadFile2", required=false)MultipartFile file2) {
+		int currentPage = page;
 		if(!file1.getOriginalFilename().equals("")) {
 			String savePath1 = saveFile(file1, request);
 			if(savePath1 != null) {
 				r.setReviewImg1(file1.getOriginalFilename());
 			}
 		}
+		
 		if(!file2.getOriginalFilename().contentEquals("")) {
 			String savePath2 = saveFile(file2, request);
 			r.setReviewImg2(file2.getOriginalFilename());
@@ -259,10 +265,11 @@ public class ItemController {
 				r.setReviewImg1(file1.getOriginalFilename());
 			}
 		}
+		
 		int result = iService.insertReview(r);
 		System.out.println("review result : " + result);
 		if(result > 0) {
-			return "redirect:idetail.do";
+			return "redirect:idetail.do?itemNo=" + itemNo + "&page=" + currentPage + "&memberNo=" + memberNo + "#reviewPI";
 		}else {
 			throw new ItemException("리뷰 등록 실패");
 		}

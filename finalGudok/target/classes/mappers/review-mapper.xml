@@ -21,6 +21,7 @@
 		FROM SELECT_REVIEW SR
 		LEFT JOIN MEMBER M ON(SR.MEMBER_ID = M.MEMBER_ID)
 		WHERE MEMBER_STATUS='Y' AND ITEM_NO=#{itemNo}
+		ORDER BY REVIEW_NO DESC
 	</select>
 	
 	<select id="selectAllReview" parameterType="_int" resultMap="reviewResultSet">

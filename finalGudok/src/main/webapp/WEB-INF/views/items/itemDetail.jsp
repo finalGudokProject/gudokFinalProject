@@ -244,6 +244,7 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 	<fmt:formatNumber var="itemPrice" value="${ilv.itemPrice}" type="number"/>
 	<div class="container" style="margin-top:3%;">
 		<div class="row">
+			
 			<div class="col-md-6" style="padding:0 2% 0 2%;"><img src="${contextPath }/resources/images/breadLogo.jpg" id="logoImg"></div>
 			<div class="col-md-6" style="margin-bottom:2%;">
 					<div style="margin-top:3%;">카테고리명</div>
@@ -390,10 +391,10 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 			
 		<br>
 		<!-- 리뷰 시작 -->
-		<form action="reviewInsert.do" method="post" enctype="multipart/form-data" onsubmit="return check()">
-		
+		<form action="reviewInsert.do" method="post" enctype="multipart/form-data" id="reviewForm">
+		<input type="hidden" name="page" value="${currentPage}">
 		<input type="hidden" name="itemNo" value="${ilv.itemNo }">
-		<input type="text" id="starValue" name="reviewRate" value="5">
+		<input type="hidden" id="starValue" name="reviewRate" value="5">
 		<input type="hidden" name="memberNo" value="${loginUser.memberNo }">
 		<input type="hidden" name="memberId" value="${loginUser.memberId }">
 		<input type="hidden" name="email" value="${loginUser.email }">
@@ -442,56 +443,13 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 		
 		
 		<br>
-		<script>
-			function check(){
-				if($("#reviewTxt").val().length < 10){
-					swal("","10자 이상으로 입력해 주세요.","warning");
-					return false;
-				}else if($("input[name=reviewRadio]:checked").val() == "1" || $("input[name=reviewRadio]:checked").val() == "2"){
-					swal({
-						text : "무분별한 평점 테러는 다른 사람에게 피해를 줄 수 있습니다.\n 다시 작성하시겠습니까?",
-						icon : "warning",
-						buttons : ["예", "아니오"],
-						closeOnEsc: false,
-						dangerMode : true,
-					}).then((result)=>{
-						if(result){
-							swal("상품평","등록 완료되었습니다.","success").then((result)=>{
-								if(result){
-									$("#reviewTxt").val("");
-								}
-							});
-						}else{
-							$("#reviewTxt").focus();
-							return false;
-						}
-					})	
-				}else{
-					swal({
-						text : "상품평을 등록하시겠습니까?",
-						buttons : ["예","아니오"],
-						closeOnEsc: false,
-						dangerMode : true,
-					}).then((result)=>{
-						if(result){
-							return false;
-						}else{
-							swal("상품평","등록 완료되었습니다.","success").then((result)=>{
-								if(result){
-									$("#reviewTxt").val("");
-								}
-							})
-							
-						}
-					})
-				}
-			}
-		</script>
-<!-- 상품평 -->
-	<!-- <script>
+		
+		
+	<!-- 상품평 -->
+	<script>
 		$(function(){
-			$("#reviewBtn").on("click", function(){
-				
+			$("#reviewBtn").on("click", function(e){
+				e.preventDefault();
 				/* console.log($("#reviewTxt").val().length); */
 				if($("#reviewTxt").val().length < 10){
 					swal("","10자 이상으로 입력해 주세요.","warning");
@@ -506,7 +464,7 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 						if(result){
 							swal("상품평","등록 완료되었습니다.","success").then((result)=>{
 								if(result){
-									$("#reviewTxt").val("");
+									$("#reviewForm").submit();
 								}
 							});
 						}else{
@@ -525,7 +483,7 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 						}else{
 							swal("상품평","등록 완료되었습니다.","success").then((result)=>{
 								if(result){
-									$("#reviewTxt").val("");
+									$("#reviewForm").submit();
 								}
 							})
 							
@@ -534,7 +492,7 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 				}
 			})
 		})
-	</script> -->
+	</script>
 	<!-- 상품평 끝 -->
 
 		
@@ -717,6 +675,8 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 								if(result){
 
 								}else{
+									$.ajax({
+										url : "inquire.do",
 										data : {title:title, itemNo:itemNo, memberNo:memberNo, memberId:memberId, email:email, content:content},
 										type : "POST",
 										  success:function(data){
