@@ -115,5 +115,9 @@ public class ItemDao {
 		return sqlSessionTemplate.update("itemMapper.updateMChoice",itemNo);
 	}
 
+	public void deleteCart(Cart c) {
+		sqlSessionTemplate.delete("cartMapper.deleteCart", c);
+	}
+
 
 }

@@ -4,9 +4,10 @@ import static com.kh.finalGudok.common.pagination.getPageInfo;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,6 +27,7 @@ import com.kh.finalGudok.item.model.vo.Item;
 import com.kh.finalGudok.item.model.vo.ItemListView;
 import com.kh.finalGudok.item.model.vo.PageInfo;
 import com.kh.finalGudok.item.model.vo.Review;
+import com.kh.finalGudok.member.model.vo.Member;
 
 @Controller
 public class ItemController {
@@ -179,11 +181,32 @@ public class ItemController {
 		int result = iService.deleteChoice(h);
 		System.out.println("찜 삭제 확인 : " + result);
 		int result2 = iService.updateMChoice(itemNo);
-		if(result > 0 && result > 0) {
+		if(result > 0 && result2 > 0) {
 			return "success";
 		}else {
 			throw new ItemException("찜 삭제 실패");
 		}
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="basketDel.do", method=RequestMethod.POST)
+	public String cartDelete(HttpSession session, HttpServletRequest request, @RequestParam(value="checkboxArr[]") List<String> checkArr, Cart c) {
+		Member member = (Member)session.getAttribute("loginUser");
+		String memberId = member.getMemberId();
+		
+		int cartNo = 0;
+		
+		if(member != null) {
+			c.setMemberId(memberId);
+			for(String i : checkArr) {
+				cartNo = Integer.parseInt(i);
+				c.setCartNo(cartNo);
+				iService.deleteCart(c);
+			}
+		}
+		return "success";
+			
+		
 	}
 	
 	@RequestMapping("basket.do")

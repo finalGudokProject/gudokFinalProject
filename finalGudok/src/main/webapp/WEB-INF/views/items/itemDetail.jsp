@@ -717,10 +717,8 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 								if(result){
 
 								}else{
-									$.ajax({
-										  url : "inquire.do",
-										  data : {title:title, itemNo:itemNo, memberNo:memberNo, memberId:memberId, email:email, content:content},
-										  type : "POST",
+										data : {title:title, itemNo:itemNo, memberNo:memberNo, memberId:memberId, email:email, content:content},
+										type : "POST",
 										  success:function(data){
 											  if(data == "success"){
 												  swal("","문의하신 내용은 어디서 확인하실 수 있습니다.","success").then((result)=>{

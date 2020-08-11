@@ -33,4 +33,10 @@
 		WHERE MEMBER_NO=#{memberNo}
 		ORDER BY CART_NO DESC
 	</select>
+	
+	<delete id="deleteCart" parameterType="Cart">
+		DELETE FROM CART
+		WHERE CART_NO=#{cartNo}
+			AND MEMBER_ID=#{memberId}
+	</delete>
 </mapper>

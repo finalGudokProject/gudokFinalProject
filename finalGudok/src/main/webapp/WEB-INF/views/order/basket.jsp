@@ -92,6 +92,7 @@
 		</div>
 	<div class="container">
 		<div class="row" style="text-align:center;">
+			<c:if test="${!empty list }">
 			<table style="border:1px solid black; text-align:center; padding:10%;" align="center">
 				<thead>
 				<tr style="border-bottom:1px solid lightgray; vertical-align:middle;">
@@ -105,10 +106,11 @@
 				
 				</thead>
 				<tbody id="tbody">
+				
 				<c:forEach var="c" items="${list }" varStatus="vs">
 				<fmt:formatNumber var="itemPrice" value="${c.itemPrice * c.cartCount }" type="number"/>
 				<tr style="border-bottom:1px solid lightgray;vertical-align:middle;">
-					<td class="listChk"><input type="checkbox" class="chk" value="${c.itemPrice * c.cartCount}"></td>
+					<td class="listChk"><input type="checkbox" class="chk" value="${c.itemPrice * c.cartCount}" data-cartNo="${c.cartNo }"></td>
 					<td colspan="2" style="width:30%;"><img src="${contextPath }/resources/images/breadLogo.jpg" class="basketImg"></td>
 					<td><input type="hidden" id="totalPriceInput">${c.itemName }</td>
 					<td class="countTd">
@@ -164,13 +166,24 @@
 				</tbody>
 				<tfoot>
 				<tr>
-					<td colspan="7" style="text-align:right; padding-right:3%; font-size:40px;"><span id="totalPriceTd">총 주문 금액 : 선택된 상품이 없습니다.</span></td>
+					<td colspan="7" style="text-align:right; padding-right:3%; font-size:40px;"><span id="totalPriceTd">결제하실 상품을 선택해 주세요.</span></td>
 				</tr>
 				<tr id="asd">
 					<td colspan="7" style="text-align:right;padding-right:3%;"><input type="button" value="장바구니 삭제하기" style="margin-right:5%;" id="delBtn"><input type="button" value="선택 상품 결제하기" id="paymentBtn"></td>
 				</tr>
 				</tfoot>
 			</table>
+			</c:if>
+			<c:if test="${empty list }">
+				<c:if test="${empty list }">
+					<div class="col-2"></div>
+						<div class="col-8" id="emptyDiv" style="margin-top:2%;border:1px solid lightgray;">
+							<div style="text-align:center;width:100%;"><img src="${contextPath }/resources/images/empty.png" style="width:30%;"></div>
+							<div style="text-align:center;width:100%;font-size:40px;">장바구니에 추가한 상품이 없습니다.</div>
+						</div>
+					<div class="col-2"></div>	
+				</c:if>
+			</c:if>
 		</div>
 	</div>	<!-- 컨테이너 끝 -->
 	
@@ -198,10 +211,11 @@
 				}else{
 					$("input[type=checkbox]").prop("checked",false);
 					check = $("input:checkbox[class=chk]:checked").length;
-					$("#delBtn").val("상품을 선택해 주세요.");
+					$("#delBtn").val("장바구니 삭제하기");
 					$("#frontCount").text("0");
 					sum = 0;
 					$("#paymentBtn").val("상품을 선택해 주세요.");
+					$("#totalPriceTd").text("결제하실 상품을 선택해 주세요.");
 					console.log(sum);
 				}
 			})
@@ -232,7 +246,7 @@
 					}else{
 						$("#paymentBtn").val("상품을 선택해 주세요.");
 						$("#delBtn").val(check + "개 상품 삭제하기");
-						$("#totalPriceTd").text("총 주문 금액 : 선택된 상품이 없습니다.");
+						$("#totalPriceTd").text("결제하실 상품을 선택해 주세요.");
 					}
 					console.log(sum);
 					
@@ -326,7 +340,32 @@
 							if(result){
 								
 							}else{
-								swal("",check+"개의 상품이 장바구니에서 삭제되었습니다.","success");
+								var checkArr = new Array();
+								$("input:checkbox[class='chk']:checked").each(function(){
+									checkArr.push($(this).attr("data-cartNo"));
+								})
+								$.ajax({
+									url : "basketDel.do",
+									data : {checkboxArr:checkArr},
+									type : "post",
+									success:function(data){
+										if(data == "success"){
+											swal("",check+"개의 상품이 장바구니에서 삭제되었습니다.","success").then((del)=>{
+												if(del){
+													location.reload();
+												}
+											})
+											
+										}else{
+											alert("실패");
+										}
+									},
+									error:function(request, status, errorData){
+					                	alert("error code: " + request.status + "\n"
+					                	+"message: " + request.responseText
+					                	+"error: " + errorData);
+					               }
+								})
 							}
 						})
 					}
@@ -339,7 +378,7 @@
 		<script>
 			$(function(){
 				$("#paymentBtn").on("click", function(){
-					var check = $("input:checkbox[class=chk]:checked").length;
+					var check = $("input:checkbox[class='chk']:checked").length;
 					if(check == 0){
 						swal("","결제하실 상품을 선택해 주세요.","error");
 					}else{

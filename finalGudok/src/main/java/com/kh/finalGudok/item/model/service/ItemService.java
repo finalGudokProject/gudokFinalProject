@@ -56,4 +56,6 @@ public interface ItemService {
 
 	int updateMChoice(int itemNo);
 
+	public void deleteCart(Cart c);
+
 }
