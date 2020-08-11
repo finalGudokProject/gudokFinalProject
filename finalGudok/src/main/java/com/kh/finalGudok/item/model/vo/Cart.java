@@ -16,12 +16,15 @@ public class Cart implements Serializable{
 	private String email;
 	private String cartSubs;
 	private int cartCount;
+	private String itemName;
+	private int itemPrice;
 	
 	public Cart() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Cart(int cartNo, int itemNo, int memberNo, String memberId, String email, String cartSubs, int cartCount) {
+	public Cart(int cartNo, int itemNo, int memberNo, String memberId, String email, String cartSubs, int cartCount,
+			String itemName, int itemPrice) {
 		super();
 		this.cartNo = cartNo;
 		this.itemNo = itemNo;
@@ -30,6 +33,8 @@ public class Cart implements Serializable{
 		this.email = email;
 		this.cartSubs = cartSubs;
 		this.cartCount = cartCount;
+		this.itemName = itemName;
+		this.itemPrice = itemPrice;
 	}
 
 	public int getCartNo() {
@@ -88,6 +93,22 @@ public class Cart implements Serializable{
 		this.cartCount = cartCount;
 	}
 
+	public String getItemName() {
+		return itemName;
+	}
+
+	public void setItemName(String itemName) {
+		this.itemName = itemName;
+	}
+
+	public int getItemPrice() {
+		return itemPrice;
+	}
+
+	public void setItemPrice(int itemPrice) {
+		this.itemPrice = itemPrice;
+	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
@@ -95,8 +116,10 @@ public class Cart implements Serializable{
 	@Override
 	public String toString() {
 		return "Cart [cartNo=" + cartNo + ", itemNo=" + itemNo + ", memberNo=" + memberNo + ", memberId=" + memberId
-				+ ", email=" + email + ", cartSubs=" + cartSubs + ", cartCount=" + cartCount + "]";
+				+ ", email=" + email + ", cartSubs=" + cartSubs + ", cartCount=" + cartCount + ", itemName=" + itemName
+				+ ", itemPrice=" + itemPrice + "]";
 	}
+
 	
 	
 }

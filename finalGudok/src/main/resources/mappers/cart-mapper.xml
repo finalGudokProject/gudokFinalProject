@@ -10,6 +10,8 @@
 		<result property="email" column="EMAIL"/>
 		<result property="cartSubs" column="CART_SUBS"/>
 		<result property="cartCount" column="CART_COUNT"/>
+		<result property="itemName" column="ITEM_NAME"/>
+		<result property="itemPrice" column="ITEM_PRICE"/>
 	</resultMap>
 
 	<insert id="insertCart" parameterType="Cart">
@@ -20,7 +22,9 @@
 			, #{memberId}
 			, #{email}
 			, #{cartSubs}
-			, #{cartCount})
+			, #{cartCount}
+			, #{itemName}
+			, #{itemPrice})
 	</insert>
 	
 	<select id="selectCart" parameterType="int" resultMap="cartResultSet">

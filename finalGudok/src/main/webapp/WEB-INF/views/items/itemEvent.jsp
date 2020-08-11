@@ -355,20 +355,6 @@
 		</c:forEach>
 		</div>
 		</c:if>
-		<c:forEach var="i" items="${list }" varStatus="vs">
-		<script>
-			/* $(function(){
-				$("#preview${vs.index}").on("click", function(){
-					var preview = $(this).attr("id");
-					console.log(preview);
-					var review = $(this).next().val();
-					console.log(review);
-					
-				})
-			}) */
-
-		</script>
-		</c:forEach>
 		
 		<c:if test="${!empty list}">
 			<div class="col-12">

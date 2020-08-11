@@ -6,6 +6,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -221,19 +222,24 @@ public class ItemController {
 	}
 	
 	@RequestMapping(value="reviewInsert.do", method=RequestMethod.POST)
-	public String reviewInsert(Review r, HttpServletRequest request, @RequestParam(name="uploadFile1", required=false)MultipartFile file1, @RequestParam(name="uploadFile2", required=false)MultipartFile file2) {
+	public String reviewInsert(Review r, HttpServletRequest request, @RequestParam(value="uploadFile1", required=false)MultipartFile file1, @RequestParam(value="uploadFile2", required=false)MultipartFile file2) {
 		if(!file1.getOriginalFilename().equals("")) {
 			String savePath1 = saveFile(file1, request);
-			r.setReviewImg1(file1.getOriginalFilename());
-			if(!file2.getOriginalFilename().contentEquals("")) {
-				String savePath2 = saveFile(file2, request);
-				r.setReviewImg2(file2.getOriginalFilename());
+			if(savePath1 != null) {
+				r.setReviewImg1(file1.getOriginalFilename());
+			}
+		}
+		if(!file2.getOriginalFilename().contentEquals("")) {
+			String savePath2 = saveFile(file2, request);
+			r.setReviewImg2(file2.getOriginalFilename());
+			if(savePath2 != null) {
+				r.setReviewImg1(file1.getOriginalFilename());
 			}
 		}
 		int result = iService.insertReview(r);
-		
+		System.out.println("review result : " + result);
 		if(result > 0) {
-			return "redirect:itemDetail.do";
+			return "redirect:idetail.do";
 		}else {
 			throw new ItemException("리뷰 등록 실패");
 		}

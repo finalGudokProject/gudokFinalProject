@@ -391,8 +391,9 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 		<br>
 		<!-- 리뷰 시작 -->
 		<form action="reviewInsert.do" method="post" enctype="multipart/form-data" onsubmit="return check()">
+		
 		<input type="hidden" name="itemNo" value="${ilv.itemNo }">
-		<input type="hidden" id="starValue" name="reviewRate">
+		<input type="text" id="starValue" name="reviewRate" value="5">
 		<input type="hidden" name="memberNo" value="${loginUser.memberNo }">
 		<input type="hidden" name="memberId" value="${loginUser.memberId }">
 		<input type="hidden" name="email" value="${loginUser.email }">
@@ -436,6 +437,7 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 				</div>
 			</div>
 		</div>
+		
 		</form>
 		
 		
@@ -830,6 +832,8 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 				var memberNo = "${loginUser.memberNo}";
 				var memberId = "${loginUser.memberId}";
 				var email = "${loginUser.email}";
+				var itemName = "${ilv.itemName}";
+				var itemPrice = "${ilv.itemPrice}";
 				$("#paymentBtn").click(function(){
 					var cycle = $("#cycleText").val();
 					var amount = $(".amountT").val();
@@ -876,7 +880,7 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 						}else{
 							$.ajax({
 								  url : "basket.do",
-								  data : {itemNo:itemNo, memberNo:memberNo, memberId:memberId, email:email, cartSubs:cartSubs, cartCount:cartCount},
+								  data : {itemNo:itemNo, memberNo:memberNo, memberId:memberId, email:email, cartSubs:cartSubs, cartCount:cartCount, itemName:itemName, itemPrice:itemPrice},
 								  type : "POST",
 								  success:function(data){
 									if(data == "success"){
