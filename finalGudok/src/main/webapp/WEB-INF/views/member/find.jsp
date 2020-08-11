@@ -112,11 +112,11 @@ td {
 				<table id="inputIdTable" align="center">
 					<tr>
 						<td colspan="3"><input class="form-control mb-1" type="text"
-							id="name1" placeholder="이름" autofocus></td>
+							id="name" placeholder="이름" autofocus></td>
 					</tr>
 					<tr>
 						<td colspan="3"><input class="form-control mb-1" type="text"
-							id="email1" placeholder="이메일"></td>
+							id="email" placeholder="이메일"></td>
 					</tr>
 					<tr>
 						<td colspan="3"><button type="button" class="btn"
@@ -134,11 +134,11 @@ td {
 					</tr>
 					<tr>
 						<td colspan="3"><input class="form-control mb-1" type="text"
-							id="name2" placeholder="이름" required></td>
+							id="name" placeholder="이름" required></td>
 					</tr>
 					<tr>
 						<td colspan="3"><input class="form-control mb-1" type="text"
-							id="email2" placeholder="이메일" required></td>
+							id="email" placeholder="이메일" required></td>
 					</tr>
 					<tr>
 						<td colspan="3"><button type="button" class="btn"
@@ -160,7 +160,7 @@ td {
 			$("#findPwd").attr("style", "color:black !important");
 		});
 
-		function findId() {
+		/* function findId() {
 			if ($("#name").val() == "") {
 				alert("이름1");
 			} else if ($("#email1").val() == "") {
@@ -171,19 +171,32 @@ td {
 				$("#email1").val("");
 			}
 		}
+		 */
 
-		function findPwd() {
-			if ($("#id").val() == "") {
-				alert("아이디");
-			} else if ($("#name2").val() == "") {
-				alert("이름")
-			} else if ($("#email2").val() == "") {
+		function findId() {
+			if ($("#inputIdTable").find("#name").val() == "") {
+				alert("이름");
+			} else if ($("#inputIdTable").find("#email").val() == "") {
 				alert("이메일");
 			} else {
 				alert("발송");
-				$("#id").val("");
-				$("#name2").val("");
-				$("#email2").val("");
+				$("#inputIdTable").find("#name").val("");
+				$("#inputIdTable").find("#email").val("");
+			}
+		}
+
+		function findPwd() {
+			if ($("#inputPwdTable").find("#id").val() == "") {
+				alert("아이디");
+			} else if ($("#inputPwdTable").find("#name").val() == "") {
+				alert("이름")
+			} else if ($("#inputPwdTable").find("#email").val() == "") {
+				alert("이메일");
+			} else {
+				alert("발송");
+				$("#inputPwdTable").find("#id").val("");
+				$("#inputPwdTable").find("#name").val("");
+				$("#inputPwdTable").find("#email").val("");
 			}
 		}
 	</script>
