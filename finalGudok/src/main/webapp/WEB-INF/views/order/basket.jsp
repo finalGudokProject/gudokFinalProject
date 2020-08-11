@@ -96,7 +96,7 @@
 				<thead>
 				<tr style="border-bottom:1px solid lightgray; vertical-align:middle;">
 					<th class="listChk"  style="width:3%;"><input type="checkbox" id="allChk"></th>
-					<th style="width:7%;"><label for="chk" style="display:block;margin:0px;text-align:center;">전체선택(0/?)</label></th>
+					<th style="width:7%;"><label for="chk" style="display:block;margin:0px;text-align:center;">전체선택(<span id="frontCount">0</span>/<span id="afterCount">${list.size() }</span>)</label></th>
 					<th colspan="2">상품정보</th>
 					<th style="width:15%;">수량</th>
 					<th style="width:10%;">구독주기</th>
@@ -104,6 +104,7 @@
 				</tr>
 				
 				</thead>
+				<tbody id="tbody">
 				<c:forEach var="c" items="${list }" varStatus="vs">
 				<fmt:formatNumber var="itemPrice" value="${c.itemPrice * c.cartCount }" type="number"/>
 				<tr style="border-bottom:1px solid lightgray;vertical-align:middle;">
@@ -160,19 +161,25 @@
 					<td>${itemPrice}원</td>
 				</tr>
 				</c:forEach>
-				
+				</tbody>
+				<tfoot>
 				<tr>
-					<td colspan="7" style="text-align:right; padding-right:3%; font-size:40px;"><input type="text" id="totalPrice">총 주문 금액 : 체크박스 체크한 것만 연산</td>
+					<td colspan="7" style="text-align:right; padding-right:3%; font-size:40px;"><span id="totalPriceTd">총 주문 금액 : 선택된 상품이 없습니다.</span></td>
 				</tr>
-				<tr>
-					<td colspan="7" style="text-align:right;padding-right:3%;"><input type="button" value="0개 상품 선택됨" style="margin-right:5%;" id="delBtn"><input type="button" value="10,000원 결제하기" id="paymentBtn"></td>
+				<tr id="asd">
+					<td colspan="7" style="text-align:right;padding-right:3%;"><input type="button" value="장바구니 삭제하기" style="margin-right:5%;" id="delBtn"><input type="button" value="선택 상품 결제하기" id="paymentBtn"></td>
 				</tr>
+				</tfoot>
 			</table>
 		</div>
 	</div>	<!-- 컨테이너 끝 -->
 	
 	<script>
 		$(function(){
+			function addComma(num) {
+			 	var regexp = /\B(?=(\d{3})+(?!\d))/g;
+				return num.toString().replace(regexp, ',');
+			}
 			var count = "";
 			var check = "";
 			var sum = 0;
@@ -180,16 +187,21 @@
 				if($("#allChk").prop("checked")){
 					$("input[type=checkbox]").prop("checked",true);
 					check = $("input:checkbox[class=chk]:checked").length;
-					$("#delBtn").val(check + "개 상품 선택됨");
+					$("#delBtn").val(check + "개 상품 삭제하기");
+					$("#frontCount").text(check);
 					$("input:checkbox[class=chk]:checked").each(function(){
 						sum += Number($(this).val());
+						$("#paymentBtn").val(addComma(sum)+"원 결제하기");
+						$("#totalPriceTd").text("총 주문 금액 : " + addComma(sum)+"원");
 					})
 					console.log(sum);
 				}else{
 					$("input[type=checkbox]").prop("checked",false);
 					check = $("input:checkbox[class=chk]:checked").length;
-					$("#delBtn").val(check + "개 상품 선택됨");
+					$("#delBtn").val("상품을 선택해 주세요.");
+					$("#frontCount").text("0");
 					sum = 0;
+					$("#paymentBtn").val("상품을 선택해 주세요.");
 					console.log(sum);
 				}
 			})
@@ -199,16 +211,29 @@
 				}
 				if($(this).prop("checked")){
 					check++;
-					$("#delBtn").val(check + "개 상품 선택됨");
+					$("#delBtn").val(check + "개 상품 삭제하기");
+					$("#frontCount").text(check);
 					
 					/* sum += $(this).parent().next().next().find("input").val(); */
 					sum += Number($(this).val());
-					$("#totalPrice").val(sum);	
+					$("#totalPrice").val(sum);
+					$("#paymentBtn").val(addComma(sum)+"원 결제하기");
+					$("#totalPriceTd").text("총 주문 금액 : " + addComma(sum)+"원");
+					
 					console.log(sum);
 				}else{
 					check--;
-					$("#delBtn").val(check + "개 상품 선택됨");
 					sum -= Number($(this).val());
+					$("#frontCount").text(check);
+					if(check != 0){
+						$("#delBtn").val("상품을 선택해 주세요.");
+						$("#paymentBtn").val(addComma(sum)+"원 결제하기");
+						$("#totalPriceTd").text("총 주문 금액 : " + addComma(sum)+"원");
+					}else{
+						$("#paymentBtn").val("상품을 선택해 주세요.");
+						$("#delBtn").val(check + "개 상품 삭제하기");
+						$("#totalPriceTd").text("총 주문 금액 : 선택된 상품이 없습니다.");
+					}
 					console.log(sum);
 					
 				}
@@ -269,7 +294,8 @@
 							$(this).parent().next("td").next("td").text(varPrice);
 							$(this).parent().prev().prev().prev("td").find("input").val(varPrice);
 							$(this).parent().next("td").next("td").text(addComma(varPrice)+"원");
-							
+							/* $("#totalPriceTd").text("총 주문 금액 : " + addComma(varPrice) + "원"); */
+							console.log(valChk);
 							if(amount < 2){
 								$(this).attr("src","${contextPath }/resources/images/XSIGN.png");
 							}
@@ -288,7 +314,7 @@
 				$("#delBtn").on("click", function(){
 					var check = $("input:checkbox[class=chk]:checked").length;
 					if(check == 0){
-						swal("","체크된 상품이 존재하지 않습니다.","info");
+						swal("","선택된 상품이 없습니다.","error");
 					}else{
 						swal({
 							text : check + "개의 상품을 장바구니에서 삭제하시겠습니까?",
@@ -315,7 +341,7 @@
 				$("#paymentBtn").on("click", function(){
 					var check = $("input:checkbox[class=chk]:checked").length;
 					if(check == 0){
-						swal("","체크된 상품이 존재하지 않습니다.","info");
+						swal("","결제하실 상품을 선택해 주세요.","error");
 					}else{
 						swal({
 							text : check + "개의 상품 " + "얼마를 결제하시겠습니까?",
