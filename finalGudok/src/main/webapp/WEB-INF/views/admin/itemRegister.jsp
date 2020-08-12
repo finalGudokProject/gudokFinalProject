@@ -207,7 +207,7 @@ input, select,textarea{
                             <div class="filebox preview-image"> 
                                 <input class="upload-name" value="파일선택" disabled="disabled" > 
                                 <label for="input-file">업로드</label> 
-                                <input type="file" id="input-file" class="upload-hidden" name="uploadFile" multiple accept="image/*" title="이미지 파일만 업로드 가능"> 
+                                <input type="file" id="input-file" class="upload-hidden" name="uploadFile" accept="image/*" title="이미지 파일만 업로드 가능"> 
                          	</div>
                         </td>
                     </tr>
@@ -337,6 +337,8 @@ input, select,textarea{
             }
         });
     });
+        
+        
             </script>
      
         

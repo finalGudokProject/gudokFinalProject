@@ -4,16 +4,23 @@
 <html>
   <head>
  
-                </head>
-
-   
-    <!-- Required meta tags -->
+      
+ <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+	
+
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+	<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+
+	
+    
+    
     <title>이벤트 배너 등록</title>    
     <style>
 
@@ -40,6 +47,8 @@
 input, select,textarea{
     border: 1px solid #CCCCCC;
 }
+
+
 
 /*파일첨부 이미지*/
 .where {
@@ -131,6 +140,10 @@ input, select,textarea{
     border-color: #2e6da4;
 }
 
+
+
+
+
 </style>
 
 </head>
@@ -144,28 +157,29 @@ input, select,textarea{
                 <br>
 
                 <br><br>
+                <form action="eInsert.do" method="post" encType="multipart/form-data" onsubmit="return validate()">
                 <table>
               
                     <tr>
                         <td id="td1" style="vertical-align: middle;">
-                            이벤트 제목
+                          	 이벤트 제목
                         </td>
                         <td colspan="3">
-                                <input type="text" name="bTitle" style="width:100%; margin:3px;">
+                                <input type="text" name="eventName" id="eventName" style="width:100%; margin:3px;">
                         </td>
                        
                     </tr>
                     <tr>
                         <td id="td1">
-                            이미지 첨부
+                        	    이미지 첨부
                         </td>
                         <td colspan="3">
 
-                            <div class="filebox preview-image"> 
+                             <div class="filebox preview-image"> 
                                 <input class="upload-name" value="파일선택" disabled="disabled" > 
                                 <label for="input-file">업로드</label> 
-                                <input type="file" id="input-file" class="upload-hidden"> 
-                         </div>
+                                <input type="file" id="input-file" class="upload-hidden" name="uploadFile" accept="image/*" title="이미지 파일만 업로드 가능"> 
+                         	</div>
 
                         </td>
                     </tr>
@@ -174,66 +188,100 @@ input, select,textarea{
                 </table>
                 <br>
             <div style="text-align: center;">
-                <button type="submit" id="btn">저장하기</button>&nbsp;
-                <button type="reset" id="btn">취소</button>&nbsp;&nbsp;
+           		<button type="button" onclick="location.href='eList.do'">목록으로</button>&nbsp;
+                <button type="submit">저장하기</button>&nbsp;
+                <button type="reset">취소</button>&nbsp;&nbsp;
             </div>
+            
+            </form>
             </div><!--내용담은 컨테이너-->
         </div><!--250px띄운 div-->
 
 
         <script>
-    $(document).ready(function(){
-   var fileTarget = $('.filebox .upload-hidden');
+        
+      //이벤트 등록시 필요정보 공백 제한
+        function validate(){
+        
+    	if($("#eventName").val().trim().length==0){
+	    		alert('이벤트 명을 입력하세요.');
+	    		$("#eventName").focus();
+    		
+    		return false;
 
-    fileTarget.on('change', function(){
-        if(window.FileReader){
-            // 파일명 추출
-            var filename = $(this)[0].files[0].name;
-        } 
+    			
+    	}else if(!$("#input-file").val()){
+			alert('배너 이미지를 선택하세요.')
+		
+			return false;
+		
+    	}else{
+    		alert('이벤트가 등록되었습니다.');
+    		return true;
+    	}
+        
+      };
+        
+    
+     
+      
+      // 파일 업로드 관련
+      $(function(){
+     var fileTarget = $('.filebox .upload-hidden');
 
-        else {
-            // Old IE 파일명 추출
-            var filename = $(this).val().split('/').pop().split('\\').pop();
-        };
+      fileTarget.on('change', function(){
+          if(window.FileReader){
+              // 파일명 추출
+              var filename = $(this)[0].files[0].name;
+          } 
+          
+          else {
+              // Old IE 파일명 추출
+              var filename = $(this).val().split('/').pop().split('\\').pop();
+          };
 
-        $(this).siblings('.upload-name').val(filename);
-    });
+          $(this).siblings('.upload-name').val(filename);
+      });
 
-    //preview image 
-    var imgTarget = $('.preview-image .upload-hidden');
+     		 //preview image 
+      var imgTarget = $('.preview-image .upload-hidden');
 
-    imgTarget.on('change', function(){
-        var parent = $(this).parent();
-        parent.children('.upload-display').remove();
+      imgTarget.on('change', function(){
+          var parent = $(this).parent();
+          parent.children('.upload-display').remove();
 
-        if(window.FileReader){
-            //image 파일만
-            if (!$(this)[0].files[0].type.match(/image\//)) return;
-            
-            var reader = new FileReader();
-            reader.onload = function(e){
-                var src = e.target.result;
-                parent.prepend('<div class="upload-display"><div class="upload-thumb-wrap"><img src="'+src+'" class="upload-thumb"></div></div>');
-            }
-            reader.readAsDataURL($(this)[0].files[0]);
-        }
+          if(window.FileReader){
+              //image 파일만
+              if (!$(this)[0].files[0].type.match(/image\//)) return;
+              
+              var reader = new FileReader();
+              reader.onload = function(e){
+                  var src = e.target.result;
+                  parent.prepend('<div class="upload-display"><div class="upload-thumb-wrap"><img src="'+src+'" class="upload-thumb"></div></div>');
+              }
+              reader.readAsDataURL($(this)[0].files[0]);
+          }
 
-        else {
-            $(this)[0].select();
-            $(this)[0].blur();
-            var imgSrc = document.selection.createRange().text;
-            parent.prepend('<div class="upload-display"><div class="upload-thumb-wrap"><img class="upload-thumb"></div></div>');
+          else {
+              $(this)[0].select();
+              $(this)[0].blur();
+              var imgSrc = document.selection.createRange().text;
+              parent.prepend('<div class="upload-display"><div class="upload-thumb-wrap"><img class="upload-thumb"></div></div>');
 
-            var img = $(this).siblings('.upload-display').find('img');
-            img[0].style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(enable='true',sizingMethod='scale',src=\""+imgSrc+"\")";        
-        }
-    });
-});
-        </script>
+              var img = $(this).siblings('.upload-display').find('img');
+              img[0].style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(enable='true',sizingMethod='scale',src=\""+imgSrc+"\")";        
+          }
+      });
+  });
+      
+    </script>
+        
+        
         
        <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+   
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
   </body>

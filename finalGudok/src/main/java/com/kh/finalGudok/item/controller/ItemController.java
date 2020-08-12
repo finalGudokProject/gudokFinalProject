@@ -19,10 +19,13 @@ import org.springframework.web.servlet.ModelAndView;
 import com.kh.finalGudok.item.model.exception.ItemException;
 import com.kh.finalGudok.item.model.service.ItemService;
 import com.kh.finalGudok.item.model.vo.AdminItem;
+import com.kh.finalGudok.item.model.vo.Event;
 import com.kh.finalGudok.item.model.vo.Item;
 import com.kh.finalGudok.item.model.vo.ItemListView;
 import com.kh.finalGudok.item.model.vo.PageInfo;
 import com.kh.finalGudok.item.model.vo.Review;
+
+import jdk.nashorn.internal.ir.RuntimeNode.Request;
 
 @Controller
 public class ItemController {
@@ -103,6 +106,7 @@ public class ItemController {
 	}
 	
 
+	//상품등록
 	@RequestMapping("iInsert.do")
 	public String itemInsert(HttpServletRequest request, AdminItem i, @RequestParam("uploadFile") MultipartFile file) {
 		
@@ -127,9 +131,6 @@ public class ItemController {
 		}else {
 			throw new ItemException("상품 등록 실패");
 		}
-		
-		
-		
 		
 	}
 
@@ -157,6 +158,92 @@ public class ItemController {
 		return renameFileName;
 	}
 	
+	
+	//배너 이벤트 등록
+	@RequestMapping("eInsert.do")
+	public String insertEvent(HttpServletRequest request, Event e, @RequestParam("uploadFile") MultipartFile file) {
 
+		
+		String renameFileName=saveFile(request,file);
+		String root=request.getSession().getServletContext().getRealPath("resources");
+		String savePath=root+"\\uploadFiles";
+		
+		e.setImageOriginalName(file.getOriginalFilename());
+		e.setImageRename(renameFileName);
+		e.setImagePath(savePath);
+			
+		int result1=iService.insertEvent(e);
+		int result2=iService.insertEventImg(e);
+		
+		if(result1>0&&result2>0) {
+			return "admin/bannerList";
+		}else {
+			throw new ItemException("배너 등록 실패!");
+		}
+		
+		
+	}
+	
+	@RequestMapping("eRegisterView.do")
+	public String eventRegisterView() {
+		return "admin/bannerRegister";
+	}
+
+	@RequestMapping("eList.do")
+	public ModelAndView selectEvent(ModelAndView mv, Integer page) {
+	
+		System.out.println("도착했낭");
+		int currentPage=1;
+		
+		if(page!=null) {
+			currentPage=page;
+		}
+		
+		int listCount=iService.getEventCount();
+		
+	
+		
+		PageInfo pi=getPageInfo(currentPage,listCount);
+		pi.setPageLimit(10); //보여질 페이지 총 갯수
+		pi.setBoardLimit(5); //게시판 한 페이지에 뿌려질 게시글 수
+
+		
+		ArrayList<Event> list=iService.selectEventList(pi); //이벤트 리스트
+		ArrayList eCountList=iService.selectEventListCount(pi); //이벤트당 상품갯수
+		
+		System.out.println("카운트 한건?"+eCountList.get(0));
+		System.out.println("카운트 한건?"+eCountList.get(1));
+		System.out.println("카운트 한건?"+eCountList.get(2));
+		
+		
+		
+		
+		if(list!=null&&eCountList!=null) {
+			mv.addObject("list",list);
+			mv.addObject("eCountList",eCountList);
+			mv.addObject("pi",pi);
+			mv.setViewName("admin/bannerList");
+			
+		}else {
+			throw new ItemException("이벤트 전체 조회 실패!");
+		}
+		return mv;
+	}
+	
+	
+	@RequestMapping("eDelete.do")
+	public String deleteEvent(HttpServletRequest request, String[] array) {
+		
+		System.out.println("컨트롤러 옴");
+		String[] dEventArr=request.getParameterValues("array");
+		
+		System.out.println("삭제 컨트롤러까지 왔다"+dEventArr.toString());
+		System.out.println("삭제 컨트롤러까지 왔다"+dEventArr[0].toString());
+		
+		return null;
+		
+	}
+	
+	
 	
 }

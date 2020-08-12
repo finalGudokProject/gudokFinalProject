@@ -20,6 +20,20 @@
 		<result property="imagePath" column="IMAGE_PATH"/>
 	</resultMap>
 	
+	<resultMap type="Event" id="eventResultSet">
+		<id property="eventNo" column="EVENT_NO"/>
+		<result property="itemNo" column="ITEM_NO"/>
+		<result property="eventStatus" column="EVENT_STATUS"/>
+		<result property="eventName" column="EVENT_NAME"/>
+		<result property="itemDiscount" column="ITEM_DISCOUNT"/>
+		<result property="imageOriginalName" column="IMAGE_ORIGINAL_NAME"/>
+		<result property="imageRename" column="IMAGE_RENAME"/>
+		<result property="imagePath" column="IMAGE_PATH"/>
+	</resultMap>
+	
+
+	
+	
 	<insert id="insertItem" parameterType="AdminItem">
 		INSERT INTO ITEM VALUES(
 		SEQ_IID.NEXTVAL,#{itemName},#{itemPrice},DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,SYSDATE,DEFAULT,#{categoryNo},#{itemMemo},DEFAULT)
@@ -33,5 +47,38 @@
 		SELECT *
 		FROM DUAL
 	</insert>
+	
+	<insert id="insertEvent" parameterType="Event">
+		INSERT INTO EVENT VALUES(
+		SEQ_EID.NEXTVAL,#{eventName},'N')
+	</insert>
+	
+	
+	<insert id="insertEventImg" parameterType="Event">
+		INSERT ALL
+		INTO IMAGE VALUES(SEQ_MID.NEXTVAL,#{imagePath},#{imageOriginalName},#{imageRename})
+		INTO BANNER_IMG VALUES(SEQ_BAID.NEXTVAL,SEQ_MID.CURRVAL,SEQ_EID.CURRVAL)
+		SELECT *
+		FROM DUAL
+	</insert>
+	
+	<select id="selectEventCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM EVENT
+	</select>
+	
+	<select id="selectEventList" resultMap="eventResultSet">
+		SELECT EVENT_NO,EVENT_NAME,EVENT_STATUS, COUNT(*)
+		FROM EVENTLIST
+		WHERE EVENT_NO IS NOT NULL
+		GROUP BY EVENT_NO, EVENT_NAME,EVENT_STATUS
+	</select>
+	
+	<select id="selectEventListCount" resultType="_int">
+		SELECT COUNT(*)-1
+		FROM EVENTLIST
+		WHERE EVENT_NO IS NOT NULL
+		GROUP BY EVENT_NO, EVENT_NAME,EVENT_STATUS
+	</select>
 
 </mapper>

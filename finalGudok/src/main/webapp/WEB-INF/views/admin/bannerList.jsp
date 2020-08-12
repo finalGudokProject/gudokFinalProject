@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
   <head>
@@ -10,6 +11,9 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+  
+   
+   
     <title>이벤트 배너 리스트</title>    
     <style>
 
@@ -50,17 +54,26 @@ input, select,textarea{
                
                 <br>
                 <br>
-                
-                <div style="float:right">
-                    <button id="btn1">게시</button>&nbsp;
-                    <button id="btn1">중지</button>&nbsp;
-                    <button id="btn1">삭제</button>
+                <form>
+                <div style="width:100%">
+                <div style="float:left;">
+                	<input type="button" class="btn" value="글 등록" onclick="location.href='eRegisterView.do'">
+          			
+                    <input type="button" class="btn" value="게시">
+                    <input type="button" class="btn" value="중지">
+                    <input type="button" class="btn" value="삭제"onclick="eventDelete()">
+                </div>
+                <div style="float:right;">
+                	<input type="text">
+                	<input type="button" class="btn" value="검색">
+                </div>
                 </div>
         <br><br>
+        			<input type="hidden" name="array" value="">
                     <table>
                         <thead>
                             <tr>
-                                <th><input type="checkbox"></th>
+                                <th><input type="checkbox" id="checkAll"></th>
                                 <th id="td1">배너번호</th>
                                 <th>이벤트 명</th>
                                 <th>상품 수</th>
@@ -69,23 +82,21 @@ input, select,textarea{
                              </tr>   
                          </thead>
                          <tbody>
-                             <tr>
-                                <td><input type="checkbox"></td>
-                                <td>1</td>
-                                <td>키가 쑥쑥 우유</td>
-                                <td>30</td>
-                                <td>중지</td>
-                              
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox"></td>
-                                <td>2</td>
-                                <td>꽃다발 왕 큰 꽃다발</td>
-                                <td>35</td>
-                                <td>게시</td>
-                               
-                            </tr>
-                            
+                         	<c:forEach var="e" items="${list }" varStatus="status">
+	                             <tr>
+	                                <td><input type="checkbox" class="common" name="eventNo" value="${e.eventNo }"></td>
+	                                <td>${e.eventNo }</td>
+	                                <td>
+	                                
+	                                
+	                                ${e.eventName }
+	                                
+	                                
+	                                </td>
+	                                <td>${eCountList[status.index] }</td>
+	                                <td>${e.eventStatus }</td>
+	                            </tr>
+                            </c:forEach>
                            
                          </tbody>
                     </table>
@@ -118,12 +129,44 @@ input, select,textarea{
 
                 </div>
 
-
-
-
-
+				</form>	
             </div><!--내용담은 컨테이너-->
         </div><!--250px띄운 div-->
+        
+        
+        
+        <script>
+        
+         //선택 삭제
+        	function eventDelete(){
+        		alert("오잉?");
+        		
+        		var sendArr=Array();
+        		alert("오잉?");
+        		var sendCnt=0;
+        		var chkbox=$(".common");
+        		
+        		for(i=0; i<chkbox.length;i++){
+        			if(chkbox[i].checked==true){
+        				sendArr[sendCnt]=chkbox[i].value;
+        				sendCnt++;
+        			}
+        		}
+        		
+        		$("#array").val(sendArr);
+        	} 
+        	
+        	//모두 체크
+
+    	 	$(function(){
+		
+    			$("#checkAll").click(function(){
+    				var bool = $(this).prop("checked");
+    				$(".common").prop('checked', bool);
+    			});
+    		}); 
+        	
+        </script>
         
        <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

@@ -10,21 +10,21 @@ public class AdminItem implements Serializable{
 	 */
 	private static final long serialVersionUID = 1476512498108750682L;
 	
-	private int itemNo;
-	private String itemName;
-	private int itemPrice;
-	private int itemRate;
-	private String itemDpStatus;
-	private int itemCmSales;
-	private int itemChoice;
-	private Date itemDate;
-	private String itemRecommend;
-	private String categoryNo;
-	private String itemMemo;
-	private String itemEventStatus;
-	private String imageOriginalName;
-	private String imageRename;
-	private String imagePath;
+	private int itemNo;				//상품번호
+	private String itemName;		//상품명
+	private int itemPrice;			//가격
+	private int itemRate;			//평점
+	private String itemDpStatus;	//전시상태
+	private int itemCmSales;		//누적판매량
+	private int itemChoice;			//찜누적수
+	private Date itemDate;			//상품등록일
+	private String itemRecommend;	//추천상품
+	private String categoryNo;		//카테고리번호
+	private String itemMemo;		//상품메모
+	private String itemEventStatus;	//이벤트상품
+	private String imageOriginalName;	//원래 파일명
+	private String imageRename;			//변경된 파일명
+	private String imagePath;			//저장경로
 	
 	public AdminItem() {}
 

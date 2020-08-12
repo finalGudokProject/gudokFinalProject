@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.finalGudok.item.model.dao.ItemDao;
 import com.kh.finalGudok.item.model.vo.AdminItem;
+import com.kh.finalGudok.item.model.vo.Event;
 import com.kh.finalGudok.item.model.vo.Item;
 import com.kh.finalGudok.item.model.vo.ItemListView;
 import com.kh.finalGudok.item.model.vo.PageInfo;
@@ -52,6 +53,33 @@ public class ItemServiceImpl implements ItemService {
 	public int insertImage(AdminItem i) {
 		return iDao.insertImage(i);
 	}
+
+	@Override
+	public int insertEvent(Event e) {
+		return iDao.insertEvent(e);
+	}
+
+	@Override
+	public int insertEventImg(Event e) {
+		return iDao.insertEventImg(e);
+	}
+
+	@Override
+	public int getEventCount() {
+		return iDao.getEventCount();
+	}
+
+	@Override
+	public ArrayList<Event> selectEventList(PageInfo pi) {
+		return iDao.selectEventList(pi);
+	}
+
+	@Override
+	public ArrayList selectEventListCount(PageInfo pi) {
+		return iDao.selecctEventListCount(pi);
+	}
+
+
 
 
 
