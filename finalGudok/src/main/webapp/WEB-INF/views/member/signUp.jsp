@@ -47,7 +47,7 @@ td {
 	color: #495057;
 }
 
-button:hover {
+.btn:hover {
 	border-color: black;
 	color:black;
 }
@@ -58,7 +58,11 @@ button:hover {
 
 #titleTag{
 	margin-left:-30px;
-	margin-top:30px;
+	margin-top:50px;
+}
+
+#signUpDiv{
+	margin-bottom:50px;
 }
 </style>
 <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap"
@@ -68,16 +72,16 @@ button:hover {
 	<jsp:include page="../common/menubar.jsp" />
 
 	<section>
-		<h2 align="center" id="titleTag">회원가입</h2>
+		<h2 align="center" id="titleTag" style="color:black;">회원가입</h2>
 		<br>
 
-		<div>
+		<div id="signUpDiv">
 			<form action="" method="post" id="signUpForm">
 				<table align="center" width="500" id="signUpTb">
 					<tr>
 						<td>*아이디</td>
 						<td><input type="text" id="id" placeholder="사용할 아이디를 입력하세요."
-							required></td>
+							required autofocus></td>
 						<td></td>
 					</tr>
 					<tr>
@@ -150,11 +154,6 @@ button:hover {
 			</form>
 		</div>
 
-		<br>
-		<br>
-		<br>
-		<br>
-		<br>
 	</section>
 	<!-- Footer -->
 	<footer>

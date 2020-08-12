@@ -42,8 +42,7 @@ Bootstrap CSS
 /*나비바 각 카테고리(a태그) 간격조정*/
 .nav-link {
 	margin: 0 60px 0 60px;
-	/* color: #495057; */
-	color:red;
+	color: #495057 !important;
 }
 
 .nav-link:hover{
@@ -65,11 +64,11 @@ Bootstrap CSS
 	margin-left: 50px;
 }
 
-.nav-link{
-	color:#495057 !important;
+.nav-item a{
+	color:#495057;
 }
 
-.nav-link:hover{
+.nav-item > a:hover{
 	color:black !important;
 }
 
@@ -139,6 +138,14 @@ body {
 a:hover{
 	text-decoration:none;
 	color:black;
+}
+
+h3{
+	color:black;
+}
+
+section{
+	margin-bottom:50px;
 }
 
 </style>

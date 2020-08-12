@@ -210,7 +210,7 @@ body {
 		<br> <br> <br> <br> <br>
 		
 		<div class=cardWrap>
-			<p style="font-size: 2em;">JM's 추천</p>
+			<p style="font-size: 2em;">JH's 추천</p>
 			<br>
 
 			<div class="card" style="width: 18rem;">
