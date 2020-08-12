@@ -232,9 +232,9 @@
                 <a href="#home"><img src="resources/images/delivery.png"
                         style="width: 25%; height: 25%; margin-right: 4%;">구독배송</a>
                 <ul>
-                    <li><a href="#">구독 조회</a></li>
-                    <li><a href="#">배송 조회</a></li>
-                    <li><a href="#">교환 내역</a></li>
+                    <li><a href="subscribeList.do">구독 조회</a></li>
+                    <li><a href="deliveryLookup.do">배송 조회</a></li>
+                    <li><a href="exchangeList.do">교환 내역</a></li>
                 </ul>
             </li>
             <li>
@@ -302,41 +302,69 @@
 	      <br><br><br>
 	      <table class="cartTable">
 	        <tr>
-	          <td style="width:10%" class="top bottom"><input type="checkbox" class="check_all">&nbsp;&nbsp;전체선택</td>
+	          <td style="width: 10%" class="top bottom"><input type="checkbox" class="check_all">&nbsp;&nbsp;전체선택</td>
 	          <td style="width: 45%;" colspan="2" class="top bottom">상품명</td>
+	          <td style="width: 15%;" class="top bottom">주기</td>
 	          <td style="width: 15%;" class="top bottom">수량</td>
 	          <td style="width: 15%;" class="top bottom">주문금액</td>
 	        </tr>
-	        <tr>
-	          <td class="bottom"><input type="checkbox" style="margin: auto 0;" class="check"></td>
-	          <td style="width: 10%;" class="bottom">
-	            <div class="image">
-	              <img src="resources/images/milk.jpg">
-	            </div>
-	          </td>
-	          <td class="bottom"><span style="float:left; margin-left: 1%;">옳은 유기농 우유</span></td>
-	          <td class="bottom">
-	            <img class="minus" src="resources/images/my_minus.png" style="width: 10%; height: auto;">
-	            <span class="amount" style="display: inline-block; width: 40px;">1</span>
-	            <img class="plus" src="resources/images/my_plus.png" style="width: 10%; height: auto;">
-	          </td>
-	          <td class="bottom"><span class="price">4,950</span><span>원</span></td>
-	        </tr>
-	        <tr>
-	          <td class="bottom"><input type="checkbox" style="margin: auto 0;" class="check"></td>
-	          <td style="width: 10%;" class="bottom">
-	            <div class="image">
-	              <img src="resources/images/milk.jpg">
-	            </div>
-	          </td>
-	          <td class="bottom"><span style="float:left; margin-left: 1%;">옳은 유기농 우유</span></td>
-	          <td class="bottom">
-	            <img class="minus" src="resources/images/my_minus.png" style="width: 10%; height: auto;">
-	            <span class="amount" style="display: inline-block; width: 40px;">1</span>
-	            <img class="plus" src="resources/images/my_plus.png" style="width: 10%; height: auto;">
-	          </td>
-	          <td class="bottom"><span class="price">4,950</span><span>원</span></td>
-	        </tr>
+	        <c:forEach var="c" items="${list}">
+		        <tr>
+		          <td class="bottom"><input type="checkbox" style="margin: auto 0;" class="check"></td>
+		          <td style="width: 15%;" class="bottom">
+		            <div class="image">
+		              <img src="resources/images/milk.jpg">
+		            </div>
+		          </td>
+		          <td class="bottom"><span style="float:left; margin-left: 1%;">옳은 유기농 우유</span></td>
+		          <c:if test="${c.cartSubs eq '1주'}">
+		          	<td class="bottom">
+		          	<select style="width:60%; height:30px;">
+		          		<option selected>1주</option>
+		          		<option>2주</option>
+		          		<option>3주</option>
+		          		<option>4주</option>
+		          	</select>
+		          </td> 
+		          </c:if>
+		          <c:if test="${c.cartSubs eq '2주'}">
+		          	<td class="bottom">
+		          	<select style="width:60%; height:30px;">
+		          		<option>1주</option>
+		          		<option selected>2주</option>
+		          		<option>3주</option>
+		          		<option>4주</option>
+		          	</select>
+		          </td> 
+		          </c:if>
+		          <c:if test="${c.cartSubs eq '3주'}">
+		          	<td class="bottom">
+		          	<select style="width:60%; height:30px;">
+		          		<option>1주</option>
+		          		<option>2주</option>
+		          		<option selected>3주</option>
+		          		<option>4주</option>
+		          	</select>
+		          </td> 
+		          </c:if>
+		          <c:if test="${c.cartSubs eq '4주'}">
+		          	<td class="bottom">
+		          	<select style="width:60%; height:30px;">
+		          		<option>1주</option>
+		          		<option>2주</option>
+		          		<option>3주</option>
+		          		<option selected>4주</option>
+		          	</select>
+		          </td> 
+		          </c:if>
+		          <td class="bottom">
+		            <img class="minus" src="resources/images/my_minus.png" style="width: 10%; height: auto;">
+		            <span class="amount" style="display: inline-block; width: 40px;">${c.cartCount }</span>
+		            <img class="plus" src="resources/images/my_plus.png" style="width: 10%; height: auto;">
+		          </td>
+		          <td class="bottom"><span class="price">${c.itemPrice}</span><span>원</span></td>
+		        </tr>
+	        </c:forEach>
 	      </table>
 	
 	      <div class="delete">

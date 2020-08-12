@@ -22,8 +22,7 @@ public class HomeController {
 	 */
 	@RequestMapping(value = "home.do", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
-		return "admin/bannerRegister";
-		
+			return "home";
 	}
 	
 }

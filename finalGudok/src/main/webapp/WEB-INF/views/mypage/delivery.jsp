@@ -395,21 +395,20 @@
 	            <td style="width: 20%;" class="top bottom">배송지 변경</td>
 	            <td style="width: 20%;" class="top bottom">교환 신청</td>
 	          </tr>
-	          <tr>
-	            <td>2020.08.06</td>
-	            <td>무가당 드링킹 요거트</td>
-	            <td>배송중</td>
-	            <td><a href="#destination_form" id="destination_pop">배송지 변경</a></td>
-	            <td><a href="#exchange_form" id="exchange_pop">교환 신청</a></td>
-	          </tr>
-	          <tr>
-	            <td>2020.08.06</td>
-	            <td>무가당 드링킹 요거트</td>
-	            <td>배송중</td>
-	            <td><a href="#destination_form" id="destination_pop">배송지 변경</a></td>
-	            <td><a href="#exchange_form" id="exchange_pop">교환 신청</a></td>
-	          </tr>
-	
+	          <c:forEach var="d" items="${list}">
+		          <tr>
+		            <td>${d.subscribeDate}</td>
+		            <td>${d.itemName}</td>
+		            <c:if test="${d.deliveryStatus eq 'N' }">
+		            	<td>배송중</td>
+		            </c:if>
+		            <c:if test="${d.deliveryStatus eq 'Y' }">
+		            	<td>배송완료</td>
+		            </c:if>
+		            <td><a href="#destination_form" id="destination_pop">배송지 변경</a></td>
+		            <td><a href="#exchange_form" id="exchange_pop" onclick="exchangeClick(${d.subscribeNo}, '${d.itemName}')">교환 신청</a></td>
+		          </tr>
+	          </c:forEach>
 	        </table>
 	      </div>
 	
@@ -417,34 +416,52 @@
 	      <a href="#x" class="overlay" id="exchange_form"></a>
 	      <div class="popup">
 	        <h4>교환신청</h4>
-	        <div>
-	          <table>
-	            <tr>
-	              <td style="width: 100px;" class="top bottom">교환 사유</td>
-	              <td class="top bottom">
-	                <select style="width: 200px; height: 30px;">
-	                  <option>품질불량</option>
-	                  <option>주문상품과 다른 상품 배송</option>
-	                  <option>기타</option>
-	                </select>
-	              </td>
-	            </tr>
-	            <tr>
-	              <td colspan="2">
-	                <br>
-	                <textarea cols="50" rows="5"></textarea>
-	              </td>
-	            </tr>
-	          </table>
-	        </div>
-	        <div style="text-align: center;">
-	          <button>교환신청</button>
-	        </div>
+	        
+	        <form action="exchangeInsert.do" method="post">
+	        	<input type="hidden" id="subscribeNo" name="subscribeNo">
+	        	<input type="hidden" id="itemName" name="itemName">
+		        <div>
+		          	<table>
+			            <tr>
+			              <td style="width: 100px;" class="top bottom">교환 사유</td>
+			              <td class="top bottom">
+			                <select style="width: 200px; height: 30px;" id="exchangeCategory" name="exchangeCategory">
+			                  <option value="1">품질불량</option>
+			                  <option value="2">오배송</option>
+			                  <option value="3">기타</option>
+			                </select>
+			              </td>
+			            </tr>
+			            <tr>
+			              <td colspan="2">
+			                <br>
+			                <textarea cols="50" rows="5" id="exchangeContent" name="exchangeContent"></textarea>
+			              </td>
+			            </tr>
+		          	</table>
+		        </div>
+		        <div style="text-align: center;">
+		          	<button id="exchangeSubmit">교환신청</button>
+		        </div>
+	        </form>
 	        <a class="close" href="#close"></a>
 	      </div>
 	    </div>
     </div>
     <br style="clear:both;">
     <jsp:include page="../common/footer.jsp"/>
+    
+    <script>
+    	function exchangeClick(subscribeNo, itemName){
+    		$("#subscribeNo").val(subscribeNo);
+    		$("#itemName").val(itemName);
+    	}																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																														
+    	
+    	$("#exchangeSubmit").on("click",function(){
+    		var itemNo = $("#itemNo").val();
+    		
+    		
+    	})
+    </script>
 </body>
 </html>

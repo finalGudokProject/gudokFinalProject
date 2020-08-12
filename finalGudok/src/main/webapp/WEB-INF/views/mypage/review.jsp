@@ -264,22 +264,16 @@
 	            <td style="width: 50%;" class="top bottom">내용</td>
 	            <td style="width: 30%;" class="top bottom">수정/삭제</td>
 	          </tr>
-	          <tr>
-	            <td>2020.08.05</td>
-	            <td>로스터스 초이스 싱글 오리진 원두</td>
-	            <td>
-	              <button>수정</button>
-	              <button>삭제</button>
-	            </td>
-	          </tr>
-	          <tr>
-	            <td>2020.08.05</td>
-	            <td>로스터스 초이스 싱글 오리진 원두</td>
-	            <td>
-	              <button>수정</button>
-	              <button>삭제</button>
-	            </td>
-	          </tr>
+	          <c:forEach var="r" items="${list}">
+		          <tr>
+		            <td>${r.reviewDate}</td>
+		            <td>${r.reviewContent}</td>
+		            <td>
+		              <button>수정</button>
+		              <button>삭제</button>
+		            </td>
+		          </tr>
+	          </c:forEach>
 	        </table>
 	      </div>
 	    </div>

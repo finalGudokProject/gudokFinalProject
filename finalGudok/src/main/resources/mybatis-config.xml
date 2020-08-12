@@ -14,6 +14,11 @@
 		<typeAlias type="com.kh.finalGudok.item.model.vo.Event" alias="Event"/>
 		
 		
+		<typeAlias type="com.kh.finalGudok.member.model.vo.Point" alias="Point"/>
+		<typeAlias type="com.kh.finalGudok.member.model.vo.Review" alias="mReview"/>
+		<typeAlias type="com.kh.finalGudok.member.model.vo.Exchange" alias="mExchange"/>
+		<typeAlias type="com.kh.finalGudok.member.model.vo.Delivery" alias="mDelivery"/>
+		<typeAlias type="com.kh.finalGudok.member.model.vo.Cart" alias="mCart"/>
 	</typeAliases>
 	
 	<mappers>
