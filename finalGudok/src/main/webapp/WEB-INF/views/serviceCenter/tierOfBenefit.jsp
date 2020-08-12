@@ -37,11 +37,11 @@
       <div class="col-3">
         <h1 align="center">고객센터</h1>
         <ul class="list" id="list">
-            <li style="margin-bottom: 5%;"><img src="resources/images/Alert.png" style="width:20%; height:20%;margin-bottom:3%"><a id="notice" href="sc_notice.html">공지사항</a></li>
-            <li style="margin-bottom: 5%;"><img src="resources/images/FAQ.png" style="width:20%; height:20%;margin-bottom:3%"><a id="FAQ"  href="sc_FAQ.html">FAQ</a></li>
-            <li style="margin-bottom: 5%;"><img src="resources/images/inquiary.png" style="width:20%; height:20%;margin-bottom:3%"><a id="inquiary"  href="sc_inquriary.html">1:1문의</a></li>
-            <li style="margin-bottom: 5%;"><img src="resources/images/proposal.png" style="width:20%; height:20%;margin-bottom:3%"><a id="product_proposal" href="sc_proposal.html">상품제안</a></li>
-            <li style="margin-bottom: 5%;"><img src="resources/images/benefit.png" style="width:20%; height:20%;margin-bottom:3%"><a id="tier_benefit" style="color:rgb(0, 125, 255);" readonly>등급별 혜택</a></li>
+            <li style="margin-bottom: 5%;"><img src="resources/images/Alert.png" style="width:20%; height:20%;margin-bottom:3%"><a href="noticeList.do">공지사항</a></li>
+            <li style="margin-bottom: 5%;"><img src="resources/images/FAQ.png" style="width:20%; height:20%;margin-bottom:3%"><a href="FAQList.do">FAQ</a></li>
+			<li style="margin-bottom: 5%;"><img src="resources/images/inquiary.png" style="width:20%; height:20%;margin-bottom:3%"><a href="inquriaryList.do">1:1문의</a></li>
+            <li style="margin-bottom: 5%;"><img src="resources/images/proposal.png" style="width:20%; height:20%;margin-bottom:3%"><a href="productProposal.do">상품제안</a></li>
+            <li style="margin-bottom: 5%;"><img src="resources/images/benefit1.png" style="width:20%; height:20%;margin-bottom:3%"><a id="tier_benefit" style="color:rgb(0, 125, 255);" readonly>등급별 혜택</a></li>
         </ul>
       </div>
       <div class="col-9">

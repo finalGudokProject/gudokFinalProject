@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="boardMapper">
+
+	<resultMap type="Board" id="boardResultSet">
+		<id property="rownum" column="ROWNUM"/>
+		<result property="bBoard_no" column="BOARD_NO"/>
+		<result property="bMember_no" column="MEMBER_NO"/>
+		<result property="bMember_id" column="MEMBER_ID"/>
+		<result property="bEmail" column="EMAIL"/>
+		<result property="bItem_no" column="ITEM_NO"/>
+		<result property="bBoard_code" column="BOARD_CODE"/>
+		<result property="bTitle" column="TITLE"/>
+		<result property="bContent" column="CONTENT"/>
+		<result property="bWrite_date" column="WRITE_DATE"/>
+		<result property="bRead_num" column="READ_NUM"/>
+		<result property="originalFileName" column="IMAGE_ORIGINAL_NAME"/>
+		<result property="renameFileName" column="IMAGE_RENAME"/>
+		<result property="imagePath" column="IMAGE_PATH"/>
+		<result property="bItem_no" column="ITEM_NO"/>
+	</resultMap>
+	
+	
+	<select id="getListCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM BOARD
+	</select>
+	
+	<select id="getBoardList" resultMap="boardResultSet">
+		SELECT ROWNUM, B.*
+		FROM ( SELECT *
+        FROM BOARD B
+        LEFT JOIN BOARD_IMAGE BI on (B.BOARD_NO = BI.BOARD_NO)
+        LEFT JOIN IMAGE on (B_IMAGE_NO = IMAGE_NO)
+        ) B
+		WHERE BOARD_CODE = 'N'
+		ORDER BY ROWNUM DESC 
+	</select>
+	
+	<select id="selectNoticeDetail" parameterType="int" resultMap="boardResultSet">
+		SELECT *
+		FROM BOARD B
+        LEFT JOIN BOARD_IMAGE BI on (B.BOARD_NO = BI.BOARD_NO)
+        LEFT JOIN IMAGE on (B_IMAGE_NO = IMAGE_NO)
+        WHERE B.BOARD_NO = #{b.bBoard_no}
+	</select>
+	
+	<update id="updateCount" parameterType="int">
+		UPDATE BOARD
+		SET READ_NUM = READ_NUM + 1
+		WHERE BOARD_NO = #{b.bBoard_no}
+	</update>
+	
+	<!-- admin Notice -->
+	<insert id="insertNotice" parameterType="Board">
+		INSERT INTO BOARD VALUES(
+			SEQ_BNO.NEXTVAL
+			, #{bTitle}
+			, #{bContent}
+			, SYSDATE
+			, DEFAULT
+			, 'N'
+			, 1
+			, 'admin'
+			, 'admin@naver.com'
+			, DEFAULT
+		)
+	</insert>
+	
+	<insert id="insertNoticeImg" parameterType="Board">
+		INSERT ALL
+		INTO IMAGE VALUES(SEQ_MID.NEXTVAL, #{imagePath}, #{originalFileName}, #{renameFileName})
+		INTO BOARD_IMAGE VALUES(SEQ_BID.NEXTVAL, SEQ_BNO.CURRVAL, SEQ_MID.CURRVAL)
+		SELECT*
+		FROM DUAL
+	</insert>
+	
+	
+</mapper>

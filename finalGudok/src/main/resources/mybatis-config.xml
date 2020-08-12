@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd" >
+<configuration>
+	<settings>
+		<setting name="jdbcTypeForNull" value="NULL"/>
+	</settings>
+	
+	<typeAliases>
+		<typeAlias type="com.kh.finalGudok.item.model.vo.Item" alias="Item"/>
+		<typeAlias type="com.kh.finalGudok.item.model.vo.ItemListView" alias="ItemListView"/>
+		<typeAlias type="com.kh.finalGudok.item.model.vo.Review" alias="Review"/>
+		<typeAlias type="com.kh.finalGudok.member.model.vo.Member" alias="Member"/>
+		<typeAlias type="com.kh.finalGudok.board.model.vo.Board" alias="Board"/>
+	</typeAliases>
+	
+	<mappers>
+		<mapper resource="/mappers/item-mapper.xml"/>
+		<mapper resource="/mappers/itemList-mapper.xml"/>
+		<mapper resource="/mappers/review-mapper.xml"/>
+		<mapper resource="/mappers/member-mapper.xml"/>
+		<mapper resource="/mappers/board-mapper.xml"/>
+	</mappers>
+
+</configuration>
