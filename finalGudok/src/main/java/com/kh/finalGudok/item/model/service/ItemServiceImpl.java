@@ -131,6 +131,11 @@ public class ItemServiceImpl implements ItemService {
 		iDao.deleteCart(c);
 	}
 
+	@Override
+	public int updateReviewRate(int itemNo) {
+		return iDao.updateReviewRate(itemNo);
+	}
+
 
 
 

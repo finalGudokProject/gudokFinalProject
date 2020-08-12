@@ -355,7 +355,6 @@
 		</c:forEach>
 		</div>
 		</c:if>
-		
 		<c:if test="${!empty list}">
 			<div class="col-12">
 			
@@ -367,7 +366,7 @@
 				    </li>
 				</c:if>
 				<c:if test = "${pi.currentPage > 1 }">
-					<c:url var = "ilistBack" value = "itemFood.do">
+					<c:url var = "ilistBack" value = "itemEvent.do">
 						<c:param name="page" value="${pi.currentPage - 1 }"/>
 					</c:url>
 					<li class="page-item">
@@ -393,7 +392,7 @@
 				    </li>
 				</c:if>
 				<c:if test = "${pi.currentPage lt pi.maxPage}">
-					<c:url var = "ilistAfter" value = "itemFood.do">
+					<c:url var = "ilistAfter" value = "itemEvent.do">
 						<c:param name="page" value="${pi.currentPage + 1 }"/>
 					</c:url>
 					<li class="page-item">

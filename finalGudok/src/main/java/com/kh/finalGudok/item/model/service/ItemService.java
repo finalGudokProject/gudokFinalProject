@@ -58,4 +58,6 @@ public interface ItemService {
 
 	public void deleteCart(Cart c);
 
+	int updateReviewRate(int itemNo);
+
 }

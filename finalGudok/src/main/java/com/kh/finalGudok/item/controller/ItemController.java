@@ -268,7 +268,8 @@ public class ItemController {
 		
 		int result = iService.insertReview(r);
 		System.out.println("review result : " + result);
-		if(result > 0) {
+		int updateResult = iService.updateReviewRate(itemNo);
+		if(result > 0 && updateResult > 0) {
 			return "redirect:idetail.do?itemNo=" + itemNo + "&page=" + currentPage + "&memberNo=" + memberNo + "#reviewPI";
 		}else {
 			throw new ItemException("리뷰 등록 실패");

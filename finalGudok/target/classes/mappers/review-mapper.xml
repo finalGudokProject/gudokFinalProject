@@ -46,4 +46,10 @@
 			, #{memberId}
 			, #{email})
 	</insert>
+	
+	<update id="updateReviewRate" parameterType="_int">
+		UPDATE ITEM
+		SET ITEM_RATE=(SELECT TRUNC(AVG(REVIEW_RATE),1) FROM REVIEW)
+		WHERE ITEM_NO=#{itemNo}
+	</update>
 </mapper>

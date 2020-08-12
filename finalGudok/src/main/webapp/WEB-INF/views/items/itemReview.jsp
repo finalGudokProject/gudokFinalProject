@@ -195,7 +195,18 @@
 				<tr>
 					<td>
 						<div style="padding:2%;border-top:1px dashed lightgray;">
-							<img src="resources/images/breadLogo.jpg" class="reviewImgClass">
+						<c:if test="${!empty r.reviewImg1 && !empty r.reviewImg2}">
+							<img src="resources/iuploadFiles/${r.reviewImg1 }" class="reviewImgClass">
+							<img src="resources/iuploadFiles/${r.reviewImg2 }" class="reviewImgClass">
+						</c:if>
+						<c:if test="${!empty r.reviewImg1 && empty r.reviewImg2 }">
+							<img src="resources/iuploadFiles/${r.reviewImg1 }" class="reviewImgClass">
+						</c:if>
+						<c:if test="${empty r.reviewImg1 && !empty r.reviewImg2 }">
+							<img src="resources/iuploadFiles/${r.reviewImg2 }" class="reviewImgClass">
+						</c:if>
+						<c:if test="${empty r.reviewImg1 && empty r.reviewImg2 }">
+						</c:if>
 						</div>
 					</td>
 				</tr>

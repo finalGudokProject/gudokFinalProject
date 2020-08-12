@@ -352,7 +352,15 @@
 						</div>
 						
 						
-						  <div id="rateId">(평점 : ${i.itemRate }점 / 찜한 사람 : ${i.itemChoice }명)</div>
+						  <div id="rateId">
+							  <c:if test="${i.itemRate == 0}">
+							  	(평점 : 0점 / 찜한 사람 : ${i.itemChoice }명)
+							  </c:if>
+							  <c:if test="${i.itemRate != 0}">
+							  	(평점 : ${i.itemRate}점 / 찜한 사람 : ${i.itemChoice }명)
+							  </c:if>
+						  </div>
+						  
 						</div>
 						<div class="row">
 							<div class="col-4" id="btnBlank"></div>
@@ -371,18 +379,22 @@
 		<c:forEach var="i" items="${list }" varStatus="vs">
 		<script>
 			$(function(){
-				$("#preview${vs.index}").on("click", function(){
+				$("#preview${vs.index}").on("click", function(event){
 					var preview = $(this).attr("id");
 					console.log(preview);
 					var review = $(this).next().val();
 					console.log(review);
-					
+					event.stopPropagation();
+				})
+				$("#preview${vs.index}").on("click",function(){
+					location.href="home.do";
 				})
 			})
+			
 		
 		</script>
 		</c:forEach>
-		
+		<c:if test="${!empty list}">
 			<div class="col-12">
 			
 			<nav aria-label="Page navigation example">
@@ -429,6 +441,7 @@
 				</ul>
 			</nav>
 		</div>
+		</c:if>
 	</div>
 </div>
 

@@ -237,6 +237,19 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 	.starRev div{
 		vertical-align:bottom;
 	}
+	
+	.reviewImgClass{
+		width:100%;
+		height:100%;
+		margin:2% 2% 2% 0;
+		border:1px solid lightgray;
+		max-height:200px;
+		max-width:200px;
+	}
+	
+	.reviewLine{
+		border-bottom:1px datted lightgray;
+	}
 </style>
 </head>
 <body>
@@ -390,6 +403,7 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 			
 			
 		<br>
+		
 		<!-- 리뷰 시작 -->
 		<form action="reviewInsert.do" method="post" enctype="multipart/form-data" id="reviewForm">
 		<input type="hidden" name="page" value="${currentPage}">
@@ -501,7 +515,7 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 				<p class="reviewRP"><b>긍정 상품평</b></p>
 				<c:forEach var="r" items="${review }">
 					<c:if test="${r.reviewRate >=4 }">
-						<div><span style="font-size:20px;">${r.memberId }님의 상품평</span>
+						<div class="reviewLine"><span style="font-size:20px;">${r.memberId }님의 상품평</span>
 							<div class="starRev">
 								<c:choose>
 									<c:when test="${r.reviewRate < 1}">
@@ -552,6 +566,21 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 								</c:choose>
 								<div style="display:inline-block;color:gray;">등록일 : ${r.reviewDate }</div>
 							</div>
+							<c:choose>
+								<c:when test="${!empty r.reviewImg1 && !empty r.reviewImg2 }">
+									<div><img src="${contextPath }/resources/iuploadFiles/${r.reviewImg1}" class="reviewImgClass"><img src="${contextPath }/resources/iuploadFiles/${r.reviewImg2}" class="reviewImgClass"></div>
+								</c:when>
+								<c:when test="${!empty r.reviewImg1 && empty r.reviewImg2}">
+									<div><img src="${contextPath }/resources/iuploadFiles/${r.reviewImg1}" class="reviewImgClass"></div>
+								</c:when>
+								<c:when test="${!empty r.reviewImg2 && empty r.reviewImg1}">
+									<div><img src="${contextPath }/resources/iuploadFiles/${r.reviewImg2}" class="reviewImgClass"></div>
+								</c:when>
+								<c:when test="${empty r.reviewImg1 || empty r.reviewImg2 }">
+									<div></div>
+								</c:when>
+								<c:otherwise></c:otherwise>
+							</c:choose>
 							<div class="reviewTDiv">
 								<div class="reviewText">${r.reviewContent }</div>
 							</div>
@@ -564,7 +593,7 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 				
 				<c:forEach var="r" items="${review }">
 					<c:if test="${r.reviewRate < 3 }">
-						<div><span style="font-size:20px;">${r.memberId }님의 상품평</span>
+						<div class="reviewLine"><span style="font-size:20px;">${r.memberId }님의 상품평</span>
 							<div class="starRev">
 								<c:choose>
 									<c:when test="${r.reviewRate < 1}">
@@ -615,6 +644,21 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 								</c:choose>
 								<div style="display:inline-block;color:gray;">등록일 : ${r.reviewDate }</div>
 							</div>
+							<c:choose>
+								<c:when test="${!empty r.reviewImg1 && !empty r.reviewImg2 }">
+									<div><img src="${contextPath }/resources/iuploadFiles/${r.reviewImg1}" class="reviewImgClass"><img src="${contextPath }/resources/iuploadFiles/${r.reviewImg2}" class="reviewImgClass"></div>
+								</c:when>
+								<c:when test="${!empty r.reviewImg1 && empty r.reviewImg2}">
+									<div><img src="${contextPath }/resources/iuploadFiles/${r.reviewImg1}" class="reviewImgClass"></div>
+								</c:when>
+								<c:when test="${!empty r.reviewImg2 && empty r.reviewImg1}">
+									<div><img src="${contextPath }/resources/iuploadFiles/${r.reviewImg2}" class="reviewImgClass"></div>
+								</c:when>
+								<c:when test="${empty r.reviewImg1 || empty r.reviewImg2 }">
+									<div></div>
+								</c:when>
+								<c:otherwise></c:otherwise>
+							</c:choose>
 							<div class="reviewTDiv">
 								<div class="reviewText">${r.reviewContent }</div>
 							</div>

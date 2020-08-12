@@ -62,9 +62,9 @@ public class ItemDao {
 	}
 
 	public ArrayList<Item> selectLivingList(PageInfo pi) {
-		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
-		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
-		return (ArrayList)sqlSessionTemplate.selectList("itemListMapper.getItemLivingList", null, rowBounds);
+		int offsetL = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBoundsL = new RowBounds(offsetL, pi.getBoardLimit());
+		return (ArrayList)sqlSessionTemplate.selectList("itemListMapper.getItemLivingList", null, rowBoundsL);
 	}
 
 	public int getItemEventCount() {
@@ -72,9 +72,9 @@ public class ItemDao {
 	}
 	
 	public ArrayList<Item> selectEventList(PageInfo pi) {
-		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
-		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
-		return (ArrayList)sqlSessionTemplate.selectList("itemListMapper.getItemEventList", null, rowBounds);
+		int offsetE = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBoundsE = new RowBounds(offsetE, pi.getBoardLimit());
+		return (ArrayList)sqlSessionTemplate.selectList("itemListMapper.getItemEventList", null, rowBoundsE);
 	}
 
 	public int insertInquired(Board b) {
@@ -90,9 +90,9 @@ public class ItemDao {
 	}
 
 	public ArrayList<Item> selectNewList(PageInfo pi) {
-		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
-		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
-		return (ArrayList)sqlSessionTemplate.selectList("itemListMapper.selectNewList", null, rowBounds);
+		int offsetN = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBoundsN = new RowBounds(offsetN, pi.getBoardLimit());
+		return (ArrayList)sqlSessionTemplate.selectList("itemListMapper.selectNewList", null, rowBoundsN);
 	}
 
 	public int insertCart(Cart c) {
@@ -117,6 +117,10 @@ public class ItemDao {
 
 	public void deleteCart(Cart c) {
 		sqlSessionTemplate.delete("cartMapper.deleteCart", c);
+	}
+
+	public int updateReviewRate(int itemNo) {
+		return sqlSessionTemplate.update("reviewMapper.updateReviewRate", itemNo);
 	}
 
 

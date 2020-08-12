@@ -381,7 +381,6 @@
 		
 		<c:if test="${!empty list}">
 			<div class="col-12">
-			
 			<nav aria-label="Page navigation example">
 				<ul class="pagination justify-content-center">
 				<c:if test = "${pi.currentPage == 1}">
@@ -390,7 +389,7 @@
 				    </li>
 				</c:if>
 				<c:if test = "${pi.currentPage > 1 }">
-					<c:url var = "ilistBack" value = "itemFood.do">
+					<c:url var = "ilistBack" value = "itemNew.do">
 						<c:param name="page" value="${pi.currentPage - 1 }"/>
 					</c:url>
 					<li class="page-item">
@@ -403,7 +402,7 @@
 						<li class="page-item disabled"><a class="page-link" href="#" tabindex="-1">${p }</a></li>
 					</c:if>
 					<c:if test="${p != pi.currentPage }">
-						<c:url var="ilistCheck" value="itemFood.do">
+						<c:url var="ilistCheck" value="itemNew.do">
 							<c:param name="page" value="${p}"/>
 						</c:url>
 						<li class="page-item"><a class="page-link" href="${ilistCheck }">${p }</a></li>
