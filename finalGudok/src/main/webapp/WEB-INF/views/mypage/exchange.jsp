@@ -263,16 +263,18 @@
 	            <td style="width: 50%;" class="top bottom">상품</td>
 	            <td style="width: 30%;" class="top bottom">교환상태</td>
 	          </tr>
-	          <tr>
-	            <td>2020.08.06</td>
-	            <td>무가당 드링킹 요거트</td>
-	            <td>교환전</td>
-	          </tr>
-	          <tr>
-	            <td>2020.08.06</td>
-	            <td>무가당 드링킹 요거트</td>
-	            <td>교환전</td>
-	          </tr>
+	          <c:forEach var="e" items="${list}">
+		          <tr>
+		            <td>${e.exchangeDate}</td>
+		            <td>${e.itemName}</td>
+		            <c:if test="${e.exchangeStatus eq 'N'}">
+		            	<td>교환전</td>
+		            </c:if>
+		            <c:if test="${e.exchangeStatus eq 'Y'}">
+		            	<td>교환완료</td>
+		            </c:if>
+		          </tr>
+	          </c:forEach>
 	        </table>
 	      </div>
 	    </div>

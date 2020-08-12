@@ -45,7 +45,6 @@ body {
 	rel="stylesheet">
 </head>
 <body>
-
 	<jsp:include page="common/menubar.jsp" />
 	<section>
 		<div id="carouselExampleControls" class="carousel slide"

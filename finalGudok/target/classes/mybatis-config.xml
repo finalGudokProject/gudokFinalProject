@@ -10,6 +10,11 @@
 		<typeAlias type="com.kh.finalGudok.item.model.vo.ItemListView" alias="ItemListView"/>
 		<typeAlias type="com.kh.finalGudok.item.model.vo.Review" alias="Review"/>
 		<typeAlias type="com.kh.finalGudok.member.model.vo.Member" alias="Member"/>
+		<typeAlias type="com.kh.finalGudok.member.model.vo.Point" alias="Point"/>
+		<typeAlias type="com.kh.finalGudok.member.model.vo.Review" alias="mReview"/>
+		<typeAlias type="com.kh.finalGudok.member.model.vo.Exchange" alias="mExchange"/>
+		<typeAlias type="com.kh.finalGudok.member.model.vo.Delivery" alias="mDelivery"/>
+		<typeAlias type="com.kh.finalGudok.member.model.vo.Cart" alias="mCart"/>
 	</typeAliases>
 	
 	<mappers>

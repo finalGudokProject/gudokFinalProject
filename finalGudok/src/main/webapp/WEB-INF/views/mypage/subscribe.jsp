@@ -461,7 +461,7 @@
 	              <td style="width: 100px;" class="top bottom">취소 사유</td>
 	              <td class="top bottom">
 	                <select style="width: 200px; height: 30px;">
-	                  <option>구독할 필요성이 없어짐</option>
+	                  <option>상품 불필요</option>
 	                  <option>가격이 비쌈</option>
 	                  <option>기타</option>
 	                </select>

@@ -148,16 +148,32 @@ a:hover{
 <body>
 	<c:set var="contextPath"
 		value="${pageContext.servletContext.contextPath }" scope="application" />
-
+		
 	<div id="userMenu">
 		<ul id="menu-list">
 			<li><a href="signUp.do">회원가입</a></li>
 			<li><a href="moveToLogin.do">로그인</a></li>
+			<%-- <c:if test="${empty loginUser}">
+	        <li>
+		        <form action="login.do" method="post">
+			        <input type="text" name="memberId">
+			        <input type="password" name="memberPwd">
+			        <button id="login">로그인</button>
+		        </form>
+	        </li>
+	        </c:if>
+			
+	        <c:if test="${!empty loginUser}">
+	        <li>	       
+		        <c:url var="mypage" value="mypage.do"/>
+		        <button id="login" onclick="location.href='${mypage}'">${loginUser.memberId }</button>
+	        </li>
+	        </c:if> --%>
+
 			<li><a href="#">고객센터</a></li>
 			<li><a href="#">Who is JH?</a></li>
 			<li><a href="payment.do">결제페이지</a>
 		</ul>
-
 	</div>
 	<div class="container">
 		<div class="row">
