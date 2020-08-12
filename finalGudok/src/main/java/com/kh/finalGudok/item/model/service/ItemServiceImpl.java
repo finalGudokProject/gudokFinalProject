@@ -13,6 +13,7 @@ import com.kh.finalGudok.item.model.vo.Item;
 import com.kh.finalGudok.item.model.vo.ItemListView;
 import com.kh.finalGudok.item.model.vo.PageInfo;
 import com.kh.finalGudok.item.model.vo.Review;
+import com.kh.finalGudok.item.model.vo.Sort;
 import com.kh.finalGudok.member.model.vo.Member;
 
 @Service("iService")
@@ -136,11 +137,64 @@ public class ItemServiceImpl implements ItemService {
 		return iDao.updateReviewRate(itemNo);
 	}
 
+	@Override
+	public int mListCount() {
+		return iDao.mListCount();
+	}
 
+	@Override
+	public ArrayList<ItemListView> selectMList(PageInfo pi) {
+		return iDao.selectMList(pi);
+	}
 
+	@Override
+	public int dListCount() {
+		return iDao.dListCount();
+	}
 
+	@Override
+	public ArrayList<ItemListView> selectDList(PageInfo pi) {
+		return iDao.selectDList(pi);
+	}
 
+	@Override
+	public int bListCount() {
+		return iDao.selectBListCount();
+	}
 
+	@Override
+	public int sListCount() {
+		return iDao.selectSListCount();
+	}
 
+	@Override
+	public int hListCount() {
+		return iDao.selectHListCount();
+	}
+
+	@Override
+	public int diListCount() {
+		return iDao.selectDiListCount();
+	}
+
+	@Override
+	public ArrayList<ItemListView> selectBList(PageInfo pi) {
+		return iDao.selectBList(pi);
+	}
+
+	@Override
+	public ArrayList<ItemListView> selectSList(PageInfo pi) {
+		return iDao.selectSList(pi);
+	}
+
+	@Override
+	public ArrayList<ItemListView> selectHList(PageInfo pi) {
+		return iDao.selectHList(pi);
+	}
+
+	@Override
+	public ArrayList<ItemListView> selectDiList(PageInfo pi) {
+		return iDao.selectDiList(pi);
+	}
 
 }

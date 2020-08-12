@@ -210,6 +210,10 @@
 		font-size:30px;
 	}
 	
+	.cateTableC td:hover{
+		background:lightyellow;
+		cursor:pointer;
+	}
 
 </style>
 </head>
@@ -223,16 +227,24 @@
 		<span>푸드</span>
 		</div>
 		<div style="margin:0 0 3% 2%">
-			<table style="display:block;">
+			<table style="display:block;" class="cateTableC">
 				<tr>
-					<td style="width:10%;">유제품</td>
-					<td style="width:10%;">베이커리</td>
-					<td style="width:10%;">다이어트 식단</td>
-					<td style="width:10%;">음료</td>
-					<td style="width:10%;">간편식품</td>
-					<td style="width:10%;">건강식품</td>
+					<td style="width:10%;" id="foodMilk" class="sortCate"><input type="hidden" value="F2">유제품</td>
+					<td style="width:10%;" id="foodBakery" class="sortCate"><input type="hidden" value="F3">베이커리</td>
+					<td style="width:10%;" id="foodDiet" class="sortCate"><input type="hidden" value="F6">다이어트 식단</td>
+					<td style="width:10%;" id="foodDrink" class="sortCate"><input type="hidden" value="F1">음료</td>
+					<td style="width:10%;" id="foodSimple" class="sortCate"><input type="hidden" value="F4">간편식품</td>
+					<td style="width:10%;" id="foodHealth" class="sortCate"><input type="hidden" value="F5">건강식품</td>
 				</tr>
 			</table>
+			<script>
+				$(function(){
+					$(".sortCate").on("click", function(){
+						var sort = $(this).find("input").val();
+						location.href="foodSort.do?categoryNo="+sort;
+					})
+				})
+			</script>
 		</div>
 			<div style="border-top:1px solid lightgray;border-bottom:1px solid lightgray;">
 			<table align="center" style="margin-bottom:1%;" id="sortTable">
@@ -259,8 +271,7 @@
 	
 	
 	
-	
-	
+		<c:if test="${!empty list}">
 		<c:forEach var="i" items="${list }" varStatus="vs">
 		<c:url var="idetail" value="idetail.do">
 			<c:param name="itemNo" value="${i.itemNo }"/>
@@ -269,7 +280,7 @@
 		</c:url>
 		<fmt:formatNumber var="discountPrice" value="${(i.itemPrice - i.itemPrice*(i.itemDiscount/100))}" type="number"/>
 		<fmt:formatNumber var="itemPrice" value="${i.itemPrice}" type="number"/>
-			<div class="col-4" onclick="location.href='${idetail}'">
+			<div class="col-4" onclick="location.href='${idetail}'" class="detailDiv">
 				<div class="card">
 					<c:if test="${i.itemDiscount != 0}" >
 					<div class="cardHeader">
@@ -374,6 +385,7 @@
 				</div>
 			</div>
 		</c:forEach>
+		</c:if>
 		</div>
 		
 		<c:forEach var="i" items="${list }" varStatus="vs">
@@ -387,7 +399,8 @@
 					event.stopPropagation();
 				})
 				$("#preview${vs.index}").on("click",function(){
-					location.href="home.do";
+					var itemNo = $(this).next().val();
+					location.href="itemReview.do?itemNo="+itemNo;
 				})
 			})
 			
@@ -466,7 +479,7 @@
 		})
 	})
 	</script>
-	<script>
+	<!-- <script>
 		$(function(){
 			$(".cardHeader, .cardBody, #btnBlank, .cardFooter").click(function(){
 				var itemNo = $(this).find("input[type=hidden]").val();
@@ -476,7 +489,7 @@
 				$(this).css("cursor","pointer");
 			})
 		})
-	</script>
+	</script> -->
 	
 <jsp:include page="../common/footer.jsp"/>
 </body>

@@ -9,6 +9,7 @@ import com.kh.finalGudok.item.model.vo.Item;
 import com.kh.finalGudok.item.model.vo.ItemListView;
 import com.kh.finalGudok.item.model.vo.PageInfo;
 import com.kh.finalGudok.item.model.vo.Review;
+import com.kh.finalGudok.item.model.vo.Sort;
 import com.kh.finalGudok.member.model.vo.Member;
 
 public interface ItemService {
@@ -59,5 +60,29 @@ public interface ItemService {
 	public void deleteCart(Cart c);
 
 	int updateReviewRate(int itemNo);
+
+	int dListCount();
+	
+	ArrayList<ItemListView> selectDList(PageInfo pi);
+	
+	int mListCount();
+
+	ArrayList<ItemListView> selectMList(PageInfo pi);
+
+	int bListCount();
+	
+	ArrayList<ItemListView> selectBList(PageInfo pi);
+	
+	int sListCount();
+
+	ArrayList<ItemListView> selectSList(PageInfo pi);
+	
+	int hListCount();
+
+	ArrayList<ItemListView> selectHList(PageInfo pi);
+	
+	int diListCount();
+
+	ArrayList<ItemListView> selectDiList(PageInfo pi);
 
 }

@@ -27,6 +27,7 @@ import com.kh.finalGudok.item.model.vo.Item;
 import com.kh.finalGudok.item.model.vo.ItemListView;
 import com.kh.finalGudok.item.model.vo.PageInfo;
 import com.kh.finalGudok.item.model.vo.Review;
+import com.kh.finalGudok.item.model.vo.Sort;
 import com.kh.finalGudok.member.model.vo.Member;
 
 @Controller
@@ -59,16 +60,61 @@ public class ItemController {
 		int listCount = iService.getItemCount();
 //		System.out.println("listCount : " + listCount);
 		
+		
+		
 		PageInfo pi = getPageInfo(currentPage, listCount);
 		ArrayList<Item> list = iService.selectList(pi);
 //		System.out.println("ArrayList : " + list);
 		
-		if(list != null) {
-			mv.addObject("list", list);
-			mv.addObject("pi", pi);
-			mv.setViewName("items/itemFood");
-		}else {
-			throw new ItemException("아이템 조회 실패");
+		
+		
+		mv.addObject("list", list).addObject("pi", pi).setViewName("items/itemFood");
+		
+		return mv;
+	}
+	
+	@RequestMapping("foodSort.do")
+	public ModelAndView foodSort(ModelAndView mv, @RequestParam(value = "page", required = false) Integer page, String categoryNo) {
+		int currentPage = 1;
+		if(page != null) {
+			currentPage = page;
+		}
+		if(categoryNo.equals("F1")) {
+			int dListCount = iService.dListCount();
+			System.out.println("음료 Count : " + dListCount);
+			PageInfo pi = getPageInfo(currentPage, dListCount);
+			ArrayList<ItemListView> dList = iService.selectDList(pi);
+			mv.addObject("dList", dList).addObject("dPi",pi).setViewName("items/foodSort");
+		}else if(categoryNo.equals("F2")) {
+			int mListCount = iService.mListCount();
+			System.out.println("유제품 Count : " + mListCount);
+			PageInfo pi = getPageInfo(currentPage, mListCount);
+			ArrayList<ItemListView> mList = iService.selectMList(pi);
+			mv.addObject("mList", mList).addObject("mPi",pi).setViewName("items/foodSort");
+		}else if(categoryNo.equals("F3")) {
+			int bListCount = iService.bListCount();
+			System.out.println("베이커리 Count : " + bListCount);
+			PageInfo pi = getPageInfo(currentPage, bListCount);
+			ArrayList<ItemListView> bList = iService.selectBList(pi);
+			mv.addObject("bList", bList).addObject("bPi",pi).setViewName("items/foodSort");
+		}else if(categoryNo.equals("F4")) {
+			int sListCount = iService.sListCount();
+			System.out.println("간편 Count : " + sListCount);
+			PageInfo pi = getPageInfo(currentPage, sListCount);
+			ArrayList<ItemListView> sList = iService.selectSList(pi);
+			mv.addObject("sList", sList).addObject("sPi",pi).setViewName("items/foodSort");
+		}else if(categoryNo.equals("F5")) {
+			int hListCount = iService.hListCount();
+			System.out.println("건강 Count : " + hListCount);
+			PageInfo pi = getPageInfo(currentPage, hListCount);
+			ArrayList<ItemListView> hList = iService.selectHList(pi);
+			mv.addObject("hList", hList).addObject("hPi",pi).setViewName("items/foodSort");
+		}else if(categoryNo.equals("F6")) {
+			int diListCount = iService.diListCount();
+			System.out.println("다이어트 Count : " + diListCount);
+			PageInfo pi = getPageInfo(currentPage, diListCount);
+			ArrayList<ItemListView> diList = iService.selectDiList(pi);
+			mv.addObject("diList", diList).addObject("diPi",pi).setViewName("items/foodSort");
 		}
 		return mv;
 	}

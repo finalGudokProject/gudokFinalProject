@@ -10,6 +10,8 @@ public class ItemListView implements Serializable{
 	 */
 	private static final long serialVersionUID = -6337821619057909757L;
 	private int itemNo;
+	private String categoryNo;
+	private Date itemDate;
 	private String itemName;
 	private String itemMemo;
 	private int itemPrice;
@@ -23,10 +25,11 @@ public class ItemListView implements Serializable{
 		// TODO Auto-generated constructor stub
 	}
 
-	public ItemListView(int itemNo, String itemName, String itemMemo, int itemPrice, int itemDiscount, Double itemRate,
-			int reviewCount, int itemChoice, int heartNo) {
+	public ItemListView(String categoryNo, Date itemDate, String itemName, String itemMemo, int itemPrice,
+			int itemDiscount, Double itemRate, int reviewCount, int itemChoice, int itemNo, int heartNo) {
 		super();
-		this.itemNo = itemNo;
+		this.categoryNo = categoryNo;
+		this.itemDate = itemDate;
 		this.itemName = itemName;
 		this.itemMemo = itemMemo;
 		this.itemPrice = itemPrice;
@@ -34,15 +37,24 @@ public class ItemListView implements Serializable{
 		this.itemRate = itemRate;
 		this.reviewCount = reviewCount;
 		this.itemChoice = itemChoice;
+		this.itemNo = itemNo;
 		this.heartNo = heartNo;
 	}
 
-	public int getItemNo() {
-		return itemNo;
+	public String getCategoryNo() {
+		return categoryNo;
 	}
 
-	public void setItemNo(int itemNo) {
-		this.itemNo = itemNo;
+	public void setCategoryNo(String categoryNo) {
+		this.categoryNo = categoryNo;
+	}
+
+	public Date getItemDate() {
+		return itemDate;
+	}
+
+	public void setItemDate(Date itemDate) {
+		this.itemDate = itemDate;
 	}
 
 	public String getItemName() {
@@ -101,6 +113,14 @@ public class ItemListView implements Serializable{
 		this.itemChoice = itemChoice;
 	}
 
+	public int getItemNo() {
+		return itemNo;
+	}
+
+	public void setItemNo(int itemNo) {
+		this.itemNo = itemNo;
+	}
+
 	public int getHeartNo() {
 		return heartNo;
 	}
@@ -115,9 +135,10 @@ public class ItemListView implements Serializable{
 
 	@Override
 	public String toString() {
-		return "ItemListView [itemNo=" + itemNo + ", itemName=" + itemName + ", itemMemo=" + itemMemo + ", itemPrice="
-				+ itemPrice + ", itemDiscount=" + itemDiscount + ", itemRate=" + itemRate + ", reviewCount="
-				+ reviewCount + ", itemChoice=" + itemChoice + ", heartNo=" + heartNo + "]";
+		return "ItemListView [categoryNo=" + categoryNo + ", itemDate=" + itemDate + ", itemName=" + itemName
+				+ ", itemMemo=" + itemMemo + ", itemPrice=" + itemPrice + ", itemDiscount=" + itemDiscount
+				+ ", itemRate=" + itemRate + ", reviewCount=" + reviewCount + ", itemChoice=" + itemChoice + ", itemNo="
+				+ itemNo + ", heartNo=" + heartNo + "]";
 	}
 
 	

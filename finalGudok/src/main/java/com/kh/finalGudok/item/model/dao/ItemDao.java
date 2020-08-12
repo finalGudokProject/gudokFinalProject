@@ -14,6 +14,7 @@ import com.kh.finalGudok.item.model.vo.Item;
 import com.kh.finalGudok.item.model.vo.ItemListView;
 import com.kh.finalGudok.item.model.vo.PageInfo;
 import com.kh.finalGudok.item.model.vo.Review;
+import com.kh.finalGudok.item.model.vo.Sort;
 import com.kh.finalGudok.member.model.vo.Member;
 
 @Repository("iDao")
@@ -123,5 +124,64 @@ public class ItemDao {
 		return sqlSessionTemplate.update("reviewMapper.updateReviewRate", itemNo);
 	}
 
+	public int mListCount() {
+		return sqlSessionTemplate.selectOne("itemListMapper.mListCount");
+	}
+
+	public ArrayList<ItemListView> selectMList(PageInfo pi) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSessionTemplate.selectList("itemListMapper.selectMList",null,rowBounds);
+	}
+
+	public int dListCount() {
+		return sqlSessionTemplate.selectOne("itemListMapper.dListCount");
+	}
+
+	public ArrayList<ItemListView> selectDList(PageInfo pi) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSessionTemplate.selectList("itemListMapper.selectDList",null,rowBounds);
+	}
+
+	public int selectBListCount() {
+		return sqlSessionTemplate.selectOne("itemListMapper.bListCount");
+	}
+
+	public ArrayList<ItemListView> selectBList(PageInfo pi) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSessionTemplate.selectList("itemListMapper.selectBList",null,rowBounds);
+	}
+	
+	public int selectSListCount() {
+		return sqlSessionTemplate.selectOne("itemListMapper.sListCount");
+	}
+	
+	public ArrayList<ItemListView> selectSList(PageInfo pi) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSessionTemplate.selectList("itemListMapper.selectSList",null,rowBounds);
+	}
+
+	public int selectHListCount() {
+		return sqlSessionTemplate.selectOne("itemListMapper.hListCount");
+	}
+
+	public ArrayList<ItemListView> selectHList(PageInfo pi) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSessionTemplate.selectList("itemListMapper.selectHList",null,rowBounds);
+	}
+
+	public int selectDiListCount() {
+		return sqlSessionTemplate.selectOne("itemListMapper.diListCount");
+	}
+
+	public ArrayList<ItemListView> selectDiList(PageInfo pi) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSessionTemplate.selectList("itemListMapper.selectDiList",null,rowBounds);
+	}
 
 }
