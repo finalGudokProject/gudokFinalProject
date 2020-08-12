@@ -35,6 +35,22 @@ public interface ItemService {
 
 	ArrayList selectEventListCount(PageInfo pi);
 
+	int deleteEvent(int dEventArr);
+
+	int deleteEventItem(int i);
+
+	int deleteEventImg(int i);
+
+	int deleteEventBannerImg(int i);
+
+	Event selectDeleteEvent(int i);
+
+	int updateEventStatusY(int i);
+
+	int updateEventStatusN(int i);
+
+
+
 
 
 

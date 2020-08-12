@@ -81,4 +81,43 @@
 		GROUP BY EVENT_NO, EVENT_NAME,EVENT_STATUS
 	</select>
 
+	<delete id="deleteEvent" parameterType="_int">
+		DELETE 
+		FROM EVENT
+		WHERE EVENT_NO IN(#{dEventArr}) 
+	</delete>
+	
+	<delete id="deleteEventItem" parameterType="_int">
+		DELETE 
+		FROM EVENT_ITEM
+		WHERE EVENT_NO IN(#{i}) 
+	</delete>
+	<delete id="deleteEventImg" parameterType="_int">
+		DELETE 
+		FROM IMAGE
+		WHERE IMAGE_NO IN
+        (SELECT BANNERIMAGE_NO
+        FROM BANNER_IMG
+        WHERE EVENT_NO IN(#{i}))
+	</delete>
+	<delete id="deleteEventBannerImg" parameterType="_int">
+		DELETE 
+		FROM BANNER_IMG
+		WHERE EVENT_NO IN(#{i}) 
+	</delete>
+	<select id="selectDeleteEvent" parameterType="_int" resultMap="eventResultSet">
+		SELECT *
+		FROM EIMAGE
+		WHERE EVENT_NO IN(#{i}) 
+	</select>
+	<update id="updateEventStatusY" parameterType="_int">
+		UPDATE EVENT
+		SET EVENT_STATUS='Y'
+		WHERE EVENT_NO=(#{i})
+	</update>
+	<update id="updateEventStatusN" parameterType="_int">
+		UPDATE EVENT
+		SET EVENT_STATUS='N'
+		WHERE EVENT_NO=(#{i})
+	</update>
 </mapper>

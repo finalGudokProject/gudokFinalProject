@@ -163,7 +163,7 @@ public class ItemController {
 	@RequestMapping("eInsert.do")
 	public String insertEvent(HttpServletRequest request, Event e, @RequestParam("uploadFile") MultipartFile file) {
 
-		
+		System.out.println("이벤트 등록 도착");
 		String renameFileName=saveFile(request,file);
 		String root=request.getSession().getServletContext().getRealPath("resources");
 		String savePath=root+"\\uploadFiles";
@@ -176,7 +176,7 @@ public class ItemController {
 		int result2=iService.insertEventImg(e);
 		
 		if(result1>0&&result2>0) {
-			return "admin/bannerList";
+			return "redirect:eList.do";
 		}else {
 			throw new ItemException("배너 등록 실패!");
 		}
@@ -184,11 +184,13 @@ public class ItemController {
 		
 	}
 	
+	//이벤트 등록 페이지 가기
 	@RequestMapping("eRegisterView.do")
 	public String eventRegisterView() {
 		return "admin/bannerRegister";
 	}
 
+	//이벤트 리스트 보기
 	@RequestMapping("eList.do")
 	public ModelAndView selectEvent(ModelAndView mv, Integer page) {
 	
@@ -201,22 +203,14 @@ public class ItemController {
 		
 		int listCount=iService.getEventCount();
 		
-	
-		
 		PageInfo pi=getPageInfo(currentPage,listCount);
 		pi.setPageLimit(10); //보여질 페이지 총 갯수
 		pi.setBoardLimit(5); //게시판 한 페이지에 뿌려질 게시글 수
-
 		
 		ArrayList<Event> list=iService.selectEventList(pi); //이벤트 리스트
 		ArrayList eCountList=iService.selectEventListCount(pi); //이벤트당 상품갯수
 		
-		System.out.println("카운트 한건?"+eCountList.get(0));
-		System.out.println("카운트 한건?"+eCountList.get(1));
-		System.out.println("카운트 한건?"+eCountList.get(2));
-		
-		
-		
+
 		
 		if(list!=null&&eCountList!=null) {
 			mv.addObject("list",list);
@@ -231,18 +225,130 @@ public class ItemController {
 	}
 	
 	
+	//이벤트 삭제
 	@RequestMapping("eDelete.do")
-	public String deleteEvent(HttpServletRequest request, String[] array) {
+	public String deleteEvent(HttpServletRequest request, String sendArr) {
 		
-		System.out.println("컨트롤러 옴");
-		String[] dEventArr=request.getParameterValues("array");
+
+		String dEvent=request.getParameter("sendArr");
+		String[] strArr=dEvent.split(",");
 		
-		System.out.println("삭제 컨트롤러까지 왔다"+dEventArr.toString());
-		System.out.println("삭제 컨트롤러까지 왔다"+dEventArr[0].toString());
+		int[] dEventArr=new int[strArr.length];
 		
-		return null;
+		
+		for(int i=0;i<strArr.length;i++) {
+			dEventArr[i]=Integer.valueOf(strArr[i]);
+			System.out.println("선택된 값:"+strArr[i]);
+		}
+
+		
+		int result1=0; //이벤트 삭제
+		int result2=0; //연결된 상품 삭제
+		int result3=0; //배너 이미지 삭제
+		int result4=0; //이미지 삭제
+		
+		
+		
+		for(int k=0;k<dEventArr.length;k++) {
+			
+			Event e=iService.selectDeleteEvent(dEventArr[k]);
+			System.out.println(e.toString());
+			if(e.getImageOriginalName()!=null) {
+				deleteFile(e.getImageRename(),request);
+			}
+			
+			result1=iService.deleteEvent(dEventArr[k]);
+			result2=iService.deleteEventItem(dEventArr[k]);
+			result3=iService.deleteEventImg(dEventArr[k]);
+			result4=iService.deleteEventBannerImg(dEventArr[k]);
+		}
+		
+		
+		
+		
+		if(result1>0&&result3>0&&result4>0) {
+			
+			return "redirect:eList.do";
+			
+		}else {
+			throw new ItemException("이벤트 삭제 실패!");
+		}
+		
 		
 	}
+
+	private void deleteFile(String imageRename, HttpServletRequest request) {
+		String root=request.getSession().getServletContext().getRealPath("resources");
+		String savePath=root+"\\uploadFiles";
+		File f=new File(savePath+"\\"+imageRename);
+		
+		if(f.exists()) { 
+			f.delete();
+		}
+		
+	}
+	
+		//이벤트 게시
+		@RequestMapping("eChangeY.do")
+		public String updateEventStatusY(HttpServletRequest request, String sendArr) {
+			
+			String dEvent=request.getParameter("sendArr");
+			String[] strArr=dEvent.split(",");
+			
+			int[] dEventArr=new int[strArr.length];
+			
+			
+			for(int i=0;i<strArr.length;i++) {
+				dEventArr[i]=Integer.valueOf(strArr[i]);
+			}
+			
+			int result=0;
+			
+			for(int k=0;k<dEventArr.length;k++) {
+				result=iService.updateEventStatusY(dEventArr[k]);
+			}
+			
+			
+			if(result>0) {
+				
+				return "redirect:eList.do";
+				
+			}else {
+				throw new ItemException("이벤트 게시 변경 실패!");
+			}
+		}
+		
+		
+		//이벤트 게시
+		@RequestMapping("eChangeN.do")
+		public String updateEventStatusN(HttpServletRequest request, String sendArr) {
+			
+			String dEvent=request.getParameter("sendArr");
+			String[] strArr=dEvent.split(",");
+			
+			int[] dEventArr=new int[strArr.length];
+			
+			
+			for(int i=0;i<strArr.length;i++) {
+				dEventArr[i]=Integer.valueOf(strArr[i]);
+			}
+			
+			int result=0;
+			
+			for(int k=0;k<dEventArr.length;k++) {
+				result=iService.updateEventStatusN(dEventArr[k]);
+			}
+			
+			
+			if(result>0) {
+				
+				return "redirect:eList.do";
+				
+			}else {
+				throw new ItemException("이벤트 게시 변경 실패!");
+			}
+		}
+				
 	
 	
 	

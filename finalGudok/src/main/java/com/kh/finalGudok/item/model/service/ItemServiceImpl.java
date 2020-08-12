@@ -80,6 +80,42 @@ public class ItemServiceImpl implements ItemService {
 	}
 
 
+	@Override
+	public int deleteEvent(int dEventArr) {
+		return iDao.deleteEvent(dEventArr);
+	}
+
+	@Override
+	public int deleteEventItem(int i) {
+		return iDao.deleteEventItem(i);
+	}
+
+	@Override
+	public int deleteEventImg(int i) {
+		return iDao.deleteEventImg(i);
+	}
+
+	@Override
+	public int deleteEventBannerImg(int i) {
+		return iDao.deleteEventBannerImg(i);
+	}
+
+	@Override
+	public Event selectDeleteEvent(int i) {
+		return iDao.selectDeleteEvent(i);
+	}
+
+	@Override
+	public int updateEventStatusY(int i) {
+		return iDao.updateEventStatusY(i);
+	}
+
+	@Override
+	public int updateEventStatusN(int i) {
+		return iDao.updateEventStatusN(i);
+	}
+
+
 
 
 

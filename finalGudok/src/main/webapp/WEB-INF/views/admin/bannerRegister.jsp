@@ -188,9 +188,9 @@ input, select,textarea{
                 </table>
                 <br>
             <div style="text-align: center;">
-           		<button type="button" onclick="location.href='eList.do'">목록으로</button>&nbsp;
-                <button type="submit">저장하기</button>&nbsp;
-                <button type="reset">취소</button>&nbsp;&nbsp;
+           		<input type="button" class="btn" value="목록으로" onclick="location.href='eList.do'">
+                <input type="submit" class="btn" value="저장하기">
+                <input type="reset"  class="btn" value="취소">
             </div>
             
             </form>

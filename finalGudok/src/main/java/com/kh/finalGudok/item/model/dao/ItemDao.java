@@ -74,4 +74,33 @@ public class ItemDao {
 		RowBounds rowBounds=new RowBounds(offset,pi.getBoardLimit());
 		return (ArrayList)sqlSessionTemplate.selectList("adminItemMapper.selectEventListCount",null,rowBounds);
 	}
+
+	public int deleteEvent(int dEventArr) {
+		return sqlSessionTemplate.delete("adminItemMapper.deleteEvent",dEventArr);
+		
+	}
+
+	public int deleteEventItem(int i) {
+		return sqlSessionTemplate.delete("adminItemMapper.deleteEventItem",i);
+	}
+
+	public int deleteEventImg(int i) {
+		return sqlSessionTemplate.delete("adminItemMapper.deleteEventImg",i);
+	}
+
+	public int deleteEventBannerImg(int i) {
+		return sqlSessionTemplate.delete("adminItemMapper.deleteEventBannerImg",i);
+	}
+
+	public Event selectDeleteEvent(int i) {
+		return sqlSessionTemplate.selectOne("adminItemMapper.selectDeleteEvent",i);
+	}
+
+	public int updateEventStatusY(int i) {
+		return sqlSessionTemplate.update("adminItemMapper.updateEventStatusY",i);
+	}
+
+	public int updateEventStatusN(int i) {
+		return sqlSessionTemplate.update("adminItemMapper.updateEventStatusN",i);
+	}
 }
