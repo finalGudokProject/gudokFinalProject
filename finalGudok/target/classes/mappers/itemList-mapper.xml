@@ -8,6 +8,9 @@
 		<result property="itemDate" column="ITEM_DATE"/>
 		<result property="itemName" column="ITEM_NAME"/>
 		<result property="itemMemo" column="ITEM_MEMO"/>
+		<result property="itemPath" column="ITEM_PATH"/>
+		<result property="itemOriginalName" column="ITEM_ORIGINAL_NAME"/>
+		<result property="itemRename" column="ITEM_RENAME"/>
 		<result property="itemPrice" column="ITEM_PRICE"/>
 		<result property="itemDiscount" column="ITEM_DISCOUNT"/>
 		<result property="itemRate" column="ITEM_RATE"/>
@@ -77,7 +80,7 @@
 		SELECT COUNT(*)
 		FROM ITEM_LIST_VIEW ILV
 		LEFT JOIN ITEM I ON(ILV.ITEM_NO = I.ITEM_NO)
-		WHERE ITEM_DP_STATUS='Y'
+		WHERE ITEM_DP_STATUS='Y' AND EVENT_NO !=0
 	</select>
 	
 	<select id="getItemEventList" resultMap="itemListResultSet">

@@ -9,7 +9,6 @@ import com.kh.finalGudok.item.model.vo.Item;
 import com.kh.finalGudok.item.model.vo.ItemListView;
 import com.kh.finalGudok.item.model.vo.PageInfo;
 import com.kh.finalGudok.item.model.vo.Review;
-import com.kh.finalGudok.item.model.vo.Sort;
 import com.kh.finalGudok.member.model.vo.Member;
 
 public interface ItemService {

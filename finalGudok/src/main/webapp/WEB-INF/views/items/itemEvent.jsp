@@ -379,7 +379,7 @@
 						<li class="page-item disabled"><a class="page-link" href="#" tabindex="-1">${p }</a></li>
 					</c:if>
 					<c:if test="${p != pi.currentPage }">
-						<c:url var="ilistCheck" value="itemFood.do">
+						<c:url var="ilistCheck" value="itemEvent.do">
 							<c:param name="page" value="${p}"/>
 						</c:url>
 						<li class="page-item"><a class="page-link" href="${ilistCheck }">${p }</a></li>

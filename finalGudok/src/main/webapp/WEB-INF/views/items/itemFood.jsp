@@ -255,7 +255,7 @@
 					<td><div class="sortDivC">
 					<img src="${contextPath }/resources/images/popul.png" class="sortClass"><span style="display:block;">인기순</span>
 					</div></td>
-					<td><div class="sortDivC">
+					<td onclick="location.href='home.do'"><div class="sortDivC">
 					<img src="${contextPath }/resources/images/high.png" class="sortClass"><span style="display:block;">높은 가격순</span>
 					</div></td>
 					<td><div class="sortDivC">

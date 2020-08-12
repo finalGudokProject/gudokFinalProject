@@ -14,6 +14,9 @@ public class ItemListView implements Serializable{
 	private Date itemDate;
 	private String itemName;
 	private String itemMemo;
+	private String imagePath;
+	private String imageOriginalName;
+	private String imageRename;
 	private int itemPrice;
 	private int itemDiscount;
 	private Double itemRate;
@@ -25,20 +28,32 @@ public class ItemListView implements Serializable{
 		// TODO Auto-generated constructor stub
 	}
 
-	public ItemListView(String categoryNo, Date itemDate, String itemName, String itemMemo, int itemPrice,
-			int itemDiscount, Double itemRate, int reviewCount, int itemChoice, int itemNo, int heartNo) {
+	public ItemListView(int itemNo, String categoryNo, Date itemDate, String itemName, String itemMemo,
+			String imagePath, String imageOriginalName, String imageRename, int itemPrice, int itemDiscount,
+			Double itemRate, int reviewCount, int itemChoice, int heartNo) {
 		super();
+		this.itemNo = itemNo;
 		this.categoryNo = categoryNo;
 		this.itemDate = itemDate;
 		this.itemName = itemName;
 		this.itemMemo = itemMemo;
+		this.imagePath = imagePath;
+		this.imageOriginalName = imageOriginalName;
+		this.imageRename = imageRename;
 		this.itemPrice = itemPrice;
 		this.itemDiscount = itemDiscount;
 		this.itemRate = itemRate;
 		this.reviewCount = reviewCount;
 		this.itemChoice = itemChoice;
-		this.itemNo = itemNo;
 		this.heartNo = heartNo;
+	}
+
+	public int getItemNo() {
+		return itemNo;
+	}
+
+	public void setItemNo(int itemNo) {
+		this.itemNo = itemNo;
 	}
 
 	public String getCategoryNo() {
@@ -71,6 +86,30 @@ public class ItemListView implements Serializable{
 
 	public void setItemMemo(String itemMemo) {
 		this.itemMemo = itemMemo;
+	}
+
+	public String getImagePath() {
+		return imagePath;
+	}
+
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
+	}
+
+	public String getImageOriginalName() {
+		return imageOriginalName;
+	}
+
+	public void setImageOriginalName(String imageOriginalName) {
+		this.imageOriginalName = imageOriginalName;
+	}
+
+	public String getImageRename() {
+		return imageRename;
+	}
+
+	public void setImageRename(String imageRename) {
+		this.imageRename = imageRename;
 	}
 
 	public int getItemPrice() {
@@ -113,14 +152,6 @@ public class ItemListView implements Serializable{
 		this.itemChoice = itemChoice;
 	}
 
-	public int getItemNo() {
-		return itemNo;
-	}
-
-	public void setItemNo(int itemNo) {
-		this.itemNo = itemNo;
-	}
-
 	public int getHeartNo() {
 		return heartNo;
 	}
@@ -135,13 +166,13 @@ public class ItemListView implements Serializable{
 
 	@Override
 	public String toString() {
-		return "ItemListView [categoryNo=" + categoryNo + ", itemDate=" + itemDate + ", itemName=" + itemName
-				+ ", itemMemo=" + itemMemo + ", itemPrice=" + itemPrice + ", itemDiscount=" + itemDiscount
-				+ ", itemRate=" + itemRate + ", reviewCount=" + reviewCount + ", itemChoice=" + itemChoice + ", itemNo="
-				+ itemNo + ", heartNo=" + heartNo + "]";
+		return "ItemListView [itemNo=" + itemNo + ", categoryNo=" + categoryNo + ", itemDate=" + itemDate
+				+ ", itemName=" + itemName + ", itemMemo=" + itemMemo + ", imagePath=" + imagePath
+				+ ", imageOriginalName=" + imageOriginalName + ", imageRename=" + imageRename + ", itemPrice="
+				+ itemPrice + ", itemDiscount=" + itemDiscount + ", itemRate=" + itemRate + ", reviewCount="
+				+ reviewCount + ", itemChoice=" + itemChoice + ", heartNo=" + heartNo + "]";
 	}
-
 	
-
+	
 
 }
