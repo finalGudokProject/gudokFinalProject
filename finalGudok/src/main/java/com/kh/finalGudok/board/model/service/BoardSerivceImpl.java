@@ -44,4 +44,37 @@ public class BoardSerivceImpl implements BoardService {
 		return bDao.selectNoticeDetail(bBoard_no);
 	}
 
+	@Override
+	public Board selectAdminNoticeDetail(int bBoard_no) {
+		return bDao.selectAdminNoticeDetail(bBoard_no);
+	}
+
+	@Override
+	public int deleteAdminNoticeBoard(Integer bBoard_no) {
+		return bDao.deleteAdminNoticeBoard(bBoard_no);
+	}
+
+	@Override
+	public int deleteAdminNoticeImage(Integer bBoard_no) {
+		return bDao.deleteAdminNoticeImage(bBoard_no);
+	}
+
+	@Override
+	public int deleteAdminNoticeBoardImg(Integer bBoard_no) {
+		return bDao.deleteAdminNoticeBoardImg(bBoard_no);
+	}
+
+	@Override
+	public int updateAdminNoticeUpdate(Board b) {
+		return bDao.updateAdminNoticeUpdate(b);
+	}
+
+
+	@Override
+	public int updateAdminNoticeUpdateImg(Board b) {
+		return bDao.updateAdminNoticeUpdateImg(b);
+	}
+
+
+
 }

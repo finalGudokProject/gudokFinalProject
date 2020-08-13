@@ -1,5 +1,7 @@
 package com.kh.finalGudok.board.controller;
 
+import static com.kh.finalGudok.board.common.pagination.getPageInfo;
+
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -9,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -18,14 +21,13 @@ import com.kh.finalGudok.board.model.service.BoardService;
 import com.kh.finalGudok.board.model.vo.Board;
 import com.kh.finalGudok.board.model.vo.bPageInfo;
 
-import static com.kh.finalGudok.board.common.pagination.getPageInfo;
-
 @Controller
 public class BoardController {
 	@Autowired
 	BoardService bService;
 	
-	// admin List
+	// admin Notice
+	// List
 	@RequestMapping("adminNoticeList.do")
 	public ModelAndView adminNoticeList(ModelAndView mv, 
 			@RequestParam(value="page", required=false) Integer page) {	// 기본 자료형으로 받을 수 없기 때문에 Integer를 쓴다
@@ -41,7 +43,7 @@ public class BoardController {
 		
 		// 페이징 처리가 끝나면 게시글을 추려오자
 		ArrayList<Board> list = bService.selectList(pi);
-		System.out.println(list);
+//		System.out.println(list);
 		if(list != null) {
 			mv.addObject("list",list);
 			mv.addObject("pi",pi);
@@ -53,7 +55,7 @@ public class BoardController {
 		return mv;
 	}
 	
-	// admin Insert
+	// Insert
 	@RequestMapping("adminNoticeInsert")
 	public String adminNoticeInsert(){
 		return "admin/adminNoticeInsert";
@@ -80,7 +82,7 @@ public class BoardController {
 		int result1 = bService.insertNotice(b);
 		int result2 = bService.insertNoticeImg(b);
 		
-		if(result1 > 0 || (result1>0&& result2>0)) {
+		if((result1>0&& result2<0) || (result1>0 && result2>0)) {
 			return "redirect:adminNoticeList.do";
 		}else {
 			throw new BoardException("게시글 등록 실패!");
@@ -131,10 +133,123 @@ public class BoardController {
 			return renameFileName;
 		}
 		
+	// Detail
+	@RequestMapping("adminNoticeDetail.do")
+	public ModelAndView adminNoticeDetail(ModelAndView mv, int bBoard_no, @RequestParam("page") Integer page) {
+		int currentPage = page;
 		
+		int result = bService.addReadCount(bBoard_no); // 조회수가 증가 되어야만 게시물 상세보기가 가능하다
+		
+		if (result > 0) {
+			Board board = bService.selectAdminNoticeDetail(bBoard_no);
+			if(board != null) {
+				mv.addObject("board", board).addObject("currentPage",currentPage).setViewName("admin/adminNoticeDetail");
+			}else {
+				throw new BoardException("게시글 조회 실패");
+			}			
+		}else {
+			throw new BoardException("게시글 조회수 증가 실패!");
+		}		
+		return mv;
+	}
+	
+	
+		
+	// UpDate
+	@RequestMapping("bupdateView.do")
+	public ModelAndView boardUpdateView(ModelAndView mv, Integer bBoard_no,
+										@RequestParam("page") Integer page) {
+		Board board = bService.selectAdminNoticeDetail(bBoard_no);
+		System.out.println(board);
+		mv.addObject("board", board).addObject("currentPage", page).setViewName("admin/adminNoticeUpdate");
+
+		return mv;
+	}
+	
+	@RequestMapping(value="aNoticeUpdate", method=RequestMethod.POST)
+	public ModelAndView adminNoticeUpdate(ModelAndView mv, Board b, 
+											HttpServletRequest request,
+											@RequestParam("page") Integer page,
+											@RequestParam(value="uploadFile", required=false)
+											MultipartFile file) {
+		String renameFileName="";
+			
+			if(!file.getOriginalFilename().equals("")) {	
+			if(b.getRenameFileName() != null) {			
+			deleteFile1(b.getRenameFileName(), request);
+
+			}
+			renameFileName = saveFile(file, request);
+			}
+			
+			
+			b.setOriginalFileName(file.getOriginalFilename());
+			b.setRenameFileName(renameFileName);
+			
+			int result1 = bService.updateAdminNoticeUpdateImg(b);
+			int result2 = bService.updateAdminNoticeUpdate(b);
+			
+			if(result1>0 || result2>0) { 
+			mv.addObject("page",page).setViewName("redirect:adminNoticeList.do");
+			}else {
+			throw new BoardException("게시글 수정 실패!!");
+			}
+			
+			return mv;
+		
+	}
+	
+	private void deleteFile1(String fileName, HttpServletRequest request) {
+		String root = request.getSession().getServletContext().getRealPath("resources");
+		String savePath = root + "\\aNoticeUploadFiles";
+		
+		File f = new File(savePath + "\\" + fileName);
+		if(f.exists()) {
+			f.delete();
+		}
+	}
+	
+	// Delete
+	
+	private void deleteFile(String fileName, HttpServletRequest request) {
+		String root = request.getSession().getServletContext().getRealPath("resources");
+		String savePath = root + "\\aNoticeUploadFiles";
+		
+		File f = new File(savePath + "\\" + fileName);
+		if(f.exists()) {
+			f.delete();
+		}
+	}
+	
+	@RequestMapping("adminNoticeDelete.do")
+	public String boardDelete(Integer bBoard_no, HttpServletRequest request) {
+		
+		// 게시글을 삭제하기 전에 기존의 파일을 지운다.
+		Board b = bService.selectAdminNoticeDetail(bBoard_no);
+		if(b.getOriginalFileName() != null) {
+			deleteFile(b.getRenameFileName(), request);
+		}
+		
+		// 게시글 삭제하기
+		int result1 = bService.deleteAdminNoticeImage(bBoard_no);
+		int result2 = bService.deleteAdminNoticeBoardImg(bBoard_no);
+		int result3 = bService.deleteAdminNoticeBoard(bBoard_no);
+		
+		if(result1 > 0 && result2 > 0 && result3 > 0) {
+			return "redirect:adminNoticeList.do";
+		}else {
+			throw new BoardException("게시물 삭제 실패!");
+		}
+	}
+	
+	
 		
 
+	
+
 	// serviceCenter
+	
+	// etc
 	@RequestMapping("tierOfBenefit")
 	public String tierOfBenefit(){
 		return "serviceCenter/tierOfBenefit";
@@ -148,7 +263,8 @@ public class BoardController {
 		return "event/privacyPolicy";
 	}
 
-	
+	// Notice
+	// List
 	@RequestMapping("noticeList.do")
 	public ModelAndView noticeList(ModelAndView mv, 
 			@RequestParam(value="page", required=false) Integer page) {	// 기본 자료형으로 받을 수 없기 때문에 Integer를 쓴다
@@ -164,7 +280,7 @@ public class BoardController {
 		
 		// 페이징 처리가 끝나면 게시글을 추려오자
 		ArrayList<Board> list = bService.selectList(pi);
-		System.out.println(list);
+//		System.out.println(list);
 		if(list != null) {
 			mv.addObject("list",list);
 			mv.addObject("pi",pi);
@@ -176,6 +292,8 @@ public class BoardController {
 		return mv;
 	}
 	
+	
+	// Detail
 	@RequestMapping("noticeDetail.do")
 	public ModelAndView noticeDetail(ModelAndView mv, int bBoard_no, @RequestParam("page") Integer page) {
 		int currentPage = page;

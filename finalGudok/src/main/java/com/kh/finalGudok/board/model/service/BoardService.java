@@ -19,4 +19,17 @@ public interface BoardService {
 
 	Board selectNoticeDetail(int bBoard_no);
 
+	int deleteAdminNoticeBoard(Integer bBoard_no);
+
+	int deleteAdminNoticeImage(Integer bBoard_no);
+
+	int deleteAdminNoticeBoardImg(Integer bBoard_no);
+
+	int updateAdminNoticeUpdate(Board b);
+
+	Board selectAdminNoticeDetail(int bBoard_no);
+
+	int updateAdminNoticeUpdateImg(Board b);
+
+
 }

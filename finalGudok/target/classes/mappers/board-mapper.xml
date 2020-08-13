@@ -21,6 +21,7 @@
 	</resultMap>
 	
 	
+	<!-- notice게시판 상세내용 불러오기 -->
 	<select id="getListCount" resultType="_int">
 		SELECT COUNT(*)
 		FROM BOARD
@@ -28,13 +29,13 @@
 	
 	<select id="getBoardList" resultMap="boardResultSet">
 		SELECT ROWNUM, B.*
-		FROM ( SELECT *
+		FROM (SELECT *
         FROM BOARD B
         LEFT JOIN BOARD_IMAGE BI on (B.BOARD_NO = BI.BOARD_NO)
         LEFT JOIN IMAGE on (B_IMAGE_NO = IMAGE_NO)
         ) B
 		WHERE BOARD_CODE = 'N'
-		ORDER BY ROWNUM DESC 
+        ORDER BY ROWNUM DESC
 	</select>
 	
 	<select id="selectNoticeDetail" parameterType="int" resultMap="boardResultSet">
@@ -45,13 +46,15 @@
         WHERE B.BOARD_NO = #{b.bBoard_no}
 	</select>
 	
+	
+	<!-- 조회수 증가 -->
 	<update id="updateCount" parameterType="int">
 		UPDATE BOARD
 		SET READ_NUM = READ_NUM + 1
 		WHERE BOARD_NO = #{b.bBoard_no}
 	</update>
 	
-	<!-- admin Notice -->
+	<!-- admin Notice 게시판 -->
 	<insert id="insertNotice" parameterType="Board">
 		INSERT INTO BOARD VALUES(
 			SEQ_BNO.NEXTVAL
@@ -74,6 +77,42 @@
 		SELECT*
 		FROM DUAL
 	</insert>
+	
+	<select id="selectAdminNoticeDetail" parameterType="int" resultMap="boardResultSet">
+		SELECT *
+		FROM BOARD B
+        LEFT JOIN BOARD_IMAGE BI on (B.BOARD_NO = BI.BOARD_NO)
+        LEFT JOIN IMAGE on (B_IMAGE_NO = IMAGE_NO)
+        WHERE B.BOARD_NO = #{b.bBoard_no}
+	</select>
+	
+	<delete id="deleteAdminNoticeImage" parameterType="int">
+		DELETE FROM IMAGE
+		WHERE IMAGE_NO = #{bBoard_no}
+	</delete>
+
+	<delete id="deleteAdminNoticeBoardImg" parameterType="int">
+		DELETE FROM BOARD_IMAGE
+		WHERE BOARDIMAGE_NO= #{bBoard_no}
+	</delete>
+
+	<delete id="deleteAdminNoticeBoard" parameterType="int">
+		DELETE FROM BOARD
+		WHERE BOARD_NO = #{bBoard_no}
+	</delete>
+	
+	<update id="updateAdminNoticeUpdateImg" parameterType="Board">
+		UPDATE IMAGE
+		SET IMAGE_ORIGINAL_NAME = #{originalFileName}
+			, IMAGE_RENAME = #{renameFileName}
+		WHERE IMAGE_NO = #{bBoard_no}
+	</update>
+	<update id="updateAdminNoticeUpdate" parameterType="Board">
+		UPDATE BOARD
+		SET TITLE = #{bTitle}
+			, CONTENT = #{bContent}
+		WHERE BOARD_NO = #{bBoard_no}
+	</update>
 	
 	
 </mapper>

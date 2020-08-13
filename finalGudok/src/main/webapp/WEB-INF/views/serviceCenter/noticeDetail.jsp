@@ -25,11 +25,11 @@
   }
   table {
     width: 100%;
-    border: 1px solid #444444;
+    border: 1px solid #CCCCCC !important;
     border-collapse: collapse;
   }
   th, td {
-    border: 1px solid #444444;
+    border: 1px solid #CCCCCC !important;
   }
 </style>
 </head>
@@ -72,11 +72,11 @@
                         ${board.bContent }
                         </span>
                         <br><br>
-                        <center>
-                          	<c:if test="${!empty board.originalFileName }">
-                          		<img src="${contextPath }/resources/aNoticeUploadFiles/${board.renameFileName }">
-							</c:if>
-                        </center>
+                        <c:if test="${!empty board.originalFileName }">
+                        	<center>
+                           		<img src="${contextPath }/resources/aNoticeUploadFiles/${board.renameFileName }">
+                        	</center>
+                        </c:if>
                       </td>
                   </tr>
                 </tbody>

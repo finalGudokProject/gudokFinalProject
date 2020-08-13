@@ -42,4 +42,30 @@ public class BoardDao {
 	public Board selectNoticeDetail(int bBoard_no) {
 		return sqlSessionTemplate.selectOne("boardMapper.selectNoticeDetail", bBoard_no);
 	}
+
+	public Board selectAdminNoticeDetail(int bBoard_no) {
+		return sqlSessionTemplate.selectOne("boardMapper.selectAdminNoticeDetail", bBoard_no);
+	}
+
+	public int deleteAdminNoticeBoard(Integer bBoard_no) {
+		return sqlSessionTemplate.delete("boardMapper.deleteAdminNoticeBoard",bBoard_no);
+	}
+
+	public int deleteAdminNoticeImage(Integer bBoard_no) {
+		return sqlSessionTemplate.delete("boardMapper.deleteAdminNoticeImage",bBoard_no);
+	}
+
+	public int deleteAdminNoticeBoardImg(Integer bBoard_no) {
+		return sqlSessionTemplate.delete("boardMapper.deleteAdminNoticeBoardImg",bBoard_no);
+	}
+
+	public int updateAdminNoticeUpdate(Board b) {
+		return sqlSessionTemplate.update("boardMapper.updateAdminNoticeUpdate", b);
+	}
+
+	public int updateAdminNoticeUpdateImg(Board b) {
+		return sqlSessionTemplate.update("boardMapper.updateAdminNoticeUpdateImg", b);
+	}
+
+
 }

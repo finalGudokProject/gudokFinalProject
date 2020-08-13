@@ -100,11 +100,11 @@
           		<td><input type="checkbox">
           		<td align="center">${b.rownum }</td>
 				<td align="center">
-					<c:url var="noticeDetail" value="adminNoticeDetail.do">
+					<c:url var="adminNoticeDetail" value="adminNoticeDetail.do">
 						<c:param name="bBoard_no" value="${b.bBoard_no }"/>
 						<c:param name="page" value="${pi.currentPage }"/>
 					</c:url>
-					<a href="${noticeDetail }">${b.bTitle }</a>
+					<a href="${adminNoticeDetail }">${b.bTitle }</a>
 				</td>
 				<td align="center">${b.bWrite_date }</td>
 				<td align="center">${b.bRead_num }</td>
