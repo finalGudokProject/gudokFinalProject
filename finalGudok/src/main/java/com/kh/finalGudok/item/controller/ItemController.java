@@ -31,28 +31,29 @@ public class ItemController {
 	@Autowired
 	ItemService iService;
 	
-	@RequestMapping("itemFood.do")
-	public ModelAndView itemList(ModelAndView mv, @RequestParam(value = "page", required = false) Integer page){
-		int currentPage = 1;
-		if(page != null) {
-			currentPage = page;
-		}
-		int listCount = iService.getItemCount();
-//		System.out.println("listCount : " + listCount);
-		
-		PageInfo pi = getPageInfo(currentPage, listCount);
-		ArrayList<Item> list = iService.selectList(pi);
-//		System.out.println("ArrayList : " + list);
-		
-		if(list != null) {
-			mv.addObject("list", list);
-			mv.addObject("pi", pi);
-			mv.setViewName("items/itemFood");
-		}else {
-			throw new ItemException("아이템 조회 실패");
-		}
-		return mv;
-	}
+	// 수한오빠
+//	@RequestMapping("itemFood.do")
+//	public ModelAndView itemList(ModelAndView mv, @RequestParam(value = "page", required = false) Integer page){
+//		int currentPage = 1;
+//		if(page != null) {
+//			currentPage = page;
+//		}
+//		int listCount = iService.getItemCount();
+////		System.out.println("listCount : " + listCount);
+//		
+//		PageInfo pi = getPageInfo(currentPage, listCount);
+//		ArrayList<Item> list = iService.selectList(pi);
+////		System.out.println("ArrayList : " + list);
+//		
+//		if(list != null) {
+//			mv.addObject("list", list);
+//			mv.addObject("pi", pi);
+//			mv.setViewName("items/itemFood");
+//		}else {
+//			throw new ItemException("아이템 조회 실패");
+//		}
+//		return mv;
+//	}
 	
 	@RequestMapping("idetail.do")
 	public ModelAndView itemDetailPage(ModelAndView mv, Integer itemNo, @RequestParam("page")Integer page) {
@@ -189,38 +190,38 @@ public class ItemController {
 	}
 
 	//이벤트 리스트 보기
-	@RequestMapping("eList.do")
-	public ModelAndView selectEvent(ModelAndView mv, Integer page) {
-	
-		System.out.println("도착했낭");
-		int currentPage=1;
-		
-		if(page!=null) {
-			currentPage=page;
-		}
-		
-		int listCount=iService.getEventCount();
-		
-		PageInfo pi=getPageInfo(currentPage,listCount);
-		pi.setPageLimit(10); //보여질 페이지 총 갯수
-		pi.setBoardLimit(5); //게시판 한 페이지에 뿌려질 게시글 수
-		
-		ArrayList<Event> list=iService.selectEventList(pi); //이벤트 리스트
-		ArrayList eCountList=iService.selectEventListCount(pi); //이벤트당 상품갯수
-		
-
-		
-		if(list!=null&&eCountList!=null) {
-			mv.addObject("list",list);
-			mv.addObject("eCountList",eCountList);
-			mv.addObject("pi",pi);
-			mv.setViewName("admin/bannerList");
-			
-		}else {
-			throw new ItemException("이벤트 전체 조회 실패!");
-		}
-		return mv;
-	}
+//	@RequestMapping("eList.do")
+//	public ModelAndView selectEvent(ModelAndView mv, Integer page) {
+//	
+//		System.out.println("도착했낭");
+//		int currentPage=1;
+//		
+//		if(page!=null) {
+//			currentPage=page;
+//		}
+//		
+//		int listCount=iService.getEventCount();
+//		
+//		PageInfo pi=getPageInfo(currentPage,listCount);
+//		pi.setPageLimit(10); //보여질 페이지 총 갯수
+//		pi.setBoardLimit(5); //게시판 한 페이지에 뿌려질 게시글 수
+//		
+//		ArrayList<Event> list=iService.selectEventList(pi); //이벤트 리스트
+//		ArrayList eCountList=iService.selectEventListCount(pi); //이벤트당 상품갯수
+//		
+//
+//		
+//		if(list!=null&&eCountList!=null) {
+//			mv.addObject("list",list);
+//			mv.addObject("eCountList",eCountList);
+//			mv.addObject("pi",pi);
+//			mv.setViewName("admin/bannerList");
+//			
+//		}else {
+//			throw new ItemException("이벤트 전체 조회 실패!");
+//		}
+//		return mv;
+//	}
 	
 	
 	//이벤트 삭제

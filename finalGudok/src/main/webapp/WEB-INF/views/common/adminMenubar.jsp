@@ -501,7 +501,7 @@ label > span {
                                         <path fill-rule="evenodd" d="M6.717 3.55A.5.5 0 0 1 7 4v8a.5.5 0 0 1-.812.39L3.825 10.5H1.5A.5.5 0 0 1 1 10V6a.5.5 0 0 1 .5-.5h2.325l2.363-1.89a.5.5 0 0 1 .529-.06z"/>
                                       </svg>&nbsp;&nbsp;고객센터 관리&nbsp;&nbsp;</b></label>
                                   <ul class="group-list sd_ul">
-                                    <li><a href="#">공지사항</a></li>
+                                    <li><a href="adminNoticeList.do">공지사항</a></li>
                                     <li><a href="#">FAQ</a></li>
                                     <li><a href="#">상품제안</a></li>
                                     <li><a href="#">1:1 문의</a></li>

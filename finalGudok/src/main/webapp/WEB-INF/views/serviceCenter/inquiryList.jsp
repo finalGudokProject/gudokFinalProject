@@ -9,116 +9,106 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 <title></title>
 <style>
-    .list{
+.list{
         margin:20px;
         list-style-type: none;
     }
-    
+    table {
+    width: 100%;
+    border-top: 1px solid #444444;
+    border-collapse: collapse;
+  }
+  th, td {
+    border-bottom: 1px solid #444444;
+    padding: 10px;
+  }
   
   #list a{
     color:black;
     text-decoration: none;
   }
+
   button{
       background-color: rgb(0, 125, 255);
   }
-  table {
-    width: 100%;
-    border: 1px solid #444444;
-    border-collapse: collapse;
-  }
-  th, td {
-    border: 1px solid #444444;
-  }
-        body {margin: 10px;}
-.where {
-  display: block;
-  margin: 25px 15px;
-  font-size: 11px;
-  color: #000;
-  text-decoration: none;
-  font-family: verdana;
-  font-style: italic;
-} 
 
-.filebox input[type="file"] {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip:rect(0,0,0,0);
-    border: 0;
-}
+  /*페이징 처리용 cs*/
+.pagination-t {
+            display: flex;
+            padding-left: 0;
+            list-style: none;
+            border-radius: 0.25rem;
+        }
 
-.filebox label {
-    display: inline-block;
-    padding: .5em .75em;
-    color: #999;
-    font-size: inherit;
-    line-height: normal;
-    vertical-align: middle;
-    background-color: #fdfdfd;
-    cursor: pointer;
-    border: 1px solid #ebebeb;
-    border-bottom-color: #e2e2e2;
-    border-radius: .25em;
-}
+        .page-link-t {
+            position: relative;
+            display: block;
+            padding: 0.5rem 0.75rem;
+            margin-left: -1px;
+            line-height: 1.25;
+            color: black;
+            background-color: #fff;
+            border: 1px solid #dee2e6;
+        }
 
-/* named upload */
-.filebox .upload-name {
-    display: inline-block;
-    padding: .5em .75em;
-    font-size: inherit;
-    font-family: inherit;
-    line-height: normal;
-    vertical-align: middle;
-    background-color: #f5f5f5;
-  border: 1px solid #ebebeb;
-  border-bottom-color: #e2e2e2;
-  border-radius: .25em;
-  -webkit-appearance: none; /* 네이티브 외형 감추기 */
-  -moz-appearance: none;
-  appearance: none;
-}
+        .page-link-t:hover {
+            z-index: 2;
+            color: #0056b3;
+            text-decoration: none;
+            background-color: #e9ecef;
+            border-color: #dee2e6;
+        }
 
-/* imaged preview */
-.filebox .upload-display {
-    margin-bottom: 5px;
-}
+        .page-link-t:focus {
+            z-index: 3;
+            outline: 0;
+        }
 
-@media(min-width: 768px) {
-    .filebox .upload-display {
-        display: inline-block;
-        margin-right: 5px;
-        margin-bottom: 0;
-    }
-}
+        .page-item-t:first-child .page-link-t {
+            border-top-left-radius: 0.25rem;
+            border-bottom-left-radius: 0.25rem;
+        }
 
-.filebox .upload-thumb-wrap {
-    display: inline-block;
-    width: 54px;
-    padding: 2px;
-    vertical-align: middle;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    background-color: #fff;
-}
+        .page-item-t:last-child .page-link-t {
+            border-top-right-radius: 0.25rem;
+            border-bottom-right-radius: 0.25rem;
+        }
 
-.filebox .upload-display img {
-    display: block;
-    max-width: 100%;
-    width: 100% \9;
-    height: auto;
-}
+        .page-item-t.active-t .page-link-t {
+            z-index: 3;
+            color: #fff;
+            background-color: rgba(90,148,235,0.8);
+            border-color:  rgba(90,148,235,0.8);
+        }
 
-.filebox.bs3-primary label {
-  color: #fff;
-  background-color: rgb(0, 125, 255);
-    border-color:  rgb(0, 125, 255);
-    margin-bottom:0px;
-}
+        .page-item-t.disabled-t .page-link-t {
+            color: #6c757d;
+            pointer-events: none;
+            cursor: auto;
+            background-color: #fff;
+            border-color: #dee2e6;
+        }
+
+
+        .sr-only-t {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        .page-center {
+            display: flex;
+            justify-content: center;
+            /*가운데 정렬*/
+            align-items: center;
+        }
+
 </style>
 </head>
 <body>
@@ -130,119 +120,97 @@
         <h1 align="center">고객센터</h1>
         <ul class="list" id="list">
             <li style="margin-bottom: 5%;"><img src="resources/images/Alert.png" style="width:20%; height:20%;margin-bottom:3%"><a id="notice" href="sc_notice.html">공지사항</a></li>
-            <li style="margin-bottom: 5%;"><img src="resources/images/FAQ.png" style="width:20%; height:20%;margin-bottom:3%"><a id="FAQ"  href="sc_FAQ.html">FAQ</a></li>
+            <li style="margin-bottom: 5%;"><img src="resources/images/FAQ.png" style="width:20%; height:20%;margin-bottom:3%"><a id="FAQ" href="sc_FAQ.html">FAQ</a></li>
             <li style="margin-bottom: 5%;"><img src="resources/images/inquiary.png" style="width:20%; height:20%;margin-bottom:3%"><a id="inquiary" style="color:rgb(0, 125, 255);" readonly>1:1문의</a></li>
             <li style="margin-bottom: 5%;"><img src="resources/images/proposal.png" style="width:20%; height:20%;margin-bottom:3%"><a id="product_proposal"  href="sc_proposal.html">상품제안</a></li>
             <li style="margin-bottom: 5%;"><img src="resources/images/benefit.png" style="width:20%; height:20%;margin-bottom:3%"><a id="tier_benefit"  href="sc_benefit.html">등급별 혜택</a></li>
         </ul>
       </div>
       <div class="col-9">
+        <div class="input-group" >
+          <div style="font-size: 30px;">1:1 문의</div>
+          <select class="custom-select" id="inputGroupSelect04" style="margin-left: 405px;">
+            <option selected>모두</option>
+            <option value="1">제목</option>
+            <option value="2">내용</option>
+            <option value="3">제목+내용</option>
+          </select>
+          <input type="text" class="form-control" style="float:right; width:100px;height: 38px;">
+          <div class="input-group-append" style="float:right; width: 55px; height: 38px;">
+            <button type="button" class="btn btn-primary" >검색</button>
+          </div>
+        </div>
+         
         
-          <form>
-            <div style="font-size: 30px;">1:1 문의</div>
-            <hr style="border-color:rgb(0, 125, 255);">
-            <table style="text-align: center; margin-top:15px">
-                <tbody >
-                    <tr>
-                        <th style="width:10%; padding:20px;">문의유형</th>
-                        <td style="width: 39%;" colspan="3">
-                            <select name="type" style="float:left; margin-left:35%; height:30px ;width:200px;" id="type">
-                                <option value="">문의유형을 선택 해주세요</option>
-                                <option value="product_infor">상품정보문의</option>
-                                <option value="exchange">교환문의</option>
-                                <option value="alliance">제휴</option>
-                                <option value="deliever">배송문의</option>
-                                <option value="etc">기타문의</option>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th style="width:10%; padding:20px;">제목</th>
-                        <td style="width: 39%;" colspan="3">
-                            <textarea class="form-control" rows="1" style="resize: none;  margin-left:10%;width:550px;"></textarea>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th style="width:15%; padding:20px;">비밀글 설정</th>
-                        <td style="width: 39%;">
-                            <input type="radio" name="chk_info" id="open" value="open" checked="checked">공개글
-                            &nbsp;
-                            <input type="radio" name="chk_info" id="secret" value="secret">비밀글</td>
-                        <th style="width:15%; padding:20px;">비밀번호</th>
-                        <td style="width: 39%;"><input type="password" id="secret"></td>
-                    </tr>
-                    <tr>
-                        <th style="padding:20px;">내용</th><td colspan="3"><textarea class="form-control" rows="20" style="resize: none;"></textarea></td>
-                    </tr>
-                    <tr>
-                        <th style="padding:20px;">이미지</th><td colspan="3"><div class="filebox bs3-primary preview-image">
-                        <input class="upload-name" value="파일선택" disabled="disabled" style="width: 200px;">
-                        <label for="input_file">업로드</label> 
-                        <input type="file" id="input_file" class="upload-hidden"> 
-                    </div>
-                    </tr>
-                </tbody>
-              </table>
-      
+        <table style="text-align: center; margin-top:15px">
+      <thead>
+        <tr>
+          <th style="width:5%">번호</th>
+          <th style="width:35%;">제목</th>
+          <th style="width:10%;">작성일</th>
+          <th style="width:10%;">조회수</th>
+        </tr>
+      </thead>
+      <tbody >
+        <tr>
+            <td>1</td><td>[공개]집 보내주세요</td><td>2020.08.04</td><td>0</td>
+        </tr>
+        <tr>
+            <td>1</td><td>[공개]집 보내주세요</td><td>2020.08.04</td><td>0</td>
+        </tr>
+        <tr>
+            <td>1</td><td>[공개]집 보내주세요</td><td>2020.08.04</td><td>0</td>
+        </tr>
+        <tr>
+            <td>1</td><td>[비공개 게시글 입니다]</td><td>2020.08.04</td><td>0</td>
+        </tr>
+        <tr>
+            <td>1</td><td>[비공개 게시글 입니다]</td><td>2020.08.04</td><td>0</td>
+        </tr>
+        <tr>
+            <td>1</td><td>[비공개 게시글 입니다]</td><td>2020.08.04</td><td>0</td>
+        </tr>
+        <tr>
+            <td>1</td><td>[비공개 게시글 입니다]</td><td>2020.08.04</td><td>0</td>
+        </tr>
+        <tr>
+            <td>1</td><td>[비공개 게시글 입니다]</td><td>2020.08.04</td><td>0</td>
+        </tr>
+        <tr>
+            <td>1</td><td>[비공개 게시글 입니다]</td><td>2020.08.04</td><td>0</td>
+        </tr>
+        <tr>
+            <td>1</td><td>[비공개 게시글 입니다]</td><td>2020.08.04</td><td>0</td>
+        </tr>
+      </tbody>
+    </table>
+    <br><br>
+    <!------페이징 처리----->
+    <div class="page-center">
+      <ul class="pagination-t">
 
-            </form>
-            <br><br><br>
-            <input type="submit" value="작성하기" class="btn btn-primary" style="float:right;">
-            </div>
-            </div>
-            </div>
-        
-            <br><br><br>
-            
-        <script>
-        $(document).ready(function(){
-        var fileTarget = $('.filebox .upload-hidden');
+          <!-- disabled: 페이지 비활성화 -->
+          <li class="page-item-t disabled-t"><a class="page-link-t" href="#"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-chevron-left" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+            </svg></a></li>
 
-            fileTarget.on('change', function(){
-                if(window.FileReader){
-                    // 파일명 추출
-                    var filename = $(this)[0].files[0].name;
-                } 
+          <li class="page-item-t"><a class="page-link-t" href="#">1</a></li>
 
-                else {
-                    // Old IE 파일명 추출
-                    var filename = $(this).val().split('/').pop().split('\\').pop();
-                };
-
-                $(this).siblings('.upload-name').val(filename);
-            });
-
-            //preview image 
-            var imgTarget = $('.preview-image .upload-hidden');
-
-            imgTarget.on('change', function(){
-                var parent = $(this).parent();
-                parent.children('.upload-display').remove();
-
-                if(window.FileReader){
-                    //image 파일만
-                    if (!$(this)[0].files[0].type.match(/image\//)) return;
-                    
-                    var reader = new FileReader();
-                    reader.onload = function(e){
-                        var src = e.target.result;
-                        parent.prepend('<div class="upload-display"><div class="upload-thumb-wrap"><img src="'+src+'" class="upload-thumb"></div></div>');
-                    }
-                    reader.readAsDataURL($(this)[0].files[0]);
-                }
-
-                else {
-                    $(this)[0].select();
-                    $(this)[0].blur();
-                    var imgSrc = document.selection.createRange().text;
-                    parent.prepend('<div class="upload-display"><div class="upload-thumb-wrap"><img class="upload-thumb"></div></div>');
-
-                    var img = $(this).siblings('.upload-display').find('img');
-                    img[0].style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(enable='true',sizingMethod='scale',src=\""+imgSrc+"\")";        
-                }
-            });
-        });
-
-    	</script>
+          <!-- disabled: 해당 버튼 활성화 -->
+          <li class="page-item-t active-t" aria-current="page-t">
+              <a class="page-link-t" href="#">2 <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="page-item-t"><a class="page-link-t" href="#">3</a></li>
+          <li class="page-item-t"><a class="page-link-t" href="#"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-chevron-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+            </svg></a></li>
+      </ul>
+    </div>
+    <a href="sc_inquiary_write.html" type="button" class="btn btn-primary" style="float:right;">글쓰기</a>
+      </div>
+    </div>
+    </div>
+    <br><br><br>
+    
 </body>
 </html>

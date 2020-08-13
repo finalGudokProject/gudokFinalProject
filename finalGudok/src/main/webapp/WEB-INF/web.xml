@@ -29,7 +29,7 @@
 		<servlet-name>appServlet</servlet-name>
 		<url-pattern>*.do</url-pattern>
 	</servlet-mapping>
-	
+
 	<filter>
 		<!-- filter 안에는 filter-name, filter-class. init-pararm을 추가하자 -->
 		<filter-name>encodingFilter</filter-name>
