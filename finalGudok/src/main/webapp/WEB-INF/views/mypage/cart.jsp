@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -310,7 +312,9 @@
 	        </tr>
 	        <c:forEach var="c" items="${list}">
 		        <tr>
-		          <td class="bottom"><input type="checkbox" style="margin: auto 0;" class="check"></td>
+		          <td class="bottom">
+		          	<input type="checkbox" checked="" name="check" style="margin: auto 0;" class="check" onclick="priceSum(${c.itemPrice})" >
+		          </td>
 		          <td style="width: 15%;" class="bottom">
 		            <div class="image">
 		              <img src="resources/images/milk.jpg">
@@ -319,33 +323,33 @@
 		          <td class="bottom"><span style="float:left; margin-left: 1%;">옳은 유기농 우유</span></td>
 		          <c:if test="${c.cartSubs eq '1주'}">
 		          	<td class="bottom">
-		          	<select style="width:60%; height:30px;">
-		          		<option selected>1주</option>
-		          		<option>2주</option>
-		          		<option>3주</option>
-		          		<option>4주</option>
-		          	</select>
-		          </td> 
+			          	<select style="width:60%; height:30px;">
+			          		<option selected>1주</option>
+			          		<option>2주</option>
+			          		<option>3주</option>
+			          		<option>4주</option>
+			          	</select>
+		          	</td> 
 		          </c:if>
 		          <c:if test="${c.cartSubs eq '2주'}">
 		          	<td class="bottom">
-		          	<select style="width:60%; height:30px;">
-		          		<option>1주</option>
-		          		<option selected>2주</option>
-		          		<option>3주</option>
-		          		<option>4주</option>
-		          	</select>
-		          </td> 
+			          	<select style="width:60%; height:30px;">
+			          		<option>1주</option>
+			          		<option selected>2주</option>
+			          		<option>3주</option>
+			          		<option>4주</option>
+			          	</select>
+		          	</td> 
 		          </c:if>
 		          <c:if test="${c.cartSubs eq '3주'}">
 		          	<td class="bottom">
-		          	<select style="width:60%; height:30px;">
-		          		<option>1주</option>
-		          		<option>2주</option>
-		          		<option selected>3주</option>
-		          		<option>4주</option>
-		          	</select>
-		          </td> 
+			          	<select style="width:60%; height:30px;">
+			          		<option>1주</option>
+			          		<option>2주</option>
+			          		<option selected>3주</option>
+			          		<option>4주</option>
+			          	</select>
+		          	</td> 
 		          </c:if>
 		          <c:if test="${c.cartSubs eq '4주'}">
 		          	<td class="bottom">
@@ -362,7 +366,11 @@
 		            <span class="amount" style="display: inline-block; width: 40px;">${c.cartCount }</span>
 		            <img class="plus" src="resources/images/my_plus.png" style="width: 10%; height: auto;">
 		          </td>
-		          <td class="bottom"><span class="price">${c.itemPrice}</span><span>원</span></td>
+		          <c:set var="price" value="${c.itemPrice}"/>
+		          <td class="bottom tprice">
+		          	<span class="price"><fmt:formatNumber value="${c.itemPrice}" pattern="#,###"/></span>
+		          	<span>원</span>
+		          </td>
 		        </tr>
 	        </c:forEach>
 	      </table>
@@ -380,10 +388,12 @@
 	            <td>최종 주문금액</td>
 	          </tr>
 	          <tr style="height: 80px;">
-	            <td><span style="font-size:1.2em">4,950</span><span>원</span></td>
+	            <td><span style="font-size:1.2em" class="totalPrice"><fmt:formatNumber value="${price}" pattern="#,###"/></span><span>원</span></td>
 	            <td><span style="font-size:1.2em">0</span><span>원</span></td>
-	            <td><span style="font-size:1.2em">2,500</span><span>원</span></td>
-	            <td><span style="font-size:1.2em">7,450</span><span>원</span></td>
+	            <td><span style="font-size:1.2em" class="deliveryPrice">2,500</span><span>원</span></td>
+	            <fmt:parseNumber var="numberType" value="${price}"/>
+	            <c:set var="paymentPrice" value="${numberType + 2500}"/>
+	            <td><span style="font-size:1.2em" class="paymentPrice"><fmt:formatNumber value="${paymentPrice}" pattern="#,###"/></span><span>원</span></td>
 	          </tr>
 	        </table>
 	      </div>
@@ -398,28 +408,122 @@
     <jsp:include page="../common/footer.jsp"/>
     
     <script>
+    	var total = 0;
+    	function priceSum(price){
+			var price1 = $(this).parent('td').siblings('.tprice').children('.price').text();
+			alert(price1);
+    		if($(this).is(":checked") == false) {
+    			alert("체크 클릭");
+    			alert(price);
+		        $(this).attr("checked");
+	    		var sum = 0;
+	    		var deliveryPrice = parseInt($('.deliveryPrice').text().replace(/\,/g, ""), 10);
+	    		
+	    		sum = sum + price;
+	    		total = total + sum;
+	    		
+	    		var paymentPrice = total + deliveryPrice;
+	    		
+	    		total = String(total);
+	    		total = total.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+	    		
+	    		paymentPrice = String(paymentPrice);
+		        paymentPrice = paymentPrice.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+	    		
+		        alert(total);
+		        
+		        $('.totalPrice').text(total);
+		        $('.paymentPrice').text(paymentPrice);
+		        
+		        total = parseInt(total.replace(/\,/g, ""), 10);
+    		} else{
+    			alert("체크 해제");
+    			var sum = 0;
+	    		var deliveryPrice = parseInt($('.deliveryPrice').text().replace(/\,/g, ""), 10);
+
+	    		total = total - price;
+	    		
+	    		var paymentPrice = total + deliveryPrice;
+	    		
+	    		total = String(total);
+	    		total = total.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+	    		
+	    		paymentPrice = String(paymentPrice);
+		        paymentPrice = paymentPrice.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+	    		
+		        alert(total);
+		        
+		        $('.totalPrice').text(total);
+		        $('.paymentPrice').text(paymentPrice);
+		        
+		        total = parseInt(total.replace(/\,/g, ""), 10);
+    		}
+    	}
+    </script>
+    
+    <script>
+    	
 	    $(function () {
 	      $('.minus').click(function (e) {
 	        e.preventDefault();
 	        var stat = $(this).siblings('.amount').text();
 	        var num = parseInt(stat, 10);
+	        var currentPrice = $(this).parent('td').next('td').children('.price').text();
+	        var price = parseInt(currentPrice.replace(/\,/g, ""), 10);
+	        var itemPrice = price / num;
+	        var deliveryPrice = parseInt($('.deliveryPrice').text().replace(/\,/g, ""), 10);
+	        
 	        num--;
 	
 	        if (num <= 0) {
 	          alert('주문 최소 수량은 1개입니다.');
 	          num = 1;
 	        }
-	
+			
+	        var totalPrice = itemPrice * num;
+	        
+	        var paymentPrice = totalPrice + deliveryPrice;
+	        
+	       
+	        totalPrice = String(totalPrice);
+	        totalPrice = totalPrice.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+	        
+	        paymentPrice = String(paymentPrice);
+	        paymentPrice = paymentPrice.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+	        
 	        $(this).siblings('.amount').text(num);
+	        $(this).parent('td').next('td').children('.price').text(totalPrice);
+	        
+	        $('.totalPrice').text(totalPrice);
+	        $('.paymentPrice').text(paymentPrice);
 	      });
 	
 	      $('.plus').click(function (e) {
 	        e.preventDefault();
 	        var stat = $(this).siblings('.amount').text();
 	        var num = parseInt(stat, 10);
+	        var currentPrice = $(this).parent('td').next('td').children('.price').text();
+	        var price = parseInt(currentPrice.replace(/\,/g, ""), 10);
+	        var itemPrice = price / num;
+	        var deliveryPrice = parseInt($('.deliveryPrice').text().replace(/\,/g, ""), 10);
+	        
 	        num++;
+	        
+	        var totalPrice = itemPrice * num;
+	        
+	        var paymentPrice = totalPrice + deliveryPrice;
+	        
+	        totalPrice = String(totalPrice);
+	        totalPrice = totalPrice.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+	        
+	        paymentPrice = String(paymentPrice);
+	        paymentPrice = paymentPrice.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
 	
 	        $(this).siblings('.amount').text(num);
+	        $(this).parent('td').next('td').children('.price').text(totalPrice);
+	        
+	        $('.totalPrice').text(totalPrice);
+	        $('.paymentPrice').text(paymentPrice);
 	      });
 	    });
   </script>
@@ -433,7 +537,7 @@
 			  } else {
 				  $(":checkbox[name=checkbox]").prop("checked", false);
 			  }
-      }); 
+      });
     });
   </script>
 </body>

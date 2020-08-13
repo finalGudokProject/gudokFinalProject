@@ -51,6 +51,7 @@
 		<result property="subscribeNo" column="SUBSCRIBE_NO"/>
 		<result property="itemName" column="ITEM_NAME"/>
 		<result property="subscribeDate" column="SUBSRIBE_DATE"/>
+		<result property="exchangeStatus" column="EXCHANGE_STATUS"/>
 	</resultMap>
 	
 	<resultMap type="mCart" id="cartResultSet">
@@ -92,6 +93,7 @@
 		SELECT *
 		FROM REVIEW
 		WHERE MEMBER_NO=1
+		ORDER BY REVIEW_DATE DESC
 	</select>
 	
 	<select id="exchangeList" parameterType="int" resultMap="exchangeResultSet">
@@ -101,14 +103,15 @@
 		JOIN MEMBER M ON (S.MEMBER_NO = M.MEMBER_NO)
 		JOIN ITEM I ON (S.ITEM_NO = I.ITEM_NO)
 		WHERE S.MEMBER_NO = 1
+		ORDER BY E.EXCHANGE_DATE DESC
 	</select>
 	
 	<select id="deliveryList" parameterType="int" resultMap="deliveryResultSet">
-		SELECT D.*, I.ITEM_NAME, S.SUBSRIBE_DATE
+		SELECT D.*, I.ITEM_NAME, S.SUBSRIBE_DATE, S.EXCHANGE_STATUS
 		FROM DELIVERY D
 		JOIN SUBSCRIBE S ON (D.SUBSCRIBE_NO = S.SUBSCRIBE_NO)
 		JOIN ITEM I ON (S.ITEM_NO = I.ITEM_NO)
-WHERE MEMBER_NO = 1
+		WHERE MEMBER_NO = 1
 	</select>
 	
 	<select id="cartList" parameterType="int" resultMap="cartResultSet">
@@ -120,6 +123,21 @@ WHERE MEMBER_NO = 1
 	
 	<insert id="insertExchange" parameterType="mExchange">
 		INSERT INTO EXCHANGE
-		VALUES()
+		VALUES(SEQ_EXCHANGE.NEXTVAL, DEFAULT, #{exchangeContent}, SYSDATE, #{subscribeNo}, #{exchangeCategory})
 	</insert>
+	
+	<update id="updateSubscribe" parameterType="_int">
+		UPDATE SUBSCRIBE
+		SET EXCHANGE_STATUS = 'Y'
+		WHERE SUBSCRIBE_NO=#{subscribeNo}
+	</update>
+	
+	<!-- <select id="selectReview" parameterType="int" resultMap="reviewResultSet">
+		
+	</select> -->
+	
+	<delete id="deleteReview" parameterType="int">
+		DELETE REVIEW
+		WHERE REVIEW_NO=#{reviewNo}
+	</delete>
 </mapper>

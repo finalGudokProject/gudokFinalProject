@@ -14,17 +14,19 @@ public class Delivery implements Serializable{
 	private int subscribeNo;
 	private String itemName;
 	private Date subscribeDate;
+	private String exchangeStatus;
 	private int itemNo;
 	
 	public Delivery() {}
 
 	public Delivery(int deliveryNo, String deliveryStatus, int subscribeNo, String itemName, Date subscribeDate,
-			int itemNo) {
+			String exchangeStatus, int itemNo) {
 		this.deliveryNo = deliveryNo;
 		this.deliveryStatus = deliveryStatus;
 		this.subscribeNo = subscribeNo;
 		this.itemName = itemName;
 		this.subscribeDate = subscribeDate;
+		this.exchangeStatus = exchangeStatus;
 		this.itemNo = itemNo;
 	}
 
@@ -68,6 +70,14 @@ public class Delivery implements Serializable{
 		this.subscribeDate = subscribeDate;
 	}
 
+	public String getExchangeStatus() {
+		return exchangeStatus;
+	}
+
+	public void setExchangeStatus(String exchangeStatus) {
+		this.exchangeStatus = exchangeStatus;
+	}
+
 	public int getItemNo() {
 		return itemNo;
 	}
@@ -83,7 +93,7 @@ public class Delivery implements Serializable{
 	@Override
 	public String toString() {
 		return "Delivery [deliveryNo=" + deliveryNo + ", deliveryStatus=" + deliveryStatus + ", subscribeNo="
-				+ subscribeNo + ", itemName=" + itemName + ", subscribeDate=" + subscribeDate + ", itemNo=" + itemNo
-				+ "]";
+				+ subscribeNo + ", itemName=" + itemName + ", subscribeDate=" + subscribeDate + ", exchangeStatus="
+				+ exchangeStatus + ", itemNo=" + itemNo + "]";
 	}
 }
