@@ -75,3 +75,4 @@ public class MemberServiceImpl implements MemberService {
 		return mDao.deleteReview(reviewNo);
 	}
 }
+

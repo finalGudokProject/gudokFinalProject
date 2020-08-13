@@ -50,28 +50,28 @@ body {
 #loginBtn:hover, #signInBtn:hover {
 	color: black;
 	cursor: pointer;
-	border-color:black;
+	border-color: black;
 }
 
-#find > a, #find > div{
-	font-size:20px;
-	display:inline-block;
+#find>a, #find>div {
+	font-size: 20px;
+	display: inline-block;
 }
 
 .vl {
-  border: 1px solid #495057;
-  height: 15px;
-  margin-left: 10px;
-  margin-right: 10px;
+	border: 1px solid #495057;
+	height: 15px;
+	margin-left: 10px;
+	margin-right: 10px;
 }
 
-.container{
-	margin-top:20px;
-	margin-bottom:50px;
+.container {
+	margin-top: 20px;
+	margin-bottom: 50px;
 }
 
-.form-signin{
-	margin-top:50px;
+.form-signin {
+	margin-top: 50px;
 }
 </style>
 <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap"
@@ -88,18 +88,15 @@ body {
 
 				<div class="card">
 					<div class="card-body">
-						<h2 style="color:black;">로그인</h2>
-						<form class="form-signin">
-							<input type="text" class="form-control mb-3" placeholder="ID"
-								required autofocus> <input type="password"
-								class="form-control mb-3" placeholder="Password" required>
-							<br>
-							<button class="btn" type="submit"
-								id="loginBtn">로그인</button>
+						<h2 style="color: black;">로그인</h2>
+						<form class="form-signin" action="login.do" method="post">
+							<input type="text" name="memberId" class="form-control mb-3" placeholder="ID" autofocus> 
+							<input type="password" name="memberPwd" class="form-control mb-3" placeholder="Password" required> <br>
+							<button class="btn" type="submit" id="loginBtn">로그인</button>
 							<!-- <label class="checkbox float-left">
-              <input type="checkbox" value="remember-me">
-                아이디 저장하기
-              </label> -->
+             				 <input type="checkbox" value="remember-me">
+                				아이디 저장하기
+             				 </label> -->
 						</form>
 						<div id="find">
 							<a href="find.do">계정찾기</a>

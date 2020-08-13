@@ -28,6 +28,7 @@ public interface MemberService {
 
 	int insertExchange(Exchange e);
 
+
 	int updateSubscribe(int subscribeNo);
 
 //	Review selectReview(Integer reviewNo);
@@ -35,3 +36,4 @@ public interface MemberService {
 	int deleteReview(Integer reviewNo);
 
 }
+
