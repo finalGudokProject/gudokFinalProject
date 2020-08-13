@@ -70,5 +70,9 @@
 1. 이 약관은 2020년 9월 14일부터 시행됩니다.
 </p>
 <br><br><br>
+
+<footer class="page-footer font-small indigo">
+		<jsp:include page="../common/footer.jsp" />
+	</footer>
 </body>
 </html>

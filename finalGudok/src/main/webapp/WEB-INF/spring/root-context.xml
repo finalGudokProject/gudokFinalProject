@@ -4,14 +4,20 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
+<<<<<<< HEAD
 
 	
 
 
+=======
+>>>>>>> refs/remotes/origin/master
 	<bean id="dataSource" lazy-init="default"
 		class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close">
+<<<<<<< HEAD
 		
+=======
+>>>>>>> refs/remotes/origin/master
 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></property>
 		<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"></property>
 		<property name="username" value="gudok"></property>
@@ -31,11 +37,10 @@
 		<constructor-arg ref="sqlSession"></constructor-arg>
 	</bean>
 
-	<!-- 파일 업로드시 파일 크기 지정을 위한 코드 작성 -->
+	<!-- 2. 파일 업로드 시 파일 크기 지정을 위한 코드 작성 -->
 	<bean id="multipartResolver"
-		class="org.springframework.web.multipart.commons.CommonsMultipartResolver"> <!-- CommonsMultipartResolver를 beans에서 browse하기(라이브러리 깔려있어야함) -->
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<property name="maxUploadSize" value="100000000"/>
 		<property name="maxInMemorySize" value="100000000"/>
 	</bean>
-		
 </beans>

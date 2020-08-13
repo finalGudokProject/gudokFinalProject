@@ -1,10 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+	<!-- sweetalert시작 -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	<link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
+	<!-- sweetalert끝 -->
 </head>
 <style>
 	.starP{
@@ -60,101 +66,162 @@
 		margin-right:1%;
 		border:1px solid lightgray !important;
 	}
+	
+	.starRv{
+  background: url('http://miuu227.godohosting.com/images/icon/ico_review.png') no-repeat right 0;
+  background-size: auto 100%;
+  width: 30px;
+  height: 30px;
+  display: inline-block;
+  text-indent: -9999px;
+  cursor: pointer;
+}
+.starRev{
+		line-height:40px;
+		padding-left:1%;
+	}
+	.starRev div{
+		vertical-align:bottom;
+	}
+.starRv.on{background-position:0 0;}
 </style>
 <body>
 	<jsp:include page="../common/menubar.jsp"/>
 	
-	<div style="padding:1% 0 1% 16%;">
+	<div style="padding:1% 0 1% 18%;">
 			<img src="${contextPath }/resources/images/reviewImg.png" style="width:7%;height:7%;">
-			<span style="vertical-align:middle;font-size:50px;"><b>상품명 상품평</b></span>
+			<span style="vertical-align:middle;font-size:50px;"><b>해당 상품 전체 상품평</b></span>
 		</div>
 	<div class="container">
 		<div class="row">
+		
 		<div class="col-12">
-		<table style="border:1px solid lightgray;margin:0 0 0 5%;width:80%;">
-			<tr>
-				<td id="reviewNameTd">
-				<div class="row">
-					<div class="col-9">
-						<span style="font-size:40px;padding-left:2%;">OOO님의 상품평</span>
-					</div>
-					<div class="col-3" style="text-align:right;padding-right:2%;">
-						<img src="resources/images/retouch.png" class="retouchImgC" style="width:3.5rem;border:1px solid lightgray;" title="상품평 수정하기">
-					</div>
-				</div>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<div class="starPp" style="padding:0 0 0 2%;">
-					  <span class="starP on">별1</span>
-					  <span class="starP">별2</span>
-					  <span class="starP">별3</span>
-					  <span class="starP">별4</span>
-					  <span class="starP">별5</span>
-					  <span id="cDate">등록일 : 2020/DB/DB</span>
-					</div>
-				</td>
-			</tr>
-			<tbody style="padding:2%;">
-				<tr>
-					<td>
-						<div style="padding:2%;border-top:1px dashed lightgray;">
-							<img src="resources/images/breadLogo.jpg" class="reviewImgClass">
-						</div>
-					</td>
-				</tr>
-				<tr>
-					<td style="padding:2%;">
-						<div class="reviewText" style="padding:2%;border:1px solid black;font-size:20px;">내용 입력내용 입력내용 입력내용 입력내용 입력내용 입력 가나다라마바사 아자차카타파하</div>
-					</td>
-				</tr>
-			</tbody>
-		</table>
-		
-		<table style="border:1px solid lightgray;margin:0 0 0 5%;width:80%;">
-			<tr>
-				<td id="reviewNameTd">
-				<div class="row">
-					<div class="col-9">
-						<span style="font-size:40px;padding-left:2%;">OOO님의 상품평</span>
-					</div>
-					<div class="col-3" style="text-align:right;padding-right:2%;">
-						<img src="${contextPath }/resources/images/retouch.png" class="retouchImgC" style="width:3.5rem;border:1px solid lightgray;" title="수정하기">
-					</div>
-				</div>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<div class="starPp" style="padding:0 0 0 2%;">
-					  <span class="starP on">별1</span>
-					  <span class="starP">별2</span>
-					  <span class="starP">별3</span>
-					  <span class="starP">별4</span>
-					  <span class="starP">별5</span>
-					  <span id="cDate">등록일 : 2020/DB/DB</span>
-					</div>
-				</td>
-			</tr>
-			<tbody style="padding:2%;">
-				<tr>
-					<td>
-						<div style="padding:2%;border-top:1px dashed lightgray;">
-							<img src="resources/images/breadLogo.jpg" class="reviewImgClass">
-							<img src="resources/images/breadLogo.jpg" class="reviewImgClass">
-						</div>
-					</td>
-				</tr>
-				<tr>
-					<td style="padding:2%;">
-						<div class="reviewText" style="padding:2%;border:1px solid black;font-size:20px;">내용 입력내용 입력내용 입력내용 입력내용 입력내용 입력 가나다라마바사 아자차카타파하</div>
-					</td>
-				</tr>
-			</tbody>
-		</table>
-		
+		<c:if test="${empty review}">
+		<div style="width:100%;border:1px solid lightgray;border-radius:5rem;">
+			<div style="text-align:center;width:100%;"><img src="${contextPath }/resources/images/empty.png" style="width:30%;"></div>
+			<div style="text-align:center;width:100%;font-size:40px;">해당 상품의 상품평이 존재하지 않습니다.</div>
 		</div>
+		
+		</c:if>
+		<c:if test="${!empty review}">
+		<c:forEach var="r" items="${review }">
+		<div style="margin-bottom:2%;"align="center">
+		<table style="border:1px solid lightgray;margin:0 0 0 5%;width:80%;">
+			<thead>
+			<tr>
+				<td id="reviewNameTd">
+				<div class="row">
+					<div class="col-9">
+						<span style="font-size:40px;padding-left:2%;">${r.memberId }님의 상품평</span>
+					</div>
+					<c:if test="${loginUser.memberId == r.memberId }">
+						<div class="col-3" style="text-align:right;padding-right:2%;">
+							<input type="hidden" value="${r.reviewNo }">
+							<img src="resources/images/retouch.png" class="retouchImgC" style="width:3.5rem;border:1px solid lightgray;" title="상품평 수정하기">
+						</div>
+					</c:if>
+				</div>
+				</td>
+			</tr>
+			<script>
+				$(function(){
+					$(".retouchImgC").on("click", function(){
+						var reviewNo = $(this).prev().val();
+						location.href="reviewUpdate.do";
+					})
+				})
+			</script>
+			<tr>
+				<td>
+					<div class="starRev">
+						<c:choose>
+							<c:when test="${r.reviewRate < 1}">
+								<span class="starRv">1</span>
+								<span class="starRv">2</span>
+								<span class="starRv">3</span>
+								<span class="starRv">4</span>
+								<span class="starRv">5</span>
+							</c:when>
+							<c:when test="${r.reviewRate  < 2 }">
+								<span class="starRv on">1</span>
+								<span class="starRv">2</span>
+								<span class="starRv">3</span>
+								<span class="starRv">4</span>
+								<span class="starRv">5</span>
+							</c:when>
+							
+							<c:when test="${r.reviewRate  < 3 }">
+								<span class="starRv on">1</span>
+								<span class="starRv on">2</span>
+								<span class="starRv">3</span>
+								<span class="starRv">4</span>
+								<span class="starRv">5</span>
+							</c:when>
+							
+							<c:when test="${r.reviewRate  < 4 }">
+								<span class="starRv on">1</span>
+								<span class="starRv on">2</span>
+								<span class="starRv on">3</span>
+								<span class="starRv">4</span>
+								<span class="starRv">5</span>
+							</c:when>
+							
+							<c:when test="${r.reviewRate  < 5 }">
+								<span class="starRv on">1</span>
+								<span class="starRv on">2</span>
+								<span class="starRv on">3</span>
+								<span class="starRv on">4</span>
+								<span class="starRv">5</span>
+							</c:when>
+							<c:otherwise>
+								<span class="starRv on">1</span>
+								<span class="starRv on">2</span>
+								<span class="starRv on">3</span>
+								<span class="starRv on">4</span>
+								<span class="starRv on">5</span>
+							</c:otherwise>
+						</c:choose>
+						<c:if test="${r.reviewDate == r.reviewModify }">
+							<div style="display:inline-block;color:gray;">등록일 : ${r.reviewDate }</div>
+						</c:if>
+						<c:if test="${r.reviewDate != r.reviewModify }">
+							<div style="display:inline-block;color:gray;">등록일 : ${r.reviewDate } / 수정일 : ${r.reviewModify }</div>
+						</c:if>
+					</div>
+				</td>
+			</tr>
+			</thead>
+			<tbody style="padding:2%;">
+				<tr>
+					<td>
+						<div style="padding:2%;border-top:1px dashed lightgray;">
+						<c:if test="${!empty r.reviewImg1 && !empty r.reviewImg2}">
+							<img src="resources/iuploadFiles/${r.reviewImg1 }" class="reviewImgClass">
+							<img src="resources/iuploadFiles/${r.reviewImg2 }" class="reviewImgClass">
+						</c:if>
+						<c:if test="${!empty r.reviewImg1 && empty r.reviewImg2 }">
+							<img src="resources/iuploadFiles/${r.reviewImg1 }" class="reviewImgClass">
+						</c:if>
+						<c:if test="${empty r.reviewImg1 && !empty r.reviewImg2 }">
+							<img src="resources/iuploadFiles/${r.reviewImg2 }" class="reviewImgClass">
+						</c:if>
+						<c:if test="${empty r.reviewImg1 && empty r.reviewImg2 }">
+						</c:if>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td style="padding:2%;">
+						<div class="reviewText" style="padding:2%;border:1px solid black;font-size:20px;">${r.reviewContent }</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		</div>
+		</c:forEach>
+		</c:if>
+		</div>
+		
 		</div>
 	</div>
 	

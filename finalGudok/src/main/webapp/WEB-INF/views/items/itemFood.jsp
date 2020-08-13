@@ -210,6 +210,10 @@
 		font-size:30px;
 	}
 	
+	.cateTableC td:hover{
+		background:lightyellow;
+		cursor:pointer;
+	}
 
 </style>
 </head>
@@ -223,16 +227,24 @@
 		<span>푸드</span>
 		</div>
 		<div style="margin:0 0 3% 2%">
-			<table style="display:block;">
+			<table style="display:block;" class="cateTableC">
 				<tr>
-					<td style="width:10%;">유제품</td>
-					<td style="width:10%;">베이커리</td>
-					<td style="width:10%;">다이어트 식단</td>
-					<td style="width:10%;">음료</td>
-					<td style="width:10%;">간편식품</td>
-					<td style="width:10%;">건강식품</td>
+					<td style="width:10%;" id="foodMilk" class="sortCate"><input type="hidden" value="F2">유제품</td>
+					<td style="width:10%;" id="foodBakery" class="sortCate"><input type="hidden" value="F3">베이커리</td>
+					<td style="width:10%;" id="foodDiet" class="sortCate"><input type="hidden" value="F6">다이어트 식단</td>
+					<td style="width:10%;" id="foodDrink" class="sortCate"><input type="hidden" value="F1">음료</td>
+					<td style="width:10%;" id="foodSimple" class="sortCate"><input type="hidden" value="F4">간편식품</td>
+					<td style="width:10%;" id="foodHealth" class="sortCate"><input type="hidden" value="F5">건강식품</td>
 				</tr>
 			</table>
+			<script>
+				$(function(){
+					$(".sortCate").on("click", function(){
+						var sort = $(this).find("input").val();
+						location.href="foodSort.do?categoryNo="+sort;
+					})
+				})
+			</script>
 		</div>
 			<div style="border-top:1px solid lightgray;border-bottom:1px solid lightgray;">
 			<table align="center" style="margin-bottom:1%;" id="sortTable">
@@ -243,7 +255,7 @@
 					<td><div class="sortDivC">
 					<img src="${contextPath }/resources/images/popul.png" class="sortClass"><span style="display:block;">인기순</span>
 					</div></td>
-					<td><div class="sortDivC">
+					<td onclick="location.href='home.do'"><div class="sortDivC">
 					<img src="${contextPath }/resources/images/high.png" class="sortClass"><span style="display:block;">높은 가격순</span>
 					</div></td>
 					<td><div class="sortDivC">
@@ -259,16 +271,16 @@
 	
 	
 	
-	
-	
+		<c:if test="${!empty list}">
 		<c:forEach var="i" items="${list }" varStatus="vs">
 		<c:url var="idetail" value="idetail.do">
 			<c:param name="itemNo" value="${i.itemNo }"/>
 			<c:param name="page" value="${pi.currentPage }"/>
+			<c:param name="memberNo" value="${loginUser.memberNo }"/>
 		</c:url>
 		<fmt:formatNumber var="discountPrice" value="${(i.itemPrice - i.itemPrice*(i.itemDiscount/100))}" type="number"/>
 		<fmt:formatNumber var="itemPrice" value="${i.itemPrice}" type="number"/>
-			<div class="col-4" onclick="location.href='${idetail}'">
+			<div class="col-4" onclick="location.href='${idetail}'" class="detailDiv">
 				<div class="card">
 					<c:if test="${i.itemDiscount != 0}" >
 					<div class="cardHeader">
@@ -351,7 +363,15 @@
 						</div>
 						
 						
-						  <div id="rateId">(평점 : ${i.itemRate }점 / 찜한 사람 : ${i.itemChoice }명)</div>
+						  <div id="rateId">
+							  <c:if test="${i.itemRate == 0}">
+							  	(평점 : 0점 / 찜한 사람 : ${i.itemChoice }명)
+							  </c:if>
+							  <c:if test="${i.itemRate != 0}">
+							  	(평점 : ${i.itemRate}점 / 찜한 사람 : ${i.itemChoice }명)
+							  </c:if>
+						  </div>
+						  
 						</div>
 						<div class="row">
 							<div class="col-4" id="btnBlank"></div>
@@ -365,23 +385,29 @@
 				</div>
 			</div>
 		</c:forEach>
+		</c:if>
 		</div>
 		
 		<c:forEach var="i" items="${list }" varStatus="vs">
 		<script>
 			$(function(){
-				$("#preview${vs.index}").on("click", function(){
+				$("#preview${vs.index}").on("click", function(event){
 					var preview = $(this).attr("id");
 					console.log(preview);
 					var review = $(this).next().val();
 					console.log(review);
-					
+					event.stopPropagation();
+				})
+				$("#preview${vs.index}").on("click",function(){
+					var itemNo = $(this).next().val();
+					location.href="itemReview.do?itemNo="+itemNo;
 				})
 			})
+			
 		
 		</script>
 		</c:forEach>
-		
+		<c:if test="${!empty list}">
 			<div class="col-12">
 			
 			<nav aria-label="Page navigation example">
@@ -428,6 +454,7 @@
 				</ul>
 			</nav>
 		</div>
+		</c:if>
 	</div>
 </div>
 
@@ -452,7 +479,7 @@
 		})
 	})
 	</script>
-	<script>
+	<!-- <script>
 		$(function(){
 			$(".cardHeader, .cardBody, #btnBlank, .cardFooter").click(function(){
 				var itemNo = $(this).find("input[type=hidden]").val();
@@ -462,7 +489,7 @@
 				$(this).css("cursor","pointer");
 			})
 		})
-	</script>
+	</script> -->
 	
 <jsp:include page="../common/footer.jsp"/>
 </body>
