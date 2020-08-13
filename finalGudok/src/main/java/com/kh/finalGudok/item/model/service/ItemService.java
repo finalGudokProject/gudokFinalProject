@@ -9,6 +9,8 @@ import com.kh.finalGudok.item.model.vo.Item;
 import com.kh.finalGudok.item.model.vo.ItemListView;
 import com.kh.finalGudok.item.model.vo.PageInfo;
 import com.kh.finalGudok.item.model.vo.Review;
+import com.kh.finalGudok.item.model.vo.ReviewImage;
+import com.kh.finalGudok.item.model.vo.ReviewView;
 import com.kh.finalGudok.member.model.vo.Member;
 
 public interface ItemService {
@@ -83,5 +85,19 @@ public interface ItemService {
 	int diListCount();
 
 	ArrayList<ItemListView> selectDiList(PageInfo pi);
+
+	ArrayList<ItemListView> selectDLists(PageInfo pi,String sortNo);
+
+	ArrayList<ItemListView> selectMLists(PageInfo pi, String sortNo);
+
+	ArrayList<ItemListView> selectBLists(PageInfo pi, String sortNo);
+
+	ArrayList<ItemListView> selectSLists(PageInfo pi, String sortNo);
+
+	ArrayList<ItemListView> selectHLists(PageInfo pi, String sortNo);
+
+	ArrayList<ItemListView> selectDiLists(PageInfo pi, String sortNo);
+
+//	int insertReviewImg(ReviewView i);
 
 }

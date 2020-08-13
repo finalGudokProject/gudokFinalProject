@@ -3,7 +3,6 @@ package com.kh.finalGudok.item.model.vo;
 import java.io.Serializable;
 
 public class Board implements Serializable{
-
 	/**
 	 * 
 	 */
@@ -15,17 +14,17 @@ public class Board implements Serializable{
 	private String writeDate;
 	private int readNum;
 	private String boardCode;
-	private int itemNo;
 	private int memberNo;
 	private String memberId;
 	private String email;
+	private int itemNo;
 	
 	public Board() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Board(int boardNo, String title, String content, String writeDate, int readNum, String boardCode, int itemNo,
-			int memberNo, String memberId, String email) {
+	public Board(int boardNo, String title, String content, String writeDate, int readNum, String boardCode,
+			int memberNo, String memberId, String email, int itemNo) {
 		super();
 		this.boardNo = boardNo;
 		this.title = title;
@@ -33,10 +32,10 @@ public class Board implements Serializable{
 		this.writeDate = writeDate;
 		this.readNum = readNum;
 		this.boardCode = boardCode;
-		this.itemNo = itemNo;
 		this.memberNo = memberNo;
 		this.memberId = memberId;
 		this.email = email;
+		this.itemNo = itemNo;
 	}
 
 	public int getBoardNo() {
@@ -87,14 +86,6 @@ public class Board implements Serializable{
 		this.boardCode = boardCode;
 	}
 
-	public int getItemNo() {
-		return itemNo;
-	}
-
-	public void setItemNo(int itemNo) {
-		this.itemNo = itemNo;
-	}
-
 	public int getMemberNo() {
 		return memberNo;
 	}
@@ -119,6 +110,14 @@ public class Board implements Serializable{
 		this.email = email;
 	}
 
+	public int getItemNo() {
+		return itemNo;
+	}
+
+	public void setItemNo(int itemNo) {
+		this.itemNo = itemNo;
+	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
@@ -126,11 +125,8 @@ public class Board implements Serializable{
 	@Override
 	public String toString() {
 		return "Board [boardNo=" + boardNo + ", title=" + title + ", content=" + content + ", writeDate=" + writeDate
-				+ ", readNum=" + readNum + ", boardCode=" + boardCode + ", itemNo=" + itemNo + ", memberNo=" + memberNo
-				+ ", memberId=" + memberId + ", email=" + email + "]";
+				+ ", readNum=" + readNum + ", boardCode=" + boardCode + ", memberNo=" + memberNo + ", memberId="
+				+ memberId + ", email=" + email + ", itemNo=" + itemNo + "]";
 	}
 
-	
-	
-	
 }

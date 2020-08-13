@@ -14,10 +14,10 @@
 		<result property="itemDate" column="ITEM_DATE"/>
 		<result property="itemRecommend" column="ITEM_RECOMMEND"/>
 		<result property="categoryNo" column="CATEGORY_NO"/>
-		<result property="eventNo" column="EVENT_NO"/>
 		<result property="itemMemo" column="ITEM_MEMO"/>
+		<result property="itemEventStatus" column="ITEM_EVENT_STATUS"/>
+		<result property="sortNo" column="SORT_NO"/>
 	</resultMap>
-	
 	
 	<update id="getDetailCount" parameterType="_int">
 		UPDATE ITEM
@@ -32,11 +32,12 @@
 		    , #{content}
 		    , SYSDATE
 		    , DEFAULT
-		    , 1
-		    , #{itemNo}
+		    , 'B1'
 		    , #{memberNo}
 		    , #{memberId}
-		    , #{email})
+		    , #{email}
+		    , #{itemNo}
+		    )
 	</insert>
 	
 	<update id="updatePChoice" parameterType="_int">

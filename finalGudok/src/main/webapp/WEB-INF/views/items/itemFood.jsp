@@ -226,6 +226,7 @@
 		<img src="${contextPath }/resources/images/food.png" style="width:70px;height:70px;">
 		<span>푸드</span>
 		</div>
+		
 		<div style="margin:0 0 3% 2%">
 			<table style="display:block;" class="cateTableC">
 				<tr>
@@ -249,21 +250,34 @@
 			<div style="border-top:1px solid lightgray;border-bottom:1px solid lightgray;">
 			<table align="center" style="margin-bottom:1%;" id="sortTable">
 				<tr>
-					<td><div class="sortDivC">
+					<td class="sortRank"><input type="hidden" value="" class="catchHidden"><input type="hidden" value="S1" class="catchNew"><div class="sortDivC">
 					<img src="${contextPath }/resources/images/newItem.png" class="sortClass"><span style="display:block;">신상품순</span>
 					</div></td>
-					<td><div class="sortDivC">
+					<td class="sortRank"><input type="hidden" value="" class="catchHidden"><input type="hidden" value="S2" class="catchBest"><div class="sortDivC">
 					<img src="${contextPath }/resources/images/popul.png" class="sortClass"><span style="display:block;">인기순</span>
 					</div></td>
-					<td onclick="location.href='home.do'"><div class="sortDivC">
+					<td class="sortRank"><input type="hidden" value="" class="catchHidden"><input type="hidden" value="S3" class="catchHigh"><div class="sortDivC">
 					<img src="${contextPath }/resources/images/high.png" class="sortClass"><span style="display:block;">높은 가격순</span>
 					</div></td>
-					<td><div class="sortDivC">
+					<td class="sortRank"><input type="hidden" value="" class="catchHidden"><input type="hidden" value="S4" class="catchLow"><div class="sortDivC">
 					<img src="${contextPath }/resources/images/low.png" class="sortClass"><span style="display:block;">낮은 가격순</span>
 					</div></td>
 				</tr>
 			</table>
 			</div>
+			<script>
+				$(function(){
+					var hidden1 = $("#hiddenCategory").val();
+					$(".catchHidden").val(hidden1);
+					$(".sortRank").on("click", function(){
+						var hidden1 = $(this).find("input:nth-child(1)").val();
+						var hidden2 = $(this).find("input:nth-child(2)").val();
+						console.log(hidden1);
+						console.log(hidden2);
+						location.href="fSort.do?categoryNo=" + hidden1 + "&sortNo=" + hidden2;
+					})
+				})
+			</script>
 			
 	</div>
 	
@@ -280,6 +294,7 @@
 		</c:url>
 		<fmt:formatNumber var="discountPrice" value="${(i.itemPrice - i.itemPrice*(i.itemDiscount/100))}" type="number"/>
 		<fmt:formatNumber var="itemPrice" value="${i.itemPrice}" type="number"/>
+		<input type="hidden" value="${i.categoryNo}" id="hiddenCategory">
 			<div class="col-4" onclick="location.href='${idetail}'" class="detailDiv">
 				<div class="card">
 					<c:if test="${i.itemDiscount != 0}" >
@@ -294,12 +309,13 @@
 					
 					<c:if test="${i.itemDiscount == 0}">
 					<div class="cardHeader">
-					<img src="resources/images/breadLogo.jpg" class="card-img-top" alt="...">
+					<img src="resources/images/kimchi.png" class="card-img-top" alt="...">
 					</div>
 					</c:if>
 					<div class="cardBody">
 						<h3 class="card-title"><b>${i.itemName }</b></h3>
-						<h5>${i.itemMemo }</h5>
+						<c:if test="${!empty i.itemMemo }"><h5>${i.itemMemo}</h5></c:if>
+						<c:if test="${empty i.itemMemo }"><h5>${i.itemName}입니다.</h5></c:if>
 						<div class="itemPriceDiv">
 						<c:if test="${i.itemDiscount != 0}">
 							<s style="color:red;">${itemPrice }원</s>→${discountPrice }원

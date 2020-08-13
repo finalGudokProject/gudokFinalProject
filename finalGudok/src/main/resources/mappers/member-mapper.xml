@@ -14,9 +14,7 @@
 		<result property="gender" column="GENDER"/>
 		<result property="enrollDate" column="ENROLL_DATE"/>
 		<result property="modifyDate" column="MODIFY_DATE"/>
-		<result property="dropDate" column="DROP_DATE"/>
 		<result property="memberStatus" column="MEMBER_STATUS"/>
-		<result property="dropReason" column="DROP_REASON"/>
 		<result property="emailStatus" column="EMAIL_STATUS"/>
 		<result property="point" column="POINT"/>
 		<result property="gradeNo" column="GRADE_NO"/>

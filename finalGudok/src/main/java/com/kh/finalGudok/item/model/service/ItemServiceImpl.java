@@ -13,6 +13,7 @@ import com.kh.finalGudok.item.model.vo.Item;
 import com.kh.finalGudok.item.model.vo.ItemListView;
 import com.kh.finalGudok.item.model.vo.PageInfo;
 import com.kh.finalGudok.item.model.vo.Review;
+import com.kh.finalGudok.item.model.vo.ReviewView;
 import com.kh.finalGudok.member.model.vo.Member;
 
 @Service("iService")
@@ -195,5 +196,40 @@ public class ItemServiceImpl implements ItemService {
 	public ArrayList<ItemListView> selectDiList(PageInfo pi) {
 		return iDao.selectDiList(pi);
 	}
+
+	@Override
+	public ArrayList<ItemListView> selectDLists(PageInfo pi,String sortNo) {
+		return iDao.selectDLists(pi,sortNo);
+	}
+
+	@Override
+	public ArrayList<ItemListView> selectMLists(PageInfo pi, String sortNo) {
+		return iDao.selectMLists(pi, sortNo);
+	}
+
+	@Override
+	public ArrayList<ItemListView> selectBLists(PageInfo pi, String sortNo) {
+		return iDao.selectBLists(pi, sortNo);
+	}
+
+	@Override
+	public ArrayList<ItemListView> selectSLists(PageInfo pi, String sortNo) {
+		return iDao.selectSLists(pi, sortNo);
+	}
+
+	@Override
+	public ArrayList<ItemListView> selectHLists(PageInfo pi, String sortNo) {
+		return iDao.selectHLists(pi, sortNo);
+	}
+
+	@Override
+	public ArrayList<ItemListView> selectDiLists(PageInfo pi, String sortNo) {
+		return iDao.selectDiLists(pi, sortNo);
+	}
+
+//	@Override
+//	public int insertReviewImg(ReviewView i) {
+//		return iDao.insertReviewImg(i);
+//	}
 
 }

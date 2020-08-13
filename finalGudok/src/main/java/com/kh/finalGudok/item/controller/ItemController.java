@@ -3,12 +3,14 @@ package com.kh.finalGudok.item.controller;
 import static com.kh.finalGudok.common.pagination.getPageInfo;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,10 +25,13 @@ import com.kh.finalGudok.item.model.service.ItemService;
 import com.kh.finalGudok.item.model.vo.Board;
 import com.kh.finalGudok.item.model.vo.Cart;
 import com.kh.finalGudok.item.model.vo.Heart;
+import com.kh.finalGudok.item.model.vo.Image;
 import com.kh.finalGudok.item.model.vo.Item;
 import com.kh.finalGudok.item.model.vo.ItemListView;
 import com.kh.finalGudok.item.model.vo.PageInfo;
 import com.kh.finalGudok.item.model.vo.Review;
+import com.kh.finalGudok.item.model.vo.ReviewImage;
+import com.kh.finalGudok.item.model.vo.ReviewView;
 import com.kh.finalGudok.member.model.vo.Member;
 
 @Controller
@@ -59,14 +64,9 @@ public class ItemController {
 		int listCount = iService.getItemCount();
 //		System.out.println("listCount : " + listCount);
 		
-		
-		
 		PageInfo pi = getPageInfo(currentPage, listCount);
 		ArrayList<Item> list = iService.selectList(pi);
 //		System.out.println("ArrayList : " + list);
-		
-		
-		
 		mv.addObject("list", list).addObject("pi", pi).setViewName("items/itemFood");
 		
 		return mv;
@@ -83,40 +83,89 @@ public class ItemController {
 			System.out.println("음료 Count : " + dListCount);
 			PageInfo pi = getPageInfo(currentPage, dListCount);
 			ArrayList<ItemListView> dList = iService.selectDList(pi);
-			mv.addObject("list", dList).addObject("pi",pi).setViewName("items/itemFood");
+			mv.addObject("list", dList).addObject("pi", pi).setViewName("items/itemFood");
 		}else if(categoryNo.equals("F2")) {
 			int mListCount = iService.mListCount();
 			System.out.println("유제품 Count : " + mListCount);
 			PageInfo pi = getPageInfo(currentPage, mListCount);
 			ArrayList<ItemListView> mList = iService.selectMList(pi);
-			mv.addObject("list", mList).addObject("pi",pi).setViewName("items/itemFood");
+			mv.addObject("list", mList).addObject("pi", pi).setViewName("items/itemFood");
 		}else if(categoryNo.equals("F3")) {
 			int bListCount = iService.bListCount();
 			System.out.println("베이커리 Count : " + bListCount);
 			PageInfo pi = getPageInfo(currentPage, bListCount);
 			ArrayList<ItemListView> bList = iService.selectBList(pi);
-			mv.addObject("list", bList).addObject("pi",pi).setViewName("items/itemFood");
+			mv.addObject("list", bList).addObject("pi", pi).setViewName("items/itemFood");
 		}else if(categoryNo.equals("F4")) {
 			int sListCount = iService.sListCount();
 			System.out.println("간편 Count : " + sListCount);
 			PageInfo pi = getPageInfo(currentPage, sListCount);
 			ArrayList<ItemListView> sList = iService.selectSList(pi);
-			mv.addObject("list", sList).addObject("pi",pi).setViewName("items/itemFood");
+			mv.addObject("list", sList).addObject("pi", pi).setViewName("items/itemFood");
 		}else if(categoryNo.equals("F5")) {
 			int hListCount = iService.hListCount();
 			System.out.println("건강 Count : " + hListCount);
 			PageInfo pi = getPageInfo(currentPage, hListCount);
 			ArrayList<ItemListView> hList = iService.selectHList(pi);
-			mv.addObject("list", hList).addObject("pi",pi).setViewName("items/itemFood");
+			mv.addObject("list", hList).addObject("pi", pi).setViewName("items/itemFood");
 		}else if(categoryNo.equals("F6")) {
 			int diListCount = iService.diListCount();
 			System.out.println("다이어트 Count : " + diListCount);
 			PageInfo pi = getPageInfo(currentPage, diListCount);
 			ArrayList<ItemListView> diList = iService.selectDiList(pi);
-			mv.addObject("list", diList).addObject("pi",pi).setViewName("items/itemFood");
+			mv.addObject("list", diList).addObject("pi", pi).setViewName("items/itemFood");
 		}
+		
 		return mv;
 	}
+	
+	
+	@RequestMapping("fSort.do")
+	public ModelAndView foodSort(ModelAndView mv, @RequestParam(value = "page", required = false) Integer page, String categoryNo, @RequestParam("sortNo") String sortNo) {
+		int currentPage = 1;
+		if(page != null) {
+			currentPage = page;
+		}
+		System.out.println("sortNo : " + sortNo);
+		if(categoryNo.equals("F1") && sortNo != null) {
+			int dListCounts = iService.dListCount();
+			PageInfo pi = getPageInfo(currentPage, dListCounts);
+			ArrayList<ItemListView> dLists = iService.selectDLists(pi,sortNo);
+			mv.addObject("list", dLists).addObject("pi", pi).setViewName("items/itemFood");
+		}else if(categoryNo.equals("F2") && sortNo != null) {
+			int mListCount = iService.mListCount();
+			PageInfo pi = getPageInfo(currentPage, mListCount);
+			ArrayList<ItemListView> mList = iService.selectMLists(pi, sortNo);
+			mv.addObject("list", mList).addObject("pi", pi).setViewName("items/itemFood");
+		}else if(categoryNo.equals("F3")) {
+			int bListCount = iService.bListCount();
+			PageInfo pi = getPageInfo(currentPage, bListCount);
+			ArrayList<ItemListView> bList = iService.selectBLists(pi, sortNo);
+			mv.addObject("list", bList).addObject("pi", pi).setViewName("items/itemFood");
+		}else if(categoryNo.equals("F4")) {
+			int sListCount = iService.sListCount();
+			PageInfo pi = getPageInfo(currentPage, sListCount);
+			ArrayList<ItemListView> sList = iService.selectSLists(pi, sortNo);
+			mv.addObject("list", sList).addObject("pi", pi).setViewName("items/itemFood");
+		}else if(categoryNo.equals("F5")) {
+			int hListCount = iService.hListCount();
+			PageInfo pi = getPageInfo(currentPage, hListCount);
+			ArrayList<ItemListView> hList = iService.selectHLists(pi, sortNo);
+			mv.addObject("list", hList).addObject("pi", pi).setViewName("items/itemFood");
+		}else if(categoryNo.equals("F6")) {
+			int diListCount = iService.diListCount();
+			PageInfo pi = getPageInfo(currentPage, diListCount);
+			ArrayList<ItemListView> diList = iService.selectDiLists(pi, sortNo);
+			mv.addObject("list", diList).addObject("pi", pi).setViewName("items/itemFood");
+		}
+			 
+			 
+		
+		
+		return mv;
+	}
+	
+	
 	
 	@RequestMapping("itemLiving.do")
 	public ModelAndView itemLivingList(ModelAndView mv, @RequestParam(value = "page", required = false) Integer page){
@@ -290,31 +339,30 @@ public class ItemController {
 	}
 	
 	@RequestMapping(value="reviewInsert.do", method=RequestMethod.POST)
-	public String reviewInsert(Review r, HttpServletRequest request, @RequestParam(value = "page", required = false)Integer page
+	public String reviewInsert(Review r, ReviewView i, ReviewImage ri, HttpServletRequest request, @RequestParam(value = "page", required = false)Integer page
 			, @RequestParam(value = "memberNo", required = false)int memberNo
 			, @RequestParam(value = "itemNo", required = false)int itemNo
 			, @RequestParam(value="uploadFile1", required=false)MultipartFile file1
 			, @RequestParam(value="uploadFile2", required=false)MultipartFile file2) {
 		int currentPage = page;
 		if(!file1.getOriginalFilename().equals("")) {
-			String savePath1 = saveFile(file1, request);
-			if(savePath1 != null) {
-				r.setReviewImg1(file1.getOriginalFilename());
-			}
+			String renameFileName1 = saveFile(file1, request);
+			i.setImageOriginalName(file1.getOriginalFilename());
+			i.setImageRename(renameFileName1);
 		}
 		
-		if(!file2.getOriginalFilename().contentEquals("")) {
-			String savePath2 = saveFile(file2, request);
-			r.setReviewImg2(file2.getOriginalFilename());
-			if(savePath2 != null) {
-				r.setReviewImg1(file1.getOriginalFilename());
-			}
+		if(!file2.getOriginalFilename().equals("")) {
+			String renameFileName2 = saveFile(file2, request);
+			i.setImageOriginalName(file1.getOriginalFilename());
+			i.setImageRename(renameFileName2);
 		}
 		
 		int result = iService.insertReview(r);
 		System.out.println("review result : " + result);
 		int updateResult = iService.updateReviewRate(itemNo);
 		if(result > 0 && updateResult > 0) {
+//			int insertImg = iService.insertImg(ri);
+//			int insertReviewImg = iService.insertReviewImg(i);
 			return "redirect:idetail.do?itemNo=" + itemNo + "&page=" + currentPage + "&memberNo=" + memberNo + "#reviewPI";
 		}else {
 			throw new ItemException("리뷰 등록 실패");
@@ -329,14 +377,19 @@ public class ItemController {
 			folder.mkdirs();
 		}
 		
-		String filePath = folder + "\\" + file.getOriginalFilename();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+		String originFileName = file.getOriginalFilename();
+		String renameFileName = sdf.format(new java.sql.Date(System.currentTimeMillis())) + "." + 
+		originFileName.substring(originFileName.lastIndexOf(".")+1);
+		
+		String filePath = folder + "\\" + renameFileName;
 		
 		try {
 			file.transferTo(new File(filePath));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return filePath;
+		return renameFileName;
 	}
 	
 	

@@ -6,28 +6,39 @@
 		<result property="itemNo" column="ITEM_NO"/>
 		<result property="reviewContent" column="REVIEW_CONTENT"/>
 		<result property="reviewRate" column="REVIEW_RATE"/>
-		<result property="reviewImg1" column="REVIEW_IMG1"/>
-		<result property="reviewImg2" column="REVIEW_IMG2"/>
 		<result property="reviewDate" column="REVIEW_DATE"/>
 		<result property="reviewModify" column="REVIEW_MODIFY"/>
 		<result property="memberNo" column="MEMBER_NO"/>
 		<result property="memberId" column="MEMBER_ID"/>
 		<result property="email" column="EMAIL"/>
 	</resultMap>
-
+	
+	<resultMap type="ReviewView" id="reviewViewResultSet">
+		<id property="reviewNo" column="REVIEW_NO"/>
+		<result property="itemNo" column="ITEM_NO"/>
+		<result property="reviewContent" column="REVIEW_CONTENT"/>
+		<result property="reviewRate" column="REVIEW_RATE"/>
+		<result property="imagePath" column="IMAGE_PATH"/>
+		<result property="imageOriginalName" column="IMAGE_ORIGINAL_NAME"/>
+		<result property="imageRename" column="IMAGE_RENAME"/>
+		<result property="reviewDate" column="REVIEW_DATE"/>
+		<result property="reviewModify" column="REVIEW_MODIFY"/>
+		<result property="memberId" column="MEMBER_ID"/>
+		<result property="memberName" column="MEMBER_NAME"/>
+	</resultMap>
 
 	<select id="selectReview" parameterType="int" resultMap="reviewResultSet">
 		SELECT *
-		FROM SELECT_REVIEW SR
-		LEFT JOIN MEMBER M ON(SR.MEMBER_ID = M.MEMBER_ID)
+		FROM REVIEW R
+		LEFT JOIN MEMBER M ON(R.MEMBER_ID = M.MEMBER_ID)
 		WHERE MEMBER_STATUS='Y' AND ITEM_NO=#{itemNo}
 		ORDER BY REVIEW_NO DESC
 	</select>
 	
-	<select id="selectAllReview" parameterType="_int" resultMap="reviewResultSet">
+	<select id="selectAllReview" parameterType="_int" resultMap="reviewViewResultSet">
 		SELECT *
-		FROM REVIEW R
-		LEFT JOIN MEMBER M ON(R.MEMBER_ID = M.MEMBER_ID)
+		FROM SELECT_REVIEW SR
+		LEFT JOIN MEMBER M ON(SR.MEMBER_ID = M.MEMBER_ID)
 		WHERE MEMBER_STATUS='Y' AND ITEM_NO=#{itemNo}
 		ORDER BY REVIEW_NO DESC
 	</select>
@@ -38,8 +49,6 @@
 			, #{itemNo}
 			, #{reviewContent}
 			, #{reviewRate}
-			, #{reviewImg1}
-			, #{reviewImg2}
 			, SYSDATE
 			, DEFAULT
 			, #{memberNo}
@@ -52,4 +61,12 @@
 		SET ITEM_RATE=(SELECT TRUNC(AVG(REVIEW_RATE),1) FROM REVIEW)
 		WHERE ITEM_NO=#{itemNo}
 	</update>
+	
+	<!-- <insert id="insertReviewImg" parameterType="ReviewView">
+		INSERT INTO IMAGE
+		VALUES(SEQ_IMAGE_NO.NEXTVAL
+			, IMAGE_PATH=DEFAULT
+			, IMAGE_ORIGINAL_NAME=#{imageOriginalName}
+			, IMAGE_RENAME=#{imageRename})
+	</insert> -->
 </mapper>

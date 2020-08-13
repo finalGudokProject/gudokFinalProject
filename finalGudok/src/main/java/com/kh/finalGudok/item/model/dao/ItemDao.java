@@ -1,6 +1,7 @@
 package com.kh.finalGudok.item.model.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -14,7 +15,6 @@ import com.kh.finalGudok.item.model.vo.Item;
 import com.kh.finalGudok.item.model.vo.ItemListView;
 import com.kh.finalGudok.item.model.vo.PageInfo;
 import com.kh.finalGudok.item.model.vo.Review;
-import com.kh.finalGudok.member.model.vo.Member;
 
 @Repository("iDao")
 public class ItemDao {
@@ -182,5 +182,57 @@ public class ItemDao {
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		return (ArrayList)sqlSessionTemplate.selectList("itemListMapper.selectDiList",null,rowBounds);
 	}
+
+	public ArrayList<ItemListView> selectDLists(PageInfo pi, String sortNo) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		HashMap<String, String> map = new HashMap<>();
+		map.put("test",sortNo);
+		return (ArrayList)sqlSessionTemplate.selectList("itemListMapper.selectDLists",map,rowBounds);
+	}
+
+	public ArrayList<ItemListView> selectMLists(PageInfo pi, String sortNo) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		HashMap<String, String> map = new HashMap<>();
+		map.put("test",sortNo);
+		return (ArrayList)sqlSessionTemplate.selectList("itemListMapper.selectMLists",map,rowBounds);
+	}
+
+	public ArrayList<ItemListView> selectBLists(PageInfo pi, String sortNo) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		HashMap<String, String> map = new HashMap<>();
+		map.put("test",sortNo);
+		return (ArrayList)sqlSessionTemplate.selectList("itemListMapper.selectBLists",map,rowBounds);
+	}
+
+	public ArrayList<ItemListView> selectSLists(PageInfo pi, String sortNo) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		HashMap<String, String> map = new HashMap<>();
+		map.put("test",sortNo);
+		return (ArrayList)sqlSessionTemplate.selectList("itemListMapper.selectSLists",map,rowBounds);
+	}
+
+	public ArrayList<ItemListView> selectHLists(PageInfo pi, String sortNo) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		HashMap<String, String> map = new HashMap<>();
+		map.put("test",sortNo);
+		return (ArrayList)sqlSessionTemplate.selectList("itemListMapper.selectHLists",map,rowBounds);
+	}
+
+	public ArrayList<ItemListView> selectDiLists(PageInfo pi, String sortNo) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		HashMap<String, String> map = new HashMap<>();
+		map.put("test",sortNo);
+		return (ArrayList)sqlSessionTemplate.selectList("itemListMapper.selectDiLists",map,rowBounds);
+	}
+
+//	public int insertReviewImg(ReviewView i) {
+//		return sqlSessionTemplate.insert("reviewMapper.insertReviewImg", i);
+//	}
 
 }

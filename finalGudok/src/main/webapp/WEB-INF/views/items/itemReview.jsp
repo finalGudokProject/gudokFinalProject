@@ -185,7 +185,7 @@
 							<div style="display:inline-block;color:gray;">등록일 : ${r.reviewDate }</div>
 						</c:if>
 						<c:if test="${r.reviewDate != r.reviewModify }">
-							<div style="display:inline-block;color:gray;">등록일 : ${r.reviewDate } / 수정일 : ${r.reviewModify }</div>
+							<div style="display:inline-block;color:gray;">등록일 : ${r.reviewDate } / 수정일 : ${r.reviewModify}</div>
 						</c:if>
 					</div>
 				</td>
@@ -195,7 +195,7 @@
 				<tr>
 					<td>
 						<div style="padding:2%;border-top:1px dashed lightgray;">
-						<c:if test="${!empty r.reviewImg1 && !empty r.reviewImg2}">
+						<%-- <c:if test="${!empty r.reviewImg1 && !empty r.reviewImg2}">
 							<img src="resources/iuploadFiles/${r.reviewImg1 }" class="reviewImgClass">
 							<img src="resources/iuploadFiles/${r.reviewImg2 }" class="reviewImgClass">
 						</c:if>
@@ -206,7 +206,8 @@
 							<img src="resources/iuploadFiles/${r.reviewImg2 }" class="reviewImgClass">
 						</c:if>
 						<c:if test="${empty r.reviewImg1 && empty r.reviewImg2 }">
-						</c:if>
+						</c:if> --%>
+						사진 넣는 곳
 						</div>
 					</td>
 				</tr>

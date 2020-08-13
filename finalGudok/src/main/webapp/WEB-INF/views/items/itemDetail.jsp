@@ -566,7 +566,7 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 								</c:choose>
 								<div style="display:inline-block;color:gray;">등록일 : ${r.reviewDate }</div>
 							</div>
-							<c:choose>
+							<%-- <c:choose>
 								<c:when test="${!empty r.reviewImg1 && !empty r.reviewImg2 }">
 									<div><img src="${contextPath }/resources/iuploadFiles/${r.reviewImg1}" class="reviewImgClass"><img src="${contextPath }/resources/iuploadFiles/${r.reviewImg2}" class="reviewImgClass"></div>
 								</c:when>
@@ -580,7 +580,8 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 									<div></div>
 								</c:when>
 								<c:otherwise></c:otherwise>
-							</c:choose>
+							</c:choose> --%>
+							<div>사진 넣는 곳</div>
 							<div class="reviewTDiv">
 								<div class="reviewText">${r.reviewContent }</div>
 							</div>
@@ -644,7 +645,7 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 								</c:choose>
 								<div style="display:inline-block;color:gray;">등록일 : ${r.reviewDate }</div>
 							</div>
-							<c:choose>
+							<%-- <c:choose>
 								<c:when test="${!empty r.reviewImg1 && !empty r.reviewImg2 }">
 									<div><img src="${contextPath }/resources/iuploadFiles/${r.reviewImg1}" class="reviewImgClass"><img src="${contextPath }/resources/iuploadFiles/${r.reviewImg2}" class="reviewImgClass"></div>
 								</c:when>
@@ -658,7 +659,8 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 									<div></div>
 								</c:when>
 								<c:otherwise></c:otherwise>
-							</c:choose>
+							</c:choose> --%>
+							<div>사진 넣을 곳</div>
 							<div class="reviewTDiv">
 								<div class="reviewText">${r.reviewContent }</div>
 							</div>
@@ -668,7 +670,12 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 			</div>
 		</div>
 		<!-- 리뷰 끝 -->
+		<c:if test="${review.size() != 0}">
 		<div style="text-align:center;margin-top:3%;"><button type="button" style="font-size:30px;height:auto;" id="allReviewBtn">상품명 모든 리뷰 보러가기</button></div>
+		</c:if>
+		<c:if test="${review.size() == 0}">
+		<div style="text-align:center;margin-top:3%;font-size:40px;">해당 상품의 리뷰가 없습니다.</div>
+		</c:if>
 		
 	</div>
 	<br><br><br><br><br><br>
@@ -727,6 +734,7 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 											  if(data == "success"){
 												  swal("","문의하신 내용은 어디서 확인하실 수 있습니다.","success").then((result)=>{
 														if(result){
+															$("#inquiredText").val("");
 															modal.style.display = "none";
 														}
 												});
