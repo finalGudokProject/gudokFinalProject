@@ -44,9 +44,7 @@ body {
 	rel="stylesheet">
 </head>
 <body>
-
 	<jsp:include page="common/menubar.jsp" />
-
 	<section>
 		<div id="carouselExampleControls" class="carousel slide"
 			data-ride="carousel">
@@ -74,7 +72,7 @@ body {
 				class="sr-only">Next</span>
 			</a>
 		</div>
-
+		
 		<br> <br> <br> <br> <br>
 
 		<div class=cardWrap>
@@ -109,7 +107,7 @@ body {
 						card title and make up the bulk of the card's content.</p>
 				</div>
 			</div>
-
+			
 			<div class="card" style="width: 18rem;">
 				<a href="#"><img src="resources/images/salad1.jpg"
 					class="card-img-top" alt="..."></a>
@@ -209,7 +207,7 @@ body {
 		</div>
 
 		<br> <br> <br> <br> <br>
-
+		
 		<div class=cardWrap>
 			<p style="font-size: 2em;">JH's 추천</p>
 			<br>
@@ -222,7 +220,7 @@ body {
 						card title and make up the bulk of the card's content.</p>
 				</div>
 			</div>
-
+			
 			<div class="card" style="width: 18rem;">
 				<a href="#"><img src="resources/images/salad1.jpg"
 					class="card-img-top" alt="..."></a>
@@ -274,3 +272,4 @@ body {
 
 </body>
 </html>
+

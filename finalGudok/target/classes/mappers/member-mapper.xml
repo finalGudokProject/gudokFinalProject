@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="memberMapper">
-
 	<resultMap type="Member" id="memberResultSet">
 		<id property="memberNo" column="MEMBER_NO"/>
 		<result property="memberId" column="MEMBER_ID"/>
@@ -19,10 +18,14 @@
 		<result property="emailStatus" column="EMAIL_STATUS"/>
 		<result property="point" column="POINT"/>
 		<result property="gradeNo" column="GRADE_NO"/>
-		
 	</resultMap>
 	
 	<select id="selectOne" parameterType="Member" resultMap="memberResultSet">
-		SELECT * FROM MEMBER WHERE MEMBER_ID=#{memberId} AND MEMBER_PWD=#{memberPwd} AND MEMBER_STATUS='Y'
+		SELECT *
+		FROM MEMBER
+		WHERE MEMBER_ID=#{memberId}
+		AND MEMBER_PWD=#{memberPwd}
+		AND MEMBER_STATUS='N'
 	</select>
- </mapper>
+	
+</mapper>

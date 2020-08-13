@@ -166,7 +166,7 @@ section {
 		</c:if>
 		<c:if test="${!empty sessionScope.loginUser }">
 			<ul class="menu-list">
-			<li><c:out value="${loginUser.memberName }님 환영합니다" /></li>
+				<li><c:out value="${loginUser.memberName }님 환영합니다" /></li>
 				<li><a href="logout.do">로그아웃</a></li>
 				<li><a href="#">고객센터</a></li>
 				<li><a href="#">Who is JH?</a></li>
@@ -174,6 +174,7 @@ section {
 			</ul>
 		</c:if>
 	</div>
+
 
 	<div class="container">
 		<div class="row">
@@ -293,9 +294,5 @@ section {
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
 		integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
 		crossorigin="anonymous"></script>
-
-
-
-
 </body>
 </html>

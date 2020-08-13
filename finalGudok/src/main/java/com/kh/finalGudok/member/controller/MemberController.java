@@ -1,5 +1,6 @@
 package com.kh.finalGudok.member.controller;
 
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,15 +9,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.kh.finalGudok.member.model.exception.MemberException;
 import com.kh.finalGudok.member.model.service.MemberService;
 import com.kh.finalGudok.member.model.vo.Member;
 
 @Controller
 public class MemberController {
+
 	@Autowired
 	private MemberService mService;
-
+	
 	@RequestMapping("moveToLogin.do")
 	public String moveTologin() {
 		return "member/login";
@@ -36,6 +37,7 @@ public class MemberController {
 	public String payment() {
 		return "items/payment";
 	}
+	
 
 //	@RequestMapping(value="login.do", method=RequestMethod.POST)
 //	public String memberLogin(HttpServletRequest request){
@@ -100,4 +102,3 @@ public class MemberController {
 			return "home";
 		}
 	}
-	
