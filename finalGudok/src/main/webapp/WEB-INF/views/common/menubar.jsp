@@ -1,6 +1,6 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page session="false" language="java"
-	contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,24 +19,24 @@ Bootstrap CSS
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <style>
 /*상단 회원가입, 로그인, 고객센터 메뉴(#menu-list) */
-#menu-list {
+.menu-list {
 	line-height: 3;
 	text-align: right;
 }
 
-#menu-list > li {
+.menu-list>li {
 	display: inline-block;
 	margin-right: 50px;
 }
 
-#menu-list a {
+.menu-list a {
 	color: #495057;;
 }
 
-#menu-list a:hover{
-	color:black;
-	cursor:pointer;
-	text-decoration:none;
+.menu-list a:hover {
+	color: black;
+	cursor: pointer;
+	text-decoration: none;
 }
 
 /*나비바 각 카테고리(a태그) 간격조정*/
@@ -45,8 +45,8 @@ Bootstrap CSS
 	color: #495057 !important;
 }
 
-.nav-link:hover{
-	color:black;
+.nav-link:hover {
+	color: black;
 }
 
 /*나비바 각 카테고리(글씨, 아이콘) 가운데 정렬*/
@@ -64,12 +64,12 @@ Bootstrap CSS
 	margin-left: 50px;
 }
 
-.nav-item a{
-	color:#495057;
+.nav-item a {
+	color: #495057;
 }
 
-.nav-item > a:hover{
-	color:black !important;
+.nav-item>a:hover {
+	color: black !important;
 }
 
 /*검색바 마진 설정*/
@@ -89,26 +89,26 @@ Bootstrap CSS
 	display: block;
 }
 
-.dropdown-item{
-	color:#495057;
+.dropdown-item {
+	color: #495057;
 }
 
-.dropdown-item:hover{
-	color:black;
+.dropdown-item:hover {
+	color: black;
 }
 
 .form-inline my-2 my-lg-0>input {
 	margin-left: 50px;
 }
 
-.btn{
+.btn {
 	border-color: #ced4da;
 	color: #495057;
 }
 
-.btn:hover{
+.btn:hover {
 	border-color: black;
-	color:black;
+	color: black;
 }
 
 /* #searchBtn {
@@ -120,7 +120,6 @@ Bootstrap CSS
 	border-color: black;
 	color:black;
 } */
-
 ::placeholder {
 	font-size: small;
 }
@@ -128,26 +127,25 @@ Bootstrap CSS
 /*폰트 적용*/
 body {
 	font-family: 'Jua', sans-serif;
-	color:#495057;
+	color: #495057;
 }
 
-#cardWrap > a{
-	color:#495057 !important;
+#cardWrap>a {
+	color: #495057 !important;
 }
 
-a:hover{
-	text-decoration:none;
-	color:black;
+a:hover {
+	text-decoration: none;
+	color: black;
 }
 
-h3{
-	color:black;
+h3 {
+	color: black;
 }
 
-section{
-	margin-bottom:50px;
+section {
+	margin-bottom: 50px;
 }
-
 </style>
 <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap"
 	rel="stylesheet">
@@ -156,16 +154,27 @@ section{
 	<c:set var="contextPath"
 		value="${pageContext.servletContext.contextPath }" scope="application" />
 
-	<div id="userMenu">
-		<ul id="menu-list">
-			<li><a href="signUp.do">회원가입</a></li>
-			<li><a href="moveToLogin.do">로그인</a></li>
-			<li><a href="#">고객센터</a></li>
-			<li><a href="#">Who is JH?</a></li>
-			<li><a href="payment.do">결제페이지</a>
-		</ul>
-
+	<div class="userMenu">
+		<c:if test="${empty sessionScope.loginUser }">
+			<ul class="menu-list">
+				<li><a href="signUp.do">회원가입</a></li>
+				<li><a href="moveToLogin.do">로그인</a></li>
+				<li><a href="#">고객센터</a></li>
+				<li><a href="#">Who is JH?</a></li>
+				<li><a href="payment.do">결제페이지</a>
+			</ul>
+		</c:if>
+		<c:if test="${!empty sessionScope.loginUser }">
+			<ul class="menu-list">
+			<li><c:out value="${loginUser.memberName }님 환영합니다" /></li>
+				<li><a href="logout.do">로그아웃</a></li>
+				<li><a href="#">고객센터</a></li>
+				<li><a href="#">Who is JH?</a></li>
+				<li><a href="payment.do">결제페이지</a>
+			</ul>
+		</c:if>
 	</div>
+
 	<div class="container">
 		<div class="row">
 			<div class="col-12" align="center">

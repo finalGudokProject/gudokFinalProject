@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="memberMapper">
+
+	<resultMap type="Member" id="memberResultSet">
+		<id property="memberNo" column="MEMBER_NO"/>
+		<result property="memberId" column="MEMBER_ID"/>
+		<result property="email" column="EMAIL"/>
+		<result property="memberPwd" column="MEMBER_PWD"/>
+		<result property="memberName" column="MEMBER_NAME"/>
+		<result property="phone" column="PHONE"/>
+		<result property="address1" column="ADDRESS_1"/>
+		<result property="address2" column="ADDRESS_2"/>
+		<result property="address3" column="ADDRESS_3"/>
+		<result property="gender" column="GENDER"/>
+		<result property="enrollDate" column="ENROLL_DATE"/>
+		<result property="modifyDate" column="MODIFY_DATE"/>
+		<result property="memberStatus" column="MEMBER_STATUS"/>
+		<result property="emailStatus" column="EMAIL_STATUS"/>
+		<result property="point" column="POINT"/>
+		<result property="gradeNo" column="GRADE_NO"/>
+		
+	</resultMap>
+	
+	<select id="selectOne" parameterType="Member" resultMap="memberResultSet">
+		SELECT * FROM MEMBER WHERE MEMBER_ID=#{memberId} AND MEMBER_PWD=#{memberPwd} AND MEMBER_STATUS='Y'
+	</select>
+ </mapper>
