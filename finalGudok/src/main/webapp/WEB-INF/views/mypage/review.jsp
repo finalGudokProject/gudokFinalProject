@@ -249,7 +249,7 @@
 	            <div class="sub">
 	              <span class="title"><a href="#" style="color: black;">적립금</a></span>
 	              <br><br>
-	              <span class="count"><a href="#" style="color :#115D8C;">0<span class="etc">&nbsp;건</span></a></span>
+	              <span class="count"><a href="#" style="color :#115D8C;">0<span class="etc">&nbsp;건</span></a></span>v
 	            </div>
 	          </div>
 	        </div>
@@ -268,9 +268,12 @@
 		          <tr>
 		            <td>${r.reviewDate}</td>
 		            <td>${r.reviewContent}</td>
+		            <c:url var="rdelete" value="reviewDelete.do">
+		            	<c:param name="reviewNo" value="${r.reviewNo}"/>
+		            </c:url>
 		            <td>
-		              <button>수정</button>
-		              <button>삭제</button>
+		              <button >수정</button>
+		              <button type="button" onclick="location.href='${rdelete}'">삭제</button>
 		            </td>
 		          </tr>
 	          </c:forEach>

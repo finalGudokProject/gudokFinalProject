@@ -51,4 +51,16 @@ public class MemberDao {
 	public int insertExchange(Exchange e) {
 		return sqlSessionTemplate.insert("memberMapper.insertExchange", e);
 	}
+
+	public int updateSubscribe(int subscribeNo) {
+		return sqlSessionTemplate.update("memberMapper.updateSubscribe", subscribeNo);
+	}
+
+//	public Review selectReview(Integer reviewNo) {
+//		return sqlSessionTemplate.selectOne("memberMapper.selectReview", reviewNo);
+//	}
+
+	public int deleteReview(Integer reviewNo) {
+		return sqlSessionTemplate.delete("memberMapper.deleteReview", reviewNo);
+	}
 }

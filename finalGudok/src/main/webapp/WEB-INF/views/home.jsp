@@ -1,8 +1,8 @@
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page session="false" language="java"
-	contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<html lang="ko">
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<html>
 <head>
 <!-- <!-- Required meta tags -->
 <meta charset="utf-8">
@@ -16,6 +16,7 @@
 	crossorigin="anonymous">
 
 <title>Goose</title>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <style>
 /*메인 */
 .cardWrap {
@@ -23,7 +24,7 @@
 }
 
 .cardWrap a {
-	color:#495057;
+	color: #495057;
 }
 
 .card {
@@ -39,8 +40,6 @@
 body {
 	font-family: 'Jua', sans-serif;
 }
-
-
 </style>
 <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap"
 	rel="stylesheet">
@@ -271,6 +270,7 @@ body {
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
 		integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
 		crossorigin="anonymous"></script>
+
 </body>
 </html>
 

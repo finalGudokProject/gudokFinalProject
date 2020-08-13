@@ -70,7 +70,6 @@ td {
 </head>
 <body>
 	<jsp:include page="../common/menubar.jsp" />
-
 	<section>
 		<h2 align="center" id="titleTag" style="color:black;">회원가입</h2>
 		<br>

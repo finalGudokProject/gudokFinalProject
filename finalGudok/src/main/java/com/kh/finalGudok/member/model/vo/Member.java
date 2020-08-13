@@ -191,4 +191,6 @@ public class Member implements Serializable {
 				+ enrollDate + ", modifyDate=" + modifyDate + ", memberStatus=" + memberStatus + ", emailStatus="
 				+ emailStatus + ", point=" + point + ", gradeNo=" + gradeNo + "]";
 	}
+
 }
+

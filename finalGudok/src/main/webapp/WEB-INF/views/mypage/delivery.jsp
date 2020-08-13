@@ -399,14 +399,28 @@
 		          <tr>
 		            <td>${d.subscribeDate}</td>
 		            <td>${d.itemName}</td>
-		            <c:if test="${d.deliveryStatus eq 'N' }">
-		            	<td>배송중</td>
+		            <c:if test="${d.deliveryStatus eq 'N'}">
+		            	<td>배송전</td>
+		            	<td><a href="#destination_form" id="destination_pop">배송지 변경</a></td>
+		            	<td><a href="#exchange_form" id="exchange_pop" onclick="return false;" style="color:#ccc; cursor:deafult;">교환 신청</a></td>
 		            </c:if>
-		            <c:if test="${d.deliveryStatus eq 'Y' }">
+		            
+		            <c:if test="${d.deliveryStatus eq 'D'}">
+						<td>배송중</td>
+						<td><a href="#destination_form" id="destination_pop" onclick="return false;" style="color:#ccc; cursor:default;">배송지 변경</a></td>
+		            	<td><a href="#exchange_form" id="exchange_pop" onclick="return false;" style="color:#ccc; cursor:default;">교환 신청</a></td>
+		            </c:if>
+		            
+		            <c:if test="${d.deliveryStatus eq 'Y'}">
 		            	<td>배송완료</td>
+		            	<td><a href="#destination_form" id="destination_pop" onclick="return false;" style="color:#ccc; cursor:default">배송지 변경</a></td>
+		            	<c:if test="${d.exchangeStatus eq 'Y'}">
+		            		<td><a href="#exchange_form" id="exchange_pop" onclick="return false;" style="color:#ccc; cursor:default;">교환 신청</a></td>
+		            	</c:if>
+		            	<c:if test="${d.exchangeStatus eq 'N'}">
+		            		<td><a href="#exchange_form" id="exchange_pop" onclick="exchangeClick(${d.subscribeNo}, '${d.itemName}')">교환 신청</a></td>
+		            	</c:if>
 		            </c:if>
-		            <td><a href="#destination_form" id="destination_pop">배송지 변경</a></td>
-		            <td><a href="#exchange_form" id="exchange_pop" onclick="exchangeClick(${d.subscribeNo}, '${d.itemName}')">교환 신청</a></td>
 		          </tr>
 	          </c:forEach>
 	        </table>
@@ -455,13 +469,24 @@
     	function exchangeClick(subscribeNo, itemName){
     		$("#subscribeNo").val(subscribeNo);
     		$("#itemName").val(itemName);
-    	}																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																														
+    		$("#exchangeContent").attr("disabled", "disabled");
+			
+    	}
     	
-    	$("#exchangeSubmit").on("click",function(){
-    		var itemNo = $("#itemNo").val();
-    		
-    		
+    	$(function(){
+    		$("#exchangeCategory").on('change',function(){
+    			var select = $("#exchangeCategory option:selected").val()
+    			
+        		if(select == 1){
+        			$("#exchangeContent").attr("disabled", "disabled");
+        		} else if(select == 2){
+        			$("#exchangeContent").attr("disabled", "disabled");
+        		} else if(select == 3){
+        			$("#exchangeContent").attr("disabled", false);
+        		}
+    		})
     	})
+    	
     </script>
 </body>
 </html>

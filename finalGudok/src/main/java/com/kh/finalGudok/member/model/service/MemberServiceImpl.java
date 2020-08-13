@@ -59,4 +59,20 @@ public class MemberServiceImpl implements MemberService {
 	public int insertExchange(Exchange e) {
 		return mDao.insertExchange(e);
 	}
+
+	@Override
+	public int updateSubscribe(int subscribeNo) {
+		return mDao.updateSubscribe(subscribeNo);
+	}
+
+//	@Override
+//	public Review selectReview(Integer reviewNo) {
+//		return mDao.selectReview(reviewNo);
+//	}
+
+	@Override
+	public int deleteReview(Integer reviewNo) {
+		return mDao.deleteReview(reviewNo);
+	}
 }
+
