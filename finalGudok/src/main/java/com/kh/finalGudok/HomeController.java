@@ -1,7 +1,5 @@
 package com.kh.finalGudok;
 
-import java.text.DateFormat;
-import java.util.Date;
 import java.util.Locale;
 
 import org.slf4j.Logger;
@@ -26,6 +24,7 @@ public class HomeController {
 	public String home(Locale locale, Model model) {
 		return "admin/adminNoticeList";
 //		return "home";
+
 	}
 	
 }

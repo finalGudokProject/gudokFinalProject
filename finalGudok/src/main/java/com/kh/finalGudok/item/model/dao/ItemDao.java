@@ -7,10 +7,18 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.finalGudok.item.model.vo.AdminItem;
+import com.kh.finalGudok.item.model.vo.Event;
+
+import com.kh.finalGudok.item.model.vo.Board;
+import com.kh.finalGudok.item.model.vo.Cart;
+import com.kh.finalGudok.item.model.vo.Heart;
+
 import com.kh.finalGudok.item.model.vo.Item;
 import com.kh.finalGudok.item.model.vo.ItemListView;
 import com.kh.finalGudok.item.model.vo.PageInfo;
 import com.kh.finalGudok.item.model.vo.Review;
+import com.kh.finalGudok.member.model.vo.Member;
 
 @Repository("iDao")
 public class ItemDao {
@@ -38,5 +46,207 @@ public class ItemDao {
 
 	public ArrayList<Review> selectReview(int itemNo) {
 		return (ArrayList)sqlSessionTemplate.selectList("reviewMapper.selectReview", itemNo);
+	}
+
+
+	public int insertItem(AdminItem i) {
+		
+		return sqlSessionTemplate.insert("adminItemMapper.insertItem",i);
+	}
+
+	public int insertImage(AdminItem i) {
+		return sqlSessionTemplate.insert("adminItemMapper.insertItemImage",i);
+	}
+
+	public int insertEvent(Event e) {
+		return sqlSessionTemplate.insert("adminItemMapper.insertEvent",e);
+	}
+
+	public int insertEventImg(Event e) {		
+		return sqlSessionTemplate.insert("adminItemMapper.insertEventImg",e);
+	}
+
+	public int getEventCount() {
+		return sqlSessionTemplate.selectOne("adminItemMapper.selectEventCount");
+	}
+
+	public ArrayList<Event> selectEventListA(PageInfo pi) {
+		int offset=(pi.getCurrentPage()-1)*pi.getBoardLimit();
+		RowBounds rowBounds=new RowBounds(offset,pi.getBoardLimit());
+		return (ArrayList)sqlSessionTemplate.selectList("adminItemMapper.selectEventList",null,rowBounds);
+	}
+
+	public ArrayList selecctEventListCount(PageInfo pi) {
+		int offset=(pi.getCurrentPage()-1)*pi.getBoardLimit();
+		RowBounds rowBounds=new RowBounds(offset,pi.getBoardLimit());
+		return (ArrayList)sqlSessionTemplate.selectList("adminItemMapper.selectEventListCount",null,rowBounds);
+	}
+
+	public int deleteEvent(int dEventArr) {
+		return sqlSessionTemplate.delete("adminItemMapper.deleteEvent",dEventArr);
+		
+	}
+
+	public int deleteEventItem(int i) {
+		return sqlSessionTemplate.delete("adminItemMapper.deleteEventItem",i);
+	}
+
+	public int deleteEventImg(int i) {
+		return sqlSessionTemplate.delete("adminItemMapper.deleteEventImg",i);
+	}
+
+	public int deleteEventBannerImg(int i) {
+		return sqlSessionTemplate.delete("adminItemMapper.deleteEventBannerImg",i);
+	}
+
+	public Event selectDeleteEvent(int i) {
+		return sqlSessionTemplate.selectOne("adminItemMapper.selectDeleteEvent",i);
+	}
+
+	public int updateEventStatusY(int i) {
+		return sqlSessionTemplate.update("adminItemMapper.updateEventStatusY",i);
+	}
+
+	public int updateEventStatusN(int i) {
+		return sqlSessionTemplate.update("adminItemMapper.updateEventStatusN",i);
+	}
+
+	public ArrayList<Review> selectAllReview(int itemNo) {
+		return (ArrayList)sqlSessionTemplate.selectList("reviewMapper.selectAllReview",itemNo);
+	}
+
+
+	public int insertChoice(Heart h) {
+		return sqlSessionTemplate.insert("heartMapper.insertChoice", h);
+	}
+
+	public int deleteChoice(Heart h) {
+		return sqlSessionTemplate.delete("heartMapper.deleteChoice", h);
+	}
+
+	public int getItemLivingCount() {
+		return sqlSessionTemplate.selectOne("itemListMapper.getItemLivingCount");
+	}
+
+	public ArrayList<Item> selectLivingList(PageInfo pi) {
+		int offsetL = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBoundsL = new RowBounds(offsetL, pi.getBoardLimit());
+		return (ArrayList)sqlSessionTemplate.selectList("itemListMapper.getItemLivingList", null, rowBoundsL);
+	}
+
+	public int getItemEventCount() {
+		return sqlSessionTemplate.selectOne("itemListMapper.getItemEventCount");
+	}
+	
+	public ArrayList<Item> selectEventList(PageInfo pi) {
+		int offsetE = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBoundsE = new RowBounds(offsetE, pi.getBoardLimit());
+		return (ArrayList)sqlSessionTemplate.selectList("itemListMapper.getItemEventList", null, rowBoundsE);
+	}
+
+	public int insertInquired(Board b) {
+		return sqlSessionTemplate.insert("itemMapper.insertInquired",b);
+	}
+
+	public int insertReview(Review r) {
+		return sqlSessionTemplate.insert("reviewMapper.insertReview",r);
+	}
+
+	public int getNewCount() {
+		return sqlSessionTemplate.selectOne("itemListMapper.newCount");
+	}
+
+	public ArrayList<Item> selectNewList(PageInfo pi) {
+		int offsetN = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBoundsN = new RowBounds(offsetN, pi.getBoardLimit());
+		return (ArrayList)sqlSessionTemplate.selectList("itemListMapper.selectNewList", null, rowBoundsN);
+	}
+
+	public int insertCart(Cart c) {
+		return sqlSessionTemplate.insert("cartMapper.insertCart",c);
+	}
+
+	public Heart detailHeart(int itemNo) {
+		return sqlSessionTemplate.selectOne("heartMapper.selectHeart", itemNo);
+	}
+
+	public ArrayList<Cart> selectBasket(int memberNo) {
+		return (ArrayList)sqlSessionTemplate.selectList("cartMapper.selectCart", memberNo);
+	}
+
+	public int updatePChoice(int itemNo) {
+		return sqlSessionTemplate.update("itemMapper.updatePChoice",itemNo);
+	}
+
+	public int updateMChoice(int itemNo) {
+		return sqlSessionTemplate.update("itemMapper.updateMChoice",itemNo);
+	}
+
+	public void deleteCart(Cart c) {
+		sqlSessionTemplate.delete("cartMapper.deleteCart", c);
+	}
+
+	public int updateReviewRate(int itemNo) {
+		return sqlSessionTemplate.update("reviewMapper.updateReviewRate", itemNo);
+	}
+
+	public int mListCount() {
+		return sqlSessionTemplate.selectOne("itemListMapper.mListCount");
+	}
+
+	public ArrayList<ItemListView> selectMList(PageInfo pi) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSessionTemplate.selectList("itemListMapper.selectMList",null,rowBounds);
+	}
+
+	public int dListCount() {
+		return sqlSessionTemplate.selectOne("itemListMapper.dListCount");
+	}
+
+	public ArrayList<ItemListView> selectDList(PageInfo pi) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSessionTemplate.selectList("itemListMapper.selectDList",null,rowBounds);
+	}
+
+	public int selectBListCount() {
+		return sqlSessionTemplate.selectOne("itemListMapper.bListCount");
+	}
+
+	public ArrayList<ItemListView> selectBList(PageInfo pi) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSessionTemplate.selectList("itemListMapper.selectBList",null,rowBounds);
+	}
+	
+	public int selectSListCount() {
+		return sqlSessionTemplate.selectOne("itemListMapper.sListCount");
+	}
+	
+	public ArrayList<ItemListView> selectSList(PageInfo pi) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSessionTemplate.selectList("itemListMapper.selectSList",null,rowBounds);
+	}
+
+	public int selectHListCount() {
+		return sqlSessionTemplate.selectOne("itemListMapper.hListCount");
+	}
+
+	public ArrayList<ItemListView> selectHList(PageInfo pi) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSessionTemplate.selectList("itemListMapper.selectHList",null,rowBounds);
+	}
+
+	public int selectDiListCount() {
+		return sqlSessionTemplate.selectOne("itemListMapper.diListCount");
+	}
+
+	public ArrayList<ItemListView> selectDiList(PageInfo pi) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSessionTemplate.selectList("itemListMapper.selectDiList",null,rowBounds);
 	}
 }

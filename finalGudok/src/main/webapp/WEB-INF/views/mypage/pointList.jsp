@@ -33,10 +33,11 @@
         font-size: 1em;
         font-weight: lighter;
         margin-left: 10%;
+        margin-bottom:5%;
     }
 
     .myPage_Menu>li {
-        margin-bottom: 5%;
+        margin-bottom: 10%;
     }
 
     .myPage_Menu li a {
@@ -58,10 +59,10 @@
     /* 회원정보 상자 */
 
     .content_sub {
-      float: left;
       width: 85%;
       text-align: center;
       margin-bottom: 10%;
+      float:left
     }
 
     .content_member {
@@ -183,25 +184,43 @@
                         style="width: 25%; height: 25%; margin-right: 4%;">구독배송</a>
                 <ul>
                     <li><a href="#">구독 조회</a></li>
-                    <li><a href="#">배송 조회</a></li>
-                    <li><a href="#">교환 내역</a></li>
+                    <c:url var="dlist" value="deliveryList.do">
+						<c:param name="memberNo" value="${loginUser.memberNo}"/>
+					</c:url> 
+                    <li><a href="${dlist}">배송 조회</a></li>
+                    <c:url var="elist" value="exchangeList.do">
+						<c:param name="memberNo" value="${loginUser.memberNo}"/>
+					</c:url> 
+                    <li><a href="${elist}">교환 내역</a></li>
                 </ul>
             </li>
             <li>
-                <a href="#news"><img src="resources/images/benefit.png"
+                <a href="#news"><img src="resources/images/my_benefit.png"
                         style="width: 25%; height: 25%; margin-right: 4%;">나의혜택</a>
                 <ul>
                     <li><a href="#">회원 등급</a></li>
-                    <li><a href="#">적립금 내역</a></li>
+                    <c:url var="plist" value="pointList.do">
+							<c:param name="memberNo" value="${loginUser.memberNo}"/>
+					</c:url> 
+                    <li><a href="${plist}">적립금 내역</a></li>
                 </ul>
             </li>
-            <li><a href="#contact"><img src="resources/images/cart.png"
+            <c:url var="clist" value="cartList.do">
+				<c:param name="memberNo" value="${loginUser.memberNo}"/>
+			</c:url> 
+            <li><a href="${clist}"><img src="resources/images/cart.png"
                         style="width: 25%; height: 25%; margin-right: 4%;">장바구니</a></li>
             <li><a href="#about"><img src="resources/images/heart.png" style="width: 25%; height: 25%; margin-right: 4%;">찜</a>
             </li>
-            <li><a href="#about"><img src="resources/images/review.png"
+            <c:url var="rlist" value="reviewList.do">
+				<c:param name="memberNo" value="${loginUser.memberNo}"/>
+			</c:url> 
+            <li><a href="${rlist}"><img src="resources/images/review.png"
                         style="width: 25%; height: 25%; margin-right: 4%;">상품리뷰</a></li>
-            <li><a href="#about"><img src="resources/images/inquiry.png"
+            <c:url var="ilist" value="inquiryList.do">
+				<c:param name="memberNo" value="${loginUser.memberNo}"/>
+			</c:url> 
+            <li><a href="${ilist}"><img src="resources/images/inquiry.png"
                         style="width: 25%; height: 25%; margin-right: 4%;">1:1문의</a></li>
             <li>
                 <a href="#about"><img src="resources/images/member_information.png"
@@ -218,7 +237,7 @@
 	        <div class="member_info">
 	          <div class="member">
 	            <div class="sub">
-	              <span class="name">홍길동 <span class="etc">&nbsp;님</span></span>
+	              <span class="name">${loginUser.memberName } <span class="etc">&nbsp;님</span></span>
 	              <br>
 	              <span class="grade">알 <span class="etc">&nbsp;등급</span></span>
 	              <br>
@@ -258,21 +277,18 @@
 	            <td style="width: 20%;" class="top bottom">적립금</td>
 	            <td style="width: 60%;" class="top bottom">내용</td>
 	          </tr>
-	          <tr>
-	            <td>2020.08.05</td>
-	            <td>500</td>
-	            <td>로스터스 초이스 싱글 오리진 원두</td>
-	          </tr>
-	          <tr>
-	            <td>2020.08.05</td>
-	            <td>500</td>
-	            <td>무가당 드링킹 요거트</td>
-	          </tr>
-	
+	          <c:forEach var="p" items="${list}">
+		          <tr>
+		            <td>${p.subscribeDate}</td>
+		            <td>${p.point}</td>
+		            <td>${p.itemName}</td>
+		          </tr>
+	          </c:forEach>
 	        </table>
 	      </div>
 	    </div>
     </div>
+    <br style="clear:both;">
    <jsp:include page="../common/footer.jsp"/>
 </body>
 </html>

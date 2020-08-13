@@ -13,6 +13,7 @@
 		<org.aspectj-version>1.6.10</org.aspectj-version>
 		<org.slf4j-version>1.6.6</org.slf4j-version>
 	</properties>
+	
 	<dependencies>
 		<!-- Spring -->
 		<dependency>
@@ -115,16 +116,17 @@
 			<artifactId>junit</artifactId>
 			<version>4.7</version>
 			<scope>test</scope>
-		</dependency>  
+		</dependency>     
 		
+		<!-- 1_1. DataBase 오라클 사용을 위한 라이브러리 -->
 		<!-- https://mvnrepository.com/artifact/com.oracle.database.jdbc/ojdbc6 -->
 		<dependency>
-			<groupId>com.oracle.database.jdbc</groupId>
-			<artifactId>ojdbc6</artifactId>
-		    <version>11.2.0.4</version>
+	    	 <groupId>com.oracle.database.jdbc</groupId>
+	   		 <artifactId>ojdbc6</artifactId>
+	   		 <version>11.2.0.4</version>
 		</dependency>
 		
-		<!-- 1_2. Mybatis 순수 라이브러리 -->
+		<!-- 1_2.Mybatis 순수 라이브러리 -->
 		<!-- https://mvnrepository.com/artifact/org.mybatis/mybatis -->
 		<dependency>
 		    <groupId>org.mybatis</groupId>
@@ -132,20 +134,20 @@
 		    <version>3.4.6</version>
 		</dependency>
 		
-		<!-- 1_3. 스프링에서 Mybatis를 사용하기 위한 라이브러리 -->
+		<!-- 1_3.스프링에서 Mybatis를 사용하기 위한 라이브러리 -->
 		<!-- https://mvnrepository.com/artifact/org.mybatis/mybatis-spring -->
 		<dependency>
 		    <groupId>org.mybatis</groupId>
 		    <artifactId>mybatis-spring</artifactId>
 		    <version>1.3.2</version>
 		</dependency>
-				
-		<!-- 1_4. 스프링 데이터베이스 기능을 사용하기 위한 라이브러리 -->
+		
+		<!-- 1_4.스프링 데이터베이스 기능을 사용하기 위한 라이브러리 -->
 		<!-- https://mvnrepository.com/artifact/org.springframework/spring-jdbc -->
 		<dependency>
 		    <groupId>org.springframework</groupId>
 		    <artifactId>spring-jdbc</artifactId>
-		    <!-- <version>5.2.7.RELEASE</version> -->
+		    <!-- <version>5.2.7.RELEASE</version>-->
 		    <version>${org.springframework-version}</version>
 		</dependency>
 		
@@ -156,7 +158,6 @@
 		    <artifactId>commons-dbcp</artifactId>
 		    <version>1.4</version>
 		</dependency>
-		
 		
 		<!-- 2. 암호화 처리를 위한 라이브러리들(스프링 시큐리티 모듈) -->
 		<!-- core, web, config 3가지 라이브러리가 필요함 -->
@@ -188,13 +189,13 @@
 		    <artifactId>commons-fileupload</artifactId>
 		    <version>1.3.3</version>
 		</dependency>
-				
+		
 		<!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
 		<dependency>
 		    <groupId>commons-io</groupId>
 		    <artifactId>commons-io</artifactId>
 		    <version>2.6</version>
-		</dependency>   
+		</dependency>  
 	</dependencies>
     <build>
         <plugins>
@@ -217,8 +218,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>2.5.1</version>
                 <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
+                    <source>1.8</source>
+                    <target>1.8</target> 
                     <compilerArgument>-Xlint:all</compilerArgument>
                     <showWarnings>true</showWarnings>
                     <showDeprecation>true</showDeprecation>

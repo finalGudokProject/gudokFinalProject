@@ -32,10 +32,11 @@
         font-size: 1em;
         font-weight: lighter;
         margin-left: 10%;
+        margin-bottom:5%;
     }
 
     .myPage_Menu>li {
-        margin-bottom: 5%;
+        margin-bottom: 10%;
     }
 
     .myPage_Menu li a {
@@ -55,6 +56,10 @@
     }
     
     /* ------------------- */
+    
+    .content_sub{
+    	margin-bottom:18%;
+    }
 
     .sub_content {
         float: left;
@@ -63,7 +68,7 @@
     .content_sub table {
         width: auto;
         margin:0 auto;
-        margin-top:1%;
+        margin-top:5%;
     }
 
     .content_sub table tr {
@@ -117,7 +122,7 @@
                 </ul>
             </li>
             <li>
-                <a href="#news"><img src="resources/images/benefit.png"
+                <a href="#news"><img src="resources/images/my_benefit.png"
                         style="width: 25%; height: 25%; margin-right: 4%;">나의혜택</a>
                 <ul>
                     <li><a href="#">회원 등급</a></li>
@@ -151,9 +156,10 @@
 	                    <td style="width: 80px">탈퇴사유</td>
 	                    <td>
 	                        <select style="width:30%; height:30px;">
-	                            <option>구독의 필요성을 못느낌</option>
-	                            <option>믈건이 별로 없다</option>
-	                            <option>가격대가 비싸다</option>
+	                            <option>서비스가 마음에 들지 않음</option>
+	                            <option>가격 비쌈</option>
+	                            <option>원하는 상품이 없음</option>
+	                            <option>개인정보보호</option>
 	                            <option>기타</option>
 	                        </select>
 	                    </td>
@@ -174,6 +180,7 @@
             </div>
         </div>
     </div>
+    <br style="clear:both;">
 	<jsp:include page="../common/footer.jsp"/>
 </body>
 </html>

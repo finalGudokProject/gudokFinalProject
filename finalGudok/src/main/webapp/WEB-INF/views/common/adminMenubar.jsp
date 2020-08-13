@@ -9,7 +9,8 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-    
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+   
     
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
@@ -80,13 +81,18 @@ div {
     
     z-index: 1000;
     height: 100vh;
-    border-right: 1px solid rgba(0,0,0,.1);
+    
     -ms-flex-order: 0;
     order: 0;
     border-bottom: 1px solid rgba(0,0,0,.1);
     width:250px;
     margin-left:0px;
     margin-top:0px;
+    background-color: #CFD8DC; 
+    float:left; 
+    overflow-y:hidden; 
+    overflow-x:hidden;
+    font-color:red;
 }
 
 .bd-content {
@@ -126,12 +132,8 @@ div {
     margin-bottom: 0.5rem;
     display: block;
     list-style-type: disc;
-    /* margin-block-start: 1.5em;
-    margin-block-end: 1.5em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
-    padding-inline-start: 20px; */
-    /* line-height: 30px; */
+    color:#424242;
+ 
     
 }
 
@@ -141,17 +143,29 @@ div {
 }
 
 .sd_ul li a{
-    color:black;
+    color:#424242;
+}
+
+.sd_ul:hover{
+
+  color:#11538C;
+transition:2s;
+	
+}
+
+.sd_ul li a:hover{
+
+  color:#0D47A1;
+transition:1s;
+text-decoration:none;
+	
 }
 
 
 
-.sd-btn{
-    background-color:rgba(90,148,235,0.8);
-    border:none;
-    padding:5px 10px;
-box-shadow: 1px 1px lightgray;
-}
+
+
+
 
 table {
   width: 100%;
@@ -173,6 +187,51 @@ table td {
 }
 .table tbody + tbody {
   border-top: 2px solid #dee2e6;
+}
+
+.sd_btn{
+	background:#6AAED9;
+	color:white;
+	border-radius:5px;
+	padding:3%;
+	width:40%;
+	transition:0.5s;
+  	position:relative;
+  	border:1px solid #6AAED9;
+	margin-bottom:2%;
+	font-size:14px;
+}
+.sd_btn:hover{
+  background:#11538C;
+  color:#ffffff;
+  border:1px solid #11538C;
+}
+
+.sd_btn:hover:before,#btn:hover:after{
+  width:100%;
+  transition:0.5s;
+}
+
+.btn{
+	background:#90A4AE;
+	color:white;
+	border-radius:5px;
+	padding:5px 20px;
+	transition:0.5s;
+  	position:relative;
+  	border:1px solid #B0BEC5;
+	margin-bottom:2%;
+	font-size:14px;
+}
+.btn:hover{
+  background:#424242;
+  color:#ffffff;
+  border:1px solid #11538C;
+}
+
+.btn:hover:before,#btn:hover:after{
+  width:100%;
+  transition:0.5s;
 }
 
 
@@ -206,7 +265,7 @@ table td {
 
 .content{
     margin-left:250px;
-    background-color: RGB(237,237,237);
+    background-color: #F5F5F5;
     padding:30px;
 
 }
@@ -345,15 +404,15 @@ label > span {
     <!--사이드바-->
     <div class="container-fluid" style="background-color: red;" >
         <div class="row">
-            <div class="col-md-3 bd-sidebar" style="background-color: #C4C4C4; float:left; overflow-y:hidden; overflow-x:hidden">
+            <div class="col-md-3 bd-sidebar">
                 <img src="resources/images/logo2.png" style="padding:0;">
                 
                 <h2 style="text-align: center; font-size: 18px; margin-top:35px;"><b>관리자</b>님, 환영합니다.</h2>
                 <br>
                 <div style="text-align:center">
-                <button class="sd-btn" id="nav-home-btn">쇼핑몰 이동</button>
+                <input type="button" class="sd_btn" value="쇼핑몰 이동">
                 &nbsp;
-                <button class="sd-btn" id="nav-logout-btn">로그아웃</button>
+                <input type="button" class="sd_btn" value="로그아웃">
             </div>
                   
                     <nav class="collapse bd-links">
@@ -392,6 +451,7 @@ label > span {
                                     <path fill-rule="evenodd" d="M7.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.646 2.354a.5.5 0 0 1 0-.708z"/>
                                   </svg></span></b> <b>
                                     <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-people-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                  
                                         <path fill-rule="evenodd" d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-5.784 6A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216zM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z"/>
                                       </svg>&nbsp;&nbsp;회원 관리&nbsp;&nbsp;</b></label>
                                   <ul class="group-list sd_ul">

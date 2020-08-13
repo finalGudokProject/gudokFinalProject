@@ -32,10 +32,11 @@
         font-size: 1em;
         font-weight: lighter;
         margin-left: 10%;
+        margin-bottom:5%;
     }
 
     .myPage_Menu>li {
-        margin-bottom: 5%;
+        margin-bottom: 10%;
     }
 
     .myPage_Menu li a {
@@ -163,17 +164,11 @@
 
     .delivery table {
       width: 100%;
+      text-align:center;
     }
-
+    
     .delivery table tr {
       height: 45px;
-    }
-
-    .delivery table button {
-      border: 1px solid black;
-      background: #fff;
-      padding: 1% 5%;
-      margin-right: 3%;
     }
 
     /* 모달 */
@@ -187,12 +182,29 @@
       border: 1px solid black;
       color: black;
       display: block;
-      padding: 1% 1%;
-      margin-right: 3%;
+      width:70%;
+      margin: 0 auto;
       text-decoration: none;
+      height: 35px;
+      line-height:35px;
     }
 
     a#exchange_pop:hover {
+      border-color: rgb(155, 150, 150);
+    }
+    
+    a#destination_pop {
+      border: 1px solid black;
+      color: black;
+      display: block;
+      width:40%;
+      margin: 0 auto;
+      text-decoration: none;
+      height: 35px;
+      line-height:35px;
+    }
+
+    a#destination_pop:hover {
       border-color: rgb(155, 150, 150);
     }
 
@@ -311,7 +323,7 @@
                 </ul>
             </li>
             <li>
-                <a href="#news"><img src="resources/images/benefit.png"
+                <a href="#news"><img src="resources/images/my_benefit.png"
                         style="width: 25%; height: 25%; margin-right: 4%;">나의혜택</a>
                 <ul>
                     <li><a href="#">회원 등급</a></li>
@@ -341,7 +353,7 @@
 	        <div class="member_info">
 	          <div class="member">
 	            <div class="sub">
-	              <span class="name">홍길동 <span class="etc">&nbsp;님</span></span>
+	              <span class="name">${loginUser.memberName } <span class="etc">&nbsp;님</span></span>
 	              <br>
 	              <span class="grade">알 <span class="etc">&nbsp;등급</span></span>
 	              <br>
@@ -383,21 +395,34 @@
 	            <td style="width: 20%;" class="top bottom">배송지 변경</td>
 	            <td style="width: 20%;" class="top bottom">교환 신청</td>
 	          </tr>
-	          <tr>
-	            <td>2020.08.06</td>
-	            <td>무가당 드링킹 요거트</td>
-	            <td>배송중</td>
-	            <td><button>배송지 변경</button></td>
-	            <td><a href="#exchange_form" id="exchange_pop">교환 신청</a></td>
-	          </tr>
-	          <tr>
-	            <td>2020.08.06</td>
-	            <td>무가당 드링킹 요거트</td>
-	            <td>배송중</td>
-	            <td><button>배송지 변경</button></td>
-	            <td><a href="#exchange_form" id="exchange_pop">교환 신청</a></td>
-	          </tr>
-	
+	          <c:forEach var="d" items="${list}">
+		          <tr>
+		            <td>${d.subscribeDate}</td>
+		            <td>${d.itemName}</td>
+		            <c:if test="${d.deliveryStatus eq 'N'}">
+		            	<td>배송전</td>
+		            	<td><a href="#destination_form" id="destination_pop">배송지 변경</a></td>
+		            	<td><a href="#exchange_form" id="exchange_pop" onclick="return false;" style="color:#ccc; cursor:deafult;">교환 신청</a></td>
+		            </c:if>
+		            
+		            <c:if test="${d.deliveryStatus eq 'D'}">
+						<td>배송중</td>
+						<td><a href="#destination_form" id="destination_pop" onclick="return false;" style="color:#ccc; cursor:default;">배송지 변경</a></td>
+		            	<td><a href="#exchange_form" id="exchange_pop" onclick="return false;" style="color:#ccc; cursor:default;">교환 신청</a></td>
+		            </c:if>
+		            
+		            <c:if test="${d.deliveryStatus eq 'Y'}">
+		            	<td>배송완료</td>
+		            	<td><a href="#destination_form" id="destination_pop" onclick="return false;" style="color:#ccc; cursor:default">배송지 변경</a></td>
+		            	<c:if test="${d.exchangeStatus eq 'Y'}">
+		            		<td><a href="#exchange_form" id="exchange_pop" onclick="return false;" style="color:#ccc; cursor:default;">교환 신청</a></td>
+		            	</c:if>
+		            	<c:if test="${d.exchangeStatus eq 'N'}">
+		            		<td><a href="#exchange_form" id="exchange_pop" onclick="exchangeClick(${d.subscribeNo}, '${d.itemName}')">교환 신청</a></td>
+		            	</c:if>
+		            </c:if>
+		          </tr>
+	          </c:forEach>
 	        </table>
 	      </div>
 	
@@ -405,33 +430,63 @@
 	      <a href="#x" class="overlay" id="exchange_form"></a>
 	      <div class="popup">
 	        <h4>교환신청</h4>
-	        <div>
-	          <table>
-	            <tr>
-	              <td style="width: 100px;" class="top bottom">교환 사유</td>
-	              <td class="top bottom">
-	                <select style="width: 200px; height: 30px;">
-	                  <option>품질불량</option>
-	                  <option>주문상품과 다른 상품 배송</option>
-	                  <option>기타</option>
-	                </select>
-	              </td>
-	            </tr>
-	            <tr>
-	              <td colspan="2">
-	                <br>
-	                <textarea cols="50" rows="5"></textarea>
-	              </td>
-	            </tr>
-	          </table>
-	        </div>
-	        <div style="text-align: center;">
-	          <button>교환신청</button>
-	        </div>
+	        
+	        <form action="exchangeInsert.do" method="post">
+	        	<input type="hidden" id="subscribeNo" name="subscribeNo">
+	        	<input type="hidden" id="itemName" name="itemName">
+		        <div>
+		          	<table>
+			            <tr>
+			              <td style="width: 100px;" class="top bottom">교환 사유</td>
+			              <td class="top bottom">
+			                <select style="width: 200px; height: 30px;" id="exchangeCategory" name="exchangeCategory">
+			                  <option value="1">품질불량</option>
+			                  <option value="2">오배송</option>
+			                  <option value="3">기타</option>
+			                </select>
+			              </td>
+			            </tr>
+			            <tr>
+			              <td colspan="2">
+			                <br>
+			                <textarea cols="50" rows="5" id="exchangeContent" name="exchangeContent"></textarea>
+			              </td>
+			            </tr>
+		          	</table>
+		        </div>
+		        <div style="text-align: center;">
+		          	<button id="exchangeSubmit">교환신청</button>
+		        </div>
+	        </form>
 	        <a class="close" href="#close"></a>
 	      </div>
 	    </div>
     </div>
+    <br style="clear:both;">
     <jsp:include page="../common/footer.jsp"/>
+    
+    <script>
+    	function exchangeClick(subscribeNo, itemName){
+    		$("#subscribeNo").val(subscribeNo);
+    		$("#itemName").val(itemName);
+    		$("#exchangeContent").attr("disabled", "disabled");
+			
+    	}
+    	
+    	$(function(){
+    		$("#exchangeCategory").on('change',function(){
+    			var select = $("#exchangeCategory option:selected").val()
+    			
+        		if(select == 1){
+        			$("#exchangeContent").attr("disabled", "disabled");
+        		} else if(select == 2){
+        			$("#exchangeContent").attr("disabled", "disabled");
+        		} else if(select == 3){
+        			$("#exchangeContent").attr("disabled", false);
+        		}
+    		})
+    	})
+    	
+    </script>
 </body>
 </html>

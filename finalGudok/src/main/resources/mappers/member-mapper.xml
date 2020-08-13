@@ -14,28 +14,130 @@
 		<result property="gender" column="GENDER"/>
 		<result property="enrollDate" column="ENROLL_DATE"/>
 		<result property="modifyDate" column="MODIFY_DATE"/>
-		<result property="dropDate" column="DROP_DATE"/>
 		<result property="memberStatus" column="MEMBER_STATUS"/>
-		<result property="dropReason" column="DROP_REASON"/>
 		<result property="emailStatus" column="EMAIL_STATUS"/>
 		<result property="point" column="POINT"/>
 		<result property="gradeNo" column="GRADE_NO"/>
 	</resultMap>
 	
-
+	<resultMap type="Point" id="pointResultSet">
+		<id property="pointNo" column="POINT_NO"/>
+		<result property="subscribeNo" column="SUBSCRIBE_NO"/>
+		<result property="subscribeDate" column="SUBSRIBE_DATE"/>
+		<result property="itemName" column="ITEM_NAME"/>
+		<result property="point" column="POINT"/>
+	</resultMap>
+	
+	<resultMap type="mReview" id="reviewResultSet">
+		<id property="reviewNo" column="REVIEW_NO"/>
+		<result property="itemNo" column="ITEM_NO"/>
+		<result property="reviewContent" column="REVIEW_CONTENT"/>
+		<result property="reviewDate" column="REVIEW_DATE"/>
+	</resultMap>
+	
+	<resultMap type="mExchange" id="exchangeResultSet">
+		<id property="exchangeNo" column="EXCHANGE_NO"/>
+		<result property="exchangeStatus" column="EXCHANGE_STATUS"/>
+		<result property="exchangeContent" column="EXCHANGE_CONTENT"/>
+		<result property="exchangeDate" column="EXCHANGE_DATE"/>
+		<result property="itemName" column="ITEM_NAME"/>
+		<result property="subscribeNo" column="SUBSCRIBE_NO"/>
+		<result property="exchangeCategory" column="EXCHANGE_CATEGORY"/>
+	</resultMap>
+	
+	<resultMap type="mDelivery" id="deliveryResultSet">
+		<id property="deliveryNo" column="DELIVERY_NO"/>
+		<result property="deliveryStatus" column="DELIVERY_STATUS"/>
+		<result property="subscribeNo" column="SUBSCRIBE_NO"/>
+		<result property="itemName" column="ITEM_NAME"/>
+		<result property="subscribeDate" column="SUBSRIBE_DATE"/>
+		<result property="exchangeStatus" column="EXCHANGE_STATUS"/>
+	</resultMap>
+	
+	<resultMap type="mCart" id="cartResultSet">
+		<id property="cartNo" column="CART_NO"/>
+		<result property="itemNo" column="ITEM_NO"/>
+		<result property="memberNo" column="MEMBER_NO"/>
+		<result property="cartSubs" column="CART_SUBS"/>
+		<result property="cartCount" column="CART_COUNT"/>
+		<result property="itemName" column="ITEM_NAME"/>
+		<result property="itemPrice" column="ITEM_PRICE"/>
+	</resultMap>
+	
 	<select id="selectOne" parameterType="Member" resultMap="memberResultSet">
 		SELECT *
 		FROM MEMBER
 		WHERE MEMBER_ID=#{memberId}
 		AND MEMBER_PWD=#{memberPwd}
-		AND MEMBER_STATUS='Y'
+		AND MEMBER_STATUS='N'
 	</select>
 	
 	<select id="memberConfirm" parameterType="Member" resultType="_int">
 		SELECT *
 		FROM MEMBER
 		WHERE MEMBER_PWD=#{memberPwd}
-		AND MEMBER_STATUS='Y'
+		AND MEMBER_STATUS='N'
 	</select>
-
+	
+	<select id="pointList" parameterType="int" resultMap="pointResultSet">
+		SELECT P.*, S.SUBSRIBE_DATE, I.ITEM_NAME
+		FROM POINT P
+		JOIN SUBSCRIBE S ON (P.SUBSCRIBE_NO = S.SUBSCRIBE_NO)
+		JOIN ITEM I ON (I.ITEM_NO = S.ITEM_NO)
+		JOIN MEMBER M ON(S.MEMBER_NO = M.MEMBER_NO)
+		WHERE M.MEMBER_NO = 1
+		<!-- WHERE M.MEMBER_NO = #{memberNo} -->
+	</select>
+	
+	<select id="reviewList" parameterType="int" resultMap="reviewResultSet">
+		SELECT *
+		FROM REVIEW
+		WHERE MEMBER_NO=1
+		ORDER BY REVIEW_DATE DESC
+	</select>
+	
+	<select id="exchangeList" parameterType="int" resultMap="exchangeResultSet">
+		SELECT E.*, I.ITEM_NAME
+		FROM EXCHANGE E
+		JOIN SUBSCRIBE S ON (E.SUBSCRIBE_NO = S.SUBSCRIBE_NO)
+		JOIN MEMBER M ON (S.MEMBER_NO = M.MEMBER_NO)
+		JOIN ITEM I ON (S.ITEM_NO = I.ITEM_NO)
+		WHERE S.MEMBER_NO = 1
+		ORDER BY E.EXCHANGE_DATE DESC
+	</select>
+	
+	<select id="deliveryList" parameterType="int" resultMap="deliveryResultSet">
+		SELECT D.*, I.ITEM_NAME, S.SUBSRIBE_DATE, S.EXCHANGE_STATUS
+		FROM DELIVERY D
+		JOIN SUBSCRIBE S ON (D.SUBSCRIBE_NO = S.SUBSCRIBE_NO)
+		JOIN ITEM I ON (S.ITEM_NO = I.ITEM_NO)
+		WHERE MEMBER_NO = 1
+	</select>
+	
+	<select id="cartList" parameterType="int" resultMap="cartResultSet">
+		SELECT C.*
+		FROM CART C
+		JOIN ITEM I ON (C.ITEM_NO = I.ITEM_NO)
+		WHERE MEMBER_NO = 1
+	</select>
+	
+	<insert id="insertExchange" parameterType="mExchange">
+		INSERT INTO EXCHANGE
+		VALUES(SEQ_EXCHANGE.NEXTVAL, DEFAULT, #{exchangeContent}, SYSDATE, #{subscribeNo}, #{exchangeCategory})
+	</insert>
+	
+	<update id="updateSubscribe" parameterType="_int">
+		UPDATE SUBSCRIBE
+		SET EXCHANGE_STATUS = 'Y'
+		WHERE SUBSCRIBE_NO=#{subscribeNo}
+	</update>
+	
+	<!-- <select id="selectReview" parameterType="int" resultMap="reviewResultSet">
+		
+	</select> -->
+	
+	<delete id="deleteReview" parameterType="int">
+		DELETE REVIEW
+		WHERE REVIEW_NO=#{reviewNo}
+	</delete>
 </mapper>

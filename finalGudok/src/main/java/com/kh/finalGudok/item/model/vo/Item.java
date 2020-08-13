@@ -13,7 +13,7 @@ public class Item implements Serializable{
 	private String itemName;
 	private int itemPrice;
 	private int itemCount;
-	private int itemRate;
+	private Double itemRate;
 	private String itemDpStatus;
 	private int itemCmSales;
 	private int itemChoice;
@@ -27,7 +27,7 @@ public class Item implements Serializable{
 		// TODO Auto-generated constructor stub
 	}
 
-	public Item(int itemNo, String itemName, int itemPrice, int itemCount, int itemRate, String itemDpStatus,
+	public Item(int itemNo, String itemName, int itemPrice, int itemCount, Double itemRate, String itemDpStatus,
 			int itemCmSales, int itemChoice, Date itemDate, String itemRecommend, String categoryNo, int eventNo,
 			String itemMemo) {
 		super();
@@ -78,11 +78,11 @@ public class Item implements Serializable{
 		this.itemCount = itemCount;
 	}
 
-	public int getItemRate() {
+	public Double getItemRate() {
 		return itemRate;
 	}
 
-	public void setItemRate(int itemRate) {
+	public void setItemRate(Double itemRate) {
 		this.itemRate = itemRate;
 	}
 
@@ -162,5 +162,7 @@ public class Item implements Serializable{
 				+ itemRecommend + ", categoryNo=" + categoryNo + ", eventNo=" + eventNo + ", itemMemo=" + itemMemo
 				+ "]";
 	}
+
+	
 	
 }

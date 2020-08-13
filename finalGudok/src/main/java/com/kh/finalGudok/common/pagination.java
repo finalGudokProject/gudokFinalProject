@@ -1,10 +1,10 @@
 package com.kh.finalGudok.common;
 
-import com.kh.finalGudok.board.model.vo.bPageInfo;
+import com.kh.finalGudok.item.model.vo.PageInfo;
 
 public class pagination {
-	public static bPageInfo getPageInfo(int currentPage, int listCount) {
-		bPageInfo pi = null;
+	public static PageInfo getPageInfo(int currentPage, int listCount) {
+		PageInfo pi = null;
 		
 		int pageLimit = 10;
 		int maxPage;
@@ -18,7 +18,7 @@ public class pagination {
 		if(maxPage<endPage) {
 			endPage=maxPage;
 		}
-		pi = new bPageInfo(currentPage, listCount, pageLimit, maxPage, startPage, endPage, boardLimit);
+		pi = new PageInfo(currentPage, listCount, pageLimit, maxPage, startPage, endPage, boardLimit);
 		
 		return pi;
 	}

@@ -32,10 +32,11 @@
         font-size: 1em;
         font-weight: lighter;
         margin-left: 10%;
+        margin-bottom:5%;
     }
 
     .myPage_Menu>li {
-        margin-bottom: 5%;
+        margin-bottom: 10%;
     }
 
     .myPage_Menu li a {
@@ -192,7 +193,7 @@
                 </ul>
             </li>
             <li>
-                <a href="#news"><img src="resources/images/benefit.png"
+                <a href="#news"><img src="resources/images/my_benefit.png"
                         style="width: 25%; height: 25%; margin-right: 4%;">나의혜택</a>
                 <ul>
                     <li><a href="#">회원 등급</a></li>
@@ -222,7 +223,7 @@
 	        <div class="member_info">
 	          <div class="member">
 	            <div class="sub">
-	              <span class="name">홍길동 <span class="etc">&nbsp;님</span></span>
+	              <span class="name">${loginUser.memberName } <span class="etc">&nbsp;님</span></span>
 	              <br>
 	              <span class="grade">알 <span class="etc">&nbsp;등급</span></span>
 	              <br>
@@ -262,20 +263,23 @@
 	            <td style="width: 50%;" class="top bottom">상품</td>
 	            <td style="width: 30%;" class="top bottom">교환상태</td>
 	          </tr>
-	          <tr>
-	            <td>2020.08.06</td>
-	            <td>무가당 드링킹 요거트</td>
-	            <td>교환전</td>
-	          </tr>
-	          <tr>
-	            <td>2020.08.06</td>
-	            <td>무가당 드링킹 요거트</td>
-	            <td>교환전</td>
-	          </tr>
+	          <c:forEach var="e" items="${list}">
+		          <tr>
+		            <td>${e.exchangeDate}</td>
+		            <td>${e.itemName}</td>
+		            <c:if test="${e.exchangeStatus eq 'N'}">
+		            	<td>교환전</td>
+		            </c:if>
+		            <c:if test="${e.exchangeStatus eq 'Y'}">
+		            	<td>교환완료</td>
+		            </c:if>
+		          </tr>
+	          </c:forEach>
 	        </table>
 	      </div>
 	    </div>
     </div>
+    <br style="clear:both;">
     <jsp:include page="../common/footer.jsp"/>
 </body>
 </html>

@@ -1,18 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+    <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
-<script type="text/javascript" src="/data/201101/IJ12941530138912/jquery-1.4.4.min.js"></script>
-<script type="text/javascript" src="/data/201101/IJ12941530138912/jquery-contained-sticky-scroll.js"></script>
-<script type="text/javascript">
-jQuery(document).ready(function(){
-	jQuery('#sidebar').containedStickyScroll();
-});
-</script>
+	 <!-- sweetalert시작 -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	<link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
+	<!-- sweetalert끝 -->
 <style>
 	.basketImg{
 		width:30%;
@@ -64,6 +64,17 @@ jQuery(document).ready(function(){
 		height:35px;
 	}
 	
+	.signImgP{
+		width:35px;
+		height:35px;
+	}
+	
+	.signImgM{
+		width:35px;
+		height:35px;
+	}
+	
+	
 	table .countTd{
 		vertical-align:middle;
 	}
@@ -81,11 +92,12 @@ jQuery(document).ready(function(){
 		</div>
 	<div class="container">
 		<div class="row" style="text-align:center;">
+			<c:if test="${!empty list }">
 			<table style="border:1px solid black; text-align:center; padding:10%;" align="center">
 				<thead>
 				<tr style="border-bottom:1px solid lightgray; vertical-align:middle;">
 					<th class="listChk"  style="width:3%;"><input type="checkbox" id="allChk"></th>
-					<th style="width:7%;"><label for="chk" style="display:block;margin:0px;text-align:center;">전체선택(@/?)</label></th>
+					<th style="width:7%;"><label for="chk" style="display:block;margin:0px;text-align:center;">전체선택(<span id="frontCount">0</span>/<span id="afterCount">${list.size() }</span>)</label></th>
 					<th colspan="2">상품정보</th>
 					<th style="width:15%;">수량</th>
 					<th style="width:10%;">구독주기</th>
@@ -93,77 +105,151 @@ jQuery(document).ready(function(){
 				</tr>
 				
 				</thead>
-				<tr style="border-bottom:1px solid lightgray;vertical-align:middle;">
-					<td class="listChk"><input type="checkbox" class="chk"></td>
-					<td colspan="2" style="width:30%;"><img src="${contextPath }/resources/images/breadLogo.jpg" class="basketImg"></td>
-					<td>상품명상품명상품명상품명상품명상품명상품명상품</td>
-					<td class="countTd"><img src="${contextPath }/resources/images/XSIGN.png" class="signImg" id="signM">
-					<input type="text" readonly class="amountT" value="1" style="width:50px;text-align:center;">
-					<img src="${contextPath }/resources/images/plus.png" class="signImg" id="signP"></td>
-					<td>
-					<select style="width:80px;height:30px;">
-						<option value="1">1주일</option>
-						<option value="2">2주일</option>
-						<option value="3">3주일</option>
-						<option value="4">4주일</option>
-					</select>
-					<td>10,000원</td>
-				</tr>
-				<tr style="border-bottom:1px solid lightgray;vertical-align:middle;">
-					<td class="listChk"><input type="checkbox" class="chk"></td>
-					<td colspan="2" style="width:30%;"><img src="${contextPath }/resources/images/breadLogo.jpg" class="basketImg"></td>
-					<td>상품명상품명상품명상품명상품명상품명상품명상품</td>
-					<td class="countTd"><img src="${contextPath }/resources/images/XSIGN.png" class="signImg" id="signM">
-					<input type="text" readonly class="amountT" value="1" style="width:50px;text-align:center;">
-					<img src="${contextPath }/resources/images/plus.png" class="signImg" id="signP"></td>
-					<td>
-					<select style="width:80px;height:30px;">
-						<option value="1">1주일</option>
-						<option value="2">2주일</option>
-						<option value="3">3주일</option>
-						<option value="4">1개월</option>
-					</select>
-					<td>10,000원</td>
-				</tr>
-				<tr style="border-bottom:1px solid lightgray;vertical-align:middle;">
-					<td class="listChk"><input type="checkbox" class="chk"></td>
-					<td colspan="2" style="width:30%;"><img src="${contextPath }/resources/images/breadLogo.jpg" class="basketImg"></td>
-					<td>상품명상품명상품명상품품명상품</td>
-					<td class="countTd"><img src="${contextPath }/resources/images/XSIGN.png" class="signImg" id="signM">
-					<input type="text" readonly class="amountT" value="1" style="width:50px;text-align:center;">
-					<img src="${contextPath }/resources/images/plus.png" class="signImg" id="signP"></td>
-					<td>
-					<select style="width:80px;height:30px;">
-						<option value="1">1주일</option>
-						<option value="2">2주일</option>
-						<option value="3">3주일</option>
-						<option value="4">1개월</option>
-					</select>
-					<td>10,000원</td>
-				</tr>
+				<tbody id="tbody">
 				
-				<tr>
-					<td colspan="7" style="text-align:right; padding-right:3%; font-size:40px;">총 주문 금액 : 체크박스 체크한 것만 연산</td>
+				<c:forEach var="c" items="${list }" varStatus="vs">
+				<fmt:formatNumber var="itemPrice" value="${c.itemPrice * c.cartCount }" type="number"/>
+				<tr style="border-bottom:1px solid lightgray;vertical-align:middle;">
+					<td class="listChk"><input type="checkbox" class="chk" value="${c.itemPrice * c.cartCount}" data-cartNo="${c.cartNo }"></td>
+					<td colspan="2" style="width:30%;"><img src="${contextPath }/resources/images/breadLogo.jpg" class="basketImg"></td>
+					<td><input type="hidden" id="totalPriceInput">${c.itemName }</td>
+					<td class="countTd">
+					<c:if test="${c.cartCount == 1 }">
+					<img src="${contextPath }/resources/images/XSIGN.png" class="signImgM" id="signM">
+					</c:if>
+					<c:if test="${c.cartCount != 1 }">
+					<img src="${contextPath }/resources/images/minus.png" class="signImgM" id="signM">
+					</c:if>
+					<input type="hidden">
+					<input type="hidden" value="${c.itemPrice }">
+					<input type="text" readonly class="amountT" value="${c.cartCount }" style="width:50px;text-align:center;">
+					<img src="${contextPath }/resources/images/plus.png" class="signImgP" id="signP"></td>
+					<td>
+					<c:choose>
+						<c:when test="${c.cartSubs == 1 }">
+							<select style="width:80px;height:30px;" name="cartSubs">
+								<option value="1" selected>1주일</option>
+								<option value="2">2주일</option>
+								<option value="3">3주일</option>
+								<option value="4">4주일</option>
+							</select>
+						</c:when>
+						<c:when test="${c.cartSubs == 2 }">
+							<select style="width:80px;height:30px;" name="cartSubs">
+								<option value="1">1주일</option>
+								<option value="2" selected>2주일</option>
+								<option value="3">3주일</option>
+								<option value="4">4주일</option>
+							</select>
+						</c:when>
+						<c:when test="${c.cartSubs == 3 }">
+							<select style="width:80px;height:30px;" name="cartSubs">
+								<option value="1">1주일</option>
+								<option value="2">2주일</option>
+								<option value="3" selected>3주일</option>
+								<option value="4">4주일</option>
+							</select>
+						</c:when>
+						<c:otherwise>
+							<select style="width:80px;height:30px;" name="cartSubs">
+								<option value="1" selected>1주일</option>
+								<option value="2">2주일</option>
+								<option value="3">3주일</option>
+								<option value="4" selected>4주일</option>
+							</select>
+						</c:otherwise>
+					</c:choose>
+					</td>
+					<td>${itemPrice}원</td>
 				</tr>
+				</c:forEach>
+				</tbody>
+				<tfoot>
 				<tr>
-					<td colspan="7" style="text-align:right;padding-right:3%;"><input type="button" value="개 상품 삭제" style="margin-right:5%;" id="delBtn"><input type="button" value="10,000원 결제하기" id="paymentBtn"></td>
+					<td colspan="7" style="text-align:right; padding-right:3%; font-size:40px;"><span id="totalPriceTd">결제하실 상품을 선택해 주세요.</span></td>
 				</tr>
+				<tr id="asd">
+					<td colspan="7" style="text-align:right;padding-right:3%;"><input type="button" value="장바구니 삭제하기" style="margin-right:5%;" id="delBtn"><input type="button" value="선택 상품 결제하기" id="paymentBtn"></td>
+				</tr>
+				</tfoot>
 			</table>
+			</c:if>
+			<c:if test="${empty list }">
+				<c:if test="${empty list }">
+					<div class="col-2"></div>
+						<div class="col-8" id="emptyDiv" style="margin-top:2%;border:1px solid lightgray;">
+							<div style="text-align:center;width:100%;"><img src="${contextPath }/resources/images/empty.png" style="width:30%;"></div>
+							<div style="text-align:center;width:100%;font-size:40px;">장바구니에 추가한 상품이 없습니다.</div>
+						</div>
+					<div class="col-2"></div>	
+				</c:if>
+			</c:if>
 		</div>
 	</div>	<!-- 컨테이너 끝 -->
 	
 	<script>
 		$(function(){
-			$("#allChk").click(function(){
+			function addComma(num) {
+			 	var regexp = /\B(?=(\d{3})+(?!\d))/g;
+				return num.toString().replace(regexp, ',');
+			}
+			var count = "";
+			var check = "";
+			var sum = 0;
+			$("#allChk").on("click", function(){
 				if($("#allChk").prop("checked")){
 					$("input[type=checkbox]").prop("checked",true);
+					check = $("input:checkbox[class=chk]:checked").length;
+					$("#delBtn").val(check + "개 상품 삭제하기");
+					$("#frontCount").text(check);
+					$("input:checkbox[class=chk]:checked").each(function(){
+						sum += Number($(this).val());
+						$("#paymentBtn").val(addComma(sum)+"원 결제하기");
+						$("#totalPriceTd").text("총 주문 금액 : " + addComma(sum)+"원");
+					})
+					console.log(sum);
 				}else{
 					$("input[type=checkbox]").prop("checked",false);
+					check = $("input:checkbox[class=chk]:checked").length;
+					$("#delBtn").val("장바구니 삭제하기");
+					$("#frontCount").text("0");
+					sum = 0;
+					$("#paymentBtn").val("상품을 선택해 주세요.");
+					$("#totalPriceTd").text("결제하실 상품을 선택해 주세요.");
+					console.log(sum);
 				}
 			})
-			$(".chk").click(function(){
+			$(".chk").on("click", function(){
 				if($("#allChk").prop("checked")){
 					$("#allChk").prop("checked",false);
+				}
+				if($(this).prop("checked")){
+					check++;
+					$("#delBtn").val(check + "개 상품 삭제하기");
+					$("#frontCount").text(check);
+					
+					/* sum += $(this).parent().next().next().find("input").val(); */
+					sum += Number($(this).val());
+					$("#totalPrice").val(sum);
+					$("#paymentBtn").val(addComma(sum)+"원 결제하기");
+					$("#totalPriceTd").text("총 주문 금액 : " + addComma(sum)+"원");
+					
+					console.log(sum);
+				}else{
+					check--;
+					sum -= Number($(this).val());
+					$("#frontCount").text(check);
+					if(check != 0){
+						$("#delBtn").val("상품을 선택해 주세요.");
+						$("#paymentBtn").val(addComma(sum)+"원 결제하기");
+						$("#totalPriceTd").text("총 주문 금액 : " + addComma(sum)+"원");
+					}else{
+						$("#paymentBtn").val("상품을 선택해 주세요.");
+						$("#delBtn").val(check + "개 상품 삭제하기");
+						$("#totalPriceTd").text("결제하실 상품을 선택해 주세요.");
+					}
+					console.log(sum);
+					
 				}
 			})
 		})
@@ -172,26 +258,65 @@ jQuery(document).ready(function(){
 	
 	<!-- 수량 버튼 -->
 		<script>
+			function addComma(num) {
+			 	var regexp = /\B(?=(\d{3})+(?!\d))/g;
+				return num.toString().replace(regexp, ',');
+			}
 			$(function(){
-				var amount = $(".amountT").val();
-				$("#signP").click(function(){
-					amount = Number(amount) + 1;
-					console.log(amount);
-					$(".amountT").val(amount);
-					if(amount > 1){
-						$("#signM").attr("src","${contextPath }/resources/images/minus.png").css("transitionDuration","1s");
+				$(".signImgP").on("click",function(){
+					if($(this).parent().prev().prev().prev("td").find("input").prop("checked") == true){
+						swal("","선택된 상태로는 수량 변경을 할 수 없습니다.","error");
+					}else{
+						var amount = $(this).prev().val();
+						amount = Number(amount) + 1;
+						console.log(amount);
+						$(this).prev().val(amount);
+						
+						var valueCheck = $(this).prev().prev().val();
+						$(this).prev().prev().prev().val("");
+						var realValue = $(this).prev().prev().prev().val(valueCheck * amount);
+						var varPrice = $(this).prev().prev().prev().val();
+	
+						$(this).parent().next("td").next("td").text("");
+						$(this).parent().prev("td").find("input").val(varPrice);
+						$(this).parent().prev().prev().prev("td").find("input").val(varPrice);
+						
+						
+						$(this).parent().next("td").next("td").text(addComma(varPrice)+"원");
+						
+						if(amount > 1){
+							$(this).prev().prev().prev().prev().attr("src","${contextPath }/resources/images/minus.png");
+						}
 					}
 				})
-				$("#signM").click(function(){
-					if(amount > 1){
-						amount = Number(amount) - 1;
-						$(".amountT").val(amount);
-						console.log(amount);
-						if(amount < 2){
-							$("#signM").attr("src","${contextPath }/resources/images/XSIGN.png").css("transitionDuration","1s");
+				$(".signImgM").on("click",function(){
+					if($(this).parent().prev().prev().prev("td").find("input").prop("checked") == true){
+						swal("","선택된 상태로는 수량 변경을 할 수 없습니다.","error");
+					}else{
+						var amount = $(this).next().next().next().val();
+						if(amount > 1){
+							amount = Number(amount) - 1;
+							$(this).next().next().next().val(amount);
+							/* console.log(amount); */
+							
+							var valueCheck = $(this).next().next().val();
+							$(this).next().val("");
+							var realValue = $(this).next().val(valueCheck * amount);
+							var varPrice = $(this).next().val();
+							
+							$(this).parent().next("td").next("td").text("");
+							$(this).parent().next("td").next("td").text(varPrice);
+							$(this).parent().prev().prev().prev("td").find("input").val(varPrice);
+							$(this).parent().next("td").next("td").text(addComma(varPrice)+"원");
+							/* $("#totalPriceTd").text("총 주문 금액 : " + addComma(varPrice) + "원"); */
+							console.log(valChk);
+							if(amount < 2){
+								$(this).attr("src","${contextPath }/resources/images/XSIGN.png");
+							}
+							
+						}else if(amount == 1){
+								swal("","1개 미만은 선택하실 수 없습니다.","error");
 						}
-					}else if(amount == 1){
-						swal("","1개 미만은 선택하실 수 없습니다.","error");
 					}
 				})
 			})
@@ -203,7 +328,7 @@ jQuery(document).ready(function(){
 				$("#delBtn").on("click", function(){
 					var check = $("input:checkbox[class=chk]:checked").length;
 					if(check == 0){
-						swal("","체크된 상품이 존재하지 않습니다.","info");
+						swal("","선택된 상품이 없습니다.","error");
 					}else{
 						swal({
 							text : check + "개의 상품을 장바구니에서 삭제하시겠습니까?",
@@ -215,7 +340,32 @@ jQuery(document).ready(function(){
 							if(result){
 								
 							}else{
-								swal("",check+"개의 상품이 장바구니에서 삭제되었습니다.","success");
+								var checkArr = new Array();
+								$("input:checkbox[class='chk']:checked").each(function(){
+									checkArr.push($(this).attr("data-cartNo"));
+								})
+								$.ajax({
+									url : "basketDel.do",
+									data : {checkboxArr:checkArr},
+									type : "post",
+									success:function(data){
+										if(data == "success"){
+											swal("",check+"개의 상품이 장바구니에서 삭제되었습니다.","success").then((del)=>{
+												if(del){
+													location.reload();
+												}
+											})
+											
+										}else{
+											alert("실패");
+										}
+									},
+									error:function(request, status, errorData){
+					                	alert("error code: " + request.status + "\n"
+					                	+"message: " + request.responseText
+					                	+"error: " + errorData);
+					               }
+								})
 							}
 						})
 					}
@@ -228,9 +378,9 @@ jQuery(document).ready(function(){
 		<script>
 			$(function(){
 				$("#paymentBtn").on("click", function(){
-					var check = $("input:checkbox[class=chk]:checked").length;
+					var check = $("input:checkbox[class='chk']:checked").length;
 					if(check == 0){
-						swal("","체크된 상품이 존재하지 않습니다.","info");
+						swal("","결제하실 상품을 선택해 주세요.","error");
 					}else{
 						swal({
 							text : check + "개의 상품 " + "얼마를 결제하시겠습니까?",

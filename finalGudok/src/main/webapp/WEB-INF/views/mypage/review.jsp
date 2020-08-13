@@ -33,10 +33,11 @@
         font-size: 1em;
         font-weight: lighter;
         margin-left: 10%;
+        margin-bottom:5%;
     }
 
     .myPage_Menu>li {
-        margin-bottom: 5%;
+        margin-bottom: 10%;
     }
 
     .myPage_Menu li a {
@@ -193,7 +194,7 @@
                 </ul>
             </li>
             <li>
-                <a href="#news"><img src="resources/images/benefit.png"
+                <a href="#news"><img src="resources/images/my_benefit.png"
                         style="width: 25%; height: 25%; margin-right: 4%;">나의혜택</a>
                 <ul>
                     <li><a href="#">회원 등급</a></li>
@@ -223,7 +224,7 @@
 	        <div class="member_info">
 	          <div class="member">
 	            <div class="sub">
-	              <span class="name">홍길동 <span class="etc">&nbsp;님</span></span>
+	              <span class="name">${loginUser.memberName } <span class="etc">&nbsp;님</span></span>
 	              <br>
 	              <span class="grade">알 <span class="etc">&nbsp;등급</span></span>
 	              <br>
@@ -248,7 +249,7 @@
 	            <div class="sub">
 	              <span class="title"><a href="#" style="color: black;">적립금</a></span>
 	              <br><br>
-	              <span class="count"><a href="#" style="color :#115D8C;">0<span class="etc">&nbsp;건</span></a></span>
+	              <span class="count"><a href="#" style="color :#115D8C;">0<span class="etc">&nbsp;건</span></a></span>v
 	            </div>
 	          </div>
 	        </div>
@@ -263,27 +264,24 @@
 	            <td style="width: 50%;" class="top bottom">내용</td>
 	            <td style="width: 30%;" class="top bottom">수정/삭제</td>
 	          </tr>
-	          <tr>
-	            <td>2020.08.05</td>
-	            <td>로스터스 초이스 싱글 오리진 원두</td>
-	            <td>
-	              <button>수정</button>
-	              <button>삭제</button>
-	            </td>
-	          </tr>
-	          <tr>
-	            <td>2020.08.05</td>
-	            <td>로스터스 초이스 싱글 오리진 원두</td>
-	            <td>
-	              <button>수정</button>
-	              <button>삭제</button>
-	            </td>
-	          </tr>
+	          <c:forEach var="r" items="${list}">
+		          <tr>
+		            <td>${r.reviewDate}</td>
+		            <td>${r.reviewContent}</td>
+		            <c:url var="rdelete" value="reviewDelete.do">
+		            	<c:param name="reviewNo" value="${r.reviewNo}"/>
+		            </c:url>
+		            <td>
+		              <button >수정</button>
+		              <button type="button" onclick="location.href='${rdelete}'">삭제</button>
+		            </td>
+		          </tr>
+	          </c:forEach>
 	        </table>
 	      </div>
 	    </div>
     </div>
-    <hr style="margin-top:55%;">
+    <br style="clear:both;">
 	<jsp:include page="../common/footer.jsp"/>
 </body>
 </html>
