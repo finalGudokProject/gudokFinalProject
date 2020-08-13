@@ -36,6 +36,7 @@
 		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
 		<init-param>
 			<!-- encoding 값을 UTF-8로 지정하자 -->
+
 			<param-name>encoding</param-name>
 			<param-value>UTF-8</param-value>
 		</init-param>

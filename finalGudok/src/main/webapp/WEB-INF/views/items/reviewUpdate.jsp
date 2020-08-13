@@ -116,21 +116,12 @@
 					</div>
 					<c:if test="${loginUser.memberId == r.memberId }">
 						<div class="col-3" style="text-align:right;padding-right:2%;">
-							<input type="hidden" value="${r.reviewNo }">
 							<img src="resources/images/retouch.png" class="retouchImgC" style="width:3.5rem;border:1px solid lightgray;" title="상품평 수정하기">
 						</div>
 					</c:if>
 				</div>
 				</td>
 			</tr>
-			<script>
-				$(function(){
-					$(".retouchImgC").on("click", function(){
-						var reviewNo = $(this).prev().val();
-						location.href="reviewUpdate.do";
-					})
-				})
-			</script>
 			<tr>
 				<td>
 					<div class="starRev">
@@ -195,18 +186,7 @@
 				<tr>
 					<td>
 						<div style="padding:2%;border-top:1px dashed lightgray;">
-						<c:if test="${!empty r.reviewImg1 && !empty r.reviewImg2}">
-							<img src="resources/iuploadFiles/${r.reviewImg1 }" class="reviewImgClass">
-							<img src="resources/iuploadFiles/${r.reviewImg2 }" class="reviewImgClass">
-						</c:if>
-						<c:if test="${!empty r.reviewImg1 && empty r.reviewImg2 }">
-							<img src="resources/iuploadFiles/${r.reviewImg1 }" class="reviewImgClass">
-						</c:if>
-						<c:if test="${empty r.reviewImg1 && !empty r.reviewImg2 }">
-							<img src="resources/iuploadFiles/${r.reviewImg2 }" class="reviewImgClass">
-						</c:if>
-						<c:if test="${empty r.reviewImg1 && empty r.reviewImg2 }">
-						</c:if>
+							<img src="resources/images/breadLogo.jpg" class="reviewImgClass">
 						</div>
 					</td>
 				</tr>
@@ -229,6 +209,29 @@
 	    $(document).ready(function(){
 	        $(".retouchImgC").tooltip();
 	    });
+	</script>
+	
+	<script>
+		$(function(){
+			$('.starRev .starRv').click(function(){
+				$(this).parent().children('span').removeClass('on');
+				$(this).addClass('on').prevAll('span').addClass('on');
+				switch($(this).text()){
+				case "1" : $("input:radio[id=radio1]").prop("checked", true);
+					break;
+				case "2" : $("input:radio[id=radio2]").prop("checked", true);
+					break;
+				case "3" : $("input:radio[id=radio3]").prop("checked", true);
+					break;
+				case "4" : $("input:radio[id=radio4]").prop("checked", true);
+					break;
+				case "5" : $("input:radio[id=radio5]").prop("checked", true);
+					break;
+				}
+				
+			});
+		})
+		
 	</script>
 	
 	<script>

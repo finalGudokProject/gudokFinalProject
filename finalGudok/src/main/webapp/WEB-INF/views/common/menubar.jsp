@@ -199,67 +199,54 @@ section {
 		</button>
 
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
-			<!-- <ul class="navbar-nav mr-auto"> -->
-			<ul class="navbar-nav ml-auto">
-				<li class="nav-item"><a class="nav-link" href="#"><img
-						src="resources/images/new.png" width="50px" height="50px"><br>신상품</a>
-				</li>
-				<li class="nav-item"><a class="nav-link" href="#"><img
-						src="resources/images/best.png" width="50px" height="50px"><br>베스트</a>
-				</li>
-				<li class="nav-item dropdown"><a class="nav-link dropdown"
-					href="#" id="navbarDropdown1" role="button" aria-haspopup="true"
-					aria-expanded="false"> <img src="resources/images/food.png"
-						width="50px" height="50px"><br>Food
-				</a>
-					<div class="dropdown-menu" aria-labelledby="navbarDropdown1"
-						id="food-menu">
-						<a class="dropdown-item" href="#"><img
-							src="resources/images/beverage.png" width="30px" height="30px">&nbsp;음료</a>
-						<div class="dropdown-divider"></div>
-						<a class="dropdown-item" href="#"><img
-							src="resources/images/milk.png" width="30px" height="30px">&nbsp;유제품</a>
-						<div class="dropdown-divider"></div>
-						<a class="dropdown-item" href="#"><img
-							src="resources/images/bakery.png" width="30px" height="30px">&nbsp;베이커리</a>
-						<div class="dropdown-divider"></div>
-						<a class="dropdown-item" href="#"><img
-							src="resources/images/canned_food.png" width="30px" height="30px">&nbsp;간편식품</a>
-						<div class="dropdown-divider"></div>
-						<a class="dropdown-item" href="#"><img
-							src="resources/images/supplement.png" width="30px" height="30px">&nbsp;건강식품</a>
-						<div class="dropdown-divider"></div>
-						<a class="dropdown-item" href="#"><img
-							src="resources/images/diet_food.png" width="30px" height="30px">&nbsp;다이어트
-							식단</a>
-					</div></li>
-				<li class="nav-item dropdown"><a class="nav-link dropdown"
-					href="#" id="navbarDropdown2" role="button" aria-haspopup="true"
-					aria-expanded="false"> <img src="resources/images/living.png"
-						width="50px" height="50px"><br>리빙
-				</a>
-					<div class="dropdown-menu" aria-labelledby="navbarDropdown2"
-						id="living-menu">
-						<a class="dropdown-item" href="#"><img
-							src="resources/images/diffuser.png" width="30px" height="30px">&nbsp;홈데코</a>
-						<div class="dropdown-divider"></div>
-						<a class="dropdown-item" href="#"><img
-							src="resources/images/body_care.png" width="30px" height="30px">&nbsp;바디케어</a>
-						<div class="dropdown-divider"></div>
-						<a class="dropdown-item" href="#"><img
-							src="resources/images/mask.png" width="30px" height="30px">&nbsp;생활용품</a>
-					</div></li>
-				<li class="nav-item"><a class="nav-link" href="#"><img
-						src="resources/images/event.png" width="50px" height="50px"><br>이벤트</a>
-				</li>
-			</ul>
-			<!-- </ul> -->
-			<form class="form-inline my-2 my-lg-0" id="searchBar">
-				<input class="form-control mr-sm-2" type="search"
-					placeholder="검색어를 입력하세요" aria-label="Search">
-				<button class="btn" type="submit" id="searchBtn">Search</button>
-			</form>
-		</div>
+          <!-- <ul class="navbar-nav mr-auto"> -->
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="itemNew.do"><img src="resources/images/new.png" width="50px" height="50px"><br>신상품</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#"><img src="resources/images/best.png" width="50px" height="50px"><br>베스트</a>
+            </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown" href="itemFood.do" id="navbarDropdown1" role="button" aria-haspopup="true" aria-expanded="false">
+                <img src="resources/images/food.png" width="50px" height="50px"><br>Food
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown1" id="food-menu">
+                  <a class="dropdown-item" href="#"><img src="resources/images/beverage.png" width="30px" height="30px">&nbsp;음료</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="#"><img src="resources/images/milk.png" width="30px" height="30px">&nbsp;유제품</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="#"><img src="resources/images/bakery.png" width="30px" height="30px">&nbsp;베이커리</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="#"><img src="resources/images/canned_food.png" width="30px" height="30px">&nbsp;간편식품</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="#"><img src="resources/images/supplement.png" width="30px" height="30px">&nbsp;건강식품</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="#"><img src="resources/images/diet_food.png" width="30px" height="30px">&nbsp;다이어트 식단</a>
+                </div>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown" href="itemLiving.do" id="navbarDropdown2" role="button" aria-haspopup="true" aria-expanded="false">
+                <img src="resources/images/living.png" width="50px" height="50px"><br>리빙
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown2" id="living-menu">
+                  <a class="dropdown-item" href="#"><img src="resources/images/diffuser.png" width="30px" height="30px">&nbsp;홈데코</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="#"><img src="resources/images/body_care.png" width="30px" height="30px">&nbsp;바디케어</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="#"><img src="resources/images/mask.png" width="30px" height="30px">&nbsp;생활용품</a>
+                </div>
+              </li>
+            <li class="nav-item">
+              <a class="nav-link" href="itemEvent.do"><img src="resources/images/event.png" width="50px" height="50px"><br>이벤트</a>
+            </li>
+          </ul>
+          <!-- </ul> -->
+          <form class="form-inline my-2 my-lg-0" id="searchBar">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+          </form>
+        </div>
 	</nav>
 	<!-- <script>
 		// When the user scrolls the page, execute myFunction

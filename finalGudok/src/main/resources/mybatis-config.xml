@@ -9,6 +9,9 @@
 		<typeAlias type="com.kh.finalGudok.item.model.vo.Item" alias="Item"/>
 		<typeAlias type="com.kh.finalGudok.item.model.vo.ItemListView" alias="ItemListView"/>
 		<typeAlias type="com.kh.finalGudok.item.model.vo.Review" alias="Review"/>
+		<typeAlias type="com.kh.finalGudok.item.model.vo.Heart" alias="Heart"/>
+		<typeAlias type="com.kh.finalGudok.item.model.vo.Board" alias="Board"/>
+		<typeAlias type="com.kh.finalGudok.item.model.vo.Cart" alias="Cart"/>
 		<typeAlias type="com.kh.finalGudok.member.model.vo.Member" alias="Member"/>
 
 		<typeAlias type="com.kh.finalGudok.item.model.vo.AdminItem" alias="AdminItem"/>
@@ -19,17 +22,20 @@
 		<typeAlias type="com.kh.finalGudok.member.model.vo.Exchange" alias="mExchange"/>
 		<typeAlias type="com.kh.finalGudok.member.model.vo.Delivery" alias="mDelivery"/>
 		<typeAlias type="com.kh.finalGudok.member.model.vo.Cart" alias="mCart"/>
-		<typeAlias type="com.kh.finalGudok.board.model.vo.Board" alias="Board"/>
 	</typeAliases>
 	
 	<mappers>
 		<mapper resource="/mappers/item-mapper.xml"/>
 		<mapper resource="/mappers/itemList-mapper.xml"/>
 		<mapper resource="/mappers/review-mapper.xml"/>
+
 		<mapper resource="/mappers/member-mapper.xml"/>
 		<mapper resource="/mappers/adminItem-mapper.xml"/>
 
 		<mapper resource="/mappers/board-mapper.xml"/>
+
+		<mapper resource="/mappers/heart-mapper.xml"/>
+		<mapper resource="/mappers/cart-mapper.xml"/>
 	</mappers>
 
 </configuration>
