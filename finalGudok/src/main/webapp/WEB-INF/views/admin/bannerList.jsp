@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
   
-   
+    <script src="https://code.jquery.com/jquery-3.4.1.js" type="text/javascript"></script>
    
     <title>이벤트 배너 리스트</title>    
     <style>
@@ -94,7 +94,7 @@ input, select,textarea{
 	                                
 	                                </td>
 	                                <td>${eCountList[status.index] }</td>
-	                                <td>${e.eventStatus }</td>
+	                                <td id="eventStatus"><b>${e.eventStatus }</b></td>
 	                            </tr>
                             </c:forEach>
                            
@@ -104,6 +104,8 @@ input, select,textarea{
 
 
                     <br>
+
+
 
 
                     <!------페이징 처리----->
@@ -120,23 +122,25 @@ input, select,textarea{
 							<c:url var="blistBack" value="eList.do">
 								<c:param name="page" value="${pi.currentPage-1 }"/>
 							</c:url>
-	                        <li class="page-item-t disabled-t">
-	                        <a class="page-link-t" href="${blistBack }">
-	                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-left-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-  <path d="M3.86 8.753l5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/>
-</svg></a></li>
+		                        <li class="page-item-t">
+		                        <a class="page-link-t" href="${blistBack }">
+		                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-left-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+	  <path d="M3.86 8.753l5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/>
+	</svg></a></li>
 						</c:if>
 						
 						<!-- 번호들 -->
 						<c:forEach var="p" begin="${pi.startPage }" end="${pi.endPage }">
-							<c:if test="${p eq currentPage }">
-	                       		<li class="page-item-t" aria-current="page-t"><a class="page-link-t">${p }</a></li>
+							
+							<c:if test="${p eq pi.currentPage }">
+	                       		<li class="page-item-t  active-t"><a class="page-link-t">${p }<span class="sr-only"></span></a></li>
 							</c:if>
-	                        <c:if test="${p ne currenPage }">
+							
+	                        <c:if test="${p ne pi.currentPage }">
 	                        	<c:url var="blistCheck" value="eList.do">
 	                        		<c:param name="page" value="${p }"/>
                         		</c:url>
-		                        <li class="page-item-t active-t"><a class="page-link-t" href="${blistCheck }">${p } <span class="sr-only"></span></a>
+		                        <li class="page-item-t"><a class="page-link-t" href="${blistCheck }">${p } <span class="sr-only"></span></a>
 		                        </li>
 		                    </c:if>
                         </c:forEach>
@@ -153,7 +157,7 @@ input, select,textarea{
 							<c:url var="blistAfter" value="eList.do">
 								<c:param name="page" value="${pi.currentPage+1 }"/>
 							</c:url>
-	                        <li class="page-item-t disabled-t">
+	                        <li class="page-item-t">
 	                        <a class="page-link-t" href="${blistAfter }">
 	                       <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-right-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
   <path d="M12.14 8.753l-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
@@ -171,8 +175,11 @@ input, select,textarea{
         
         <script>
         
+        
+        
         //이벤트 게시
         	function eventStatusY(){
+        		var currentPage=${pi.currentPage};
         		var sendArr=Array();
         		var sendCnt=0;
         		var chkbox=$(".common");
@@ -184,11 +191,70 @@ input, select,textarea{
         			}
         		}
         		
-        		 location.href="eChangeY.do?sendArr="+sendArr;
+        		
+        		$.ajax({
+        				url:"eChangeY.do",
+        				type:"post",
+        				data:{"sendArr":sendArr},
+        				dataType:"json",
+        				success:function(data){
+        					
+        					alert(data);
+        					 if(data=="success"){
+	        					$("#eventStatus").html("");
+	        					$("#eventStatus").html("Y");
+        					}
+        					
+        				},
+        				error:function(request, status, errorData){
+		                    alert("error code: " + request.status + "\n"
+			                           +"message: " + request.responseText
+			                           +"error: " + errorData);
+			                  }   
+        				
+        				
+        				
+        			}); 
+        		 /* location.href="eChangeY.do?sendArr="+sendArr; */
         	
         	
         	
         }
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         
         	  //이벤트 중지
         	function eventStatusN(){
@@ -242,7 +308,8 @@ input, select,textarea{
         
        <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+   
+    <script integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
   </body>

@@ -1,6 +1,7 @@
 package com.kh.finalGudok.item.controller;
 
 import static com.kh.finalGudok.common.pagination.getPageInfo;
+import static com.kh.finalGudok.common.pagination2.getPageInfo2;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -24,8 +26,6 @@ import com.kh.finalGudok.item.model.vo.Item;
 import com.kh.finalGudok.item.model.vo.ItemListView;
 import com.kh.finalGudok.item.model.vo.PageInfo;
 import com.kh.finalGudok.item.model.vo.Review;
-
-import jdk.nashorn.internal.ir.RuntimeNode.Request;
 
 @Controller
 public class ItemController {
@@ -203,14 +203,22 @@ public class ItemController {
 		
 		int listCount=iService.getEventCount();
 		
-		PageInfo pi=getPageInfo(currentPage,listCount);
-		pi.setPageLimit(10); //보여질 페이지 총 갯수
-		pi.setBoardLimit(5); //게시판 한 페이지에 뿌려질 게시글 수
+		PageInfo pi=new PageInfo();
+		
+		int pageLimit=10; //보여질 페이지 총 갯수
+		int boardLimit=5; //게시판 한 페이지에 뿌려질 게시글 수
+		pi=getPageInfo2(currentPage,listCount,pageLimit,boardLimit);
 		
 		ArrayList<Event> list=iService.selectEventList(pi); //이벤트 리스트
 		ArrayList eCountList=iService.selectEventListCount(pi); //이벤트당 상품갯수
 		
 
+		System.out.println("첫페이지"+pi.getStartPage());
+		System.out.println("끝페이지"+pi.getEndPage());
+		System.out.println("지금페이지"+pi.getCurrentPage());
+		System.out.println("최대페이지"+pi.getMaxPage());
+		
+		
 		
 		if(list!=null&&eCountList!=null) {
 			mv.addObject("list",list);
@@ -225,9 +233,11 @@ public class ItemController {
 	}
 	
 	
+	
+
 	//이벤트 삭제
 	@RequestMapping("eDelete.do")
-	public String deleteEvent(HttpServletRequest request, String sendArr) {
+	public String deleteEvent(HttpServletRequest request,String sendArr) {
 		
 
 		String dEvent=request.getParameter("sendArr");
@@ -290,10 +300,17 @@ public class ItemController {
 	
 		//이벤트 게시
 		@RequestMapping("eChangeY.do")
-		public String updateEventStatusY(HttpServletRequest request, String sendArr) {
+		@ResponseBody
+		public String updateEventStatusY(HttpServletRequest request, @RequestParam(value="sendArr") String sendArr) {
 			
-			String dEvent=request.getParameter("sendArr");
-			String[] strArr=dEvent.split(",");
+		
+			System.out.println("y컨트롤러옴");
+			
+			
+//			String dEvent=request.getParameter("sendArr");
+			System.out.println(sendArr);
+			
+			String[] strArr=sendArr.split(",");
 			
 			int[] dEventArr=new int[strArr.length];
 			
@@ -310,8 +327,8 @@ public class ItemController {
 			
 			
 			if(result>0) {
-				
-				return "redirect:eList.do";
+				System.out.println("성공?");
+				return "success";
 				
 			}else {
 				throw new ItemException("이벤트 게시 변경 실패!");

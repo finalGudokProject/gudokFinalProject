@@ -69,7 +69,7 @@ public class ItemDao {
 		return (ArrayList)sqlSessionTemplate.selectList("adminItemMapper.selectEventList",null,rowBounds);
 	}
 
-	public ArrayList selecctEventListCount(PageInfo pi) {
+	public ArrayList selectEventListCount(PageInfo pi) {
 		int offset=(pi.getCurrentPage()-1)*pi.getBoardLimit();
 		RowBounds rowBounds=new RowBounds(offset,pi.getBoardLimit());
 		return (ArrayList)sqlSessionTemplate.selectList("adminItemMapper.selectEventListCount",null,rowBounds);

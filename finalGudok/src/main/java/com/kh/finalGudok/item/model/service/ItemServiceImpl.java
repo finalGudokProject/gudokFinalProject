@@ -76,7 +76,7 @@ public class ItemServiceImpl implements ItemService {
 
 	@Override
 	public ArrayList selectEventListCount(PageInfo pi) {
-		return iDao.selecctEventListCount(pi);
+		return iDao.selectEventListCount(pi);
 	}
 
 

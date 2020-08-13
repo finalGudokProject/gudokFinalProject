@@ -72,6 +72,7 @@
 		FROM EVENTLIST
 		WHERE EVENT_NO IS NOT NULL
 		GROUP BY EVENT_NO, EVENT_NAME,EVENT_STATUS
+        ORDER BY EVENT_NO DESC
 	</select>
 	
 	<select id="selectEventListCount" resultType="_int">
@@ -114,10 +115,12 @@
 		UPDATE EVENT
 		SET EVENT_STATUS='Y'
 		WHERE EVENT_NO=(#{i})
+		
 	</update>
 	<update id="updateEventStatusN" parameterType="_int">
 		UPDATE EVENT
 		SET EVENT_STATUS='N'
 		WHERE EVENT_NO=(#{i})
+		
 	</update>
 </mapper>
