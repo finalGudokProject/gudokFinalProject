@@ -28,4 +28,8 @@ public interface MemberService {
 
 	int insertExchange(Exchange e);
 
+	int checkIdDup(String id);
+
+	int insertMember(Member m);
+
 }

@@ -59,4 +59,14 @@ public class MemberServiceImpl implements MemberService {
 	public int insertExchange(Exchange e) {
 		return mDao.insertExchange(e);
 	}
+
+	@Override
+	public int checkIdDup(String id) {
+		return mDao.checkIdDup(id);
+	}
+
+	@Override
+	public int insertMember(Member m) {
+		return mDao.insertMember(m);
+	}
 }

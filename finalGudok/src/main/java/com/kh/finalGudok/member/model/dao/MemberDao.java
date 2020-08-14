@@ -52,4 +52,12 @@ public class MemberDao {
 	public int insertExchange(Exchange e) {
 		return sqlSessionTemplate.insert("memberMapper.insertExchange", e);
 	}
+
+	public int checkIdDup(String id) {
+		return sqlSessionTemplate.selectOne("memberMapper.idCheck", id);
+	}
+
+	public int insertMember(Member m) {
+		return sqlSessionTemplate.insert("memberMapper.insertMember", m);
+	}
 }

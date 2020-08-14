@@ -15,7 +15,6 @@ public class Member implements Serializable {
 	private String email;
 	private String memberPwd;
 	private String memberName;
-	private String phone;
 	private String address1;
 	private String address2;
 	private String address3;
@@ -29,7 +28,7 @@ public class Member implements Serializable {
 	
 	public Member() {}
 
-	public Member(int memberNo, String memberId, String email, String memberPwd, String memberName, String phone,
+	public Member(int memberNo, String memberId, String email, String memberPwd, String memberName,
 			String address1, String address2, String address3, String gender, Date enrollDate, Date modifyDate,
 			String memberStatus, String emailStatus, int point, int gradeNo) {
 		super();
@@ -38,7 +37,6 @@ public class Member implements Serializable {
 		this.email = email;
 		this.memberPwd = memberPwd;
 		this.memberName = memberName;
-		this.phone = phone;
 		this.address1 = address1;
 		this.address2 = address2;
 		this.address3 = address3;
@@ -89,14 +87,6 @@ public class Member implements Serializable {
 
 	public void setMemberName(String memberName) {
 		this.memberName = memberName;
-	}
-
-	public String getPhone() {
-		return phone;
-	}
-
-	public void setPhone(String phone) {
-		this.phone = phone;
 	}
 
 	public String getAddress1() {
@@ -186,7 +176,7 @@ public class Member implements Serializable {
 	@Override
 	public String toString() {
 		return "Member [memberNo=" + memberNo + ", memberId=" + memberId + ", email=" + email + ", memberPwd="
-				+ memberPwd + ", memberName=" + memberName + ", phone=" + phone + ", address1=" + address1
+				+ memberPwd + ", memberName=" + memberName + ", address1=" + address1
 				+ ", address2=" + address2 + ", address3=" + address3 + ", gender=" + gender + ", enrollDate="
 				+ enrollDate + ", modifyDate=" + modifyDate + ", memberStatus=" + memberStatus + ", emailStatus="
 				+ emailStatus + ", point=" + point + ", gradeNo=" + gradeNo + "]";
