@@ -169,7 +169,7 @@
 		SELECT *
 		FROM ITEM_LIST_VIEW ILV
 		LEFT JOIN ITEM I ON(ILV.ITEM_NO = I.ITEM_NO)
-		WHERE ITEM_DP_STATUS='Y' AND ILV.CATEGORY_NO='F1'
+		WHERE ITEM_DP_STATUS='Y' AND ILV.CATEGORY_NO='F2'
 		<choose>
 			<when test="test=='S1'">
 				ORDER BY I.ITEM_DATE DESC
@@ -196,7 +196,7 @@
 		SELECT *
 		FROM ITEM_LIST_VIEW ILV
 		LEFT JOIN ITEM I ON(ILV.ITEM_NO = I.ITEM_NO)
-		WHERE ITEM_DP_STATUS='Y' AND ILV.CATEGORY_NO='F1'
+		WHERE ITEM_DP_STATUS='Y' AND ILV.CATEGORY_NO='F3'
 		<choose>
 			<when test="test=='S1'">
 				ORDER BY I.ITEM_DATE DESC
@@ -224,7 +224,7 @@
 		SELECT *
 		FROM ITEM_LIST_VIEW ILV
 		LEFT JOIN ITEM I ON(ILV.ITEM_NO = I.ITEM_NO)
-		WHERE ITEM_DP_STATUS='Y' AND ILV.CATEGORY_NO='F1'
+		WHERE ITEM_DP_STATUS='Y' AND ILV.CATEGORY_NO='F4'
 		<choose>
 			<when test="test=='S1'">
 				ORDER BY I.ITEM_DATE DESC
@@ -252,7 +252,7 @@
 		SELECT *
 		FROM ITEM_LIST_VIEW ILV
 		LEFT JOIN ITEM I ON(ILV.ITEM_NO = I.ITEM_NO)
-		WHERE ITEM_DP_STATUS='Y' AND ILV.CATEGORY_NO='F1'
+		WHERE ITEM_DP_STATUS='Y' AND ILV.CATEGORY_NO='F5'
 		<choose>
 			<when test="test=='S1'">
 				ORDER BY I.ITEM_DATE DESC
@@ -280,7 +280,36 @@
 		SELECT *
 		FROM ITEM_LIST_VIEW ILV
 		LEFT JOIN ITEM I ON(ILV.ITEM_NO = I.ITEM_NO)
-		WHERE ITEM_DP_STATUS='Y' AND ILV.CATEGORY_NO='F1'
+		WHERE ITEM_DP_STATUS='Y' AND ILV.CATEGORY_NO='F6'
+		<choose>
+			<when test="test=='S1'">
+				ORDER BY I.ITEM_DATE DESC
+			</when>
+			<when test="test=='S2'">
+				ORDER BY I.ITEM_RATE DESC
+			</when>
+			<when test="test=='S3'">
+				ORDER BY I.ITEM_PRICE DESC
+			</when>
+			<otherwise>
+				ORDER BY I.ITEM_PRICE ASC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="livingCount" parameterType="string" resultType="_int">
+		SELECT COUNT(*)
+		FROM ITEM_LIST_VIEW ILV
+		JOIN ITEM I ON(ILV.ITEM_NO = I.ITEM_NO)
+		WHERE ITEM_DP_STATUS='Y'
+		AND I.CATEGORY_NO =#{categoryNo}
+	</select>
+	
+	<select id="livingCateList" parameterType="map" resultMap="itemListResultSet">
+		SELECT *
+		FROM ITEM_LIST_VIEW ILV
+		LEFT JOIN ITEM I ON(ILV.ITEM_NO = I.ITEM_NO)
+		WHERE ITEM_DP_STATUS='Y' AND I.CATEGORY_NO='L1'
 		<choose>
 			<when test="test=='S1'">
 				ORDER BY I.ITEM_DATE DESC

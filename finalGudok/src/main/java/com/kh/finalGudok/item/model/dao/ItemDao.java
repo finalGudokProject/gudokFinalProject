@@ -11,10 +11,12 @@ import org.springframework.stereotype.Repository;
 import com.kh.finalGudok.item.model.vo.Board;
 import com.kh.finalGudok.item.model.vo.Cart;
 import com.kh.finalGudok.item.model.vo.Heart;
+import com.kh.finalGudok.item.model.vo.Image;
 import com.kh.finalGudok.item.model.vo.Item;
 import com.kh.finalGudok.item.model.vo.ItemListView;
 import com.kh.finalGudok.item.model.vo.PageInfo;
 import com.kh.finalGudok.item.model.vo.Review;
+import com.kh.finalGudok.item.model.vo.ReviewImage;
 
 @Repository("iDao")
 public class ItemDao {
@@ -231,8 +233,66 @@ public class ItemDao {
 		return (ArrayList)sqlSessionTemplate.selectList("itemListMapper.selectDiLists",map,rowBounds);
 	}
 
-//	public int insertReviewImg(ReviewView i) {
-//		return sqlSessionTemplate.insert("reviewMapper.insertReviewImg", i);
+	public int insertReviewImage1(Image i) {
+		return sqlSessionTemplate.insert("reviewMapper.insertReviewImage1",i);
+	}
+
+	public int insertReviewImage2(Image i) {
+		return sqlSessionTemplate.insert("reviewMapper.insertReviewImage2",i);
+	}
+	
+	public int insertRI(ReviewImage ri) {
+		return sqlSessionTemplate.insert("reviewMapper.insertRI",ri);
+	}
+
+	public int livingCateCount(String categoryNo) {
+		return sqlSessionTemplate.selectOne("itemListMapper.livingCount", categoryNo);
+	}
+
+	public ArrayList<ItemListView> livingCateList(PageInfo pi, String categoryNo) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		HashMap<String, String> map = new HashMap<>();
+		map.put("living", categoryNo);
+		return (ArrayList)sqlSessionTemplate.selectList("itemListMapper.livingCateList",map,rowBounds);
+	}
+
+
+//	public int l1Count() {
+//		return sqlSessionTemplate.selectOne("itemListMapper.l1Count");
 //	}
+//
+//	public int l2Count() {
+//		return sqlSessionTemplate.selectOne("itemListMapper.l2Count");
+//	}
+//
+//	public int l3Count() {
+//		return sqlSessionTemplate.selectOne("itemListMapper.l3Count");
+//	}
+//
+//	public ArrayList<ItemListView> l1List(PageInfo pi, String sortNo) {
+//		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+//		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+//		HashMap<String, String> map = new HashMap<>();
+//		map.put("test",sortNo);
+//		return (ArrayList)sqlSessionTemplate.selectList("itemListMapper.selectDiLists",map,rowBounds);
+//	}
+//
+//	public ArrayList<ItemListView> l2List(PageInfo pi, String sortNo) {
+//		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+//		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+//		HashMap<String, String> map = new HashMap<>();
+//		map.put("test",sortNo);
+//		return (ArrayList)sqlSessionTemplate.selectList("itemListMapper.selectDiLists",map,rowBounds);
+//	}
+//
+//	public ArrayList<ItemListView> l3List(PageInfo pi, String sortNo) {
+//		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+//		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+//		HashMap<String, String> map = new HashMap<>();
+//		map.put("test",sortNo);
+//		return (ArrayList)sqlSessionTemplate.selectList("itemListMapper.selectDiLists",map,rowBounds);
+//	}
+
 
 }

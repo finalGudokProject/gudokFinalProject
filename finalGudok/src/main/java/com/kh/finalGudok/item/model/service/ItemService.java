@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.kh.finalGudok.item.model.vo.Board;
 import com.kh.finalGudok.item.model.vo.Cart;
 import com.kh.finalGudok.item.model.vo.Heart;
+import com.kh.finalGudok.item.model.vo.Image;
 import com.kh.finalGudok.item.model.vo.Item;
 import com.kh.finalGudok.item.model.vo.ItemListView;
 import com.kh.finalGudok.item.model.vo.PageInfo;
@@ -98,6 +99,26 @@ public interface ItemService {
 
 	ArrayList<ItemListView> selectDiLists(PageInfo pi, String sortNo);
 
-//	int insertReviewImg(ReviewView i);
+	int insertReviewImage1(Image i);
 
+	int insertReviewImage2(Image i);
+
+	int insertRI(ReviewImage ri);
+
+	int livingCateCount(String catecoryNo);
+
+	ArrayList<ItemListView> livingCateList(PageInfo pi, String categoryNo);
+
+//	int l1Count();
+//
+//	int l2Count();
+//
+//	int l3Count();
+//
+//	ArrayList<ItemListView> l1List(PageInfo pi, String sortNo);
+//
+//	ArrayList<ItemListView> l2List(PageInfo pi, String sortNo);
+//
+//	ArrayList<ItemListView> l3List(PageInfo pi, String sortNo);
+	
 }

@@ -62,11 +62,27 @@
 		WHERE ITEM_NO=#{itemNo}
 	</update>
 	
-	<!-- <insert id="insertReviewImg" parameterType="ReviewView">
+	<insert id="insertReviewImage1" parameterType="Image">
 		INSERT INTO IMAGE
 		VALUES(SEQ_IMAGE_NO.NEXTVAL
-			, IMAGE_PATH=DEFAULT
-			, IMAGE_ORIGINAL_NAME=#{imageOriginalName}
-			, IMAGE_RENAME=#{imageRename})
-	</insert> -->
+			, DEFAULT
+			, #{imageOriginalName}
+			, #{imageRename})
+	</insert>
+	
+	<insert id="insertReviewImage2" parameterType="Image">
+		INSERT INTO IMAGE
+		VALUES(SEQ_IMAGE_NO.NEXTVAL
+			, DEFAULT
+			, #{imageOriginalName}
+			, #{imageRename})
+	</insert>
+	
+	<insert id="insertRI" parameterType="ReviewImage">
+		INSERT INTO REVIEW_IMAGE (REVIEWIMAGE_NO, REVIEW_NO, R_IMAGE_NO)
+		VALUES(SEQ_REVIEWIMAGE_NO.NEXTVAL
+		        , (SELECT MAX(REVIEW_NO) FROM REVIEW)
+		        , (SELECT MAX(IMAGE_NO) FROM IMAGE))
+	</insert>
+	
 </mapper>

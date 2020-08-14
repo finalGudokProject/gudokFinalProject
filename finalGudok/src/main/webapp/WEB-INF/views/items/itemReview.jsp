@@ -123,14 +123,7 @@
 				</div>
 				</td>
 			</tr>
-			<script>
-				$(function(){
-					$(".retouchImgC").on("click", function(){
-						var reviewNo = $(this).prev().val();
-						location.href="reviewUpdate.do";
-					})
-				})
-			</script>
+			
 			<tr>
 				<td>
 					<div class="starRev">
@@ -225,7 +218,6 @@
 		
 		</div>
 	</div>
-	
 	<script type="text/javascript">
 	    $(document).ready(function(){
 	        $(".retouchImgC").tooltip();
@@ -234,8 +226,8 @@
 	
 	<script>
 		$(function(){
-			$("div .retouchImgC").on("mouseenter", function(){
-				console.log("이미지");
+			$(".retouchImgC").on("mouseenter", function(){
+				
 				$(this).attr("src","${contextPath }/resources/images/retouchHover.png").css("cursor","pointer");
 			}).on("mouseleave", function(){
 				$(this).attr("src","${contextPath }/resources/images/retouch.png");
@@ -249,7 +241,9 @@
 					if(result){
 						
 					}else{
-						swal("","모달창 띄워주기");
+						var reviewNo = $(this).parent().find("input").val();
+						console.log(reviewNo);
+						location.href="reviewUpdate.do?reviewNo=" + reviewNo;
 					}
 				})
 			})
