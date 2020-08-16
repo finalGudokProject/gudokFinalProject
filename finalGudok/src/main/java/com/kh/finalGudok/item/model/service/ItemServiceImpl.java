@@ -254,6 +254,11 @@ public class ItemServiceImpl implements ItemService {
 		return iDao.livingCateList(pi, categoryNo);
 	}
 
+	@Override
+	public ArrayList<Item> selectNewList(PageInfo pi, String sortNo) {
+		return iDao.selectNewList(pi, sortNo);
+	}
+
 //	@Override
 //	public int l1Count() {
 //		return iDao.l1Count();

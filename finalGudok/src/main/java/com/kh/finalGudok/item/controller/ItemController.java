@@ -41,7 +41,7 @@ public class ItemController {
 	ItemService iService;
 	
 	@RequestMapping("itemNew.do")
-	private ModelAndView itemNew(ModelAndView mv, @RequestParam(value="page",required=false)Integer page) {
+	private ModelAndView itemNew(ModelAndView mv, @RequestParam(value="page",required=false)Integer page, String sortNo) {
 		int currentPage = 1;
 		if(page != null) {
 			currentPage = page;
@@ -49,9 +49,15 @@ public class ItemController {
 		int listCount = iService.getNewCount();
 		System.out.println("newListCount : " + listCount);
 		PageInfo pi = getPageInfo(currentPage, listCount);
-		ArrayList<Item> list = iService.selectNewList(pi);
-		System.out.println("itemNew list : " + list);
-		mv.addObject("list",list).addObject("pi", pi).setViewName("items/itemNew");
+		if(sortNo == null) {
+			ArrayList<Item> list = iService.selectNewList(pi);
+			mv.addObject("list",list).addObject("pi", pi).setViewName("items/itemNew");
+			System.out.println("itemNew list : " + list);
+		}else if(sortNo != null) {
+			ArrayList<Item> list = iService.selectNewList(pi, sortNo);
+			mv.addObject("list",list).addObject("pi", pi).setViewName("items/itemNew");
+			System.out.println("itemNew list : " + list);
+		}
 		return mv;
 	}
 	
@@ -150,7 +156,7 @@ public class ItemController {
 			System.out.println("리빙 Count : " + livingCateCount);
 			PageInfo pi = getPageInfo(currentPage, livingCateCount);
 			ArrayList<ItemListView> livingCateList = iService.livingCateList(pi, categoryNo);
-			mv.addObject("list", livingCateList).addObject("pi", pi).setViewName("items/itemFood");
+			mv.addObject("list", livingCateList).addObject("pi", pi).setViewName("items/itemLiving");
 		}
 		return mv;
 	}	
