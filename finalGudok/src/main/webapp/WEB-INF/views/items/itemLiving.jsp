@@ -231,10 +231,12 @@
 					<td style="width:10%;" id="foodDiet" class="sortCate"><input type="hidden" value="L3">홈데코</td>
 				</tr>
 			</table>
+			<div style="display:none;"><input type="hidden" name="categoryNo" id="categoryInput"></div>
 			<script>
 				$(function(){
 					$(".sortCate").on("click", function(){
 						var sort = $(this).find("input").val();
+						$("#categoryInput").val(sort);
 						location.href="livingSort.do?categoryNo="+sort;
 					})
 				})
@@ -267,7 +269,7 @@
 						var hidden2 = $(this).find("input:nth-child(2)").val();
 						console.log(hidden1);
 						console.log(hidden2);
-						location.href="fSort.do?categoryNo=" + hidden1 + "&sortNo=" + hidden2;
+						location.href="livingSort.do?categoryNo=" + hidden1 + "&sortNo=" + hidden2;
 					})
 				})
 			</script>

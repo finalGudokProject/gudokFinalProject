@@ -311,13 +311,13 @@
 		LEFT JOIN ITEM I ON(ILV.ITEM_NO = I.ITEM_NO)
 		WHERE ITEM_DP_STATUS='Y' AND I.CATEGORY_NO=#{categoryNo}
 		<choose>
-			<when test="test=='S1'">
+			<when test="sortNo=='S1'">
 				ORDER BY I.ITEM_DATE DESC
 			</when>
-			<when test="test=='S2'">
+			<when test="sortNo=='S2'">
 				ORDER BY I.ITEM_RATE DESC
 			</when>
-			<when test="test=='S3'">
+			<when test="sortNo=='S3'">
 				ORDER BY I.ITEM_PRICE DESC
 			</when>
 			<otherwise>

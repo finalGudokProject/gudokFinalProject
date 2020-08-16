@@ -107,7 +107,7 @@ public interface ItemService {
 
 	int livingCateCount(String catecoryNo);
 
-	ArrayList<ItemListView> livingCateList(PageInfo pi, String categoryNo);
+	ArrayList<ItemListView> livingCateList(PageInfo pi, String categoryNo, String sortNo);
 
 	ArrayList<Item> selectNewList(PageInfo pi, String sortNo);
 

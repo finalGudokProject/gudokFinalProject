@@ -146,7 +146,7 @@ public class ItemController {
 	
 	
 	@RequestMapping("livingSort.do")
-	public ModelAndView livingSort(ModelAndView mv, @RequestParam(value = "page", required = false) Integer page, String categoryNo) {
+	public ModelAndView livingSort(ModelAndView mv, @RequestParam(value = "page", required = false) Integer page, String categoryNo, @RequestParam(value="sortNo", required=false) String sortNo) {
 		int currentPage = 1;
 		if(page != null) {
 			currentPage = page;
@@ -155,7 +155,7 @@ public class ItemController {
 			int livingCateCount = iService.livingCateCount(categoryNo);
 			System.out.println("리빙 Count : " + livingCateCount);
 			PageInfo pi = getPageInfo(currentPage, livingCateCount);
-			ArrayList<ItemListView> livingCateList = iService.livingCateList(pi, categoryNo);
+			ArrayList<ItemListView> livingCateList = iService.livingCateList(pi, categoryNo, sortNo);
 			mv.addObject("list", livingCateList).addObject("pi", pi).setViewName("items/itemLiving");
 		}
 		return mv;
@@ -217,13 +217,7 @@ public class ItemController {
 		ArrayList<Item> list = iService.selectLivingList(pi);
 //		System.out.println("ArrayList : " + list);
 		
-		if(list != null) {
-			mv.addObject("list", list);
-			mv.addObject("pi", pi);
-			mv.setViewName("items/itemLiving");
-		}else {
-			throw new ItemException("아이템 조회 실패");
-		}
+		mv.addObject("list", list).addObject("pi", pi).setViewName("items/itemLiving");
 		return mv;
 	}
 	

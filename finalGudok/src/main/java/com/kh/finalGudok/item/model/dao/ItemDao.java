@@ -249,11 +249,12 @@ public class ItemDao {
 		return sqlSessionTemplate.selectOne("itemListMapper.livingCount", categoryNo);
 	}
 
-	public ArrayList<ItemListView> livingCateList(PageInfo pi, String categoryNo) {
+	public ArrayList<ItemListView> livingCateList(PageInfo pi, String categoryNo, String sortNo) {
 		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		HashMap<String, String> map = new HashMap<>();
-		map.put("living", categoryNo);
+		map.put("categoryNo", categoryNo);
+		map.put("sortNo", sortNo);
 		return (ArrayList)sqlSessionTemplate.selectList("itemListMapper.livingCateList",map,rowBounds);
 	}
 

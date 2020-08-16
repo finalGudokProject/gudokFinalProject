@@ -250,8 +250,8 @@ public class ItemServiceImpl implements ItemService {
 	}
 
 	@Override
-	public ArrayList<ItemListView> livingCateList(PageInfo pi, String categoryNo) {
-		return iDao.livingCateList(pi, categoryNo);
+	public ArrayList<ItemListView> livingCateList(PageInfo pi, String categoryNo, String sortNo) {
+		return iDao.livingCateList(pi, categoryNo, sortNo);
 	}
 
 	@Override
