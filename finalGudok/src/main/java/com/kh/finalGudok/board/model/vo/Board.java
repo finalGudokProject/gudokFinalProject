@@ -24,14 +24,13 @@ public class Board implements Serializable {
 	private String imagePath;		// 이미지 경로
 	private int bItem_no;			// 상품번호
 	private int rownum;				// 게시물 번호 순서를 위한 rownum
-	private String FilePath;		// 수정할 파일경로
 	
 	public Board() {
 	}
 
 	public Board(int bMember_no, String bMember_id, String bEmail, String bBoard_code, int bBoard_no, String bTitle,
 			String bContent, Date bWrite_date, int bRead_num, String originalFileName, String renameFileName,
-			String imagePath, int bItem_no, int rownum, String filePath) {
+			String imagePath, int bItem_no, int rownum) {
 		this.bMember_no = bMember_no;
 		this.bMember_id = bMember_id;
 		this.bEmail = bEmail;
@@ -46,7 +45,6 @@ public class Board implements Serializable {
 		this.imagePath = imagePath;
 		this.bItem_no = bItem_no;
 		this.rownum = rownum;
-		FilePath = filePath;
 	}
 
 	public int getbMember_no() {
@@ -161,14 +159,6 @@ public class Board implements Serializable {
 		this.rownum = rownum;
 	}
 
-	public String getFilePath() {
-		return FilePath;
-	}
-
-	public void setFilePath(String filePath) {
-		FilePath = filePath;
-	}
-
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
@@ -179,9 +169,10 @@ public class Board implements Serializable {
 				+ ", bBoard_code=" + bBoard_code + ", bBoard_no=" + bBoard_no + ", bTitle=" + bTitle + ", bContent="
 				+ bContent + ", bWrite_date=" + bWrite_date + ", bRead_num=" + bRead_num + ", originalFileName="
 				+ originalFileName + ", renameFileName=" + renameFileName + ", imagePath=" + imagePath + ", bItem_no="
-				+ bItem_no + ", rownum=" + rownum + ", FilePath=" + FilePath + "]";
+				+ bItem_no + ", rownum=" + rownum + "]";
 	}
 
+	
 	
 		
 }

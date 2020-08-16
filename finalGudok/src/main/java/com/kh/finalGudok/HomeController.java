@@ -24,7 +24,7 @@ public class HomeController {
 	public String home(Locale locale, Model model) {
 		return "admin/adminNoticeList";
 //		return "home";
-
+//		return "serviceCenter/inquiryInsert";
 	}
 	
 }

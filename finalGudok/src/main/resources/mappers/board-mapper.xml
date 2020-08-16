@@ -2,6 +2,24 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="boardMapper">
 
+	<resultMap type="bBoard" id="boardResultSet1">
+		<id property="rownum" column="ROWNUM"/>
+		<result property="bBoard_no" column="BOARD_NO"/>
+		<result property="bMember_no" column="MEMBER_NO"/>
+		<result property="bMember_id" column="MEMBER_ID"/>
+		<result property="bEmail" column="EMAIL"/>
+		<result property="bItem_no" column="ITEM_NO"/>
+		<result property="bBoard_code" column="BOARD_CODE"/>
+		<result property="bTitle" column="TITLE"/>
+		<result property="bContent" column="CONTENT"/>
+		<result property="bWrite_date" column="WRITE_DATE"/>
+		<result property="bRead_num" column="READ_NUM"/>
+		<result property="originalFileName" column="IMAGE_ORIGINAL_NAME"/>
+		<result property="renameFileName" column="IMAGE_RENAME"/>
+		<result property="imagePath" column="IMAGE_PATH"/>
+		<result property="bItem_no" column="ITEM_NO"/>
+	</resultMap>
+	
 	<resultMap type="Board" id="boardResultSet">
 		<id property="rownum" column="ROWNUM"/>
 		<result property="bBoard_no" column="BOARD_NO"/>
@@ -27,7 +45,7 @@
 		FROM BOARD
 	</select>
 	
-	<select id="getBoardList" resultMap="boardResultSet">
+	<select id="getBoardList" resultMap="boardResultSet1">
 		SELECT ROWNUM, B.*
 		FROM (SELECT *
         FROM BOARD B
@@ -38,7 +56,7 @@
         ORDER BY ROWNUM DESC
 	</select>
 	
-	<select id="selectNoticeDetail" parameterType="int" resultMap="boardResultSet">
+	<select id="selectNoticeDetail" parameterType="int" resultMap="boardResultSet1">
 		SELECT *
 		FROM BOARD B
         LEFT JOIN BOARD_IMAGE BI on (B.BOARD_NO = BI.BOARD_NO)
@@ -78,7 +96,7 @@
 		FROM DUAL
 	</insert>
 	
-	<select id="selectAdminNoticeDetail" parameterType="int" resultMap="boardResultSet">
+	<select id="selectAdminNoticeDetail" parameterType="int" resultMap="boardResultSet1">
 		SELECT *
 		FROM BOARD B
         LEFT JOIN BOARD_IMAGE BI on (B.BOARD_NO = BI.BOARD_NO)
@@ -86,14 +104,37 @@
         WHERE B.BOARD_NO = #{b.bBoard_no}
 	</select>
 	
+	<update id="updateAdminNoticeUpdateImg" parameterType="Board">
+		UPDATE IMAGE
+		SET IMAGE_PATH = #{imagePath}
+						, IMAGE_ORIGINAL_NAME = #{originalFileName}
+						, IMAGE_RENAME = #{renameFileName}
+		WHERE IMAGE_NO IN
+		(SELECT BOARDIMAGE_NO
+		FROM BOARD_IMAGE
+		WHERE BOARD_NO IN #{bBoard_no})
+	</update>
+	<update id="updateAdminNoticeUpdate" parameterType="Board">
+		UPDATE BOARD
+		SET TITLE = #{bTitle}
+					, CONTENT = #{bContent}
+		WHERE BOARD_NO = #{bBoard_no}
+	</update>
+	
 	<delete id="deleteAdminNoticeImage" parameterType="int">
 		DELETE FROM IMAGE
-		WHERE IMAGE_NO = #{bBoard_no}
+		WHERE IMAGE_NO IN
+		(SELECT BOARDIMAGE_NO
+		FROM BOARD_IMAGE
+		WHERE BOARD_NO IN #{bBoard_no})
 	</delete>
 
 	<delete id="deleteAdminNoticeBoardImg" parameterType="int">
 		DELETE FROM BOARD_IMAGE
-		WHERE BOARDIMAGE_NO= #{bBoard_no}
+		WHERE BOARDIMAGE_NO IN
+		(SELECT BOARD_NO
+		FROM BOARD
+		WHERE BOARD_NO IN #{bBoard_no})
 	</delete>
 
 	<delete id="deleteAdminNoticeBoard" parameterType="int">
@@ -101,18 +142,7 @@
 		WHERE BOARD_NO = #{bBoard_no}
 	</delete>
 	
-	<update id="updateAdminNoticeUpdateImg" parameterType="Board">
-		UPDATE IMAGE
-		SET IMAGE_ORIGINAL_NAME = #{originalFileName}
-			, IMAGE_RENAME = #{renameFileName}
-		WHERE IMAGE_NO = #{bBoard_no}
-	</update>
-	<update id="updateAdminNoticeUpdate" parameterType="Board">
-		UPDATE BOARD
-		SET TITLE = #{bTitle}
-			, CONTENT = #{bContent}
-		WHERE BOARD_NO = #{bBoard_no}
-	</update>
+	
 	
 	
 </mapper>

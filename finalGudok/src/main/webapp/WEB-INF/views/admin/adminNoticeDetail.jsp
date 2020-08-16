@@ -10,7 +10,7 @@
     <title></title>
     <style>
    table {
-    width: 100%;
+    width: 100%;	
     border: 1px solid #CCCCCC !important;
   }
   th, td {
@@ -41,7 +41,7 @@
 
         <div style="font-size: 30px;">공지사항</div>
         <hr style="border-color:rgb(0, 125, 255);">
-
+ 
                  <table style="margin-top:15px">
 	                <thead style="text-align: center;">
 	                  <tr>
@@ -60,7 +60,7 @@
 	                        ${board.bContent }
 	                        </span>
 	                        <br><br>
-	                        <c:if test="${!empty board.originalFileName }">
+	                        <c:if test="${!empty board.imagePath }">
 		                        <center>
 	                          		<img src="${contextPath }/resources/aNoticeUploadFiles/${board.renameFileName }">
 	                        	</center>
@@ -70,14 +70,19 @@
 	                </tbody>
               	</table>
             <br><br>
-            <c:url var="bupdateView" value="bupdateView.do">
+            <c:url var="aNoticeUpdateView" value="aNoticeUpdateView.do">
 						<c:param name="bBoard_no" value="${board.bBoard_no }"/>
 						<c:param name="page" value="${currentPage }"/>
 			</c:url>
+			<c:url var="adminNoticeDelete" value="adminNoticeDelete.do">
+						<c:param name="bBoard_no" value="${board.bBoard_no }"/>
+			</c:url>
             &nbsp;&nbsp;<a href="adminNoticeList.do" type="button" class="btn btn-primary" style="float:right;">목록으로</a>
-            <a href="${bupdateView }" type="button" class="btn btn-primary" style="float:right;margin-right:10px">수정</a>
-            <a href="adminNoticeDelete.do" type="button" class="btn btn-primary" style="float:right;margin-right:10px">삭제</a>
+            <a href="${aNoticeUpdateView }" type="button" class="btn btn-primary" style="float:right;margin-right:10px">수정</a>
+            <a href="${adminNoticeDelete }" type="button" class="btn btn-primary" style="float:right;margin-right:10px">삭제</a>
+           
             <br><br><br>
+            
 
     </div><!--하얀박스 있는부분 끝-->
   </div><!--회색바탕 div-->

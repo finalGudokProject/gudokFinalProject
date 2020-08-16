@@ -154,9 +154,11 @@ public class BoardController {
 	}
 	
 	
+	
 		
 	// UpDate
-	@RequestMapping("bupdateView.do")
+	
+	@RequestMapping("aNoticeUpdateView.do")
 	public ModelAndView boardUpdateView(ModelAndView mv, Integer bBoard_no,
 										@RequestParam("page") Integer page) {
 		Board board = bService.selectAdminNoticeDetail(bBoard_no);
@@ -172,20 +174,22 @@ public class BoardController {
 											@RequestParam("page") Integer page,
 											@RequestParam(value="uploadFile", required=false)
 											MultipartFile file) {
-		String renameFileName="";
-			
-			if(!file.getOriginalFilename().equals("")) {	
-			if(b.getRenameFileName() != null) {			
-			deleteFile1(b.getRenameFileName(), request);
 
-			}
-			renameFileName = saveFile(file, request);
-			}
+			if(!file.getOriginalFilename().equals("")) {	// 원래 파일명이 존재하면
+				if(b.getRenameFileName() != null) {			// 바뀐이름이 존재하면
+				deleteFile(b.getRenameFileName(), request);	// 바뀐이름 삭제
+				}
+				String renameFileName = saveFile(file, request);
 			
 			
 			b.setOriginalFileName(file.getOriginalFilename());
 			b.setRenameFileName(renameFileName);
+			} 
+			String root=request.getSession().getServletContext().getRealPath("resources");
+			String savePath=root+"\\aNoticeUploadFiles";
+			b.setImagePath(savePath);
 			
+
 			int result1 = bService.updateAdminNoticeUpdateImg(b);
 			int result2 = bService.updateAdminNoticeUpdate(b);
 			
@@ -199,15 +203,6 @@ public class BoardController {
 		
 	}
 	
-	private void deleteFile1(String fileName, HttpServletRequest request) {
-		String root = request.getSession().getServletContext().getRealPath("resources");
-		String savePath = root + "\\aNoticeUploadFiles";
-		
-		File f = new File(savePath + "\\" + fileName);
-		if(f.exists()) {
-			f.delete();
-		}
-	}
 	
 	// Delete
 	
@@ -223,9 +218,9 @@ public class BoardController {
 	
 	@RequestMapping("adminNoticeDelete.do")
 	public String boardDelete(Integer bBoard_no, HttpServletRequest request) {
-		
-		// 게시글을 삭제하기 전에 기존의 파일을 지운다.
+		System.out.println(bBoard_no);
 		Board b = bService.selectAdminNoticeDetail(bBoard_no);
+		System.out.println(b);
 		if(b.getOriginalFileName() != null) {
 			deleteFile(b.getRenameFileName(), request);
 		}

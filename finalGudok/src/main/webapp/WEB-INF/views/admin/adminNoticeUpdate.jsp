@@ -142,8 +142,7 @@
             	<input type="hidden" name="page" value="${currentPage }">
 				<input type="hidden" name="bBoard_no" value="${board.bBoard_no }">
 				<input type="hidden" name="renameFileName" value="${board.renameFileName }">
-				<input type="hidden" name="bTitle" value="${board.bTitle }">
-				<input type="hidden" name="bContent" value="${board.bContent }">
+				<input type="hidden" name="originalFileName" value="${board.originalFileName }">
                 <div style="font-size: 30px;">공지사항</div><br>
                 <hr style="border-color:rgb(0, 125, 255);">
                 <table style="text-align: center; margin-top:15px">
@@ -151,12 +150,12 @@
                         <tr>
                             <th style="padding:20px;" >제목</th>
                             <td>
-                                <textarea class="form-control" rows="1" style="resize: none;width:907px;">${board.bTitle }</textarea>
+                                <textarea class="form-control" rows="1" name="bTitle" style="resize: none;width:907px;">${board.bTitle }</textarea>
                             </td>
                         </tr>
                         <tr>
                             <th style="padding:20px;">내용</th>
-                            <td><textarea class="form-control" rows="15" style="resize: none;">${board.bContent }</textarea>
+                            <td><textarea class="form-control" rows="15" name="bContent" style="resize: none;">${board.bContent }</textarea>
                             <br><br>
 	                        <c:if test="${!empty board.originalFileName }">
 		                        <center>
@@ -168,15 +167,7 @@
                             <th style="padding:20px;">이미지</th><td><div class="filebox bs3-primary preview-image">
                             <input class="upload-name" value="파일선택" disabled="disabled" style="width: 200px;">
                             <label for="input_file">업로드</label> 
-                            <input type="file" id="input_file" class="upload-hidden"> 
-                            <input type="file" name="uploadFile">
-							<c:if test="${!empty board.originalFileName }">
-								<br>현재 업로드 한 파일:
-								<a href="${contextPath }/resources/aNoticeUploadFiles/${board.renameFileName}"
-								download="${board.originalFileName }">
-									${board.originalFileName }
-								</a>
-							</c:if>
+                            <input type="file" id="input_file" name="uploadFile" class="upload-hidden">
                         </div>
                         </tr>
                     </tbody>
