@@ -228,7 +228,7 @@ public class ItemController {
 	}
 	
 	@RequestMapping("itemEvent.do")
-	public ModelAndView itemEventList(ModelAndView mv, @RequestParam(value = "page", required = false) Integer page){
+	public ModelAndView itemEventList(ModelAndView mv, @RequestParam(value = "page", required = false) Integer page, String sortNo){
 		int currentPage = 1;
 		if(page != null) {
 			currentPage = page;
@@ -237,15 +237,13 @@ public class ItemController {
 //		System.out.println("listCount : " + listCount);
 		
 		PageInfo pi = getPageInfo(currentPage, listCount);
-		ArrayList<Item> list = iService.selectEventList(pi);
-//		System.out.println("ArrayList : " + list);
-		
-		if(list != null) {
-			mv.addObject("list", list);
-			mv.addObject("pi", pi);
-			mv.setViewName("items/itemEvent");
-		}else {
-			throw new ItemException("아이템 조회 실패");
+		if(sortNo == null) {
+			ArrayList<Item> list = iService.selectEventList(pi);
+//			System.out.println("ArrayList : " + list);
+			mv.addObject("list", list).addObject("pi", pi).setViewName("items/itemEvent");
+		}else if(sortNo != null) {
+			ArrayList<Item> list = iService.selectEventList(pi, sortNo);
+			mv.addObject("list", list).addObject("pi", pi).setViewName("items/itemEvent");
 		}
 		return mv;
 	}

@@ -111,6 +111,8 @@ public interface ItemService {
 
 	ArrayList<Item> selectNewList(PageInfo pi, String sortNo);
 
+	ArrayList<Item> selectEventList(PageInfo pi, String sortNo);
+
 //	int l1Count();
 //
 //	int l2Count();

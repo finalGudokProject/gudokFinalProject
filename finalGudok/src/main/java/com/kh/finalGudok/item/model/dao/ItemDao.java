@@ -265,6 +265,14 @@ public class ItemDao {
 		return (ArrayList)sqlSessionTemplate.selectList("itemListMapper.selectSortNewList", map, rowBounds);
 	}
 
+	public ArrayList<Item> selectEventList(PageInfo pi, String sortNo) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		HashMap<String, String> map = new HashMap<>();
+		map.put("sortNo", sortNo);
+		return (ArrayList)sqlSessionTemplate.selectList("itemListMapper.selectSortEventList", map, rowBounds);
+	}
+
 
 //	public int l1Count() {
 //		return sqlSessionTemplate.selectOne("itemListMapper.l1Count");

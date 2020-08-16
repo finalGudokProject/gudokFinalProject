@@ -259,6 +259,11 @@ public class ItemServiceImpl implements ItemService {
 		return iDao.selectNewList(pi, sortNo);
 	}
 
+	@Override
+	public ArrayList<Item> selectEventList(PageInfo pi, String sortNo) {
+		return iDao.selectEventList(pi, sortNo);
+	}
+
 //	@Override
 //	public int l1Count() {
 //		return iDao.l1Count();

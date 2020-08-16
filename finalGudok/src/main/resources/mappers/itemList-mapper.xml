@@ -81,14 +81,14 @@
 		SELECT COUNT(*)
 		FROM ITEM_LIST_VIEW ILV
 		LEFT JOIN ITEM I ON(ILV.ITEM_NO = I.ITEM_NO)
-		WHERE ITEM_DP_STATUS='Y' AND EVENT_NO !=0
+		WHERE ITEM_DP_STATUS='Y' AND ITEM_EVENT_STATUS='Y'
 	</select>
 	
 	<select id="getItemEventList" resultMap="itemListResultSet">
 		SELECT *
 		FROM ITEM_LIST_VIEW ILV
 		LEFT JOIN ITEM I ON(ILV.ITEM_NO = I.ITEM_NO)
-		WHERE ITEM_DP_STATUS='Y' AND EVENT_NO NOT LIKE 0
+		WHERE ITEM_DP_STATUS='Y' AND ITEM_EVENT_STATUS='Y'
 	</select>
 	
 	
@@ -347,4 +347,24 @@
 		</choose>
 	</select>
 	
+	<select id="selectSortEventList" parameterType="map" resultMap="itemListResultSet">
+		SELECT *
+		FROM ITEM_LIST_VIEW ILV
+		LEFT JOIN ITEM I ON(ILV.ITEM_NO = I.ITEM_NO)
+		WHERE ITEM_DP_STATUS='Y' AND ITEM_EVENT_STATUS='Y'
+		<choose>
+			<when test="sortNo=='S1'">
+				ORDER BY I.ITEM_DATE DESC
+			</when>
+			<when test="sortNo=='S2'">
+				ORDER BY I.ITEM_RATE DESC
+			</when>
+			<when test="sortNo=='S3'">
+				ORDER BY I.ITEM_PRICE DESC
+			</when>
+			<otherwise>
+				ORDER BY I.ITEM_PRICE ASC
+			</otherwise>
+		</choose>
+	</select>
 </mapper>
