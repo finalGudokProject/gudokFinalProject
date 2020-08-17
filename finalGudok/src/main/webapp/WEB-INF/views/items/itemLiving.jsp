@@ -220,7 +220,15 @@
 	<div class="col-md-12">
 		<div id="cateName" style="font-size:50px;">
 		<img src="${contextPath }/resources/images/living.png" style="width:70px;height:70px;">
-		<span>리빙</span>
+		<span>리빙
+			<c:if test="${livingChk != 'L0'}">
+				<input type="hidden" id="categoryL0" value="L0">
+			</c:if>
+			<c:if test="${livingChk == 'L0' }">
+				<input type="hidden" id="categoryL0" value="">
+			</c:if>
+		</span>
+		
 		</div>
 		
 		<div style="margin:0 0 3% 2%">
@@ -240,6 +248,7 @@
 						location.href="livingSort.do?categoryNo="+sort;
 					})
 				})
+				
 			</script>
 		</div>
 			<div style="border-top:1px solid lightgray;border-bottom:1px solid lightgray;">
@@ -262,14 +271,19 @@
 			</div>
 			<script>
 				$(function(){
-					var hidden1 = $("#hiddenCategory").val();
-					$(".catchHidden").val(hidden1);
 					$(".sortRank").on("click", function(){
+						var hidden1 = $("#hiddenCategory").val();
+						$(".catchHidden").val(hidden1);
 						var hidden1 = $(this).find("input:nth-child(1)").val();
 						var hidden2 = $(this).find("input:nth-child(2)").val();
-						console.log(hidden1);
-						console.log(hidden2);
-						location.href="livingSort.do?categoryNo=" + hidden1 + "&sortNo=" + hidden2;
+						
+						if($("#categoryL0").val() == ""){
+							console.log(hidden1);
+							console.log(hidden2);
+							location.href="livingSort.do?categoryNo=" + hidden1 + "&sortNo=" + hidden2;
+						}else if($("#categoryL0").val() == "L0"){
+							location.href="itemLiving.do?sortNo=" + hidden2;
+						}
 					})
 				})
 			</script>

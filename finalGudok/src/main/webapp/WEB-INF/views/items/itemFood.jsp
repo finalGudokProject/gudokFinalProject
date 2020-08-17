@@ -224,7 +224,14 @@
 	<div class="col-md-12">
 		<div id="cateName" style="font-size:50px;">
 		<img src="${contextPath }/resources/images/food.png" style="width:70px;height:70px;">
-		<span>푸드</span>
+		<span>푸드
+			<c:if test="${foodChk != 'F0'}">
+				<input type="text" id="categoryF0" value="F0">
+			</c:if>
+			<c:if test="${foodChk == 'F0' }">
+				<input type="text" id="categoryF0" value="">
+			</c:if>
+		</span>
 		</div>
 		
 		<div style="margin:0 0 3% 2%">
@@ -267,14 +274,19 @@
 			</div>
 			<script>
 				$(function(){
-					var hidden1 = $("#hiddenCategory").val();
-					$(".catchHidden").val(hidden1);
 					$(".sortRank").on("click", function(){
+						var hidden1 = $("#hiddenCategory").val();
+						$(".catchHidden").val(hidden1);
 						var hidden1 = $(this).find("input:nth-child(1)").val();
 						var hidden2 = $(this).find("input:nth-child(2)").val();
-						console.log(hidden1);
-						console.log(hidden2);
-						location.href="fSort.do?categoryNo=" + hidden1 + "&sortNo=" + hidden2;
+						
+						if($("#categoryF0").val() == ""){
+							console.log(hidden1);
+							console.log(hidden2);
+							location.href="fSort.do?categoryNo=" + hidden1 + "&sortNo=" + hidden2;
+						}else if($("#categoryF0").val() == "F0"){
+							location.href="itemFood.do?sortNo=" + hidden2;
+						}
 					})
 				})
 			</script>

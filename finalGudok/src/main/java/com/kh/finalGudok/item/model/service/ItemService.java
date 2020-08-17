@@ -113,6 +113,12 @@ public interface ItemService {
 
 	ArrayList<Item> selectEventList(PageInfo pi, String sortNo);
 
+	ArrayList<ReviewView> selectReviewDetail(int reviewNo);
+
+	ArrayList<Item> selectLivingList(PageInfo pi, String sortNo);
+
+	ArrayList<Item> selectList(PageInfo pi, String sortNo);
+
 //	int l1Count();
 //
 //	int l2Count();

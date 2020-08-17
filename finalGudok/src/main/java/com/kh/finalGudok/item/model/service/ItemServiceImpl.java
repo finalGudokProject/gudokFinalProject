@@ -264,6 +264,21 @@ public class ItemServiceImpl implements ItemService {
 		return iDao.selectEventList(pi, sortNo);
 	}
 
+	@Override
+	public ArrayList<ReviewView> selectReviewDetail(int reviewNo) {
+		return iDao.selectReviewDetail(reviewNo);
+	}
+
+	@Override
+	public ArrayList<Item> selectLivingList(PageInfo pi, String sortNo) {
+		return iDao.selectLivingList(pi, sortNo);
+	}
+
+	@Override
+	public ArrayList<Item> selectList(PageInfo pi, String sortNo) {
+		return iDao.selectList(pi, sortNo);
+	}
+
 //	@Override
 //	public int l1Count() {
 //		return iDao.l1Count();

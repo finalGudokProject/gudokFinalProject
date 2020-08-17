@@ -17,6 +17,7 @@ import com.kh.finalGudok.item.model.vo.ItemListView;
 import com.kh.finalGudok.item.model.vo.PageInfo;
 import com.kh.finalGudok.item.model.vo.Review;
 import com.kh.finalGudok.item.model.vo.ReviewImage;
+import com.kh.finalGudok.item.model.vo.ReviewView;
 
 @Repository("iDao")
 public class ItemDao {
@@ -273,6 +274,27 @@ public class ItemDao {
 		map.put("sortNo", sortNo);
 		return (ArrayList)sqlSessionTemplate.selectList("itemListMapper.selectSortEventList", map, rowBounds);
 	}
+
+	public ArrayList<ReviewView> selectReviewDetail(int reviewNo) {
+		return (ArrayList)sqlSessionTemplate.selectList("reviewMapper.selectReviewDetail", reviewNo);
+	}
+
+	public ArrayList<Item> selectLivingList(PageInfo pi, String sortNo) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		HashMap<String, String> map = new HashMap<>();
+		map.put("sortNo", sortNo);
+		return (ArrayList)sqlSessionTemplate.selectList("itemListMapper.selectSortLivingList", map, rowBounds);
+	}
+
+	public ArrayList<Item> selectList(PageInfo pi, String sortNo) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		HashMap<String, String> map = new HashMap<>();
+		map.put("sortNo", sortNo);
+		return (ArrayList)sqlSessionTemplate.selectList("itemListMapper.selectSortFoodList", map, rowBounds);
+	}
+
 
 
 //	public int l1Count() {

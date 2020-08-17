@@ -85,4 +85,10 @@
 		        , (SELECT MAX(IMAGE_NO) FROM IMAGE))
 	</insert>
 	
+	<select id="selectReviewDetail" parameterType="_int" resultMap="reviewViewResultSet">
+		SELECT *
+		FROM SELECT_REVIEW
+		WHERE REVIEW_NO=#{reviewNo}
+	</select>
+	
 </mapper>

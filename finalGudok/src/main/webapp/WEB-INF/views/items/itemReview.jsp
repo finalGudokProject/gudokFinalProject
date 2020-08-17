@@ -243,7 +243,7 @@
 					}else{
 						var reviewNo = $(this).parent().find("input").val();
 						console.log(reviewNo);
-						location.href="reviewUpdate.do?reviewNo=" + reviewNo;
+						location.href="reviewDetail.do?reviewNo=" + reviewNo;
 					}
 				})
 			})

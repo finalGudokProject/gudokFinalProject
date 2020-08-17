@@ -62,7 +62,7 @@ public class ItemController {
 	}
 	
 	@RequestMapping("itemFood.do")
-	public ModelAndView itemList(ModelAndView mv, @RequestParam(value = "page", required = false) Integer page){
+	public ModelAndView itemList(ModelAndView mv, @RequestParam(value = "page", required = false) Integer page, String sortNo){
 		int currentPage = 1;
 		if(page != null) {
 			currentPage = page;
@@ -71,9 +71,15 @@ public class ItemController {
 //		System.out.println("listCount : " + listCount);
 		
 		PageInfo pi = getPageInfo(currentPage, listCount);
-		ArrayList<Item> list = iService.selectList(pi);
-//		System.out.println("ArrayList : " + list);
-		mv.addObject("list", list).addObject("pi", pi).setViewName("items/itemFood");
+		
+		if(sortNo == null) {
+			ArrayList<Item> list = iService.selectList(pi);
+//			System.out.println("ArrayList : " + list);
+			mv.addObject("list", list).addObject("pi", pi).setViewName("items/itemFood");
+		}else if(sortNo != null) {
+			ArrayList<Item> list = iService.selectList(pi, sortNo);
+			mv.addObject("list", list).addObject("pi", pi).setViewName("items/itemFood");
+		}
 		
 		return mv;
 	}
@@ -89,58 +95,39 @@ public class ItemController {
 			System.out.println("음료 Count : " + dListCount);
 			PageInfo pi = getPageInfo(currentPage, dListCount);
 			ArrayList<ItemListView> dList = iService.selectDList(pi);
-			mv.addObject("list", dList).addObject("pi", pi).setViewName("items/itemFood");
+			mv.addObject("list", dList).addObject("pi", pi).addObject("foodChk","F0").setViewName("items/itemFood");
 		}else if(categoryNo.equals("F2")) {
 			int mListCount = iService.mListCount();
 			System.out.println("유제품 Count : " + mListCount);
 			PageInfo pi = getPageInfo(currentPage, mListCount);
 			ArrayList<ItemListView> mList = iService.selectMList(pi);
-			mv.addObject("list", mList).addObject("pi", pi).setViewName("items/itemFood");
+			mv.addObject("list", mList).addObject("pi", pi).addObject("foodChk","F0").setViewName("items/itemFood");
 		}else if(categoryNo.equals("F3")) {
 			int bListCount = iService.bListCount();
 			System.out.println("베이커리 Count : " + bListCount);
 			PageInfo pi = getPageInfo(currentPage, bListCount);
 			ArrayList<ItemListView> bList = iService.selectBList(pi);
-			mv.addObject("list", bList).addObject("pi", pi).setViewName("items/itemFood");
+			mv.addObject("list", bList).addObject("pi", pi).addObject("foodChk","F0").setViewName("items/itemFood");
 		}else if(categoryNo.equals("F4")) {
 			int sListCount = iService.sListCount();
 			System.out.println("간편 Count : " + sListCount);
 			PageInfo pi = getPageInfo(currentPage, sListCount);
 			ArrayList<ItemListView> sList = iService.selectSList(pi);
-			mv.addObject("list", sList).addObject("pi", pi).setViewName("items/itemFood");
+			mv.addObject("list", sList).addObject("pi", pi).addObject("foodChk","F0").setViewName("items/itemFood");
 		}else if(categoryNo.equals("F5")) {
 			int hListCount = iService.hListCount();
 			System.out.println("건강 Count : " + hListCount);
 			PageInfo pi = getPageInfo(currentPage, hListCount);
 			ArrayList<ItemListView> hList = iService.selectHList(pi);
-			mv.addObject("list", hList).addObject("pi", pi).setViewName("items/itemFood");
+			mv.addObject("list", hList).addObject("pi", pi).addObject("foodChk","F0").setViewName("items/itemFood");
 		}else if(categoryNo.equals("F6")) {
 			int diListCount = iService.diListCount();
 			System.out.println("다이어트 Count : " + diListCount);
 			PageInfo pi = getPageInfo(currentPage, diListCount);
 			ArrayList<ItemListView> diList = iService.selectDiList(pi);
-			mv.addObject("list", diList).addObject("pi", pi).setViewName("items/itemFood");
+			mv.addObject("list", diList).addObject("pi", pi).addObject("foodChk","F0").setViewName("items/itemFood");
 		}
 		
-//		if(categoryNo.equals("L1")) {
-//			int l1Count= iService.l1Count();
-//			System.out.println("다이어트 Count : " + l1Count);
-//			PageInfo pi = getPageInfo(currentPage, l1Count);
-//			ArrayList<ItemListView> l1List = iService.l1List(pi);
-//			mv.addObject("list", l1List).addObject("pi", pi).setViewName("items/itemFood");
-//		}else if(categoryNo.equals("L2")) {
-//			int l2Count = iService.l2Count();
-//			System.out.println("다이어트 Count : " + l2Count);
-//			PageInfo pi = getPageInfo(currentPage, l2Count);
-//			ArrayList<ItemListView> l2List = iService.l2List(pi);
-//			mv.addObject("list", l2List).addObject("pi", pi).setViewName("items/itemFood");
-//		}else if(categoryNo.equals("L3")) {
-//			int l3Count = iService.l3Count();
-//			System.out.println("다이어트 Count : " + l3Count);
-//			PageInfo pi = getPageInfo(currentPage, l3Count);
-//			ArrayList<ItemListView> l3List = iService.l3List(pi);
-//			mv.addObject("list", l3List).addObject("pi", pi).setViewName("items/itemFood");
-//		}
 		return mv;
 	}
 	
@@ -156,7 +143,7 @@ public class ItemController {
 			System.out.println("리빙 Count : " + livingCateCount);
 			PageInfo pi = getPageInfo(currentPage, livingCateCount);
 			ArrayList<ItemListView> livingCateList = iService.livingCateList(pi, categoryNo, sortNo);
-			mv.addObject("list", livingCateList).addObject("pi", pi).setViewName("items/itemLiving");
+			mv.addObject("list", livingCateList).addObject("pi", pi).addObject("livingChk","L0").setViewName("items/itemLiving");
 		}
 		return mv;
 	}	
@@ -172,32 +159,32 @@ public class ItemController {
 			int dListCounts = iService.dListCount();
 			PageInfo pi = getPageInfo(currentPage, dListCounts);
 			ArrayList<ItemListView> dLists = iService.selectDLists(pi,sortNo);
-			mv.addObject("list", dLists).addObject("pi", pi).setViewName("items/itemFood");
+			mv.addObject("list", dLists).addObject("pi", pi).addObject("foodChk","F0").setViewName("items/itemFood");
 		}else if(categoryNo.equals("F2") && sortNo != null) {
 			int mListCount = iService.mListCount();
 			PageInfo pi = getPageInfo(currentPage, mListCount);
 			ArrayList<ItemListView> mList = iService.selectMLists(pi, sortNo);
-			mv.addObject("list", mList).addObject("pi", pi).setViewName("items/itemFood");
+			mv.addObject("list", mList).addObject("pi", pi).addObject("foodChk","F0").setViewName("items/itemFood");
 		}else if(categoryNo.equals("F3") && sortNo != null) {
 			int bListCount = iService.bListCount();
 			PageInfo pi = getPageInfo(currentPage, bListCount);
 			ArrayList<ItemListView> bList = iService.selectBLists(pi, sortNo);
-			mv.addObject("list", bList).addObject("pi", pi).setViewName("items/itemFood");
+			mv.addObject("list", bList).addObject("pi", pi).addObject("foodChk","F0").setViewName("items/itemFood");
 		}else if(categoryNo.equals("F4") && sortNo != null) {
 			int sListCount = iService.sListCount();
 			PageInfo pi = getPageInfo(currentPage, sListCount);
 			ArrayList<ItemListView> sList = iService.selectSLists(pi, sortNo);
-			mv.addObject("list", sList).addObject("pi", pi).setViewName("items/itemFood");
+			mv.addObject("list", sList).addObject("pi", pi).addObject("foodChk","F0").setViewName("items/itemFood");
 		}else if(categoryNo.equals("F5") && sortNo != null) {
 			int hListCount = iService.hListCount();
 			PageInfo pi = getPageInfo(currentPage, hListCount);
 			ArrayList<ItemListView> hList = iService.selectHLists(pi, sortNo);
-			mv.addObject("list", hList).addObject("pi", pi).setViewName("items/itemFood");
+			mv.addObject("list", hList).addObject("pi", pi).addObject("foodChk","F0").setViewName("items/itemFood");
 		}else if(categoryNo.equals("F6") && sortNo != null) {
 			int diListCount = iService.diListCount();
 			PageInfo pi = getPageInfo(currentPage, diListCount);
 			ArrayList<ItemListView> diList = iService.selectDiLists(pi, sortNo);
-			mv.addObject("list", diList).addObject("pi", pi).setViewName("items/itemFood");
+			mv.addObject("list", diList).addObject("pi", pi).addObject("foodChk","F0").setViewName("items/itemFood");
 		}
 		return mv;
 	}
@@ -205,7 +192,7 @@ public class ItemController {
 	
 	
 	@RequestMapping("itemLiving.do")
-	public ModelAndView itemLivingList(ModelAndView mv, @RequestParam(value = "page", required = false) Integer page){
+	public ModelAndView itemLivingList(ModelAndView mv, @RequestParam(value = "page", required = false) Integer page, String sortNo){
 		int currentPage = 1;
 		if(page != null) {
 			currentPage = page;
@@ -214,10 +201,16 @@ public class ItemController {
 //		System.out.println("listCount : " + listCount);
 		
 		PageInfo pi = getPageInfo(currentPage, listCount);
-		ArrayList<Item> list = iService.selectLivingList(pi);
-//		System.out.println("ArrayList : " + list);
 		
-		mv.addObject("list", list).addObject("pi", pi).setViewName("items/itemLiving");
+		if(sortNo == null) {
+			ArrayList<Item> list = iService.selectLivingList(pi);
+//			System.out.println("ArrayList : " + list);
+			mv.addObject("list", list).addObject("pi", pi).setViewName("items/itemLiving");
+		}else if(sortNo != null) {
+			ArrayList<Item> list = iService.selectLivingList(pi, sortNo);
+			mv.addObject("list", list).addObject("pi", pi).setViewName("items/itemLiving");
+		}
+		
 		return mv;
 	}
 	
@@ -362,9 +355,12 @@ public class ItemController {
 		}
 	}
 
-	@RequestMapping("reviewUpdate.do")
-	public String reviewUpdate(@RequestParam("reviewNo") Integer reviewNo) {
-		return "items/reviewUpdate";
+	@RequestMapping("reviewDetail.do")
+	public ModelAndView reviewDetail(ModelAndView mv, @RequestParam("reviewNo") Integer reviewNo) {
+		ArrayList<ReviewView> rv = iService.selectReviewDetail(reviewNo);
+		System.out.println("detail : " + rv);
+		mv.addObject("rv", rv).setViewName("items/reviewUpdate");
+		return mv;
 	}
 	
 	@RequestMapping(value="reviewInsert.do", method=RequestMethod.POST)
@@ -383,6 +379,7 @@ public class ItemController {
 			i.setImageOriginalName(file1.getOriginalFilename());
 			i.setImageRename(renameFileName1);
 			int imgResult1 = iService.insertReviewImage1(i);
+			iService.insertRI(ri);
 		}
 		
 		if(!file2.getOriginalFilename().equals("")) {
@@ -390,12 +387,12 @@ public class ItemController {
 			i.setImageOriginalName(file2.getOriginalFilename());
 			i.setImageRename(renameFileName2);
 			int imgResult2 = iService.insertReviewImage2(i);
+			iService.insertRI(ri);
 		}
 		
 		
 		System.out.println("review result : " + result);
 		if(result > 0 && updateResult > 0) {
-			iService.insertRI(ri);
 			return "redirect:idetail.do?itemNo=" + itemNo + "&page=" + currentPage + "&memberNo=" + memberNo + "#reviewPI";
 		}else {
 			throw new ItemException("리뷰 등록 실패");

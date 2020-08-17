@@ -13,16 +13,16 @@
 	<!-- sweetalert끝 -->
 </head>
 <style>
-	.starP{
+	.starRv{
 		background: url('http://miuu227.godohosting.com/images/icon/ico_review.png') no-repeat right 0;
 		background-size: auto 100%;
-		width: 30px;
-		height: 30px;
+		width: 50px;
+		height: 50px;
 		display: inline-block;
 		text-indent: -9999px;
 		cursor: pointer;
 	}
-	.starP.on{background-position:0 0;}
+	.starRv.on{background-position:0 0;}
 	
 	div.reviewDC{
 	vertical-align: middle;
@@ -67,56 +67,124 @@
 		border:1px solid lightgray !important;
 	}
 	
-	.starRv{
-  background: url('http://miuu227.godohosting.com/images/icon/ico_review.png') no-repeat right 0;
-  background-size: auto 100%;
-  width: 30px;
-  height: 30px;
-  display: inline-block;
-  text-indent: -9999px;
-  cursor: pointer;
-}
-.starRev{
-		line-height:40px;
-		padding-left:1%;
+	input[type=button]{
+	background:#6AAED9;
+	color:white;
+	border-radius:5px;
+	padding:2%;
+	width:40%;
+	transition:0.5s;
+  	position:relative;
+  	border:1px solid #6AAED9;
+	margin-bottom:2%;
 	}
-	.starRev div{
-		vertical-align:bottom;
+	input[type=button]:hover{
+	  background:#11538C;
+	  color:#white;
+	  border:1px solid #11538C;
 	}
-.starRv.on{background-position:0 0;}
 </style>
 <body>
 	<jsp:include page="../common/menubar.jsp"/>
 	
 	<div style="padding:1% 0 1% 18%;">
 			<img src="${contextPath }/resources/images/reviewImg.png" style="width:7%;height:7%;">
-			<span style="vertical-align:middle;font-size:50px;"><b>상품명 상품평 수정</b></span>
+			<span style="vertical-align:middle;font-size:50px;"><b>님 상품평 수정</b></span>
 		</div>
 	<div class="container">
 		<div class="row">
 		
 		<div class="col-12">
 			<table align="center" style="width:80%;text-align:center;font-size:30px;border:1px solid lightgray;">
+			<c:if test="${empty rv}">
+			<div class="col-2"></div>
+				<div class="col-8" id="emptyDiv" style="margin-top:2%;border:1px solid lightgray;">
+					<div style="text-align:center;width:100%;"><img src="${contextPath }/resources/images/empty.png" style="width:30%;"></div>
+					<div style="text-align:center;width:100%;font-size:40px;">해당 카테고리의 상품이 존재하지 않습니다.</div>
+				</div>
+			<div class="col-2"></div>
+			</c:if>
+			
+			
+			<c:if test="${!empty rv}">
+			<c:forEach var="r" items="${rv }">
 				<tr>
-					<td>
-						별점
+					<td><div style="vertical-align:middle;font-size:50px; text-align:left;margin-left:2%;">평점 : 
+						<div class="starRev" style="margin:2% 0 0 0;display:inline-block;">
+							<c:choose>
+								<c:when test="${r.reviewRate < 1}">
+									<span class="starRv">1</span>
+									<span class="starRv">2</span>
+									<span class="starRv">3</span>
+									<span class="starRv">4</span>
+									<span class="starRv">5</span>
+								</c:when>
+								<c:when test="${r.reviewRate < 2 }">
+									<span class="starRv on">1</span>
+									<span class="starRv">2</span>
+									<span class="starRv">3</span>
+									<span class="starRv">4</span>
+									<span class="starRv">5</span>
+								</c:when>
+								
+								<c:when test="${r.reviewRate < 3 }">
+									<span class="starRv on">1</span>
+									<span class="starRv on">2</span>
+									<span class="starRv">3</span>
+									<span class="starRv">4</span>
+									<span class="starRv">5</span>
+								</c:when>
+								
+								<c:when test="${r.reviewRate < 4 }">
+									<span class="starRv on">1</span>
+									<span class="starRv on">2</span>
+									<span class="starRv on">3</span>
+									<span class="starRv">4</span>
+									<span class="starRv">5</span>
+								</c:when>
+								
+								<c:when test="${r.reviewRate < 5 }">
+									<span class="starRv on">1</span>
+									<span class="starRv on">2</span>
+									<span class="starRv on">3</span>
+									<span class="starRv on">4</span>
+									<span class="starRv">5</span>
+								</c:when>
+								<c:otherwise>
+									<span class="starRv on">1</span>
+									<span class="starRv on">2</span>
+									<span class="starRv on">3</span>
+									<span class="starRv on">4</span>
+									<span class="starRv on">5</span>
+								</c:otherwise>
+							</c:choose>
+						</div>
+						</div>
 					</td>
 				</tr>
 				<tr>
 					<td>
-						이미지 넣는 곳
+						<c:if test="${!empty r.imageOriginalName }">
+							<img src="${contextPath }/resources/iuploadFiles/${r.imageRename}" style="margin:2%;width:40%;">
+						</c:if>
+						<c:if test="${empty r.imageOriginalName }">
+							등록한 사진이 없습니다.
+						</c:if>
+						
 					</td>
 				</tr>
 				<tr>
 					<td>
-						<textarea style="width:98%;">내용</textarea>
+						<div style="line-height:50px;vertical-align:middle;"><textarea style="width:96%;">${r.reviewContent }</textarea></div>
 					</td>
 				</tr>
 				<tr>
 					<td>
-						<button type="button">수정완료</button>
+						<input type="button" style="vertical-align:middle;width:15%;margin:0 0 2% 0;" value="수정완료">
 					</td>
 				</tr>
+				</c:forEach>
+				</c:if>
 			</table>
 		</div>
 		
