@@ -52,9 +52,9 @@ public interface ItemService {
 
 	Event selectDeleteEvent(int i);
 
-	int updateEventStatusY(int i);
+	int updateEventStatusY(ArrayList<Event> dEventArr);
 
-	int updateEventStatusN(int i);
+	int updateEventStatusN(int dEventArr);
 
 
 	ArrayList<Review> selectAllReview(int itemNo);
@@ -117,5 +117,7 @@ public interface ItemService {
 	int diListCount();
 
 	ArrayList<ItemListView> selectDiList(PageInfo pi);
+
+	int updateEventStatusN(ArrayList<Event> dEventArr);
 
 }

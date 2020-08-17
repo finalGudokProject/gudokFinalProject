@@ -83,11 +83,10 @@ public class ItemServiceImpl implements ItemService {
 	}
 
 	@Override
-<<<<<<< HEAD
-	public ArrayList<Event> selectEventList(PageInfo pi) {
-=======
+
+
 	public ArrayList<Event> selectEventListA(PageInfo pi) {
->>>>>>> refs/remotes/origin/master
+
 		return iDao.selectEventListA(pi);
 	}
 
@@ -122,16 +121,7 @@ public class ItemServiceImpl implements ItemService {
 		return iDao.selectDeleteEvent(i);
 	}
 
-	@Override
-	public int updateEventStatusY(int i) {
-		return iDao.updateEventStatusY(i);
-	}
-
-	@Override
-	public int updateEventStatusN(int i) {
-		return iDao.updateEventStatusN(i);
-	}
-
+	
 	public ArrayList<Review> selectAllReview(int itemNo) {
 		return iDao.selectAllReview(itemNo);
 	}
@@ -275,5 +265,28 @@ public class ItemServiceImpl implements ItemService {
 	public ArrayList<ItemListView> selectDiList(PageInfo pi) {
 		return iDao.selectDiList(pi);
 	}
+
+	@Override
+	public int updateEventStatusN(ArrayList<Event> dEventArr) {
+		return iDao.updateEventStatusN(dEventArr);
+		
+	}
+	
+	@Override
+	public int updateEventStatusY(ArrayList<Event> dEventArr) {
+		return iDao.updateEventStatusY(dEventArr);
+		
+	}
+
+	@Override
+	public int updateEventStatusN(int dEventArr) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	
+	
+	
+	
 
 }

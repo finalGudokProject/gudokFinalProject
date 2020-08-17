@@ -46,7 +46,7 @@ input, select,textarea{
 
     <body>
     <jsp:include page="../common/adminMenubar.jsp"/>
-        <div class="content">
+        <div class="content" id="content">
             <div class="container box">
                 <h3>배너 리스트</h3>
                 <br>
@@ -61,16 +61,16 @@ input, select,textarea{
           			
                     <input type="button" class="btn" value="게시" onclick="eventStatusY()">
                     <input type="button" class="btn" value="중지" onclick="eventStatusN()">
-                    <input type="button" class="btn" value="삭제"onclick="eventDelete()">
+                    <input type="button" class="btn" value="삭제" onclick="eventDelete()">
                 </div>
                 <div style="float:right;">
-                	<input type="text">
-                	<input type="button" class="btn" value="검색">
+                	<input type="text" id="keyword" name="keyword">
+                	<input type="button" class="btn" value="검색" onclick="eventSearch()">
                 </div>
                 </div>
         <br><br>
         			<input type="hidden" name="array" value="">
-                    <table>
+                    <table id="bannerTable">
                         <thead>
                             <tr>
                                 <th><input type="checkbox" id="checkAll"></th>
@@ -78,26 +78,28 @@ input, select,textarea{
                                 <th>이벤트 명</th>
                                 <th>상품 수</th>
                                 <th>상태</th>
-                             
                              </tr>   
                          </thead>
+                         
+                         
+                         
                          <tbody>
+                    <c:if test="${!empty list }">
                          	<c:forEach var="e" items="${list }" varStatus="status">
 	                             <tr>
 	                                <td><input type="checkbox" class="common" name="eventNo" value="${e.eventNo }"></td>
 	                                <td>${e.eventNo }</td>
-	                                <td>
-	                                
-	                                
-	                                ${e.eventName }
-	                                
-	                                
-	                                </td>
+	                                <td>${e.eventName }</td>
 	                                <td>${eCountList[status.index] }</td>
-	                                <td id="eventStatus"><b>${e.eventStatus }</b></td>
+	                                <td id="eventStatus">${e.eventStatus }</td>
 	                            </tr>
                             </c:forEach>
-                           
+                     </c:if>
+                     <c:if test="${empty list }">
+                     		<tr>
+                     			<td colspan="5">등록된 이벤트가 없습니다.</td>
+                     		</tr>
+                     </c:if>       
                          </tbody>
                     </table>
 
@@ -174,15 +176,26 @@ input, select,textarea{
         
         
         <script>
+        //검색 
         
+        function eventSearch(){
+        	alert('검색 실행됨');
+        	
+        	var keyword=$("#keyword").val();
+        	location.href="searchEventA.do?keyword="+keyword;
+        	
+        	
+        	
+        }
         
         
         //이벤트 게시
         	function eventStatusY(){
-        		var currentPage=${pi.currentPage};
+        		
         		var sendArr=Array();
         		var sendCnt=0;
         		var chkbox=$(".common");
+        		
         		
         		for(i=0; i<chkbox.length;i++){
         			if(chkbox[i].checked==true){
@@ -191,20 +204,16 @@ input, select,textarea{
         			}
         		}
         		
-        		
+        	
         		$.ajax({
         				url:"eChangeY.do",
         				type:"post",
+        				traditional:true,
         				data:{"sendArr":sendArr},
-        				dataType:"json",
         				success:function(data){
         					
-        					alert(data);
-        					 if(data=="success"){
-	        					$("#eventStatus").html("");
-	        					$("#eventStatus").html("Y");
-        					}
-        					
+        					getBannerList();
+        					        					
         				},
         				error:function(request, status, errorData){
 		                    alert("error code: " + request.status + "\n"
@@ -212,68 +221,106 @@ input, select,textarea{
 			                           +"error: " + errorData);
 			                  }   
         				
+        			});
         				
-        				
-        			}); 
-        		 /* location.href="eChangeY.do?sendArr="+sendArr; */
-        	
-        	
-        	
         }
         
         
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+     	//이벤트 상태 변경 후 리스트 가져오기
+         function getBannerList(){
+        	 var page=${pi.currentPage};
+        	 
+        	 $.ajax({
+        		 
+        	 	url:"eListChange.do", 
+        	 	data:{"page":page},
+        	 	dataType:"json",
+        	 	success:function(data){
+        	 		
+        	 
+        	 		$tableBody=$("tbody");
+        	 		$tableBody.html("");
+        	 		
+        	 		var $tr;
+        	 		var $eventNo;
+        	 		var $eventName;
+        	 		var $eventCnt;
+        	 		var $eventStatus;
+        	 		var $checkBox;
+        	 		var $th;
+        	 		
+        	 				
+        	 				for(var i in data.bannerList){
+        	 					
+        	 				
+        	 				$tr=$("<tr>");
+        	 				$td=$("<td>");
+        	 				$checkBox=$("<input type='checkbox' class='common' name='eventNo'>").val(data.bannerList[i].eventNo);     	 			
+        	 				$eventNo=$("<td>").text(data.bannerList[i].eventNo);
+        	 				$eventName=$("<td>").text(data.bannerList[i].eventName);
+        	 				$eventCnt=$("<td>").text(data.bannerList[i].eventCnt);
+        	 				$eventStatus=$("<td>").text(data.bannerList[i].eventStatus);
+        	 				
+        	 				
+        	 				$td.append($checkBox);
+        	 				$tr.append($td);
+        	 				$tr.append($eventNo);
+        	 				$tr.append($eventName);
+        	 				$tr.append($eventCnt);
+        	 				$tr.append($eventStatus);
+        	 				$tableBody.append($tr);
+        	 				
+        	 			}
+        	 			
+        	 		
+        	 	},
+        	 	error:function(request, status, errorData){
+                    alert("error code: " + request.status + "\n"
+	                           +"message: " + request.responseText
+	                           +"error: " + errorData);
+	                  }   
+        	 	
+        	 })
+        	 
+         }
+        			
+        			
         	  //이벤트 중지
         	function eventStatusN(){
-        		var sendArr=Array();
-        		var sendCnt=0;
-        		var chkbox=$(".common");
-        		
-        		for(i=0; i<chkbox.length;i++){
-        			if(chkbox[i].checked==true){
-        				sendArr[sendCnt]=chkbox[i].value;
-        				sendCnt++;
-        			}
-        		}
-        		
-        		 location.href="eChangeN.do?sendArr="+sendArr;
-        	
-        	
-        	
-        }
+       	 
+            		var sendArr=Array();
+            		var sendCnt=0;
+            		var chkbox=$(".common");
+            		
+            		
+            		for(i=0; i<chkbox.length;i++){
+            			if(chkbox[i].checked==true){
+            				sendArr[sendCnt]=chkbox[i].value;
+            				sendCnt++;
+            			}
+            		}
+            		
+            	
+            		
+            		$.ajax({
+            				url:"eChangeN.do",
+            				type:"post",
+            				traditional:true,
+            				data:{"sendArr":sendArr},
+            				success:function(data){
+            					
+            					getBannerList();
+            					        					
+            				},
+            				error:function(request, status, errorData){
+    		                    alert("error code: " + request.status + "\n"
+    			                           +"message: " + request.responseText
+    			                           +"error: " + errorData);
+    			                  }   
+            			});
+            				
+            }
+            
         
         
          //선택 삭제
@@ -290,7 +337,29 @@ input, select,textarea{
         			}
         		}
         		
-        		 location.href="eDelete.do?sendArr="+sendArr;
+        		$.ajax({
+    				url:"eDelete.do",
+    				type:"post",
+    				traditional:true,
+    				data:{"sendArr":sendArr},
+    				success:function(data){
+    					
+    					getBannerList();
+    					        					
+    				},
+    				error:function(request, status, errorData){
+	                    alert("error code: " + request.status + "\n"
+		                           +"message: " + request.responseText
+		                           +"error: " + errorData);
+		                  }   
+    				
+    				 
+    			});
+        		
+        		
+        		
+        /* 		
+        		 location.href="eDelete.do?sendArr="+sendArr; */
         		
         	} 
         	
@@ -303,6 +372,10 @@ input, select,textarea{
     				$(".common").prop('checked', bool);
     			});
     		}); 
+        	
+        	
+        	
+        	
         	
         </script>
         

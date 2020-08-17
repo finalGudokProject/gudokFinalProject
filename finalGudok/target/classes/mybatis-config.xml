@@ -16,12 +16,7 @@
 
 		<typeAlias type="com.kh.finalGudok.item.model.vo.AdminItem" alias="AdminItem"/>
 		<typeAlias type="com.kh.finalGudok.item.model.vo.Event" alias="Event"/>
-<<<<<<< HEAD
-		
-		
-=======
 
->>>>>>> refs/remotes/origin/master
 		<typeAlias type="com.kh.finalGudok.member.model.vo.Point" alias="Point"/>
 		<typeAlias type="com.kh.finalGudok.member.model.vo.Review" alias="mReview"/>
 		<typeAlias type="com.kh.finalGudok.member.model.vo.Exchange" alias="mExchange"/>

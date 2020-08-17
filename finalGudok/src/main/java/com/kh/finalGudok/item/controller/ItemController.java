@@ -4,51 +4,43 @@ import static com.kh.finalGudok.common.pagination.getPageInfo;
 import static com.kh.finalGudok.common.pagination2.getPageInfo2;
 
 import java.io.File;
-
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-<<<<<<< HEAD
 import org.springframework.web.bind.annotation.ResponseBody;
-=======
-
-import org.springframework.web.bind.annotation.ResponseBody;
-
->>>>>>> refs/remotes/origin/master
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.finalGudok.item.model.exception.ItemException;
 import com.kh.finalGudok.item.model.service.ItemService;
-
 import com.kh.finalGudok.item.model.vo.AdminItem;
-import com.kh.finalGudok.item.model.vo.Event;
-
 import com.kh.finalGudok.item.model.vo.Board;
 import com.kh.finalGudok.item.model.vo.Cart;
+import com.kh.finalGudok.item.model.vo.Event;
 import com.kh.finalGudok.item.model.vo.Heart;
-
 import com.kh.finalGudok.item.model.vo.Item;
 import com.kh.finalGudok.item.model.vo.ItemListView;
 import com.kh.finalGudok.item.model.vo.PageInfo;
 import com.kh.finalGudok.item.model.vo.Review;
-<<<<<<< HEAD
-=======
 import com.kh.finalGudok.member.model.vo.Member;
->>>>>>> refs/remotes/origin/master
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+
 
 @Controller
 public class ItemController {
@@ -513,33 +505,39 @@ public class ItemController {
 		//이벤트 게시
 		@RequestMapping("eChangeY.do")
 		@ResponseBody
-		public String updateEventStatusY(HttpServletRequest request, @RequestParam(value="sendArr") String sendArr) {
+		public String updateEventStatusY(String sendArr) {
 			
 		
 			System.out.println("y컨트롤러옴");
-			
-			
-//			String dEvent=request.getParameter("sendArr");
 			System.out.println(sendArr);
 			
+			
 			String[] strArr=sendArr.split(",");
+			System.out.println(strArr[0].toString());
+			System.out.println(strArr.length);
 			
-			int[] dEventArr=new int[strArr.length];
-			
+			ArrayList<Event> dEventArr=new ArrayList<>();
+			Event e=new Event();
 			
 			for(int i=0;i<strArr.length;i++) {
-				dEventArr[i]=Integer.valueOf(strArr[i]);
+				e=new Event(Integer.valueOf(strArr[i]));
+				dEventArr.add(e);
+			
+				System.out.println(dEventArr.get(i).getEventNo());
 			}
+			
+			System.out.println("dEventArr길이"+dEventArr.size());
+			System.out.println("확인할것"+dEventArr.toString());
+
 			
 			int result=0;
 			
-			for(int k=0;k<dEventArr.length;k++) {
-				result=iService.updateEventStatusY(dEventArr[k]);
-			}
+				result=iService.updateEventStatusY(dEventArr);
 			
+			System.out.println("변경된 갯수"+result);
 			
 			if(result>0) {
-				System.out.println("성공?");
+				
 				return "success";
 				
 			}else {
@@ -548,36 +546,52 @@ public class ItemController {
 		}
 		
 		
-		//이벤트 게시
+		//이벤트 중지
 		@RequestMapping("eChangeN.do")
-		public String updateEventStatusN(HttpServletRequest request, String sendArr) {
+		@ResponseBody
+		public String updateEventStatusN(String sendArr) {
 			
-			String dEvent=request.getParameter("sendArr");
-			String[] strArr=dEvent.split(",");
+		
+			System.out.println("y컨트롤러옴");
+			System.out.println(sendArr);
 			
-			int[] dEventArr=new int[strArr.length];
 			
+			String[] strArr=sendArr.split(",");
+			System.out.println(strArr[0].toString());
+			System.out.println(strArr.length);
+			
+			ArrayList<Event> dEventArr=new ArrayList<>();
+			Event e=new Event();
 			
 			for(int i=0;i<strArr.length;i++) {
-				dEventArr[i]=Integer.valueOf(strArr[i]);
+				e=new Event(Integer.valueOf(strArr[i]));
+				dEventArr.add(e);
+			
+				System.out.println(dEventArr.get(i).getEventNo());
 			}
+			
+			System.out.println("dEventArr길이"+dEventArr.size());
+			System.out.println("확인할것"+dEventArr.toString());
+
 			
 			int result=0;
 			
-			for(int k=0;k<dEventArr.length;k++) {
-				result=iService.updateEventStatusN(dEventArr[k]);
-			}
+				result=iService.updateEventStatusN(dEventArr);
 			
+			System.out.println("변경된 갯수"+result);
 			
 			if(result>0) {
 				
-				return "redirect:eList.do";
+				return "success";
 				
 			}else {
 				throw new ItemException("이벤트 게시 변경 실패!");
 			}
 		}
+		
 
+		
+		
 	@RequestMapping(value="reviewInsert.do", method=RequestMethod.POST)
 	public String reviewInsert(Review r, HttpServletRequest request, @RequestParam(value = "page", required = false)Integer page
 			, @RequestParam(value = "memberNo", required = false)int memberNo
@@ -627,5 +641,92 @@ public class ItemController {
 		}
 		return filePath;
 	}
+	
+	
+	
+	//이벤트 리스트 보기
+		@RequestMapping("eListChange.do")
+		public void selectEventChange(HttpServletResponse response, Integer page) throws IOException {
+		
+			System.out.println("ajax컨트롤러");
+			int currentPage=1;
+			
+			if(page!=null) {
+				currentPage=page;
+			}
+			
+			int listCount=iService.getEventCount();
+			
+			PageInfo pi=new PageInfo();
+			
+			int pageLimit=10; //보여질 페이지 총 갯수
+			int boardLimit=5; //게시판 한 페이지에 뿌려질 게시글 수
+			pi=getPageInfo2(currentPage,listCount,pageLimit,boardLimit);
+			
+			ArrayList<Event> list=iService.selectEventListA(pi); //이벤트 리스트
+			ArrayList eCountList=iService.selectEventListCount(pi); //이벤트당 상품갯수
+			
+			
+			response.setContentType("application/json;charset=utf-8");
+
+		
+			if(list!=null&&eCountList!=null) {
+				
+				System.out.println(list);
+				System.out.println(eCountList);
+				JSONArray jarr=new JSONArray();
+				
+				for(int i=0;i<list.size();i++) {
+					JSONObject jList=new JSONObject();
+					
+					jList.put("eventNo",list.get(i).getEventNo());
+					jList.put("eventName",list.get(i).getEventName());
+					jList.put("eventCnt",eCountList.get(i));
+					jList.put("eventStatus",list.get(i).getEventStatus());
+					
+					jarr.add(jList);
+				}
+				
+				JSONObject sendJson=new JSONObject();
+				sendJson.put("bannerList",jarr);
+				
+				PrintWriter out=response.getWriter();
+				out.print(sendJson);
+				out.flush();
+				out.close();
+				
+				
+				
+			}else {
+				throw new ItemException("이벤트 전체 조회 실패!");
+			}
+		
+		}
+		
+	
+		@RequestMapping("searchEventA.do")
+		public String searchEventA(String keyword) {
+			
+			
+			
+			Event e=new Event();
+			e.setEventName(keyword);
+			System.out.println("도착?"+keyword);
+			
+			
+			return null;
+			
+		}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 }

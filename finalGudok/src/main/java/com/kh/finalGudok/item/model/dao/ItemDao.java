@@ -103,12 +103,12 @@ public class ItemDao {
 		return sqlSessionTemplate.selectOne("adminItemMapper.selectDeleteEvent",i);
 	}
 
-	public int updateEventStatusY(int i) {
-		return sqlSessionTemplate.update("adminItemMapper.updateEventStatusY",i);
+	public int updateEventStatusY(ArrayList<Event> dEventArr) {
+		return sqlSessionTemplate.update("adminItemMapper.updateEventStatusY",dEventArr);
 	}
 
-	public int updateEventStatusN(int i) {
-		return sqlSessionTemplate.update("adminItemMapper.updateEventStatusN",i);
+	public int updateEventStatusN(ArrayList<Event> dEventArr) {
+		return sqlSessionTemplate.update("adminItemMapper.updateEventStatusN",dEventArr);
 	}
 
 	public ArrayList<Review> selectAllReview(int itemNo) {

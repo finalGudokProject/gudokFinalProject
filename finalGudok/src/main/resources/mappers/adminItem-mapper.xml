@@ -111,16 +111,24 @@
 		FROM EIMAGE
 		WHERE EVENT_NO IN(#{i}) 
 	</select>
-	<update id="updateEventStatusY" parameterType="_int">
+	<update id="updateEventStatusY" parameterType="java.util.ArrayList">
 		UPDATE EVENT
 		SET EVENT_STATUS='Y'
-		WHERE EVENT_NO=(#{i})
-		
+		WHERE EVENT_NO IN
+	
+			<foreach item="e" index="index" collection="list" open="(" separator="," close=")">
+				#{e.eventNo}
+			</foreach>
+	
 	</update>
-	<update id="updateEventStatusN" parameterType="_int">
+	<update id="updateEventStatusN" parameterType="java.util.ArrayList">
 		UPDATE EVENT
 		SET EVENT_STATUS='N'
-		WHERE EVENT_NO=(#{i})
-		
+		WHERE EVENT_NO IN
+	
+			<foreach item="e" index="index" collection="list" open="(" separator="," close=")">
+				#{e.eventNo}
+			</foreach>
+	
 	</update>
 </mapper>

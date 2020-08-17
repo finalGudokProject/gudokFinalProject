@@ -38,6 +38,15 @@ public class Event implements Serializable{
 	}
 
 
+	
+
+
+	public Event(int eventNo) {
+		super();
+		this.eventNo = eventNo;
+	}
+
+
 	public int getEventNo() {
 		return eventNo;
 	}
