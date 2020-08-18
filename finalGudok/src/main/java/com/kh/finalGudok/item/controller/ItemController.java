@@ -92,37 +92,37 @@ public class ItemController {
 		}
 		if(categoryNo.equals("F1")) {
 			int dListCount = iService.dListCount();
-			System.out.println("음료 Count : " + dListCount);
+//			System.out.println("음료 Count : " + dListCount);
 			PageInfo pi = getPageInfo(currentPage, dListCount);
 			ArrayList<ItemListView> dList = iService.selectDList(pi);
 			mv.addObject("list", dList).addObject("pi", pi).addObject("foodChk","F0").setViewName("items/itemFood");
 		}else if(categoryNo.equals("F2")) {
 			int mListCount = iService.mListCount();
-			System.out.println("유제품 Count : " + mListCount);
+//			System.out.println("유제품 Count : " + mListCount);
 			PageInfo pi = getPageInfo(currentPage, mListCount);
 			ArrayList<ItemListView> mList = iService.selectMList(pi);
 			mv.addObject("list", mList).addObject("pi", pi).addObject("foodChk","F0").setViewName("items/itemFood");
 		}else if(categoryNo.equals("F3")) {
 			int bListCount = iService.bListCount();
-			System.out.println("베이커리 Count : " + bListCount);
+//			System.out.println("베이커리 Count : " + bListCount);
 			PageInfo pi = getPageInfo(currentPage, bListCount);
 			ArrayList<ItemListView> bList = iService.selectBList(pi);
 			mv.addObject("list", bList).addObject("pi", pi).addObject("foodChk","F0").setViewName("items/itemFood");
 		}else if(categoryNo.equals("F4")) {
 			int sListCount = iService.sListCount();
-			System.out.println("간편 Count : " + sListCount);
+//			System.out.println("간편 Count : " + sListCount);
 			PageInfo pi = getPageInfo(currentPage, sListCount);
 			ArrayList<ItemListView> sList = iService.selectSList(pi);
 			mv.addObject("list", sList).addObject("pi", pi).addObject("foodChk","F0").setViewName("items/itemFood");
 		}else if(categoryNo.equals("F5")) {
 			int hListCount = iService.hListCount();
-			System.out.println("건강 Count : " + hListCount);
+//			System.out.println("건강 Count : " + hListCount);
 			PageInfo pi = getPageInfo(currentPage, hListCount);
 			ArrayList<ItemListView> hList = iService.selectHList(pi);
 			mv.addObject("list", hList).addObject("pi", pi).addObject("foodChk","F0").setViewName("items/itemFood");
 		}else if(categoryNo.equals("F6")) {
 			int diListCount = iService.diListCount();
-			System.out.println("다이어트 Count : " + diListCount);
+//			System.out.println("다이어트 Count : " + diListCount);
 			PageInfo pi = getPageInfo(currentPage, diListCount);
 			ArrayList<ItemListView> diList = iService.selectDiList(pi);
 			mv.addObject("list", diList).addObject("pi", pi).addObject("foodChk","F0").setViewName("items/itemFood");
@@ -251,7 +251,7 @@ public class ItemController {
 			
 			// 해당 상품 리뷰 조회
 			ArrayList<Review> review = iService.selectReview(itemNo);
-			System.out.println("review 확인 : " + review);
+//			System.out.println("review 확인 : " + review);
 			if(review != null) {
 				ArrayList<ReviewView> reviewImg = iService.selectAllReviewImg(itemNo);
 				mv.addObject("review",review).addObject("img", reviewImg).setViewName("items/itemDetail");
@@ -285,7 +285,7 @@ public class ItemController {
 	@ResponseBody
 	public String choiceInsert(HttpServletRequest request, Heart h, Integer itemNo) {
 		int result = iService.insertChoice(h);
-		System.out.println("찜 확인 : " + result);
+//		System.out.println("찜 확인 : " + result);
 		int result2 = iService.updatePChoice(itemNo);
 		if(result > 0 && result2 > 0) {
 			return "success";
@@ -298,7 +298,7 @@ public class ItemController {
 	@ResponseBody
 	public String choiceDelete(HttpServletRequest request, Heart h, Integer itemNo) {
 		int result = iService.deleteChoice(h);
-		System.out.println("찜 삭제 확인 : " + result);
+//		System.out.println("찜 삭제 확인 : " + result);
 		int result2 = iService.updateMChoice(itemNo);
 		if(result > 0 && result2 > 0) {
 			return "success";
@@ -346,7 +346,7 @@ public class ItemController {
 	public ModelAndView basketPage(ModelAndView mv, Integer memberNo) {
 		ArrayList<Cart> list = iService.selectBasket(memberNo);
 		mv.addObject("list", list).setViewName("order/basket");
-		System.out.println("basketList : " + list);
+//		System.out.println("basketList : " + list);
 		return mv;
 	}
 	
@@ -366,15 +366,22 @@ public class ItemController {
 	@RequestMapping("reviewDetail.do")
 	public ModelAndView reviewDetail(ModelAndView mv, @RequestParam("reviewNo") int reviewNo) {
 		ArrayList<ReviewView> rv = iService.selectReviewDetail(reviewNo);
-		System.out.println("detail : " + rv);
+//		System.out.println("detail : " + rv);
 		mv.addObject("rv", rv).setViewName("items/reviewUpdate");
 		return mv;
 	}
 	
 	@RequestMapping("reviewUpdate.do")
-	public ModelAndView reviewUpdate(Review r, ModelAndView mv) {
+	public ModelAndView reviewUpdate(Review r, ModelAndView mv, @RequestParam("itemNo") int itemNo) {
+//		System.out.println("Review : " + r);
 		int result = iService.reviewUpdate(r);
-		
+//		System.out.println("itemNo 확인 : " + itemNo);
+//		System.out.println("review update 결과 : " + result);
+		if(result > 0) {
+			int rateResult = iService.updateReviewRate(itemNo);
+			System.out.println("평균 update 확인 : " + rateResult);
+			mv.setViewName("redirect:itemReview.do?itemNo=" + itemNo);
+		}
 		return mv;
 	}
 	
