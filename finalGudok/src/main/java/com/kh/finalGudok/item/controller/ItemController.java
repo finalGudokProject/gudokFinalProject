@@ -16,8 +16,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,6 +26,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.kh.finalGudok.item.model.exception.ItemException;
 import com.kh.finalGudok.item.model.service.ItemService;
 import com.kh.finalGudok.item.model.vo.AdminItem;
+import com.kh.finalGudok.item.model.vo.BannerItem;
 import com.kh.finalGudok.item.model.vo.Board;
 import com.kh.finalGudok.item.model.vo.Cart;
 import com.kh.finalGudok.item.model.vo.Event;
@@ -319,6 +318,7 @@ public class ItemController {
 		i.setImageRename(renameFileName);
 		i.setImagePath(savePath);
 		
+		System.out.println(i.getItemRecommend());
 		int result1=iService.insertItem(i);
 		int result2=iService.insertImage(i);
 		
@@ -413,16 +413,13 @@ public class ItemController {
 		int boardLimit=5; //게시판 한 페이지에 뿌려질 게시글 수
 		pi=getPageInfo2(currentPage,listCount,pageLimit,boardLimit);
 		
-		ArrayList<Event> list=iService.selectEventListA(pi); //이벤트 리스트
+		ArrayList<BannerItem> list=iService.selectEventListA(pi); //이벤트 리스트
+		
 		ArrayList eCountList=iService.selectEventListCount(pi); //이벤트당 상품갯수
 		
-
-		System.out.println("첫페이지"+pi.getStartPage());
-		System.out.println("끝페이지"+pi.getEndPage());
-		System.out.println("지금페이지"+pi.getCurrentPage());
-		System.out.println("최대페이지"+pi.getMaxPage());
-		
-		
+	
+		System.out.println(list);
+		System.out.println(eCountList);
 		
 		if(list!=null&&eCountList!=null) {
 			mv.addObject("list",list);
@@ -663,7 +660,7 @@ public class ItemController {
 			int boardLimit=5; //게시판 한 페이지에 뿌려질 게시글 수
 			pi=getPageInfo2(currentPage,listCount,pageLimit,boardLimit);
 			
-			ArrayList<Event> list=iService.selectEventListA(pi); //이벤트 리스트
+			ArrayList<BannerItem> list=iService.selectEventListA(pi); //이벤트 리스트
 			ArrayList eCountList=iService.selectEventListCount(pi); //이벤트당 상품갯수
 			
 			
@@ -704,6 +701,7 @@ public class ItemController {
 		}
 		
 	
+		//이벤트 검색
 		@RequestMapping("searchEventA.do")
 		public String searchEventA(String keyword) {
 			
@@ -719,14 +717,259 @@ public class ItemController {
 		}
 	
 	
+//	//같은 이벤트 번호를 지닌 아이템들 리스트 보기
+//	@RequestMapping("bannerDetail.do")
+//	public void bannerDetail(HttpServletResponse response, int eventNo, @RequestParam("page") Integer page ) throws IOException {
+//		
+//		int currentPage=1;
+//		
+//		if(page!=null) {
+//			currentPage=page;
+//		}
+//		
+//		
+//		System.out.println(eventNo);
+////		HashMap<String, Integer> eventNum=new HashMap();	
+////		eventNum.put("eventNo",eventNo);
+////		System.out.println(eventNum.get("eventNo"));
+//		
+//		
+//		
+//		
+//		int listCount=iService.getbannerItemCount(eventNo);
+//		
+//		PageInfo pi=new PageInfo();
+//		int pageLimit=10; //보여질 페이지 총 갯수
+//		int boardLimit=5; //게시판 한 페이지에 뿌려질 게시글 수
+//		
+//		pi=getPageInfo2(currentPage,listCount,pageLimit,boardLimit);
+//	
+//		ArrayList<BannerItem> biList=iService.selectBannerItem(eventNo,pi);
+//		
+//		response.setContentType("application/json;charset=utf-8");
+//
+//		
+//		if(biList!=null) {
+//			
+//			System.out.println(biList);
+//
+//			JSONArray jarr=new JSONArray();
+//			
+//			for(int i=0;i<biList.size();i++) {
+//				JSONObject jList=new JSONObject();
+//				
+//				jList.put("itemNo",biList.get(i).getItemNo());
+//				jList.put("itemName",biList.get(i).getItemName());
+//				jList.put("itemPrice",biList.get(i).getItemPrice());
+//				jList.put("itemEventStatus",biList.get(i).getItemEventStatus());
+//				
+//				jarr.add(jList);
+//			}
+//			
+//			JSONObject sendJson=new JSONObject();
+//			sendJson.put("list",jarr);
+//			
+//			PrintWriter out=response.getWriter();
+//			out.print(sendJson);
+//			out.flush();
+//			out.close();
+//			
+//		}else {
+//			throw new ItemException("이벤트 전체 조회 실패!");
+//		}
+//		
+//	}
 	
 	
+	//판매 상품 전체 리스트 보기
+	@RequestMapping("itemListA.do")
+	public void selectItemListA(HttpServletResponse response, Integer page) throws IOException {
+		
+		System.out.println("아이템 리스트 뿌려줌");
+		
+		int currentPage=1;
+		
+		if(page!=null) {
+			currentPage=page;
+		}
+		
+		int listCount=iService.getEventCount();
+		
+		PageInfo pi=new PageInfo();
+		
+		int pageLimit=10; //보여질 페이지 총 갯수
+		int boardLimit=5; //게시판 한 페이지에 뿌려질 게시글 수
+		pi=getPageInfo2(currentPage,listCount,pageLimit,boardLimit);
+		
+		ArrayList<AdminItem> list=iService.selectItemListA(pi); 
+		
+		
+		
+		response.setContentType("application/json;charset=utf-8");
+
+	
+		if(list!=null) {
+			
+			System.out.println(list);
+		
+			JSONArray jarr=new JSONArray();
+			
+			for(int i=0;i<list.size();i++) {
+				JSONObject jList=new JSONObject();
+				
+				jList.put("itemNo",list.get(i).getItemNo());
+				jList.put("itemName",list.get(i).getItemName());
+				jList.put("itemPrice",list.get(i).getItemPrice());
+				jList.put("itemDpStatus",list.get(i).getItemDpStatus());
+				
+				jarr.add(jList);
+			}
+			
+			JSONObject sendJson=new JSONObject();
+			sendJson.put("itemList",jarr);
+			
+			PrintWriter out=response.getWriter();
+			out.print(sendJson);
+			out.flush();
+			out.close();
+			
+		}else {
+			throw new ItemException("상품 전체 조회 실패!");
+		}
+	
+	}
 	
 	
+	//같은 이벤트 번호를 지닌 아이템들 리스트 보기
+		@RequestMapping("bannerDetail.do")
+		public ModelAndView bannerDetail(ModelAndView mv, int eventNo, Integer page  ) throws IOException {
+			
+			int currentPage=1;
+			
+			if(page!=null) {
+				currentPage=page;
+			}
+			
+			
+			Event ev=new Event();
+			ev.setEventNo(eventNo);
+			
+			
+			int listCount=iService.getbannerItemCount(eventNo);
+			
+			PageInfo pi=new PageInfo();
+			int pageLimit=10; //보여질 페이지 총 갯수
+			int boardLimit=5; //게시판 한 페이지에 뿌려질 게시글 수
+			
+			pi=getPageInfo2(currentPage,listCount,pageLimit,boardLimit);
+		
+			ArrayList<BannerItem> biList=iService.selectBannerItem(eventNo,pi);
+				mv.addObject("list",biList);
+				mv.addObject("pi",pi);
+				mv.addObject("ev",ev);
+				mv.setViewName("admin/bannerDetail");
+			return mv;
+		}
+		
+		
+		//이벤트 상품 제외
+		@RequestMapping("bannerItemDelete.do")
+		@ResponseBody
+		public String deleteBannerItem(HttpServletRequest request,String sendArr) {
+			
+
+			System.out.println(sendArr);
+			String dEvent=request.getParameter("sendArr");
+			String[] strArr=dEvent.split(",");
+			
+			
+			
+			int[] dEventArr=new int[strArr.length];
+			
+			
+			for(int i=0;i<strArr.length;i++) {
+				dEventArr[i]=Integer.valueOf(strArr[i]);
+				System.out.println(dEventArr[i]);
+				
+			}
+				
+			int result=iService.deleteBannerItem(dEventArr);
+				
+			System.out.println("1이 아님?"+result);
+			
+			if(result>0) {
+				System.out.println("삭제 컨트롤러까진 옴");
+				return "success";
+				
+			}else {
+				throw new ItemException("이벤트 삭제 실패!");
+			}
+			
+			
+		}
 	
 	
-	
-	
-	
+		//배너 상품 제외 ajax용 
+				@RequestMapping("biChange.do")
+				
+				public void biChange(int eventNo, HttpServletResponse response, Integer page) throws IOException {
+					
+					int currentPage=1;
+					
+					if(page!=null) {
+						currentPage=page;
+					}
+					
+					
+					Event ev=new Event();
+					ev.setEventNo(eventNo);
+					
+					
+					int listCount=iService.getbannerItemCount(eventNo);
+					
+					PageInfo pi=new PageInfo();
+					int pageLimit=10; //보여질 페이지 총 갯수
+					int boardLimit=5; //게시판 한 페이지에 뿌려질 게시글 수
+					
+					pi=getPageInfo2(currentPage,listCount,pageLimit,boardLimit);
+				
+					ArrayList<BannerItem> biList=iService.selectBannerItem(eventNo,pi);
+					
+
+					response.setContentType("application/json;charset=utf-8");
+
+				
+					if(biList!=null) {
+						
+						System.out.println(biList);
+						JSONArray jarr=new JSONArray();
+						
+						for(int i=0;i<biList.size();i++) {
+							JSONObject jList=new JSONObject();
+							
+							jList.put("eventNo",biList.get(i).getEventNo());
+							jList.put("itemNo",biList.get(i).getItemNo());
+							jList.put("itemName",biList.get(i).getItemName());
+							jList.put("itemPrice",biList.get(i).getItemPrice());
+							jList.put("itemDpStatus",biList.get(i).getItemDpStatus());
+							
+							jarr.add(jList);
+						}
+						
+						JSONObject sendJson=new JSONObject();
+						sendJson.put("list",jarr);
+						
+						PrintWriter out=response.getWriter();
+						out.print(sendJson);
+						out.flush();
+						out.close();
+						
+						
+						
+					}else {
+						throw new ItemException("이벤트별 상품 조회 실패!");
+					}
+				
+				}
 	
 }

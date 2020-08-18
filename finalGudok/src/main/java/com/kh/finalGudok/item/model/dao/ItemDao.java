@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.finalGudok.item.model.vo.AdminItem;
+import com.kh.finalGudok.item.model.vo.BannerItem;
 import com.kh.finalGudok.item.model.vo.Event;
 
 import com.kh.finalGudok.item.model.vo.Board;
@@ -70,7 +71,7 @@ public class ItemDao {
 		return sqlSessionTemplate.selectOne("adminItemMapper.selectEventCount");
 	}
 
-	public ArrayList<Event> selectEventListA(PageInfo pi) {
+	public ArrayList<BannerItem> selectEventListA(PageInfo pi) {
 		int offset=(pi.getCurrentPage()-1)*pi.getBoardLimit();
 		RowBounds rowBounds=new RowBounds(offset,pi.getBoardLimit());
 		return (ArrayList)sqlSessionTemplate.selectList("adminItemMapper.selectEventList",null,rowBounds);
@@ -248,5 +249,27 @@ public class ItemDao {
 		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		return (ArrayList)sqlSessionTemplate.selectList("itemListMapper.selectDiList",null,rowBounds);
+	}
+
+	public int selectBannerItemCount(int bi) {
+		return sqlSessionTemplate.selectOne("adminItemMapper.selectBannerItemCount",bi);
+	}
+
+	public ArrayList<BannerItem> selectBannerItem(int bi, PageInfo pi) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return (ArrayList)sqlSessionTemplate.selectList("adminItemMapper.selectBannerList",bi,rowBounds);
+	}
+
+	public ArrayList<BannerItem> selectItemListA(PageInfo pi) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSessionTemplate.selectList("adminItemMapper.selectItemListA",null,rowBounds);
+	}
+
+	public int deleteBannerItem(int[] itemArr) {
+		
+		return sqlSessionTemplate.delete("adminItemMapper.deleteBannerItem",itemArr);
 	}
 }

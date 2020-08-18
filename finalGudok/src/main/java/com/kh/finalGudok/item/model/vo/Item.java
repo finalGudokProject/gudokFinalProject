@@ -22,6 +22,7 @@ public class Item implements Serializable{
 	private String categoryNo;
 	private int eventNo;
 	private String itemMemo;
+
 	
 	public Item() {
 		// TODO Auto-generated constructor stub
@@ -45,6 +46,8 @@ public class Item implements Serializable{
 		this.eventNo = eventNo;
 		this.itemMemo = itemMemo;
 	}
+
+
 
 	public int getItemNo() {
 		return itemNo;
@@ -150,6 +153,7 @@ public class Item implements Serializable{
 		this.itemMemo = itemMemo;
 	}
 
+	
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
@@ -162,6 +166,8 @@ public class Item implements Serializable{
 				+ itemRecommend + ", categoryNo=" + categoryNo + ", eventNo=" + eventNo + ", itemMemo=" + itemMemo
 				+ "]";
 	}
+
+	
 
 	
 	

@@ -156,7 +156,9 @@ input, select,textarea{
                 <h3>배너 등록</h3>
                 <br>
 
+                
                 <br><br>
+             
                 <form action="eInsert.do" method="post" encType="multipart/form-data" onsubmit="return validate()">
                 <table>
               
@@ -188,7 +190,6 @@ input, select,textarea{
                 </table>
                 <br>
             <div style="text-align: center;">
-           		<input type="button" class="btn" value="목록으로" onclick="location.href='eList.do'">
                 <input type="submit" class="btn" value="저장하기">
                 <input type="reset"  class="btn" value="취소">
             </div>

@@ -394,6 +394,10 @@ label > span {
             /*가운데 정렬*/
             align-items: center;
         }
+        
+        #cursor{
+		cursor: pointer;
+		}
     </style>
   </head>
 
@@ -433,9 +437,9 @@ label > span {
                                       </svg>&nbsp;&nbsp;상품관리&nbsp;&nbsp;</b></label>
                                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                   <ul class="group-list sd_ul">
-                                    <li><a href="#">상품 등록</a></li>
+                                    <li><a href="iInsertView.do">상품 등록</a></li>
                                     <li><a href="#">판매 상품 리스트</a></li>
-                                    <li><a href="#">메인 배너 관리</a></li>
+                                    <li><a href="eList.do">배너 리스트</a></li>
                                     
                                   </ul>
                                 </li>

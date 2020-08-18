@@ -35,10 +35,25 @@
     vertical-align: middle;
 }
 
+td a{
+
+ text-decoration:none; 
+ color:black;
+}
+
+td a:hover{
+
+
+ color:black;
+}
+
 input, select,textarea{
     border: 1px solid #CCCCCC;
 }
 
+#cursor{
+cursor: pointer;
+}
 
 </style>
 
@@ -85,12 +100,14 @@ input, select,textarea{
                          
                          <tbody>
                     <c:if test="${!empty list }">
-                         	<c:forEach var="e" items="${list }" varStatus="status">
-	                             <tr>
-	                                <td><input type="checkbox" class="common" name="eventNo" value="${e.eventNo }"></td>
+                         	<c:forEach var="e" items="${list }" varStatus="cnt">
+                         		<tr id="cursor">
+	                                <td><input type="checkbox" class="common" id="eventNo${cnt.index}" name="eventNo" value="${e.eventNo }"></td>
 	                                <td>${e.eventNo }</td>
-	                                <td>${e.eventName }</td>
-	                                <td>${eCountList[status.index] }</td>
+	                                <td onclick="bDetail(${e.eventNo })" id="event" style="pointer:cursor;">
+	                               	<a>${e.eventName }</a>
+	                                </td>
+	                                <td>${eCountList[cnt.index] }</td>
 	                                <td id="eventStatus">${e.eventStatus }</td>
 	                            </tr>
                             </c:forEach>
@@ -176,6 +193,28 @@ input, select,textarea{
         
         
         <script>
+        
+       //게시물 상세보기
+        
+        function bDetail(eventNo){
+        	
+        		
+        		 var eventNo=eventNo;
+        		/*  var page=${pi.currentPage }; */
+        		   
+            
+        	
+           		location.href="bannerDetail.do?eventNo="+eventNo;
+           				/* "&page="+page; */
+       
+        	
+        }
+        
+        	
+        
+        
+        
+        
         //검색 
         
         function eventSearch(){
@@ -253,11 +292,11 @@ input, select,textarea{
         	 				for(var i in data.bannerList){
         	 					
         	 				
-        	 				$tr=$("<tr>");
+        	 				$tr=$("<tr id='cursor'>");
         	 				$td=$("<td>");
         	 				$checkBox=$("<input type='checkbox' class='common' name='eventNo'>").val(data.bannerList[i].eventNo);     	 			
         	 				$eventNo=$("<td>").text(data.bannerList[i].eventNo);
-        	 				$eventName=$("<td>").text(data.bannerList[i].eventName);
+        	 				$eventName=$("<td onclick='bDetail(data.bannerList[i].eventNo)'>").text(data.bannerList[i].eventName);
         	 				$eventCnt=$("<td>").text(data.bannerList[i].eventCnt);
         	 				$eventStatus=$("<td>").text(data.bannerList[i].eventStatus);
         	 				
@@ -356,11 +395,7 @@ input, select,textarea{
     				 
     			});
         		
-        		
-        		
-        /* 		
-        		 location.href="eDelete.do?sendArr="+sendArr; */
-        		
+    
         	} 
         	
         	//모두 체크

@@ -146,8 +146,8 @@ input, select,textarea{
             <div class="container box">
                 <h3>일반 상품 등록</h3>
                 <br>
-                <button type="button" onclick="location.href='iInsertView.do'">일반 상품</button>&nbsp;
-                <button type="button" onclick="location.href='eInsertView.do'">이벤트 상품</button>
+                <button type="button" class="btn" onclick="location.href='iInsertView.do'">일반 상품</button>&nbsp;
+                <button type="button" class="btn">이벤트 상품</button>
                 <br><br>
                 
           		<form action="iInsert.do" method="post" encType="multipart/form-data" onsubmit="return validate()">
@@ -160,15 +160,15 @@ input, select,textarea{
                         <td colspan="3">
                                 <select name="categoryNo" id="category" style="float:left;">
                                     <option value="0">카테고리를 선택하세요.</option>
-                                    <option value="f1">음료</option>
-                                    <option value="f2">유제품</option>
-                                    <option value="f3">베이커리</option>
-                                    <option value="f4">간편식</option>
-                                    <option value="f5">건강식품</option>
-                                    <option value="f6">다이어트식단</option>
-                                    <option value="l1">홈데코</option>
-                                    <option value="l2">바디케어</option>
-                                    <option value="l3">생활용품</option>
+                                    <option value="F1">음료</option>
+                                    <option value="F2">유제품</option>
+                                    <option value="F3">베이커리</option>
+                                    <option value="F4">간편식</option>
+                                    <option value="F5">건강식품</option>
+                                    <option value="F6">다이어트식단</option>
+                                    <option value="L1">홈데코</option>
+                                    <option value="L2">바디케어</option>
+                                    <option value="L3">생활용품</option>
                                 </select>
                                 <input type="text" name="itemName" id="itemName" style="width:100%; margin:3px;">
                         </td>
@@ -193,9 +193,9 @@ input, select,textarea{
                             	추천 선택
                         </td>
                         <td id="td4">
-                            <input type="radio" name="itemRecommend" id="itemRecommend" value="F">&nbsp;여성 &nbsp; &nbsp; &nbsp;
-                            <input type="radio" name="itemRecommend" id="itemRecommend" value="M">&nbsp;남성 &nbsp; &nbsp; &nbsp;
-                            <input type="radio" name="itemRecommend" id="itemRecommend" value="C">&nbsp;공통
+                            <input type="radio" name="itemRecommend" value="F">&nbsp;여성 &nbsp; &nbsp; &nbsp;
+                            <input type="radio" name="itemRecommend" value="M">&nbsp;남성 &nbsp; &nbsp; &nbsp;
+                            <input type="radio" name="itemRecommend" value="C">&nbsp;공통
 
                         </td>
 
@@ -217,8 +217,8 @@ input, select,textarea{
                 <br>
                 
             <div style="text-align: center;">
-           		<button type="submit">저장하기</button>&nbsp;
-                <button type="reset">취소</button>
+           		<button type="submit" class="btn">저장하기</button>&nbsp;
+                <button type="reset" class="btn">취소</button>
             </div>
             </form>
             
@@ -232,6 +232,7 @@ input, select,textarea{
         
         //상품 등록시 필요정보 공백 제한
         function validate(){
+        	
         
     	if($("#category").val().trim().length==1){
 	    		alert('카테고리를 선택해주세요.');
