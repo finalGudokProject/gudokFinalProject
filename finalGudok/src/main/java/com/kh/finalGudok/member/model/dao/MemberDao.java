@@ -8,11 +8,11 @@ import com.kh.finalGudok.member.model.vo.Member;
 
 import java.util.ArrayList;
 
-import com.kh.finalGudok.member.model.vo.Cart;
-import com.kh.finalGudok.member.model.vo.Delivery;
-import com.kh.finalGudok.member.model.vo.Exchange;
-import com.kh.finalGudok.member.model.vo.Point;
-import com.kh.finalGudok.member.model.vo.Review;
+//import com.kh.finalGudok.member.model.vo.Cart;
+//import com.kh.finalGudok.member.model.vo.Delivery;
+//import com.kh.finalGudok.member.model.vo.Exchange;
+//import com.kh.finalGudok.member.model.vo.Point;
+//import com.kh.finalGudok.member.model.vo.Review;
 
 @Repository("mDao")
 public class MemberDao {
@@ -29,35 +29,39 @@ public class MemberDao {
 		return sqlSessionTemplate.selectOne("memberMapper.memberConfirm", m);
 	}
 
-	public ArrayList<Point> selectPointList(Integer memberNo) {
-		return (ArrayList)sqlSessionTemplate.selectList("memberMapper.pointList", memberNo);
-	}
+//	public ArrayList<Point> selectPointList(Integer memberNo) {
+//		return (ArrayList)sqlSessionTemplate.selectList("memberMapper.pointList", memberNo);
+//	}
+//
+//	public ArrayList<Review> selectReviewList(Integer memberNo) {
+//		return (ArrayList)sqlSessionTemplate.selectList("memberMapper.reviewList", memberNo);
+//	}
+//
+//	public ArrayList<Exchange> selectExchangeList(Integer memberNo) {
+//		return (ArrayList)sqlSessionTemplate.selectList("memberMapper.exchangeList", memberNo);
+//	}
+//
+//	public ArrayList<Delivery> selectDeliveryList(Integer memberNo) {
+//		return (ArrayList)sqlSessionTemplate.selectList("memberMapper.deliveryList", memberNo);
+//	}
+//
+//	public ArrayList<Cart> selectCartList(Integer memberNo) {
+//		return (ArrayList)sqlSessionTemplate.selectList("memberMapper.cartList", memberNo);
+//	}
+//
+//	public int insertExchange(Exchange e) {
+//		return sqlSessionTemplate.insert("memberMapper.insertExchange", e);
+//	}
 
-	public ArrayList<Review> selectReviewList(Integer memberNo) {
-		return (ArrayList)sqlSessionTemplate.selectList("memberMapper.reviewList", memberNo);
-	}
-
-	public ArrayList<Exchange> selectExchangeList(Integer memberNo) {
-		return (ArrayList)sqlSessionTemplate.selectList("memberMapper.exchangeList", memberNo);
-	}
-
-	public ArrayList<Delivery> selectDeliveryList(Integer memberNo) {
-		return (ArrayList)sqlSessionTemplate.selectList("memberMapper.deliveryList", memberNo);
-	}
-
-	public ArrayList<Cart> selectCartList(Integer memberNo) {
-		return (ArrayList)sqlSessionTemplate.selectList("memberMapper.cartList", memberNo);
-	}
-
-	public int insertExchange(Exchange e) {
-		return sqlSessionTemplate.insert("memberMapper.insertExchange", e);
-	}
-
-	public int checkIdDup(String id) {
-		return sqlSessionTemplate.selectOne("memberMapper.idCheck", id);
+	public int checkIdDup(String memberId) {
+		return sqlSessionTemplate.selectOne("memberMapper.idCheck", memberId);
 	}
 
 	public int insertMember(Member m) {
 		return sqlSessionTemplate.insert("memberMapper.insertMember", m);
+	}
+
+	public int emailDupCheck(String email) {
+		return sqlSessionTemplate.selectOne("memberMapper.emailDupCheck",email);
 	}
 }

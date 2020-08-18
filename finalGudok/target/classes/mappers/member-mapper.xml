@@ -41,4 +41,8 @@
 		INSERT INTO MEMBER VALUES(SEQ_MEMBER_NO.NEXTVAL, #{memberId}, #{email}, #{memberPwd}, #{memberName}, 
 									#{address1}, #{address2}, #{address3}, #{gender}, SYSDATE, SYSDATE, DEFAULT, DEFAULT, DEFAULT, DEFAULT)
 	</insert>
+	
+	<select id="emailDupCheck" parameterType="String" resultType="_int">
+		SELECT COUNT(*) FROM MEMBER WHERE EMAIL=#{email}
+	</select>
 </mapper>

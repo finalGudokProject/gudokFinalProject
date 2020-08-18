@@ -22,15 +22,15 @@ public class Member implements Serializable {
 	private Date enrollDate;
 	private Date modifyDate;
 	private String memberStatus;
-	private String emailStatus;
+	private String emailStatus;	// 이메일 인증 시 인증상태 확인
 	private int point;
 	private int gradeNo;
 	
 	public Member() {}
 
-	public Member(int memberNo, String memberId, String email, String memberPwd, String memberName,
-			String address1, String address2, String address3, String gender, Date enrollDate, Date modifyDate,
-			String memberStatus, String emailStatus, int point, int gradeNo) {
+	public Member(int memberNo, String memberId, String email, String memberPwd, String memberName, String address1,
+			String address2, String address3, String gender, Date enrollDate, Date modifyDate, String memberStatus,
+			String emailStatus, int point, int gradeNo) {
 		super();
 		this.memberNo = memberNo;
 		this.memberId = memberId;
@@ -176,9 +176,13 @@ public class Member implements Serializable {
 	@Override
 	public String toString() {
 		return "Member [memberNo=" + memberNo + ", memberId=" + memberId + ", email=" + email + ", memberPwd="
-				+ memberPwd + ", memberName=" + memberName + ", address1=" + address1
-				+ ", address2=" + address2 + ", address3=" + address3 + ", gender=" + gender + ", enrollDate="
-				+ enrollDate + ", modifyDate=" + modifyDate + ", memberStatus=" + memberStatus + ", emailStatus="
-				+ emailStatus + ", point=" + point + ", gradeNo=" + gradeNo + "]";
+				+ memberPwd + ", memberName=" + memberName + ", address1=" + address1 + ", address2=" + address2
+				+ ", address3=" + address3 + ", gender=" + gender + ", enrollDate=" + enrollDate + ", modifyDate="
+				+ modifyDate + ", memberStatus=" + memberStatus + ", emailStatus=" + emailStatus + ", point=" + point
+				+ ", gradeNo=" + gradeNo + "]";
 	}
+
+	
+	
+
 }
