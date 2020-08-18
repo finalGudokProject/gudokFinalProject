@@ -281,14 +281,14 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 				</div>
 				<div class="starRev">
 							<c:choose>
-								<c:when test="${i.itemRate < 1}">
+								<c:when test="${ilv.itemRate < 1}">
 									<span class="starRv">1</span>
 									<span class="starRv">2</span>
 									<span class="starRv">3</span>
 									<span class="starRv">4</span>
 									<span class="starRv">5</span>
 								</c:when>
-								<c:when test="${i.itemRate < 2 }">
+								<c:when test="${ilv.itemRate < 2 }">
 									<span class="starRv on">1</span>
 									<span class="starRv">2</span>
 									<span class="starRv">3</span>
@@ -296,7 +296,7 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 									<span class="starRv">5</span>
 								</c:when>
 								
-								<c:when test="${i.itemRate < 3 }">
+								<c:when test="${ilv.itemRate < 3 }">
 									<span class="starRv on">1</span>
 									<span class="starRv on">2</span>
 									<span class="starRv">3</span>
@@ -304,7 +304,7 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 									<span class="starRv">5</span>
 								</c:when>
 								
-								<c:when test="${i.itemRate < 4 }">
+								<c:when test="${ilv.itemRate < 4 }">
 									<span class="starRv on">1</span>
 									<span class="starRv on">2</span>
 									<span class="starRv on">3</span>
@@ -312,7 +312,7 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 									<span class="starRv">5</span>
 								</c:when>
 								
-								<c:when test="${i.itemRate < 5 }">
+								<c:when test="${ilv.itemRate < 5 }">
 									<span class="starRv on">1</span>
 									<span class="starRv on">2</span>
 									<span class="starRv on">3</span>
@@ -568,7 +568,7 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 							</div>
 							<div>
 								<c:forEach var="i" items="${img }">
-									<c:if test="${i.reviewNo == r.reviewNo }">
+									<c:if test="${i.reviewNo == r.reviewNo && !empty i.imageRename}">
 										<img src="${contextPath }/resources/iuploadFiles/${i.imageRename}" class="reviewImgClass" style="width:100%;height:100%;">
 									</c:if>
 								</c:forEach>
@@ -638,8 +638,8 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 							</div>
 							<div>
 								<c:forEach var="i" items="${img }">
-									<c:if test="${i.reviewNo == r.reviewNo }">
-										<img src="${contextPath }/resources/iuploadFiles/${i.imageRename}" class="reviewImgClass">
+									<c:if test="${i.reviewNo == r.reviewNo && !empty i.imageRename}">
+										<img src="${contextPath }/resources/iuploadFiles/${i.imageRename}" class="reviewImgClass" style="width:100%;height:100%;">
 									</c:if>
 								</c:forEach>
 							</div>
