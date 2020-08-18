@@ -84,6 +84,25 @@
 		vertical-align:bottom;
 	}
 .starRv.on{background-position:0 0;}
+
+	.reviewImgD{
+		overflow:hidden;
+		text-align:center;
+		padding:2%;
+		border-top:1px dashed lightgray;
+	}
+	.reviewImgD img{
+		height:40%;
+		width:40%;
+		object-fit:cover;
+		transform:(1.0);
+		transition:transform.5s;
+	}
+	
+	.reviewImgD img:hover{
+		transform:scale(1.05);
+		transition:transform.5s;
+	}
 </style>
 <body>
 	<jsp:include page="../common/menubar.jsp"/>
@@ -117,6 +136,9 @@
 					<c:if test="${loginUser.memberId == r.memberId }">
 						<div class="col-3" style="text-align:right;padding-right:2%;">
 							<input type="hidden" value="${r.reviewNo }">
+							<input type="hidden" value="${r.itemNo }">
+							<input type="hidden" value="${r.reviewContent }">
+							<input type="hidden" value="${r.reviewRate }">
 							<img src="resources/images/retouch.png" class="retouchImgC" style="width:3.5rem;border:1px solid lightgray;" title="상품평 수정하기">
 						</div>
 					</c:if>
@@ -187,20 +209,12 @@
 			<tbody style="padding:2%;">
 				<tr>
 					<td>
-						<div style="padding:2%;border-top:1px dashed lightgray;">
-						<%-- <c:if test="${!empty r.reviewImg1 && !empty r.reviewImg2}">
-							<img src="resources/iuploadFiles/${r.reviewImg1 }" class="reviewImgClass">
-							<img src="resources/iuploadFiles/${r.reviewImg2 }" class="reviewImgClass">
-						</c:if>
-						<c:if test="${!empty r.reviewImg1 && empty r.reviewImg2 }">
-							<img src="resources/iuploadFiles/${r.reviewImg1 }" class="reviewImgClass">
-						</c:if>
-						<c:if test="${empty r.reviewImg1 && !empty r.reviewImg2 }">
-							<img src="resources/iuploadFiles/${r.reviewImg2 }" class="reviewImgClass">
-						</c:if>
-						<c:if test="${empty r.reviewImg1 && empty r.reviewImg2 }">
-						</c:if> --%>
-						사진 넣는 곳
+						<div class="reviewImgD">
+						<c:forEach var="i" items="${img }">
+							<c:if test="${i.reviewNo == r.reviewNo }">
+								<img src="${contextPath }/resources/iuploadFiles/${i.imageRename}" class="reviewImgClass">
+							</c:if>
+						</c:forEach>
 						</div>
 					</td>
 				</tr>
@@ -241,9 +255,17 @@
 					if(result){
 						
 					}else{
-						var reviewNo = $(this).parent().find("input").val();
-						console.log(reviewNo);
-						location.href="reviewDetail.do?reviewNo=" + reviewNo;
+						var reviewNo = $(this).parent().find("input:nth-child(1)").val();
+						var itemNo = $(this).parent().find("input:nth-child(2)").val();
+						var reviewContent = $(this).parent().find("input:nth-child(3)").val();
+						var reviewRate = $(this).parent().find("input:nth-child(4)").val();
+						var memberNo = "${loginUser.memberNo}";
+						var memberId = "${loginUser.memberId}";
+						var email = "${loginUser.email}";
+						
+						console.log("reviewNo : " + reviewNo + ",itemNo : " + itemNo + ",reviewContent : " + reviewContent
+								 + ",reviewRate : " + reviewRate + ",memberNo : " + memberNo+ ",memberId : " + memberId + ",email : " + email);
+						location.href="reviewDetail.do?reviewNo=" + reviewNo + "&itemNo=" + itemNo;
 					}
 				})
 			})

@@ -252,14 +252,14 @@ public class ItemController {
 			// 해당 상품 리뷰 조회
 			ArrayList<Review> review = iService.selectReview(itemNo);
 			System.out.println("review 확인 : " + review);
-			mv.addObject("review",review).setViewName("items/itemDetail");
+			if(review != null) {
+				ArrayList<ReviewView> reviewImg = iService.selectAllReviewImg(itemNo);
+				mv.addObject("review",review).addObject("img", reviewImg).setViewName("items/itemDetail");
+			}
 			
-			
-			// Integer 형변환 오류 해결해야 됨
 			Heart hResult = iService.detailHeart(itemNo);
 			System.out.println("hResult : " +  hResult);
 			mv.addObject("hResult", hResult).setViewName("items/itemDetail");
-			
 			
 		}else {
 			throw new ItemException("조회수 증가 실패");
@@ -272,7 +272,10 @@ public class ItemController {
 	@RequestMapping("itemReview.do")
 	public ModelAndView reviewPage(ModelAndView mv, int itemNo) {
 		ArrayList<Review> review = iService.selectAllReview(itemNo);
-		mv.addObject("review",review).setViewName("items/itemReview");
+		if(review != null) {
+			ArrayList<ReviewView> reviewImg = iService.selectAllReviewImg(itemNo);
+			mv.addObject("review", review).addObject("img", reviewImg).setViewName("items/itemReview");
+		}
 		return mv;
 	}
 	
@@ -304,6 +307,7 @@ public class ItemController {
 		}
 	}
 	
+	// 장바구니 선택 리스트 삭제
 	@ResponseBody
 	@RequestMapping(value="basketDel.do", method=RequestMethod.POST)
 	public String cartDelete(HttpSession session, HttpServletRequest request, @RequestParam(value="checkboxArr[]") List<String> checkArr, Cart c) {
@@ -325,6 +329,7 @@ public class ItemController {
 		
 	}
 	
+	// 장바구니 추가
 	@RequestMapping("basket.do")
 	@ResponseBody
 	public String insertCart(HttpServletRequest request, Cart c) {
@@ -336,6 +341,7 @@ public class ItemController {
 		}
 	}
 	
+	// 장바구니 페이지 리스트 불러오기
 	@RequestMapping("basketPage.do")
 	public ModelAndView basketPage(ModelAndView mv, Integer memberNo) {
 		ArrayList<Cart> list = iService.selectBasket(memberNo);
@@ -344,6 +350,7 @@ public class ItemController {
 		return mv;
 	}
 	
+	// 상세 페이지 상품 문의
 	@RequestMapping("inquire.do")
 	@ResponseBody
 	public String itemInquire(HttpServletRequest request, Board b) {
@@ -355,14 +362,23 @@ public class ItemController {
 		}
 	}
 
+	// 
 	@RequestMapping("reviewDetail.do")
-	public ModelAndView reviewDetail(ModelAndView mv, @RequestParam("reviewNo") Integer reviewNo) {
+	public ModelAndView reviewDetail(ModelAndView mv, @RequestParam("reviewNo") int reviewNo) {
 		ArrayList<ReviewView> rv = iService.selectReviewDetail(reviewNo);
 		System.out.println("detail : " + rv);
 		mv.addObject("rv", rv).setViewName("items/reviewUpdate");
 		return mv;
 	}
 	
+	@RequestMapping("reviewUpdate.do")
+	public ModelAndView reviewUpdate(Review r, ModelAndView mv) {
+		int result = iService.reviewUpdate(r);
+		
+		return mv;
+	}
+	
+	// 리뷰 쓰기
 	@RequestMapping(value="reviewInsert.do", method=RequestMethod.POST)
 	public String reviewInsert(Review r, Image i, ReviewImage ri, HttpServletRequest request, @RequestParam(value = "page", required = false)Integer page
 			, @RequestParam(value = "memberNo", required = false)int memberNo
@@ -379,7 +395,9 @@ public class ItemController {
 			i.setImageOriginalName(file1.getOriginalFilename());
 			i.setImageRename(renameFileName1);
 			int imgResult1 = iService.insertReviewImage1(i);
-			iService.insertRI(ri);
+			if(imgResult1 > 0) {
+				iService.insertRI(ri);
+			}
 		}
 		
 		if(!file2.getOriginalFilename().equals("")) {
@@ -387,9 +405,10 @@ public class ItemController {
 			i.setImageOriginalName(file2.getOriginalFilename());
 			i.setImageRename(renameFileName2);
 			int imgResult2 = iService.insertReviewImage2(i);
-			iService.insertRI(ri);
+			if(imgResult2 > 0) {
+				iService.insertRI(ri);
+			}
 		}
-		
 		
 		System.out.println("review result : " + result);
 		if(result > 0 && updateResult > 0) {
@@ -407,9 +426,15 @@ public class ItemController {
 			folder.mkdirs();
 		}
 		
+//		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+//		String originFileName = file.getOriginalFilename();
+//		String renameFileName = sdf.format(new java.sql.Date(System.currentTimeMillis())) + "." + 
+//		originFileName.substring(originFileName.lastIndexOf(".")+1);
+		
+		int random = (int)(Math.random() * 100000 + 1);
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
 		String originFileName = file.getOriginalFilename();
-		String renameFileName = sdf.format(new java.sql.Date(System.currentTimeMillis())) + "." + 
+		String renameFileName = sdf.format(new java.sql.Date(System.currentTimeMillis())) + random  + "." + 
 		originFileName.substring(originFileName.lastIndexOf(".")+1);
 		
 		String filePath = folder + "\\" + renameFileName;

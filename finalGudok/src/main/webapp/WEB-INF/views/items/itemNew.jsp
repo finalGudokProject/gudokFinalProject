@@ -211,6 +211,25 @@
 		font-size:30px;
 	}
 	
+	.detailDiv :hover{
+		cursor:pointer;
+	}
+	
+	.cardHeader{
+		overflow:hidden;
+	}
+	.cardHeader img{
+		height:100%;
+		width:100%;
+		object-fit:cover;
+		transform:(1.0);
+		transition:transform.5s;
+	}
+	
+	.cardHeader img:hover{
+		transform:scale(1.1);
+		transition:transform.5s;
+	}
 
 </style>
 </head>
@@ -248,6 +267,11 @@
 						console.log(hidden2);
 						location.href="itemNew.do?sortNo=" + hidden2;
 					})
+					$(".detailDiv").on("mouseenter", function(){
+						$(this).css({"box-shadow":"1px 1px 20px lightgray", "transition":"0.3s"});
+					}).on("mouseleave", function(){
+						$(this).css({"border":"1px solid lightgray","box-shadow":"none"});
+					})
 				})
 			</script>
 			
@@ -267,7 +291,7 @@
 		<fmt:formatNumber var="discountPrice" value="${(i.itemPrice - i.itemPrice*(i.itemDiscount/100))}" type="number"/>
 		<fmt:formatNumber var="itemPrice" value="${i.itemPrice}" type="number"/>
 			<div class="col-4" onclick="location.href='${idetail}'" class="detailDiv">
-				<div class="card">
+				<div class="card detailDiv">
 					<c:if test="${i.itemDiscount != 0}" >
 					<div class="cardHeader">
 						<div class="circle">

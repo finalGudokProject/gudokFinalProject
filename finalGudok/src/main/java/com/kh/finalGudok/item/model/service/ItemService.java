@@ -119,6 +119,10 @@ public interface ItemService {
 
 	ArrayList<Item> selectList(PageInfo pi, String sortNo);
 
+	int reviewUpdate(Review r);
+
+	ArrayList<ReviewView> selectAllReviewImg(int itemNo);
+
 //	int l1Count();
 //
 //	int l2Count();

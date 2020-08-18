@@ -566,22 +566,13 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 								</c:choose>
 								<div style="display:inline-block;color:gray;">등록일 : ${r.reviewDate }</div>
 							</div>
-							<%-- <c:choose>
-								<c:when test="${!empty r.reviewImg1 && !empty r.reviewImg2 }">
-									<div><img src="${contextPath }/resources/iuploadFiles/${r.reviewImg1}" class="reviewImgClass"><img src="${contextPath }/resources/iuploadFiles/${r.reviewImg2}" class="reviewImgClass"></div>
-								</c:when>
-								<c:when test="${!empty r.reviewImg1 && empty r.reviewImg2}">
-									<div><img src="${contextPath }/resources/iuploadFiles/${r.reviewImg1}" class="reviewImgClass"></div>
-								</c:when>
-								<c:when test="${!empty r.reviewImg2 && empty r.reviewImg1}">
-									<div><img src="${contextPath }/resources/iuploadFiles/${r.reviewImg2}" class="reviewImgClass"></div>
-								</c:when>
-								<c:when test="${empty r.reviewImg1 || empty r.reviewImg2 }">
-									<div></div>
-								</c:when>
-								<c:otherwise></c:otherwise>
-							</c:choose> --%>
-							<div>사진 넣는 곳</div>
+							<div>
+								<c:forEach var="i" items="${img }">
+									<c:if test="${i.reviewNo == r.reviewNo }">
+										<img src="${contextPath }/resources/iuploadFiles/${i.imageRename}" class="reviewImgClass" style="width:100%;height:100%;">
+									</c:if>
+								</c:forEach>
+							</div>
 							<div class="reviewTDiv">
 								<div class="reviewText">${r.reviewContent }</div>
 							</div>
@@ -645,22 +636,13 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 								</c:choose>
 								<div style="display:inline-block;color:gray;">등록일 : ${r.reviewDate }</div>
 							</div>
-							<%-- <c:choose>
-								<c:when test="${!empty r.reviewImg1 && !empty r.reviewImg2 }">
-									<div><img src="${contextPath }/resources/iuploadFiles/${r.reviewImg1}" class="reviewImgClass"><img src="${contextPath }/resources/iuploadFiles/${r.reviewImg2}" class="reviewImgClass"></div>
-								</c:when>
-								<c:when test="${!empty r.reviewImg1 && empty r.reviewImg2}">
-									<div><img src="${contextPath }/resources/iuploadFiles/${r.reviewImg1}" class="reviewImgClass"></div>
-								</c:when>
-								<c:when test="${!empty r.reviewImg2 && empty r.reviewImg1}">
-									<div><img src="${contextPath }/resources/iuploadFiles/${r.reviewImg2}" class="reviewImgClass"></div>
-								</c:when>
-								<c:when test="${empty r.reviewImg1 || empty r.reviewImg2 }">
-									<div></div>
-								</c:when>
-								<c:otherwise></c:otherwise>
-							</c:choose> --%>
-							<div>사진 넣을 곳</div>
+							<div>
+								<c:forEach var="i" items="${img }">
+									<c:if test="${i.reviewNo == r.reviewNo }">
+										<img src="${contextPath }/resources/iuploadFiles/${i.imageRename}" class="reviewImgClass">
+									</c:if>
+								</c:forEach>
+							</div>
 							<div class="reviewTDiv">
 								<div class="reviewText">${r.reviewContent }</div>
 							</div>

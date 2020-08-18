@@ -279,6 +279,16 @@ public class ItemServiceImpl implements ItemService {
 		return iDao.selectList(pi, sortNo);
 	}
 
+	@Override
+	public int reviewUpdate(Review r) {
+		return iDao.reviewUpdate(r);
+	}
+
+	@Override
+	public ArrayList<ReviewView> selectAllReviewImg(int itemNo) {
+		return iDao.selectAllReviewImg(itemNo);
+	}
+
 //	@Override
 //	public int l1Count() {
 //		return iDao.l1Count();

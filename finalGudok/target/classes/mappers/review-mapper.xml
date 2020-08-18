@@ -35,11 +35,18 @@
 		ORDER BY REVIEW_NO DESC
 	</select>
 	
-	<select id="selectAllReview" parameterType="_int" resultMap="reviewViewResultSet">
+	<select id="selectAllReview" parameterType="_int" resultMap="reviewResultSet">
+		SELECT *
+		FROM REVIEW R
+		LEFT JOIN MEMBER M ON(R.MEMBER_ID = M.MEMBER_ID)
+		WHERE MEMBER_STATUS='Y' AND ITEM_NO=#{itemNo}
+		ORDER BY REVIEW_NO DESC
+	</select>
+	
+	<select id="selectAllReviewImg" parameterType="_int" resultMap="reviewViewResultSet">
 		SELECT *
 		FROM SELECT_REVIEW SR
-		LEFT JOIN MEMBER M ON(SR.MEMBER_ID = M.MEMBER_ID)
-		WHERE MEMBER_STATUS='Y' AND ITEM_NO=#{itemNo}
+		WHERE ITEM_NO=#{itemNo}
 		ORDER BY REVIEW_NO DESC
 	</select>
 	
@@ -91,4 +98,10 @@
 		WHERE REVIEW_NO=#{reviewNo}
 	</select>
 	
+	<update id="updateReview" parameterType="Review">
+		UPDATE REVIEW
+		SET ITEM_NO=#{itemNo}, REVIEW_CONTENT=#{reviewContent}, REVIEW_RATE=#{reviewRate}, REVIEW_DATE=#{reviewDate}, REVIEW_MODIFY=SYSDATE
+			, MEMBER_NO=#{memberNo}, MEMBER_ID=#{memberId}, EMAIL=#{email}
+		WHERE REVIEW_NO=#{reviewNo}
+	</update>
 </mapper>

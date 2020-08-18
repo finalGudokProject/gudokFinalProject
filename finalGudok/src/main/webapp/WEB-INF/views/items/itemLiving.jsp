@@ -34,6 +34,10 @@
 		vertical-align:middle;
 	}
 	
+	.detailDiv :hover{
+		cursor:pointer;
+	}
+	
 	/* 상품 리스트 정렬 CSS */
 	#rankDiv{
 		float:left;
@@ -209,7 +213,26 @@
 	.page-link, .page-item{
 		font-size:30px;
 	}
+	.cateTableC td:hover{
+		background:lightyellow;
+		cursor:pointer;
+	}
 	
+	.cardHeader{
+		overflow:hidden;
+	}
+	.cardHeader img{
+		height:100%;
+		width:100%;
+		object-fit:cover;
+		transform:(1.0);
+		transition:transform.5s;
+	}
+	
+	.cardHeader img:hover{
+		transform:scale(1.1);
+		transition:transform.5s;
+	}
 
 </style>
 </head>
@@ -246,6 +269,11 @@
 						var sort = $(this).find("input").val();
 						$("#categoryInput").val(sort);
 						location.href="livingSort.do?categoryNo="+sort;
+					})
+					$(".detailDiv").on("mouseenter", function(){
+						$(this).css({"box-shadow":"1px 1px 20px lightgray", "transition":"0.3s"});
+					}).on("mouseleave", function(){
+						$(this).css({"border":"1px solid lightgray","box-shadow":"none"});
 					})
 				})
 				
@@ -285,6 +313,7 @@
 							location.href="itemLiving.do?sortNo=" + hidden2;
 						}
 					})
+					
 				})
 			</script>
 			
@@ -293,7 +322,7 @@
 	<div class="row" id="itemsRowDiv">
 	
 	
-	
+		
 		<c:if test="${!empty list}">
 		<c:forEach var="i" items="${list }" varStatus="vs">
 		<c:url var="idetail" value="idetail.do">
@@ -305,7 +334,7 @@
 		<fmt:formatNumber var="itemPrice" value="${i.itemPrice}" type="number"/>
 		<input type="hidden" value="${i.categoryNo}" id="hiddenCategory">
 			<div class="col-4" onclick="location.href='${idetail}'" class="detailDiv">
-				<div class="card">
+				<div class="card detailDiv">
 					<c:if test="${i.itemDiscount != 0}" >
 					<div class="cardHeader">
 						<div class="circle">
@@ -412,7 +441,6 @@
 		</c:forEach>
 		</c:if>
 		</div>
-		
 		<c:forEach var="i" items="${list }" varStatus="vs">
 		<script>
 			$(function(){

@@ -60,12 +60,6 @@
 		align:right;
 	}
 	
-	.reviewImgClass{
-		width:25rem;
-		height:auto;
-		margin-right:1%;
-		border:1px solid lightgray !important;
-	}
 	
 	input[type=button]{
 	background:#6AAED9;
@@ -86,10 +80,18 @@
 </style>
 <body>
 	<jsp:include page="../common/menubar.jsp"/>
-	
+	<form action="reviewUpdate.do" method="post" id="reviewUpForm">
+	<div style="display:none;">
+		<input type="hidden" value="${rv[0].reviewNo }" name="reviewNo">
+		<input type="hidden" value="${rv[0].itemNo }" name="itemNo">
+		<input type="hidden" value="${loginUser.memberNo }" name="memberNo">
+		<input type="hidden" value="${loginUser.memberId }" name="memberId">
+		<input type="hidden" value="${loginUser.email }" name="email">
+		<input type="hidden" value="${rv[0].reviewDate}" name="reviewDate">
+	</div>
 	<div style="padding:1% 0 1% 18%;">
 			<img src="${contextPath }/resources/images/reviewImg.png" style="width:7%;height:7%;">
-			<span style="vertical-align:middle;font-size:50px;"><b>님 상품평 수정</b></span>
+			<span style="vertical-align:middle;font-size:50px;"><b>${rv[0].memberId } 상품평 수정</b></span>
 		</div>
 	<div class="container">
 		<div class="row">
@@ -107,48 +109,75 @@
 			
 			
 			<c:if test="${!empty rv}">
-			<c:forEach var="r" items="${rv }">
 				<tr>
-					<td><div style="vertical-align:middle;font-size:50px; text-align:left;margin-left:2%;">평점 : 
+					<td><div style="vertical-align:middle;font-size:50px; text-align:left;padding-left:2%;border-bottom:1px dashed lightgray;">평점 : 
 						<div class="starRev" style="margin:2% 0 0 0;display:inline-block;">
+						<div style="display:none;">
+						<input type="hidden" value="${rv[0].reviewRate }" name="reviewRate" class="radioInput">
+						<input type="radio" name="reviewRadio" id="radio1" value="1">
+						<input type="radio" name="reviewRadio" id="radio2" value="2">
+						<input type="radio" name="reviewRadio" id="radio3" value="3">
+						<input type="radio" name="reviewRadio" id="radio4" value="4">
+						<input type="radio" name="reviewRadio" id="radio5" value="5">
+						</div>
 							<c:choose>
-								<c:when test="${r.reviewRate < 1}">
+								<c:when test="${rv[0].reviewRate < 1}">
 									<span class="starRv">1</span>
 									<span class="starRv">2</span>
 									<span class="starRv">3</span>
 									<span class="starRv">4</span>
 									<span class="starRv">5</span>
 								</c:when>
-								<c:when test="${r.reviewRate < 2 }">
+								<c:when test="${rv[0].reviewRate < 2 }">
 									<span class="starRv on">1</span>
 									<span class="starRv">2</span>
 									<span class="starRv">3</span>
 									<span class="starRv">4</span>
 									<span class="starRv">5</span>
+									<script>
+										$(function(){
+											$("#radio1").prop("checked", true);
+										})
+									</script>
 								</c:when>
 								
-								<c:when test="${r.reviewRate < 3 }">
+								<c:when test="${rv[0].reviewRate < 3 }">
 									<span class="starRv on">1</span>
 									<span class="starRv on">2</span>
 									<span class="starRv">3</span>
 									<span class="starRv">4</span>
 									<span class="starRv">5</span>
+									<script>
+										$(function(){
+											$("#radio2").prop("checked", true);
+										})
+									</script>
 								</c:when>
 								
-								<c:when test="${r.reviewRate < 4 }">
+								<c:when test="${rv[0].reviewRate < 4 }">
 									<span class="starRv on">1</span>
 									<span class="starRv on">2</span>
 									<span class="starRv on">3</span>
 									<span class="starRv">4</span>
 									<span class="starRv">5</span>
+									<script>
+										$(function(){
+											$("#radio3").prop("checked", true);
+										})
+									</script>
 								</c:when>
 								
-								<c:when test="${r.reviewRate < 5 }">
+								<c:when test="${rv[0].reviewRate < 5 }">
 									<span class="starRv on">1</span>
 									<span class="starRv on">2</span>
 									<span class="starRv on">3</span>
 									<span class="starRv on">4</span>
 									<span class="starRv">5</span>
+									<script>
+										$(function(){
+											$("#radio4").prop("checked", true);
+										})
+									</script>
 								</c:when>
 								<c:otherwise>
 									<span class="starRv on">1</span>
@@ -156,6 +185,11 @@
 									<span class="starRv on">3</span>
 									<span class="starRv on">4</span>
 									<span class="starRv on">5</span>
+									<script>
+										$(function(){
+											$("#radio5").prop("checked", true);
+										})
+									</script>
 								</c:otherwise>
 							</c:choose>
 						</div>
@@ -164,70 +198,53 @@
 				</tr>
 				<tr>
 					<td>
-						<c:if test="${!empty r.imageOriginalName }">
-							<img src="${contextPath }/resources/iuploadFiles/${r.imageRename}" style="margin:2%;width:40%;">
-						</c:if>
-						<c:if test="${empty r.imageOriginalName }">
-							등록한 사진이 없습니다.
-						</c:if>
-						
+						<c:forEach var="r" items="${rv }">
+							<c:if test="${!empty r.imageOriginalName }">
+								<div style="display:inline; cursor:pointer;" class="reviewImg">
+									<img src="${contextPath }/resources/iuploadFiles/${r.imageRename}" style="margin:2%;width:40%;border:1px solid lightgray;">
+								</div>
+							</c:if>
+							<c:if test="${empty r.imageOriginalName }">
+								등록한 사진이 없습니다.
+							</c:if>
+						</c:forEach>
+						<script>
+							$(function(){
+								$(".reviewImg").on("click", function(){
+									swal("","이미지는 수정이 불가능합니다.","error");
+								})
+							})
+						</script>
 					</td>
 				</tr>
 				<tr>
 					<td>
-						<div style="line-height:50px;vertical-align:middle;"><textarea style="width:96%;">${r.reviewContent }</textarea></div>
+						<div style="line-height:50px;vertical-align:middle; border-top:1px dashed lightgray;padding-top:2%;"><textarea style="width:96%;" name="reviewContent">${rv[0].reviewContent }</textarea></div>
 					</td>
 				</tr>
 				<tr>
 					<td>
-						<input type="button" style="vertical-align:middle;width:15%;margin:0 0 2% 0;" value="수정완료">
+						<input type="submit" style="vertical-align:middle;text-align:center;width:auto;margin:0 0 2% 0;letter-spacing:5px;" value="수정완료" id="completeBtn">
 					</td>
 				</tr>
-				</c:forEach>
 				</c:if>
 			</table>
 		</div>
 		
 		</div>
 	</div>
-	
-	<script type="text/javascript">
-	    $(document).ready(function(){
-	        $(".retouchImgC").tooltip();
-	    });
-	</script>
-	
+	</form>
 	<script>
 		$(function(){
-			$('.starRev .starRv').click(function(){
-				$(this).parent().children('span').removeClass('on');
-				$(this).addClass('on').prevAll('span').addClass('on');
-				switch($(this).text()){
-				case "1" : $("input:radio[id=radio1]").prop("checked", true);
-					break;
-				case "2" : $("input:radio[id=radio2]").prop("checked", true);
-					break;
-				case "3" : $("input:radio[id=radio3]").prop("checked", true);
-					break;
-				case "4" : $("input:radio[id=radio4]").prop("checked", true);
-					break;
-				case "5" : $("input:radio[id=radio5]").prop("checked", true);
-					break;
-				}
-				
-			});
-		})
-		
-	</script>
-	
-	<script>
-		$(function(){
-			$("div .retouchImgC").on("mouseenter", function(){
-				console.log("이미지");
-				$(this).attr("src","${contextPath }/resources/images/retouchHover.png").css("cursor","pointer");
-			}).on("mouseleave", function(){
-				$(this).attr("src","${contextPath }/resources/images/retouch.png");
-			}).on("click", function(){
+			$("#completeBtn").on("click", function(e){
+				e.preventDefault();
+				/* var reviewNo = "${rv[0].reviewNo}";
+				var itemNo = "${rv[0].itemNo}";
+				var reviewContent = "${rv[0].reviewContent}";
+				var reviewRate = $("input[type=radio]:checked").val();
+				var memberNo = "${loginUser.memberNo}";
+				var memberId = "${loginUser.memberId}";
+				var email = "${loginUser.memberId}"; */
 				swal({
 					text : "상품평을 수정하시겠습니까?",
 					buttons : ["예", "아니오"],
@@ -237,12 +254,80 @@
 					if(result){
 						
 					}else{
-						swal("","모달창 띄워주기");
+						$("#reviewUpForm").submit();
 					}
 				})
 			})
 		})
 	</script>
+	
+	<script type="text/javascript">
+	    $(document).ready(function(){
+	        $(".retouchImgC").tooltip();
+	    });
+	</script>
+	
+	<script>
+		$(function(){
+			$('.starRev .starRv').on("click", function(){
+				if(${rv[0].reviewRate} > $(this).text()){
+					swal({
+						text : "상품에 대한 불만 사항은 상품 문의를 통해 해주시길 바랍니다.\n 평점을 낮추시겠습니까?",
+						buttons : ["예", "아니오"],
+						closeOnEsc : false,
+						dangerMode : true,
+					}). then((result)=>{
+						if(result){
+							
+						}else{
+							$(this).parent().children('span').removeClass('on');
+							$(this).addClass('on').prevAll('span').addClass('on');
+							switch($(this).text()){
+							case "1" : $("input:radio[id=radio1]").prop("checked", true);
+									$(".radioInput").val($(this).text());
+								break;
+							case "2" : $("input:radio[id=radio2]").prop("checked", true);
+									$(".radioInput").val($(this).text());
+								break;
+							case "3" : $("input:radio[id=radio3]").prop("checked", true);
+									$(".radioInput").val($(this).text());
+								break;
+							case "4" : $("input:radio[id=radio4]").prop("checked", true);
+									$(".radioInput").val($(this).text());
+								break;
+							case "5" : $("input:radio[id=radio5]").prop("checked", true);
+									$(".radioInput").val($(this).text());
+								break;
+							}
+						}
+					})
+				}else{
+					$(this).parent().children('span').removeClass('on');
+					$(this).addClass('on').prevAll('span').addClass('on');
+					switch($(this).text()){
+					case "1" : $("input:radio[id=radio1]").prop("checked", true);
+							$(".radioInput").val($(this).text());
+						break;
+					case "2" : $("input:radio[id=radio2]").prop("checked", true);
+							$(".radioInput").val($(this).text());
+						break;
+					case "3" : $("input:radio[id=radio3]").prop("checked", true);
+							$(".radioInput").val($(this).text());
+						break;
+					case "4" : $("input:radio[id=radio4]").prop("checked", true);
+							$(".radioInput").val($(this).text());
+						break;
+					case "5" : $("input:radio[id=radio5]").prop("checked", true);
+							$(".radioInput").val($(this).text());
+						break;
+					}
+				}
+				
+			});
+		})
+		
+	</script>
+	
 	<jsp:include page="../common/footer.jsp"/>
 </body>
 </html>

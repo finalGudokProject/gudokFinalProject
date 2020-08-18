@@ -214,7 +214,25 @@
 		background:lightyellow;
 		cursor:pointer;
 	}
-
+	.detailDiv :hover{
+		cursor:pointer;
+	}
+	.cardHeader{
+		overflow:hidden;
+	}
+	.cardHeader img{
+		height:100%;
+		width:100%;
+		object-fit:cover;
+		transform:(1.0);
+		transition:transform.5s;
+	}
+	
+	.cardHeader img:hover{
+		transform:scale(1.1);
+		transition:transform.5s;
+	}
+	
 </style>
 </head>
 <body>
@@ -226,10 +244,10 @@
 		<img src="${contextPath }/resources/images/food.png" style="width:70px;height:70px;">
 		<span>푸드
 			<c:if test="${foodChk != 'F0'}">
-				<input type="text" id="categoryF0" value="F0">
+				<input type="hidden" id="categoryF0" value="F0">
 			</c:if>
 			<c:if test="${foodChk == 'F0' }">
-				<input type="text" id="categoryF0" value="">
+				<input type="hidden" id="categoryF0" value="">
 			</c:if>
 		</span>
 		</div>
@@ -250,6 +268,11 @@
 					$(".sortCate").on("click", function(){
 						var sort = $(this).find("input").val();
 						location.href="foodSort.do?categoryNo="+sort;
+					})
+					$(".detailDiv").on("mouseenter", function(){
+						$(this).css({"box-shadow":"1px 1px 20px lightgray", "transition":"0.3s"});
+					}).on("mouseleave", function(){
+						$(this).css({"border":"1px solid lightgray","box-shadow":"none"});
 					})
 				})
 			</script>
@@ -307,8 +330,8 @@
 		<fmt:formatNumber var="discountPrice" value="${(i.itemPrice - i.itemPrice*(i.itemDiscount/100))}" type="number"/>
 		<fmt:formatNumber var="itemPrice" value="${i.itemPrice}" type="number"/>
 		<input type="hidden" value="${i.categoryNo}" id="hiddenCategory">
-			<div class="col-4" onclick="location.href='${idetail}'" class="detailDiv">
-				<div class="card">
+			<div class="col-4" onclick="location.href='${idetail}'">
+				<div class="card detailDiv">
 					<c:if test="${i.itemDiscount != 0}" >
 					<div class="cardHeader">
 						<div class="circle">

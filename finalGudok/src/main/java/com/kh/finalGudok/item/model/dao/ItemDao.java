@@ -295,6 +295,14 @@ public class ItemDao {
 		return (ArrayList)sqlSessionTemplate.selectList("itemListMapper.selectSortFoodList", map, rowBounds);
 	}
 
+	public int reviewUpdate(Review r) {
+		return sqlSessionTemplate.update("reviewMapper.updateReview", r);
+	}
+
+	public ArrayList<ReviewView> selectAllReviewImg(int itemNo) {
+		return (ArrayList)sqlSessionTemplate.selectList("reviewMapper.selectAllReviewImg", itemNo);
+	}
+
 
 
 //	public int l1Count() {
