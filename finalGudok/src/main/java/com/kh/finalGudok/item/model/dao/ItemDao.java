@@ -307,6 +307,10 @@ public class ItemDao {
 		return sqlSessionTemplate.delete("reviewMapper.reviewDelete", reviewNo);
 	}
 
+	public Item reviewItemName(int itemNo) {
+		return sqlSessionTemplate.selectOne("itemMapper.reviewItemName", itemNo);
+	}
+
 
 
 //	public int l1Count() {

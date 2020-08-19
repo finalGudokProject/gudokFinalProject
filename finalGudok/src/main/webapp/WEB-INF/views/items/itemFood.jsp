@@ -265,6 +265,24 @@
 			</table>
 			<script>
 				$(function(){
+					console.log("${categoryNo}");
+					if(${categoryNo == "F2"}){
+						$(".cateTableC #foodMilk").css({"text-decoration":"underline","background":"lightyellow","font-weight":"bold"});
+					}else if(${categoryNo == "F3"}){
+						$(".cateTableC #foodBakery").css({"text-decoration":"underline","background":"lightyellow","font-weight":"bold"});
+					}else if(${categoryNo == "F6"}){
+						$(".cateTableC #foodDiet").css({"text-decoration":"underline","background":"lightyellow","font-weight":"bold"});
+					}else if(${categoryNo == "F1"}){
+						$(".cateTableC #foodDrink").css({"text-decoration":"underline","background":"lightyellow","font-weight":"bold"});
+					}else if(${categoryNo == "F4"}){
+						$(".cateTableC #foodSimple").css({"text-decoration":"underline","background":"lightyellow","font-weight":"bold"});
+					}else if(${categoryNo == "F5"}){
+						$(".cateTableC #foodHealth").css({"text-decoration":"underline","background":"lightyellow","font-weight":"bold"});
+					}
+				})
+			</script>
+			<script>
+				$(function(){
 					$(".sortCate").on("click", function(){
 						var sort = $(this).find("input").val();
 						location.href="foodSort.do?categoryNo="+sort;

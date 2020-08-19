@@ -95,37 +95,37 @@ public class ItemController {
 //			System.out.println("음료 Count : " + dListCount);
 			PageInfo pi = getPageInfo(currentPage, dListCount);
 			ArrayList<ItemListView> dList = iService.selectDList(pi);
-			mv.addObject("list", dList).addObject("pi", pi).addObject("foodChk","F0").setViewName("items/itemFood");
+			mv.addObject("list", dList).addObject("pi", pi).addObject("foodChk","F0").addObject("categoryNo", categoryNo).setViewName("items/itemFood");
 		}else if(categoryNo.equals("F2")) {
 			int mListCount = iService.mListCount();
 //			System.out.println("유제품 Count : " + mListCount);
 			PageInfo pi = getPageInfo(currentPage, mListCount);
 			ArrayList<ItemListView> mList = iService.selectMList(pi);
-			mv.addObject("list", mList).addObject("pi", pi).addObject("foodChk","F0").setViewName("items/itemFood");
+			mv.addObject("list", mList).addObject("pi", pi).addObject("foodChk","F0").addObject("categoryNo", categoryNo).setViewName("items/itemFood");
 		}else if(categoryNo.equals("F3")) {
 			int bListCount = iService.bListCount();
 //			System.out.println("베이커리 Count : " + bListCount);
 			PageInfo pi = getPageInfo(currentPage, bListCount);
 			ArrayList<ItemListView> bList = iService.selectBList(pi);
-			mv.addObject("list", bList).addObject("pi", pi).addObject("foodChk","F0").setViewName("items/itemFood");
+			mv.addObject("list", bList).addObject("pi", pi).addObject("foodChk","F0").addObject("categoryNo", categoryNo).setViewName("items/itemFood");
 		}else if(categoryNo.equals("F4")) {
 			int sListCount = iService.sListCount();
 //			System.out.println("간편 Count : " + sListCount);
 			PageInfo pi = getPageInfo(currentPage, sListCount);
 			ArrayList<ItemListView> sList = iService.selectSList(pi);
-			mv.addObject("list", sList).addObject("pi", pi).addObject("foodChk","F0").setViewName("items/itemFood");
+			mv.addObject("list", sList).addObject("pi", pi).addObject("foodChk","F0").addObject("categoryNo", categoryNo).setViewName("items/itemFood");
 		}else if(categoryNo.equals("F5")) {
 			int hListCount = iService.hListCount();
 //			System.out.println("건강 Count : " + hListCount);
 			PageInfo pi = getPageInfo(currentPage, hListCount);
 			ArrayList<ItemListView> hList = iService.selectHList(pi);
-			mv.addObject("list", hList).addObject("pi", pi).addObject("foodChk","F0").setViewName("items/itemFood");
+			mv.addObject("list", hList).addObject("pi", pi).addObject("foodChk","F0").addObject("categoryNo", categoryNo).setViewName("items/itemFood");
 		}else if(categoryNo.equals("F6")) {
 			int diListCount = iService.diListCount();
 //			System.out.println("다이어트 Count : " + diListCount);
 			PageInfo pi = getPageInfo(currentPage, diListCount);
 			ArrayList<ItemListView> diList = iService.selectDiList(pi);
-			mv.addObject("list", diList).addObject("pi", pi).addObject("foodChk","F0").setViewName("items/itemFood");
+			mv.addObject("list", diList).addObject("pi", pi).addObject("foodChk","F0").addObject("categoryNo", categoryNo).setViewName("items/itemFood");
 		}
 		
 		return mv;
@@ -143,7 +143,7 @@ public class ItemController {
 			System.out.println("리빙 Count : " + livingCateCount);
 			PageInfo pi = getPageInfo(currentPage, livingCateCount);
 			ArrayList<ItemListView> livingCateList = iService.livingCateList(pi, categoryNo, sortNo);
-			mv.addObject("list", livingCateList).addObject("pi", pi).addObject("livingChk","L0").setViewName("items/itemLiving");
+			mv.addObject("list", livingCateList).addObject("pi", pi).addObject("livingChk","L0").addObject("categoryNo",categoryNo).addObject("sortNo",sortNo).setViewName("items/itemLiving");
 		}
 		return mv;
 	}	
@@ -274,7 +274,8 @@ public class ItemController {
 		ArrayList<Review> review = iService.selectAllReview(itemNo);
 		if(review != null) {
 			ArrayList<ReviewView> reviewImg = iService.selectAllReviewImg(itemNo);
-			mv.addObject("review", review).addObject("img", reviewImg).setViewName("items/itemReview");
+			Item i = iService.reviewItemName(itemNo);
+			mv.addObject("review", review).addObject("img", reviewImg).addObject("item",i).setViewName("items/itemReview");
 		}
 		return mv;
 	}

@@ -125,6 +125,8 @@ public interface ItemService {
 
 	int reviewDelete(int reviewNo);
 
+	Item reviewItemName(int itemNo);
+
 //	int l1Count();
 //
 //	int l2Count();

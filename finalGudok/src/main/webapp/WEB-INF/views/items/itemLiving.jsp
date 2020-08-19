@@ -257,18 +257,31 @@
 		<div style="margin:0 0 3% 2%">
 			<table style="display:block;" class="cateTableC">
 				<tr>
-					<td style="width:10%;" id="foodMilk" class="sortCate"><input type="hidden" value="L1">생활용품</td>
-					<td style="width:10%;" id="foodBakery" class="sortCate"><input type="hidden" value="L2">바디케어</td>
-					<td style="width:10%;" id="foodDiet" class="sortCate"><input type="hidden" value="L3">홈데코</td>
+					<td style="width:10%;" id="foodLife" class="sortCate"><input type="hidden" value="L1">생활용품</td>
+					<td style="width:10%;" id="foodBody" class="sortCate"><input type="hidden" value="L2">바디케어</td>
+					<td style="width:10%;" id="foodDeco" class="sortCate"><input type="hidden" value="L3">홈데코</td>
 				</tr>
 			</table>
-			<div style="display:none;"><input type="hidden" name="categoryNo" id="categoryInput"></div>
+			<div style="display:block;"><input type="text" name="categoryNo" id="categoryInput"></div>
+			<script>
+				$(function(){
+					if(${categoryNo == "L1"}){
+						$(".cateTableC #foodLife").css({"text-decoration":"underline","background":"lightyellow","font-weight":"bold"});
+					}else if(${categoryNo == "L2"}){
+						$(".cateTableC #foodBody").css({"text-decoration":"underline","background":"lightyellow","font-weight":"bold"});
+					}else if(${categoryNo == "L3"}){
+						$(".cateTableC #foodDeco").css({"text-decoration":"underline","background":"lightyellow","font-weight":"bold"});
+					}
+				})
+			</script>
+			
 			<script>
 				$(function(){
 					$(".sortCate").on("click", function(){
 						var sort = $(this).find("input").val();
 						$("#categoryInput").val(sort);
 						location.href="livingSort.do?categoryNo="+sort;
+						
 					})
 					$(".detailDiv").on("mouseenter", function(){
 						$(this).css({"box-shadow":"1px 1px 20px lightgray", "transition":"0.3s"});
@@ -282,16 +295,16 @@
 			<div style="border-top:1px solid lightgray;border-bottom:1px solid lightgray;">
 			<table align="center" style="margin-bottom:1%;" id="sortTable">
 				<tr>
-					<td class="sortRank"><input type="hidden" value="" class="catchHidden"><input type="hidden" value="S1" class="catchNew"><div class="sortDivC">
+					<td class="sortRank" id="bestSort"><input type="hidden" value="" class="catchHidden"><input type="hidden" value="S1" class="catchNew"><div class="sortDivC">
 					<img src="${contextPath }/resources/images/newItem.png" class="sortClass"><span style="display:block;">신상품순</span>
 					</div></td>
-					<td class="sortRank"><input type="hidden" value="" class="catchHidden"><input type="hidden" value="S2" class="catchBest"><div class="sortDivC">
+					<td class="sortRank" id="popSort"><input type="hidden" value="" class="catchHidden"><input type="hidden" value="S2" class="catchBest"><div class="sortDivC">
 					<img src="${contextPath }/resources/images/popul.png" class="sortClass"><span style="display:block;">인기순</span>
 					</div></td>
-					<td class="sortRank"><input type="hidden" value="" class="catchHidden"><input type="hidden" value="S3" class="catchHigh"><div class="sortDivC">
+					<td class="sortRank" id="highSort"><input type="hidden" value="" class="catchHidden"><input type="hidden" value="S3" class="catchHigh"><div class="sortDivC">
 					<img src="${contextPath }/resources/images/high.png" class="sortClass"><span style="display:block;">높은 가격순</span>
 					</div></td>
-					<td class="sortRank"><input type="hidden" value="" class="catchHidden"><input type="hidden" value="S4" class="catchLow"><div class="sortDivC">
+					<td class="sortRank" id="lowSort"><input type="hidden" value="" class="catchHidden"><input type="hidden" value="S4" class="catchLow"><div class="sortDivC">
 					<img src="${contextPath }/resources/images/low.png" class="sortClass"><span style="display:block;">낮은 가격순</span>
 					</div></td>
 				</tr>

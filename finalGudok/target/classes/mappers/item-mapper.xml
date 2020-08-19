@@ -52,5 +52,10 @@
 		WHERE ITEM_NO=#{itemNo}
 	</update>
 	
+	<select id="reviewItemName" parameterType="_int" resultMap="itemResultSet">
+		SELECT *
+		FROM ITEM
+		WHERE ITEM_NO=#{itemNo}
+	</select>
 	
 </mapper>

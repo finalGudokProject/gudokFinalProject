@@ -294,6 +294,11 @@ public class ItemServiceImpl implements ItemService {
 		return iDao.reviewDelete(reviewNo);
 	}
 
+	@Override
+	public Item reviewItemName(int itemNo) {
+		return iDao.reviewItemName(itemNo);
+	}
+
 //	@Override
 //	public int l1Count() {
 //		return iDao.l1Count();
