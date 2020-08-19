@@ -27,11 +27,14 @@
 		<typeAlias type="com.kh.finalGudok.member.model.vo.Exchange" alias="mExchange"/>
 		<typeAlias type="com.kh.finalGudok.member.model.vo.Delivery" alias="mDelivery"/>
 		<typeAlias type="com.kh.finalGudok.member.model.vo.Cart" alias="mCart"/>
+
 		<typeAlias type="com.kh.finalGudok.member.model.vo.Withdrawal" alias="Withdrawal"/>
 		<typeAlias type="com.kh.finalGudok.member.model.vo.Inquiry" alias="mInquiry"/>
 		<typeAlias type="com.kh.finalGudok.member.model.vo.Heart" alias="mHeart"/>
 		<typeAlias type="com.kh.finalGudok.member.model.vo.DeleteHeart" alias="mDeleteHeart"/>
 		<typeAlias type="com.kh.finalGudok.member.model.vo.Reply" alias="mReply"/>
+		
+		<typeAlias type="com.kh.finalGudok.item.model.vo.BannerItem" alias="BannerItem"/>
 	</typeAliases>
 	
 	<mappers>

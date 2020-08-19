@@ -3,6 +3,7 @@ package com.kh.finalGudok.item.model.service;
 import java.util.ArrayList;
 
 import com.kh.finalGudok.item.model.vo.AdminItem;
+import com.kh.finalGudok.item.model.vo.BannerItem;
 import com.kh.finalGudok.item.model.vo.Event;
 
 import com.kh.finalGudok.item.model.vo.Board;
@@ -41,7 +42,7 @@ public interface ItemService {
 
 	int getEventCount();
 
-	ArrayList<Event> selectEventListA(PageInfo pi);
+	ArrayList<BannerItem> selectEventListA(PageInfo pi);
 
 	ArrayList selectEventListCount(PageInfo pi);
 
@@ -55,9 +56,7 @@ public interface ItemService {
 
 	Event selectDeleteEvent(int i);
 
-	int updateEventStatusY(int i);
-
-	int updateEventStatusN(int i);
+	int updateEventStatusY(ArrayList<Event> dEventArr);
 
 
 	ArrayList<Review> selectAllReview(int itemNo);
@@ -171,4 +170,13 @@ public interface ItemService {
 //
 //	ArrayList<ItemListView> l3List(PageInfo pi, String sortNo);
 	
+	int updateEventStatusN(ArrayList<Event> dEventArr);
+
+	int getbannerItemCount(int eventNo);
+
+	ArrayList<BannerItem> selectBannerItem(int eventNo, PageInfo pi);
+
+	ArrayList<AdminItem> selectItemListA(PageInfo pi);
+
+	int deleteBannerItem(int[] dEventArr);
 }

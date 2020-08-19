@@ -6,19 +6,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.finalGudok.item.model.dao.ItemDao;
-
 import com.kh.finalGudok.item.model.vo.AdminItem;
-import com.kh.finalGudok.item.model.vo.Event;
-
+import com.kh.finalGudok.item.model.vo.BannerItem;
 import com.kh.finalGudok.item.model.vo.Board;
 import com.kh.finalGudok.item.model.vo.Cart;
+import com.kh.finalGudok.item.model.vo.Event;
 import com.kh.finalGudok.item.model.vo.Heart;
+
 
 import com.kh.finalGudok.item.model.vo.Image;
 import com.kh.finalGudok.item.model.vo.Item;
 import com.kh.finalGudok.item.model.vo.ItemListView;
 import com.kh.finalGudok.item.model.vo.PageInfo;
 import com.kh.finalGudok.item.model.vo.Review;
+
 import com.kh.finalGudok.item.model.vo.ReviewImage;
 import com.kh.finalGudok.item.model.vo.ReviewView;
 import com.kh.finalGudok.member.model.vo.Member;
@@ -86,13 +87,16 @@ public class ItemServiceImpl implements ItemService {
 	}
 
 	@Override
-	public ArrayList<Event> selectEventListA(PageInfo pi) {
+
+
+	public ArrayList<BannerItem> selectEventListA(PageInfo pi) {
+
 		return iDao.selectEventListA(pi);
 	}
 
 	@Override
 	public ArrayList selectEventListCount(PageInfo pi) {
-		return iDao.selecctEventListCount(pi);
+		return iDao.selectEventListCount(pi);
 	}
 
 
@@ -121,16 +125,7 @@ public class ItemServiceImpl implements ItemService {
 		return iDao.selectDeleteEvent(i);
 	}
 
-	@Override
-	public int updateEventStatusY(int i) {
-		return iDao.updateEventStatusY(i);
-	}
-
-	@Override
-	public int updateEventStatusN(int i) {
-		return iDao.updateEventStatusN(i);
-	}
-
+	
 	public ArrayList<Review> selectAllReview(int itemNo) {
 		return iDao.selectAllReview(itemNo);
 	}
@@ -400,5 +395,46 @@ public class ItemServiceImpl implements ItemService {
 //		return iDao.l3List(pi, sortNo);
 //	}
 
+	public int updateEventStatusN(ArrayList<Event> dEventArr) {
+		return iDao.updateEventStatusN(dEventArr);
+	}
+	
+	@Override
+	public int updateEventStatusY(ArrayList<Event> dEventArr) {
+		return iDao.updateEventStatusY(dEventArr);
+	}
 
+
+	
+	/*
+	 * @Override public ArrayList<AdminItem> selectItemListA(PageInfo pi) {
+	 * 
+	 * return iDao.selectItemListA(pi); }
+	 */
+
+
+
+	@Override
+	public int getbannerItemCount(int eventNo) {
+		
+		return iDao.selectBannerItemCount(eventNo);
+	}
+
+	@Override
+	public ArrayList<BannerItem> selectBannerItem(int eventNo, PageInfo pi) {
+		
+		return iDao.selectBannerItem(eventNo,pi);
+	}
+
+	@Override
+	public ArrayList<AdminItem> selectItemListA(PageInfo pi) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int deleteBannerItem(int[] dEventArr) {
+		
+		return iDao.deleteBannerItem(dEventArr);
+	}
 }

@@ -9,8 +9,8 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-   
+    
+   <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
     
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
@@ -333,16 +333,16 @@ label > span {
             margin-left: -1px;
             line-height: 1.25;
             color: black;
-            background-color: #fff;
+            background-color: #ffffff;
             border: 1px solid #dee2e6;
         }
 
         .page-link-t:hover {
             z-index: 2;
-            color: #0056b3;
+            color: #424242;
             text-decoration: none;
-            background-color: #e9ecef;
-            border-color: #dee2e6;
+            background-color: #CFD8DC;
+            border-color: #CFD8DC;
         }
 
         .page-link-t:focus {
@@ -363,8 +363,8 @@ label > span {
         .page-item-t.active-t .page-link-t {
             z-index: 3;
             color: #fff;
-            background-color: rgba(90,148,235,0.8);
-            border-color:  rgba(90,148,235,0.8);
+            background-color: #6AAED9;
+            border-color:#6AAED9;
         }
 
         .page-item-t.disabled-t .page-link-t {
@@ -394,6 +394,10 @@ label > span {
             /*가운데 정렬*/
             align-items: center;
         }
+        
+        #cursor{
+		cursor: pointer;
+		}
     </style>
   </head>
 
@@ -433,9 +437,9 @@ label > span {
                                       </svg>&nbsp;&nbsp;상품관리&nbsp;&nbsp;</b></label>
                                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                   <ul class="group-list sd_ul">
-                                    <li><a href="#">상품 등록</a></li>
+                                    <li><a href="iInsertView.do">상품 등록</a></li>
                                     <li><a href="#">판매 상품 리스트</a></li>
-                                    <li><a href="#">메인 배너 관리</a></li>
+                                    <li><a href="eList.do">배너 리스트</a></li>
                                     
                                   </ul>
                                 </li>

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
   <head>
@@ -63,8 +64,8 @@ input, select,textarea{
                 <button id="btn">검색</button>
                 </div>
                <div style="float:right">
-                <button id="btn1">게시</button>&nbsp;
-                <button id="btn1">중지</button>&nbsp;
+                <button id="btn">게시</button>&nbsp;
+                <button id="btn">중지</button>&nbsp;
                </div>
 
 
@@ -76,25 +77,31 @@ input, select,textarea{
                     <table>
                         <thead>
                             <tr>
-                                <th><input type="checkbox"></th>
+                                <th><input type="checkbox" name="itemNo"></th>
                                 <th id="td1">상품번호</th>
                                 <th>상품명</th>
                                 <th>가격</th>
                                 <th>상태</th>
-                               
                              </tr>   
                          </thead>
+                         
                          <tbody>
-                             <tr>
-                                <td><input type="checkbox"></td>
-                                <td>1</td>
-                                <td>꽃다발 왕 큰 꽃다발</td>
-                                <td>15000</td>
-                                <td>게시</td>
-                                
-                            </tr>
-                           
-                            
+                         <c:if test="${!empty itemList}">
+                         	<c:forEach var="i" items="${itemList }" varStatus="cnt">
+	                             <tr>
+	                                <td><input type="checkbox" class="common" id="itemNo${cnt.index}" name="itemNo" value="${i.itemNo }"></td>
+	                                <td>${i.itemNo }</td>
+	                                <td>${i.itemName }</td>
+	                                <td>${i.itemPrice }</td>
+	                                <td>${i.itemDpStatus }</td>
+	                            </tr>
+                            </c:forEach>
+                          </c:if>
+                          <c:if test="${!empty itemList}">
+                           	<tr>
+                           		<td colspan="5">등록된 상품이 없습니다.</td>
+                           	</tr>
+                           </c:if>
                          </tbody>
                     </table>
 
@@ -103,25 +110,61 @@ input, select,textarea{
                     <br>
 
 
-                    <!------페이징 처리----->
+                     <!------페이징 처리----->
                 <div class="page-center">
                     <ul class="pagination-t">
-
-                        <!-- disabled: 페이지 비활성화 -->
-                        <li class="page-item-t disabled-t"><a class="page-link-t" href="#"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-chevron-left" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
-                          </svg></a></li>
-
-                        <li class="page-item-t"><a class="page-link-t" href="#">1</a></li>
-
-                        <!-- disabled: 해당 버튼 활성화 -->
-                        <li class="page-item-t active-t" aria-current="page-t">
-                            <a class="page-link-t" href="#">2 <span class="sr-only">(current)</span></a>
-                        </li>
-                        <li class="page-item-t"><a class="page-link-t" href="#">3</a></li>
-                        <li class="page-item-t"><a class="page-link-t" href="#"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-chevron-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
-                          </svg></a></li>
+                    
+                    	<!-- 이전 -->
+                        <c:if test="${pi.currentPage eq 1 }">
+	                        <li class="page-item-t disabled-t"><a class="page-link-t"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-left-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path d="M3.86 8.753l5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/>
+</svg></a></li>
+						</c:if>
+						 <c:if test="${pi.currentPage gt 1 }">
+							<c:url var="blistBack" value="eList.do">
+								<c:param name="page" value="${pi.currentPage-1 }"/>
+							</c:url>
+		                        <li class="page-item-t">
+		                        <a class="page-link-t" href="${blistBack }">
+		                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-left-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+	  <path d="M3.86 8.753l5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/>
+	</svg></a></li>
+						</c:if>
+						
+						<!-- 번호들 -->
+						<c:forEach var="p" begin="${pi.startPage }" end="${pi.endPage }">
+							
+							<c:if test="${p eq pi.currentPage }">
+	                       		<li class="page-item-t  active-t"><a class="page-link-t">${p }<span class="sr-only"></span></a></li>
+							</c:if>
+							
+	                        <c:if test="${p ne pi.currentPage }">
+	                        	<c:url var="blistCheck" value="eList.do">
+	                        		<c:param name="page" value="${p }"/>
+                        		</c:url>
+		                        <li class="page-item-t"><a class="page-link-t" href="${blistCheck }">${p } <span class="sr-only"></span></a>
+		                        </li>
+		                    </c:if>
+                        </c:forEach>
+                        
+                        
+                        <!-- 이후 -->
+                        <c:if test="${pi.currentPage eq pi.maxPage }">
+	                        <li class="page-item-t disabled-t"><a class="page-link-t">
+	                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-right-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path d="M12.14 8.753l-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
+</svg></a></li>
+						</c:if>
+						 <c:if test="${pi.currentPage lt pi.maxPage }">
+							<c:url var="blistAfter" value="eList.do">
+								<c:param name="page" value="${pi.currentPage+1 }"/>
+							</c:url>
+	                        <li class="page-item-t">
+	                        <a class="page-link-t" href="${blistAfter }">
+	                       <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-right-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path d="M12.14 8.753l-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
+</svg></a></li>
+						</c:if>
                     </ul>
 
                 </div>
@@ -129,9 +172,79 @@ input, select,textarea{
 
 
 
-
             </div><!--내용담은 컨테이너-->
         </div><!--250px띄운 div-->
+        
+        
+        <script>
+        
+        
+        
+        
+        
+        
+        
+        
+      // 상태 변경 후 리스트 가져오기
+        function getList(){
+       	 var page=${pi.currentPage};
+       	 
+       	 $.ajax({
+       		 
+       	 	url:"eListChange.do", 
+       	 	data:{"page":page},
+       	 	dataType:"json",
+       	 	success:function(data){
+       	 		
+       	 
+       	 		$tableBody=$("tbody");
+       	 		$tableBody.html("");
+       	 		
+       	 		var $tr;
+       	 		var $eventNo;
+       	 		var $eventName;
+       	 		var $eventCnt;
+       	 		var $eventStatus;
+       	 		var $checkBox;
+       	 		var $th;
+       	 		
+       	 				
+       	 				for(var i in data.list){
+       	 					
+       	 				
+       	 				$tr=$("<tr>");
+       	 				$td=$("<td>");
+       	 				$checkBox=$("<input type='checkbox' class='common' name='eventNo'>").val(data.list[i].eventNo);     	 			
+       	 				$eventNo=$("<td>").text(data.list[i].eventNo);
+       	 				$eventName=$("<td onclick='bDetail(data.bannerList[i].eventNo)'>").text(data.list[i].eventName);
+       	 				$eventCnt=$("<td>").text(data.list[i].eventCnt);
+       	 				$eventStatus=$("<td>").text(data.list[i].eventStatus);
+       	 				
+       	 				
+       	 				$td.append($checkBox);
+       	 				$tr.append($td);
+       	 				$tr.append($eventNo);
+       	 				$tr.append($eventName);
+       	 				$tr.append($eventCnt);
+       	 				$tr.append($eventStatus);
+       	 				$tableBody.append($tr);
+       	 				
+       	 			}
+       	 			
+       	 		
+       	 	},
+       	 	error:function(request, status, errorData){
+                   alert("error code: " + request.status + "\n"
+	                           +"message: " + request.responseText
+	                           +"error: " + errorData);
+	                  }   
+       	 	
+       	 })
+       	 
+        }
+       			
+        
+        </script>
         
        <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
