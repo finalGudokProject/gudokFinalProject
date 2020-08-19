@@ -122,7 +122,7 @@
 	
 	/* .sortDivC :hover{
 		cursor:pointer;
-		background:lightyellow;
+		background:yellow;
 	} */
 	
 	.starR{
@@ -268,13 +268,13 @@
 				$(function(){
 					console.log("${sortNo}");
 					if("${sortNo}" == "S1"){
-						$(".sortTable #newSort").css({"background":"lightyellow","font-weight":"bold"});
+						$(".sortTable #newSort .sortDivC span").css({"background":"yellow","font-weight":"bold"});
 					}else if("${sortNo}" == "S2"){
-						$(".sortTable #bestSort").css({"background":"lightyellow","font-weight":"bold"});
+						$(".sortTable #bestSort .sortDivC span").css({"background":"yellow","font-weight":"bold"});
 					}else if("${sortNo}" == "S3"){
-						$(".sortTable #highSort").css({"background":"lightyellow","font-weight":"bold"});
+						$(".sortTable #highSort .sortDivC span").css({"background":"yellow","font-weight":"bold"});
 					}else if("${sortNo}" == "S4"){
-						$(".sortTable #lowSort").css({"background":"lightyellow","font-weight":"bold"});
+						$(".sortTable #lowSort .sortDivC span").css({"background":"yellow","font-weight":"bold"});
 					}
 				})
 			</script>
@@ -447,16 +447,20 @@
 				$(function(){
 					$(".sortTable td").on("mouseenter", function(){
 						$(this).css("cursor","pointer");
-						$(this).children().find("span").css({"background":"lightyellow"});
+						if($(this).children().find("span").css("font-weight") == 700){
+							$(this).children().find("span").css({"background":"yellow","text-decoration":"underline"});
+						}else{
+							$(this).children().find("span").css({"background":"yellow"});
+						}
 					}).on("mouseleave", function(){
 						if($(this).children().find("span").css("font-weight") == 700){
-							$(this).children().find("span").css({"background":"lightyellow"});
+							$(this).children().find("span").css({"background":"yellow","text-decoration":"none"});
 						}else{
 							$(this).children().find("span").css({"background":"white"});
 						}
 					})
 				})
-			</script>
+		</script>
 		
 		<c:if test="${empty list }">
 		

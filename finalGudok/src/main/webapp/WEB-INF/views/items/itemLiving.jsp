@@ -6,6 +6,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
+	<!-- sweetalert시작 -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	<link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
+	<!-- sweetalert끝 -->
 <title>Insert title here</title>
 <style>
 	
@@ -129,8 +134,6 @@
 		background:lightyellow;
 	} */
 	
-	
-	
 	.starR{
 	  background: url('http://miuu227.godohosting.com/images/icon/ico_review.png') no-repeat right 0;
 	  background-size: auto 100%;
@@ -214,7 +217,7 @@
 		font-size:30px;
 	}
 	.cateTableC td:hover{
-		background:lightyellow;
+		background:yellow;
 		cursor:pointer;
 	}
 	
@@ -273,11 +276,11 @@
 			<script>
 				$(function(){
 					if("${categoryNo}" == "L1"){
-						$(".cateTableC #foodLife").css({"text-decoration":"underline","background":"lightyellow","font-weight":"bold"});
+						$(".cateTableC #foodLife").css({"text-decoration":"underline","background":"yellow","font-weight":"bold"});
 					}else if("${categoryNo}" == "L2"){
-						$(".cateTableC #foodBody").css({"text-decoration":"underline","background":"lightyellow","font-weight":"bold"});
+						$(".cateTableC #foodBody").css({"text-decoration":"underline","background":"yellow","font-weight":"bold"});
 					}else if("${categoryNo}" == "L3"){
-						$(".cateTableC #foodDeco").css({"text-decoration":"underline","background":"lightyellow","font-weight":"bold"});
+						$(".cateTableC #foodDeco").css({"text-decoration":"underline","background":"yellow","font-weight":"bold"});
 					}
 				})
 			</script>
@@ -285,13 +288,13 @@
 			<script>
 				$(function(){
 					if("${sortNo}" == "S1"){
-						$(".sortTable #newSort").css({"background":"lightyellow","font-weight":"bold"});
+						$(".sortTable #newSort .sortDivC span").css({"background":"yellow","font-weight":"bold"});
 					}else if("${sortNo}" == "S2"){
-						$(".sortTable #bestSort").css({"background":"lightyellow","font-weight":"bold"});
+						$(".sortTable #bestSort .sortDivC span").css({"background":"yellow","font-weight":"bold"});
 					}else if("${sortNo}" == "S3"){
-						$(".sortTable #highSort").css({"background":"lightyellow","font-weight":"bold"});
+						$(".sortTable #highSort .sortDivC span").css({"background":"yellow","font-weight":"bold"});
 					}else if("${sortNo}" == "S4"){
-						$(".sortTable #lowSort").css({"background":"lightyellow","font-weight":"bold"});
+						$(".sortTable #lowSort .sortDivC span").css({"background":"yellow","font-weight":"bold"});
 					}
 				})
 			</script>
@@ -333,18 +336,22 @@
 			</div>
 			<script>
 				$(function(){
-					$(".sortRank").on("click", function(){
+			 		$(".sortRank").on("click", function(){
 						var hidden1 = $("#hiddenCategory").val();
 						$(".catchHidden").val(hidden1);
-						var hidden1 = $(this).find("input:nth-child(1)").val();
-						var hidden2 = $(this).find("input:nth-child(2)").val();
+						var categoryNo = $(this).find("input:nth-child(1)").val();
+						var sortNo = $(this).find("input:nth-child(2)").val();
 						
 						if($("#categoryL0").val() == ""){
-							console.log(hidden1);
-							console.log(hidden2);
-							location.href="livingSort.do?categoryNo=" + hidden1 + "&sortNo=" + hidden2;
+							/* console.log(categoryNo);
+							console.log(sortNo); */
+							if(categoryNo != ""){
+								location.href="livingSort.do?categoryNo=" + categoryNo + "&sortNo=" + sortNo;
+							}else if(categoryNo == ""){
+								swal("","정렬할 상품이 없습니다.","error");
+							}
 						}else if($("#categoryL0").val() == "L0"){
-							location.href="itemLiving.do?sortNo=" + hidden2;
+							location.href="itemLiving.do?sortNo=" + sortNo;
 						}
 					})
 					
@@ -486,10 +493,14 @@
 				$(function(){
 					$(".sortTable td").on("mouseenter", function(){
 						$(this).css("cursor","pointer");
-						$(this).children().find("span").css({"background":"lightyellow"});
+						if($(this).children().find("span").css("font-weight") == 700){
+							$(this).children().find("span").css({"background":"yellow","text-decoration":"underline"});
+						}else{
+							$(this).children().find("span").css({"background":"yellow"});
+						}
 					}).on("mouseleave", function(){
 						if($(this).children().find("span").css("font-weight") == 700){
-							$(this).children().find("span").css({"background":"lightyellow"});
+							$(this).children().find("span").css({"background":"yellow","text-decoration":"none"});
 						}else{
 							$(this).children().find("span").css({"background":"white"});
 						}

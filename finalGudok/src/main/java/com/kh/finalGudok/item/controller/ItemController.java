@@ -78,7 +78,7 @@ public class ItemController {
 			mv.addObject("list", list).addObject("pi", pi).setViewName("items/itemFood");
 		}else if(sortNo != null) {
 			ArrayList<Item> list = iService.selectList(pi, sortNo);
-			mv.addObject("list", list).addObject("pi", pi).setViewName("items/itemFood");
+			mv.addObject("list", list).addObject("pi", pi).addObject("sortNo", sortNo).setViewName("items/itemFood");
 		}
 		
 		return mv;

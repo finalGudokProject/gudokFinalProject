@@ -7,6 +7,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
+	<!-- sweetalert시작 -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	<link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
+	<!-- sweetalert끝 -->
 <title>Insert title here</title>
 <style>
 	
@@ -211,7 +216,7 @@
 	}
 	
 	.cateTableC td:hover{
-		background:lightyellow;
+		background:yellow;
 		cursor:pointer;
 	}
 	.detailDiv :hover{
@@ -274,10 +279,14 @@
 				$(function(){
 					$(".sortTable td").on("mouseenter", function(){
 						$(this).css("cursor","pointer");
-						$(this).children().find("span").css({"background":"lightyellow"});
+						if($(this).children().find("span").css("font-weight") == 700){
+							$(this).children().find("span").css({"background":"yellow","text-decoration":"underline"});
+						}else{
+							$(this).children().find("span").css({"background":"yellow"});
+						}
 					}).on("mouseleave", function(){
 						if($(this).children().find("span").css("font-weight") == 700){
-							$(this).children().find("span").css({"background":"lightyellow"});
+							$(this).children().find("span").css({"background":"yellow","text-decoration":"none"});
 						}else{
 							$(this).children().find("span").css({"background":"white"});
 						}
@@ -288,13 +297,13 @@
 				$(function(){
 					console.log("${sortNo}");
 					if("${sortNo}" == "S1"){
-						$(".sortTable #newSort .sortDivC span").css({"background":"lightyellow","font-weight":"bold"});
+						$(".sortTable #newSort .sortDivC span").css({"background":"yellow","font-weight":"bold"});
 					}else if("${sortNo}" == "S2"){
-						$(".sortTable #bestSort .sortDivC span").css({"background":"lightyellow","font-weight":"bold"});
+						$(".sortTable #bestSort .sortDivC span").css({"background":"yellow","font-weight":"bold"});
 					}else if("${sortNo}" == "S3"){
-						$(".sortTable #highSort .sortDivC span").css({"background":"lightyellow","font-weight":"bold"});
+						$(".sortTable #highSort .sortDivC span").css({"background":"yellow","font-weight":"bold"});
 					}else if("${sortNo}" == "S4"){
-						$(".sortTable #lowSort .sortDivC span").css({"background":"lightyellow","font-weight":"bold"});
+						$(".sortTable #lowSort .sortDivC span").css({"background":"yellow","font-weight":"bold"});
 					}
 				})
 			</script>
@@ -302,17 +311,17 @@
 				$(function(){
 					/* console.log("${categoryNo}"); */
 					if("${categoryNo}" == "F2"){
-						$(".cateTableC #foodMilk").css({"text-decoration":"underline","background":"lightyellow","font-weight":"bold"});
+						$(".cateTableC #foodMilk").css({"text-decoration":"underline","background":"yellow","font-weight":"bold"});
 					}else if("${categoryNo}" == "F3"){
-						$(".cateTableC #foodBakery").css({"text-decoration":"underline","background":"lightyellow","font-weight":"bold"});
+						$(".cateTableC #foodBakery").css({"text-decoration":"underline","background":"yellow","font-weight":"bold"});
 					}else if("${categoryNo}" == "F6"){
-						$(".cateTableC #foodDiet").css({"text-decoration":"underline","background":"lightyellow","font-weight":"bold"});
+						$(".cateTableC #foodDiet").css({"text-decoration":"underline","background":"yellow","font-weight":"bold"});
 					}else if("${categoryNo}" == "F1"){
-						$(".cateTableC #foodDrink").css({"text-decoration":"underline","background":"lightyellow","font-weight":"bold"});
+						$(".cateTableC #foodDrink").css({"text-decoration":"underline","background":"yellow","font-weight":"bold"});
 					}else if("${categoryNo}" == "F4"){
-						$(".cateTableC #foodSimple").css({"text-decoration":"underline","background":"lightyellow","font-weight":"bold"});
+						$(".cateTableC #foodSimple").css({"text-decoration":"underline","background":"yellow","font-weight":"bold"});
 					}else if("${categoryNo}" == "F5"){
-						$(".cateTableC #foodHealth").css({"text-decoration":"underline","background":"lightyellow","font-weight":"bold"});
+						$(".cateTableC #foodHealth").css({"text-decoration":"underline","background":"yellow","font-weight":"bold"});
 					}
 				})
 			</script>
@@ -363,7 +372,7 @@
 							if(categoryNo != ""){
 								location.href="fSort.do?categoryNo=" + categoryNo + "&sortNo=" + sortNo;
 							}else if(categoryNo == ""){
-								swal("","정렬할 카테고리가 없습니다.","error");
+								swal("","정렬할 상품이 없습니다.","error");
 							}
 						}else if($("#categoryF0").val() == "F0"){
 							location.href="itemFood.do?sortNo=" + sortNo;
