@@ -71,13 +71,10 @@ td {
 	right: 10px;
 }
 
-span.ok {
-	color: green;
+span{
+	font-size:0.8em;
 }
 
-span.error {
-	color: red;
-}
 </style>
 <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap"
 	rel="stylesheet">
@@ -89,63 +86,78 @@ span.error {
 		<br>
 
 		<div id="signUpDiv">
-			<form action="signUp.do" method="post" id="signUpForm">
+			<form action="signUp.do" method="post" id="signUpForm" onsubmit="return validate();">
 				<table align="center" width="500" id="signUpTb">
 					<tr>
 						<td>*아이디</td>
-						<td><input type="text" name="memberId" id="memberId" placeholder="사용할 아이디를 입력하세요." autofocus required> 
+						<td><input type="text" name="memberId" id="memberId" placeholder="사용할 아이디를 입력하세요." autofocus>
+							&nbsp;
+							<span id="idInfo">4-15자리 영어, 숫자만 가능</span>
 							<span class="guide ok">사용 가능한 아이디입니다.</span> 
 							<span class="guide error">이미 사용 중인 아이디입니다.</span> 
 							<input type="hidden" name="idDuplicateCheck" id="idDuplicateCheck" value="0"></td>
 					</tr>
 					<tr>
 						<td>*비밀번호</td>
-						<td><input type="password" name="memberPwd" id="pwd" placeholder="사용할 비밀번호를 입력하세요." required></td>
-						<td></td>
+						<td colspan="2">
+							<input type="password" name="memberPwd" id="pwd1" placeholder="사용할 비밀번호를 입력하세요." class="pw">
+							<input type="hidden" id="pwdCheck" value="0"/>
+							&nbsp;
+							<span id="pwdInfo">8-15자 영어,숫자,특수문자 혼합 사용</span>
+						</td>
 					</tr>
 					<tr>
 						<td>*비밀번호 확인</td>
-						<td><input type="password" placeholder="비밀번호를 한번 더 입력하세요." required></td>
-						<td></td>
+						<td colspan="2">
+							<input type="password" id="pwd2" placeholder="비밀번호를 한번 더 입력하세요." class="pw">
+							&nbsp;
+							<span id="pwdCheckInfo"></span>
+						</td>
 					</tr>
 					<tr>
 						<td>*이름</td>
-						<td><input type="text" id="name" name="memberName" placeholder="이름을 입력하세요." required></td>
-						<td></td>
+						<td colspan="2">
+							<input type="text" id="name" name="memberName" placeholder="이름을 입력하세요.">
+							&nbsp;
+							<span id="pwdInfo">2-6자리 한글만 가능</span>
+						</td>
 					</tr>
 					<tr>
 						<td>*이메일</td>
 						<td colspan="2">
-							<input type="email" class="input-area" id="email" placeholder="email@email.com" name="email" required> 
-							<input type="hidden" value="0" id="emailDupCheck"> &nbsp;
-							<button class="btn" type="button" id="verifyEmail1">이메일인증</button>
+							<input type="email" class="input-area" id="email" placeholder="email@email.com" name="email"> 
+							<input type="hidden" value="0" id="emailDupCheck"> 
+							&nbsp;
+							<button class="btn" type="button" id="verifyEmail">이메일인증</button>
 						</td>
 					</tr>
 					<tr>
 						<td></td>
 						<td>
 							<input type="text" class="input-area" id="inputAuthCode" name="inputAuthCode" placeholder="인증번호를 입력하세요"> 
-							<input type="hidden" value="0" id="authCode"> &nbsp;
+							<input type="hidden" value="0" id="authCode"> 
+							&nbsp;
 							<button class="btn" type="button" id="emailCheck">확인</button>
 						</td>
 					</tr>
 					<tr>
 						<td>우편번호</td>
 						<td colspan="2">
-							<input type="text" name="address1" class="postcodify_postcode5" value=""> &nbsp;
+							<input type="text" name="address1" class="postcodify_postcode5" value="" id="address1"> 
+							&nbsp;
 							<button class="btn" type="button" id="postcodify_search_button">검색하기</button>
 						</td>
 					</tr>
 					<tr>
 						<td>도로명 주소</td>
 						<td>
-							<input type="text" name="address2" class="postcodify_address" value=""></td>
+							<input type="text" name="address2" class="postcodify_address" value="" id="address2"></td>
 						<td></td>
 					</tr>
 					<tr>
 						<td>상세주소</td>
 						<td>
-							<input type="text" name="address3" class="postcodify_extra_info" value="">
+							<input type="text" name="address3" class="postcodify_extra_info" value="" id="address3">
 						</td>
 						<td></td>
 					</tr>
@@ -169,7 +181,7 @@ span.error {
 					<tr>
 						<td></td>
 						<td colspan="2" id="btnTd">
-							<button type="button" class="btn" id="submitBtn" onclick="validate();">가입하기</button>
+							<button type="submit" class="btn" id="submitBtn">가입하기</button>
 							<button type="reset" class="btn">취소하기</button>
 						</td>
 					</tr>
@@ -184,29 +196,38 @@ span.error {
 	</footer>
 
 	<script>
+		// 아이디 유효성 검사
 		$(function() {
+			// 아이디 영어,숫자만 4-15자리
+			var regId = /^[a-zA-z0-9]{4,15}$/;
 			$("#memberId").on("keyup", function() {
 						var memberId = $(this).val().trim();
-
-						if (memberId.length < 4) {
+						
+						if (!regId.test(memberId) && memberId.length < 4) {
 							$(".guide").hide();
 							$("#idDuplicateCheck").val(0);
-
-							return;
+							$("#idInfo").show();
 						}
 
 						$.ajax({
 							url : "dupId.do",
 							data : {memberId : memberId},
 							success : function(data) {
-								if (data == "true") {
-									$(".error").hide();
+								if (data == "true" && memberId.length > 4 && regId.test(memberId)) {
+									$("#idInfo").hide();
 									$(".ok").show();
+									$(".error").hide();
 									$("#idDuplicateCheck").val(1);
-								} else {
-									$(".error").show();
+								}else if(data == "false" && memberId.length > 4) {
+									$("#idInfo").hide();
 									$(".ok").hide();
-									$("#idduplicate").val(0);
+									$(".error").show();
+									$("#idDuplicateCheck").val(0);
+								}else if(!regId.test(memberId) && memberId.length > 4){
+									$("#idInfo").hide();
+									$(".ok").hide();
+									$(".error").show().html("사용 가능한 아이디를 입력하세요.");
+									$("#idDuplicateCheck").val(0);
 								}
 							},
 							error : function(request, status, errorData) {
@@ -216,35 +237,52 @@ span.error {
 							}
 						})
 					})
-		})
-
-		function validate() {
-			if($("#idDuplicateCheck").val == 0) {
-				alert("사용 가능한 아이디를 입력해 주세요.");
-				$("#memberId").focus();
-			}else {
-				$("#signUpForm").submit();
+				})
+	
+		// 비밀번호 일치여부 확인
+		$(".pw").keyup(function(){
+			// 비밀번호 영 대,소문자, 특수문자, 숫자 8~15자
+			var regPwd = /^.*(?=^.{8,15}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;
+			var pwd1 = $("#pwd1").val();				
+			var pwd2 = $("#pwd2").val();				
+			
+			if(pwd1 != "" && pwd2 != "" && pwd1 != pwd2){
+				$("#pwdCheckInfo").html("비밀번호 미일치");
+				$("#pwdCheck").val(0);
 			}
-		}
-	</script>
-
-	<script>
+			if(pwd1 == pwd2 && pwd1 != "" && pwd2 != "" && regPwd.test(pwd1) == true && regPwd.test(pwd2) == true){
+				$("#pwdCheckInfo").html("사용가능");
+				$("#pwdCheck").val(1);
+			}
+			if(pwd1 == "" || pwd2 == ""){
+				$("#pwdCheckInfo").html("");
+				$("#pwdCheck").val(0);
+			}
+		})
+        
+		// 이메일 인증 확인
 		$(function() {
-			$("#verifyEmail1").on("click", function() {
+			// 이메일 양식 체크
+			var regEmail = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+			$("#verifyEmail").on("click", function() {
 						var memberEmail = $("#email").val();
 						if (memberEmail == "") {
-							alert("이메일을 입력하세요");
-						} else {
+							alert("이메일을 입력하세요.");
+						}else if(!regEmail.test(memberEmail)){
+							alert("이메일 양식을 확인해주세요.");
+						}else {
 							$.ajax({
 								url : "emailDupCheck.do",
 								data : {email : memberEmail},
 								success : function(data) {
+									// 중복되는 이메일이 없을 경우
 									if (data.emailCheckResult == true) {
-										
 										alert("인증번호를 발송하였습니다.");
 									} else {
+										// 중복되는 이메일이 있을 경우
 										alert("이미 사용중인 이메일입니다.");
 									}
+									// 메일로 발송 된 인증번호 hidden tag에 저장
 									$("#authCode").val(data.authCode);
 								},
 								error : function(request, status, errorData) {
@@ -255,12 +293,10 @@ span.error {
 								}
 							})
 						}
-					})
-		})
+				})
+			})
 		
-		</script>
-		
-		<script>
+		// 이메일 인증번호 발송 후 처리
 		$(function(){
 			$("#emailCheck").on("click",function(){
 				var inputAuthCode = $("#inputAuthCode").val();
@@ -269,11 +305,72 @@ span.error {
 				}else if($("#authCode").val() == inputAuthCode){
 					alert("인증완료");	
 					$("#emailDupCheck").val(1);
+					
+					// 인증완료 후 이메일 인증 관련 태그, 버튼 비활성화
+					$("#inputAuthCode").attr("readonly", true);
+					$("#emailCheck").attr("disabled", true);
+					$("#email").attr("readonly", true);
+					$("#verifyEmail1").attr("disabled", true);
+					
+					
 				}else{
 					alert("인증번호를 확인하고 다시 입력해주세요");
 				}
 			})
 		})
+	</script>
+	
+	<script>
+	// 회원가입 유효성검사
+		function validate(){
+
+			// 아이디
+			if($("#memberId").val() == ""){
+				alert("아이디를 입력하세요.");
+				$("#memberId").focus();
+				return false;
+			}
+			if($("#idDuplicateCheck").val() == 0) {
+				alert("사용 가능한 아이디를 입력해 주세요.");
+				$("#memberId").focus();
+				return false;
+			}
+			// 비밀번호
+			if($("#pwdCheck").val() == 0){
+				alert("비밀번호를 확인해주세요.");
+				$("#pwd1").focus();
+				return false;
+			}
+			// 이름
+			// 이름 정규표현식 2-6자 한글만 가능
+			var regName = /^[가-힣]{2,6}$/;
+			
+			if($("#name").val() == ""){
+				alert("이름을 입력하세요");
+				$("#name").focus();
+				return false;
+			}
+			if(!regName.test($("#name").val())){
+				alert("이름을 확인해주세요");
+				$("#name").focus();
+				return false;
+			}
+			// 이메일
+			if($("#emailDupCheck").val() == 0){
+				alert("이메일 인증을 해주세요.");
+				return false;
+			}
+			// 주소
+			var address1 = $("#address1");
+			var address2 = $("#address2");
+			var address3 = $("#address3");
+			if(address1.val() == "" || address2.val() == "" || address3.val() == ""){
+				alert("주소를 입력하세요.");
+				return false;
+			}
+			
+			confirm("회원가입이 완료되었습니다.");
+		}
 	</script>
 	<!-- Optional JavaScript -->
 	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
