@@ -1,17 +1,24 @@
 package com.kh.finalGudok.member.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.finalGudok.item.model.vo.Item;
 import com.kh.finalGudok.member.model.dao.MemberDao;
 import com.kh.finalGudok.member.model.vo.Cart;
+import com.kh.finalGudok.member.model.vo.DeleteHeart;
 import com.kh.finalGudok.member.model.vo.Delivery;
 import com.kh.finalGudok.member.model.vo.Exchange;
+import com.kh.finalGudok.member.model.vo.Heart;
+import com.kh.finalGudok.member.model.vo.Inquiry;
 import com.kh.finalGudok.member.model.vo.Member;
 import com.kh.finalGudok.member.model.vo.Point;
+import com.kh.finalGudok.member.model.vo.Reply;
 import com.kh.finalGudok.member.model.vo.Review;
+import com.kh.finalGudok.member.model.vo.Withdrawal;
 
 @Service("mService")
 public class MemberServiceImpl implements MemberService {
@@ -74,5 +81,51 @@ public class MemberServiceImpl implements MemberService {
 	public int deleteReview(Integer reviewNo) {
 		return mDao.deleteReview(reviewNo);
 	}
+
+	@Override
+	public int updateMember(Member m) {
+		return mDao.updateMember(m);
+	}
+
+	@Override
+	public int updateMemberStatus(int memberNo) {
+		return mDao.updateMemberStatus(memberNo);
+	}
+
+	@Override
+	public int insertSecession(Withdrawal w) {
+		return mDao.insertSecession(w);
+	}
+
+	@Override
+	public ArrayList<Inquiry> selectInquiryList(Integer memberNo) {
+		return mDao.selectInquiryList(memberNo);
+	}
+
+	@Override
+	public ArrayList<Heart> selectHeartList(Integer memberNo) {
+		return mDao.selectHeartList(memberNo);
+	}
+
+	@Override
+	public int deleteHeart(DeleteHeart dh) {
+		return mDao.deleteHeart(dh);
+	}
+
+	@Override
+	public Item selectItem(int itemNo) {
+		return mDao.selectItem(itemNo);
+	}
+
+	@Override
+	public int addCart(HashMap map) {
+		return mDao.addCart(map);
+	}
+
+	@Override
+	public Reply selectReply(Integer boardNo) {
+		return mDao.selectReply(boardNo);
+	}
+
 }
 

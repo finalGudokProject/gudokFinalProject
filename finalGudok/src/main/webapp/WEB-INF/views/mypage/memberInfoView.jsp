@@ -238,8 +238,14 @@
                         style="width: 25%; height: 25%; margin-right: 4%;">구독배송</a>
                 <ul>
                     <li><a href="#">구독 조회</a></li>
-                    <li><a href="#">배송 조회</a></li>
-                    <li><a href="#">교환 내역</a></li>
+                    <c:url var="dlist" value="deliveryList.do">
+						<c:param name="memberNo" value="${loginUser.memberNo}"/>
+					</c:url> 
+                    <li><a href="${dlist}">배송 조회</a></li>
+                    <c:url var="elist" value="exchangeList.do">
+						<c:param name="memberNo" value="${loginUser.memberNo}"/>
+					</c:url> 
+                    <li><a href="${elist}">교환 내역</a></li>
                 </ul>
             </li>
             <li>
@@ -247,23 +253,44 @@
                         style="width: 25%; height: 25%; margin-right: 4%;">나의혜택</a>
                 <ul>
                     <li><a href="#">회원 등급</a></li>
-                    <li><a href="#">적립금 내역</a></li>
+                    <c:url var="plist" value="pointList.do">
+							<c:param name="memberNo" value="${loginUser.memberNo}"/>
+					</c:url> 
+                    <li><a href="${plist}">적립금 내역</a></li>
                 </ul>
             </li>
-            <li><a href="#contact"><img src="resources/images/cart.png"
+            <c:url var="clist" value="cartList.do">
+				<c:param name="memberNo" value="${loginUser.memberNo}"/>
+			</c:url> 
+            <li><a href="${clist}"><img src="resources/images/cart.png"
                         style="width: 25%; height: 25%; margin-right: 4%;">장바구니</a></li>
-            <li><a href="#about"><img src="resources/images/heart.png" style="width: 25%; height: 25%; margin-right: 4%;">찜</a>
+            <c:url var="hlist" value="heartList.do">
+				<c:param name="memberNo" value="${loginUser.memberNo}"/>
+			</c:url> 
+            <li><a href="${hlist}"><img src="resources/images/heart.png" style="width: 25%; height: 25%; margin-right: 4%;">찜</a>
             </li>
-            <li><a href="#about"><img src="resources/images/review.png"
+            <c:url var="rlist" value="reviewList.do">
+				<c:param name="memberNo" value="${loginUser.memberNo}"/>
+			</c:url> 
+            <li><a href="${rlist}"><img src="resources/images/review.png"
                         style="width: 25%; height: 25%; margin-right: 4%;">상품리뷰</a></li>
-            <li><a href="#about"><img src="resources/images/inquiry.png"
+            <c:url var="ilist" value="inquiryList.do">
+				<c:param name="memberNo" value="${loginUser.memberNo}"/>
+			</c:url>
+            <li><a href="${ilist}"><img src="resources/images/inquiry.png"
                         style="width: 25%; height: 25%; margin-right: 4%;">1:1문의</a></li>
             <li>
                 <a href="#about"><img src="resources/images/member_information.png"
                         style="width: 25%; height: 25%; margin-right: 4%;">회원정보</a>
                 <ul>
-                    <li><a href="#">회원정보 확인</a></li>
-                    <li><a href="#">회원탈퇴</a></li>
+                	<c:url var="myInfo" value="myInfo.do">
+						<c:param name="memberNo" value="${loginUser.memberNo}"/>
+					</c:url>
+                    <li><a href="${myInfo}">회원정보 확인</a></li>
+                    <c:url var="withdrawal" value="myWithdrawal.do">
+						<c:param name="memberNo" value="${loginUser.memberNo}"/>
+					</c:url>
+                    <li><a href="${withdrawal}">회원탈퇴</a></li>
                 </ul>
             </li>
         </ul>
@@ -272,7 +299,7 @@
             <br><br>
             <span class="sub_content">회원정보</span>
             <br><br><br>
-            <form action="memberModify.do">
+            <form action="memberModify.do" method="post">
 	            <table>
 	                <tr>
 	                    <td style="width: 25%;">이름</td>
@@ -280,11 +307,11 @@
 	                </tr>
 	                <tr>
 	                    <td>아이디</td>
-	                    <td>${loginUser.memberId }</td>
+	                    <td><input type="text" name="memberId" value="${loginUser.memberId}" readonly></td>
 	                </tr>
 	                <tr>
 	                    <td>이메일</td>
-	                    <td>${loginUser.email }</td>
+	                    <td><input type="text" name="email" value="${loginUser.email}"></td>
 	                </tr>
 	                <tr>
 	                    <td>비밀번호</td>
@@ -292,20 +319,20 @@
 	                </tr>
 	                <tr>
 	                    <td>우편번호</td>
-	                    <td><input type="text" name="post" class="postcodify_postcode5" value="${loginUser.address1 }" size="6">
+	                    <td><input type="text" name="address1" class="postcodify_postcode5" value="${loginUser.address1}" size="6">
 	                        <button type="button" id="postcodify_search_button">주소변경</button>
 	                </tr>
 	                <tr>
 	                    <td>도로명 주소</td>
-	                    <td><input type="text" name="address1" class="postcodify_address" value="${loginUser.address2 }"></td>
+	                    <td><input type="text" name="address2" class="postcodify_address" value="${loginUser.address2}"></td>
 	                </tr>
 	                <tr>
 	                    <td>상세 주소</td>
-	                    <td><input type="text" name="address2" class="postcodify_extra_info" value="${loginUser.address3 }"></td>
+	                    <td><input type="text" name="address3" class="postcodify_extra_info" value="${loginUser.address3}"></td>
 	                </tr>
 	                <tr>
 	                    <td>전화번호</td>
-	                    <td><input type="text" value="${loginUser.phone }"></td>
+	                    <td><input type="text" name="phone" value="${loginUser.phone}"></td>
 	                </tr>
 	            </table>
 	

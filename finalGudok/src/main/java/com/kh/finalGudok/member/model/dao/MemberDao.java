@@ -1,17 +1,24 @@
 package com.kh.finalGudok.member.model.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.finalGudok.item.model.vo.Item;
 import com.kh.finalGudok.member.model.vo.Cart;
+import com.kh.finalGudok.member.model.vo.DeleteHeart;
 import com.kh.finalGudok.member.model.vo.Delivery;
 import com.kh.finalGudok.member.model.vo.Exchange;
+import com.kh.finalGudok.member.model.vo.Heart;
+import com.kh.finalGudok.member.model.vo.Inquiry;
 import com.kh.finalGudok.member.model.vo.Member;
 import com.kh.finalGudok.member.model.vo.Point;
+import com.kh.finalGudok.member.model.vo.Reply;
 import com.kh.finalGudok.member.model.vo.Review;
+import com.kh.finalGudok.member.model.vo.Withdrawal;
 
 @Repository("mDao")
 public class MemberDao {
@@ -62,5 +69,41 @@ public class MemberDao {
 
 	public int deleteReview(Integer reviewNo) {
 		return sqlSessionTemplate.delete("memberMapper.deleteReview", reviewNo);
+	}
+
+	public int updateMember(Member m) {
+		return sqlSessionTemplate.update("memberMapper.updateMember", m);
+	}
+
+	public int insertSecession(Withdrawal w) {
+		return sqlSessionTemplate.insert("memberMapper.insertSecession", w);
+	}
+
+	public int updateMemberStatus(int memberNo) {
+		return sqlSessionTemplate.update("memberMapper.updateMemberStatus", memberNo);
+	}
+
+	public ArrayList<Inquiry> selectInquiryList(Integer memberNo) {
+		return (ArrayList)sqlSessionTemplate.selectList("memberMapper.selectInquiryList", memberNo);
+	}
+
+	public ArrayList<Heart> selectHeartList(Integer memberNo) {
+		return (ArrayList)sqlSessionTemplate.selectList("memberMapper.selectHeartList", memberNo);
+	}
+
+	public int deleteHeart(DeleteHeart dh) {
+		return sqlSessionTemplate.delete("memberMapper.deleteHeart", dh);
+	}
+
+	public Item selectItem(int itemNo) {
+		return sqlSessionTemplate.selectOne("memberMapper.selectItem", itemNo);
+	}
+
+	public int addCart(HashMap map) {
+		return sqlSessionTemplate.insert("memberMapper.insertCart", map);
+	}
+
+	public Reply selectReply(Integer boardNo) {
+		return sqlSessionTemplate.selectOne("memberMapper.selectReply", boardNo);
 	}
 }

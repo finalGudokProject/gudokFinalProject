@@ -64,6 +64,53 @@
 		<result property="itemPrice" column="ITEM_PRICE"/>
 	</resultMap>
 	
+	<resultMap type="mInquiry" id="inquiryResultSet">
+		<id property="boardNo" column="BOARD_NO"/>
+		<result property="title" column="TITLE"/>
+		<result property="content" column="CONTENT"/>
+		<result property="writeDate" column="WRITE_DATE"/>
+		<result property="boardCode" column="BOARD_CODE"/>
+		<result property="memberNo" column="MEMBER_NO"/>
+		<result property="memberId" column="MEMBER_ID"/>
+		<result property="email" column="EMAIL"/>
+		<result property="inquiryYN" column="INQUIRY_YN"/>
+	</resultMap>
+	
+	<resultMap type="mHeart" id="heartResultSet">
+		<id property="heartNo" column="HEART_NO"/>
+		<result property="itemNo" column="ITEM_NO"/>
+		<result property="memberNo" column="MEMBER_NO"/>
+		<result property="itemPrice" column="ITEM_PRICE"/>
+		<result property="imagePath" column="IMAGE_PATH"/>
+		<result property="imageOriginalName" column="IMAGE_ORIGINAL_NAME"/>
+		<result property="imageRename" column="IMAGE_RENAME"/>
+		<result property="itemName" column="ITEM_NAME"/>
+	</resultMap>
+	
+	<resultMap type="Item" id="itemResultSet">
+		<id property="itemNo" column="ITEM_NO"/>
+		<result property="itemName" column="ITEM_NAME"/>
+		<result property="itemPrice" column="ITEM_PRICE"/>
+		<result property="itemCount" column="ITEM_COUNT"/>
+		<result property="itemRate" column="ITEM_RATE"/>
+		<result property="itemDpStatus" column="ITEM_DP_STATUS"/>
+		<result property="itemCmSales" column="ITEM_CM_SALES"/>
+		<result property="itemChoice" column="ITEM_CHOICE"/>
+		<result property="itemDate" column="ITEM_DATE"/>
+		<result property="itemRecommend" column="ITEM_RECOMMEND"/>
+		<result property="categoryNo" column="CATEGORY_NO"/>
+		<result property="eventNo" column="EVENT_NO"/>
+		<result property="itemMemo" column="ITEM_MEMO"/>
+	</resultMap>
+	
+	<resultMap type="mReply" id="replyResultSet">
+		<id property="boardNo" column="BOARD_NO"/>
+		<result property="inquiryYN" column="INQUIRY_YN"/>
+		<result property="inquiryDate" column="INQUIRY_DATE"/>
+		<result property="inquiryContent" column="INQUIRY_CONTENT"/>
+		<result property="boardType" column="BOARD_TYPE"/>
+	</resultMap>
+	
 	<select id="selectOne" parameterType="Member" resultMap="memberResultSet">
 		SELECT *
 		FROM MEMBER
@@ -85,14 +132,13 @@
 		JOIN SUBSCRIBE S ON (P.SUBSCRIBE_NO = S.SUBSCRIBE_NO)
 		JOIN ITEM I ON (I.ITEM_NO = S.ITEM_NO)
 		JOIN MEMBER M ON(S.MEMBER_NO = M.MEMBER_NO)
-		WHERE M.MEMBER_NO = 1
-		<!-- WHERE M.MEMBER_NO = #{memberNo} -->
+		WHERE M.MEMBER_NO = #{memberNo}
 	</select>
 	
 	<select id="reviewList" parameterType="int" resultMap="reviewResultSet">
 		SELECT *
 		FROM REVIEW
-		WHERE MEMBER_NO=1
+		WHERE MEMBER_NO=#{memberNo}
 		ORDER BY REVIEW_DATE DESC
 	</select>
 	
@@ -102,7 +148,7 @@
 		JOIN SUBSCRIBE S ON (E.SUBSCRIBE_NO = S.SUBSCRIBE_NO)
 		JOIN MEMBER M ON (S.MEMBER_NO = M.MEMBER_NO)
 		JOIN ITEM I ON (S.ITEM_NO = I.ITEM_NO)
-		WHERE S.MEMBER_NO = 1
+		WHERE S.MEMBER_NO = #{memberNo}
 		ORDER BY E.EXCHANGE_DATE DESC
 	</select>
 	
@@ -111,14 +157,14 @@
 		FROM DELIVERY D
 		JOIN SUBSCRIBE S ON (D.SUBSCRIBE_NO = S.SUBSCRIBE_NO)
 		JOIN ITEM I ON (S.ITEM_NO = I.ITEM_NO)
-		WHERE MEMBER_NO = 1
+		WHERE MEMBER_NO = #{memberNo}
 	</select>
 	
 	<select id="cartList" parameterType="int" resultMap="cartResultSet">
 		SELECT C.*
 		FROM CART C
 		JOIN ITEM I ON (C.ITEM_NO = I.ITEM_NO)
-		WHERE MEMBER_NO = 1
+		WHERE MEMBER_NO = #{memberNo}
 	</select>
 	
 	<insert id="insertExchange" parameterType="mExchange">
@@ -140,4 +186,66 @@
 		DELETE REVIEW
 		WHERE REVIEW_NO=#{reviewNo}
 	</delete>
+	
+	<update id="updateMember" parameterType="Member">
+		UPDATE MEMBER
+	  	SET EMAIL=#{email}, ADDRESS_1=#{address1}, ADDRESS_2=#{address2}, ADDRESS_3=#{address3}, PHONE=#{phone}, MODIFY_DATE=SYSDATE
+	  	WHERE MEMBER_ID=#{memberId}
+	</update>
+	
+	<update id="updateMemberStatus" parameterType="_int">
+		UPDATE MEMBER
+	  	SET MEMBER_STATUS='Y'
+	  	WHERE MEMBER_NO=#{memberNo}
+	</update>
+	
+	<insert id="insertSecession" parameterType="Withdrawal">
+		INSERT INTO SECESSION VALUES(SEQ_SECESSION.NEXTVAL, #{memberNo}, #{memberId}, #{email}, #{secessionCategory}, #{secessionContent}, DEFAULT)
+	</insert>
+	
+	<select id="selectInquiryList" parameterType="int" resultMap="inquiryResultSet">
+		SELECT *
+		FROM BOARD B
+		JOIN INQUIRY I ON (B.BOARD_NO = I.BOARD_NO)
+		WHERE BOARD_CODE='O' AND MEMBER_NO=#{memberNo}
+	</select>
+	
+	<select id="selectHeartList" parameterType="int" resultMap="heartResultSet">
+		SELECT H.*, M.*, T.ITEM_PRICE, T.ITEM_NAME
+		FROM HEART H 
+		JOIN ITEM_IMAGE I ON (H.ITEM_NO = I.ITEM_NO)
+		JOIN ITEM T ON (H.ITEM_NO = T.ITEM_NO)
+		JOIN IMAGE M ON (I.I_IMAGE_NO = M.IMAGE_NO)
+		WHERE H.MEMBER_NO=#{memberNo}
+	</select>
+	
+	<delete id="deleteHeart" parameterType="mDeleteHeart">
+		DELETE FROM HEART
+		WHERE HEART_NO=#{heartNo} AND MEMBER_NO=#{memberNo}
+	</delete>
+	
+	<select id="selectItem" parameterType="_int" resultMap="itemResultSet">
+		SELECT *
+		FROM ITEM
+		WHERE ITEM_NO=#{itemNo}
+	</select>
+	
+	<insert id="insertCart" parameterType="hashMap">
+		INSERT INTO CART VALUES
+		(SEQ_CART.NEXTVAL
+		 , #{item.itemNo}
+		, #{member.memberNo}
+		, #{member.memberId}
+		, #{member.email}
+		, '1주'
+		, 1
+		, #{item.itemName}
+		, #{item.itemPrice})
+	</insert>
+	
+	<select id="selectReply" parameterType="int" resultMap="replyResultSet">
+		SELECT *
+		FROM INQUIRY
+		WHERE BOARD_NO=#{boardNo}
+	</select>
 </mapper>

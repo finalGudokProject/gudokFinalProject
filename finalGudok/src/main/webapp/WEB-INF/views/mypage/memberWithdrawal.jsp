@@ -117,8 +117,14 @@
                         style="width: 25%; height: 25%; margin-right: 4%;">구독배송</a>
                 <ul>
                     <li><a href="#">구독 조회</a></li>
-                    <li><a href="#">배송 조회</a></li>
-                    <li><a href="#">교환 내역</a></li>
+                    <c:url var="dlist" value="deliveryList.do">
+						<c:param name="memberNo" value="${loginUser.memberNo}"/>
+					</c:url> 
+                    <li><a href="${dlist}">배송 조회</a></li>
+                    <c:url var="elist" value="exchangeList.do">
+						<c:param name="memberNo" value="${loginUser.memberNo}"/>
+					</c:url> 
+                    <li><a href="${elist}">교환 내역</a></li>
                 </ul>
             </li>
             <li>
@@ -126,23 +132,44 @@
                         style="width: 25%; height: 25%; margin-right: 4%;">나의혜택</a>
                 <ul>
                     <li><a href="#">회원 등급</a></li>
-                    <li><a href="#">적립금 내역</a></li>
+                    <c:url var="plist" value="pointList.do">
+							<c:param name="memberNo" value="${loginUser.memberNo}"/>
+					</c:url> 
+                    <li><a href="${plist}">적립금 내역</a></li>
                 </ul>
             </li>
-            <li><a href="#contact"><img src="resources/images/cart.png"
+            <c:url var="clist" value="cartList.do">
+				<c:param name="memberNo" value="${loginUser.memberNo}"/>
+			</c:url> 
+            <li><a href="${clist}"><img src="resources/images/cart.png"
                         style="width: 25%; height: 25%; margin-right: 4%;">장바구니</a></li>
-            <li><a href="#about"><img src="resources/images/heart.png" style="width: 25%; height: 25%; margin-right: 4%;">찜</a>
+            <c:url var="hlist" value="heartList.do">
+				<c:param name="memberNo" value="${loginUser.memberNo}"/>
+			</c:url> 
+            <li><a href="${hlist}"><img src="resources/images/heart.png" style="width: 25%; height: 25%; margin-right: 4%;">찜</a>
             </li>
-            <li><a href="#about"><img src="resources/images/review.png"
+            <c:url var="rlist" value="reviewList.do">
+				<c:param name="memberNo" value="${loginUser.memberNo}"/>
+			</c:url> 
+            <li><a href="${rlist}"><img src="resources/images/review.png"
                         style="width: 25%; height: 25%; margin-right: 4%;">상품리뷰</a></li>
-            <li><a href="#about"><img src="resources/images/inquiry.png"
+            <c:url var="ilist" value="inquiryList.do">
+				<c:param name="memberNo" value="${loginUser.memberNo}"/>
+			</c:url>
+            <li><a href="${ilist}"><img src="resources/images/inquiry.png"
                         style="width: 25%; height: 25%; margin-right: 4%;">1:1문의</a></li>
             <li>
                 <a href="#about"><img src="resources/images/member_information.png"
                         style="width: 25%; height: 25%; margin-right: 4%;">회원정보</a>
                 <ul>
-                    <li><a href="#">회원정보 확인</a></li>
-                    <li><a href="#">회원탈퇴</a></li>
+                	<c:url var="myInfo" value="myInfo.do">
+						<c:param name="memberNo" value="${loginUser.memberNo}"/>
+					</c:url>
+                    <li><a href="${myInfo}">회원정보 확인</a></li>
+                    <c:url var="withdrawal" value="myWithdrawal.do">
+						<c:param name="memberNo" value="${loginUser.memberNo}"/>
+					</c:url>
+                    <li><a href="${withdrawal}">회원탈퇴</a></li>
                 </ul>
             </li>
         </ul>
@@ -150,34 +177,37 @@
         <div class="content_sub">
             <span class="sub_content" style="font-size: 1.5em;">회원탈퇴</span>
             <br><br><br>
-            <form>
+            <form action="withdrawalInsert.do" method="post">
+            	<input type="hidden" value="${loginUser.memberNo}" name="memberNo">
+            	<input type="hidden" value="${loginUser.memberId}" name="memberId">
+            	<input type="hidden" value="${loginUser.email}" name="email">
 	            <table>
 	                <tr>
 	                    <td style="width: 80px">탈퇴사유</td>
 	                    <td>
-	                        <select style="width:30%; height:30px;">
-	                            <option>서비스가 마음에 들지 않음</option>
-	                            <option>가격 비쌈</option>
-	                            <option>원하는 상품이 없음</option>
-	                            <option>개인정보보호</option>
-	                            <option>기타</option>
+	                        <select style="width:40%; height:30px;" name="secessionCategory">
+	                            <option value="1">서비스가 마음에 들지 않음</option>
+	                            <option value="2">가격이 비쌈</option>
+	                            <option value="3">원하는 상품이 없음</option>
+	                            <option value="4">개인정보보호를 위해</option>
+	                            <option value="5">기타</option>
 	                        </select>
 	                    </td>
 	                </tr>
 	                <tr></tr>
 	                <tr>
-	                    <td colspan="2">
+	                    <td colspan="2" name="secessionContent">
 	                        <textarea cols="80" rows="10" style="resize:none;"></textarea>
 	                    </td>
 	                </tr>
 	            </table>
+	            
+	            <div style="width:52%; margin:0 auto;">
+	                <div class="button">
+	                    <button class="withdrawal_btn">탈퇴하기</button>
+	                </div>
+            	</div>
             </form>
-
-            <div style="width:52%; margin:0 auto;">
-                <div class="button">
-                    <button class="withdrawal_btn">탈퇴하기</button>
-                </div>
-            </div>
         </div>
     </div>
     <br style="clear:both;">
