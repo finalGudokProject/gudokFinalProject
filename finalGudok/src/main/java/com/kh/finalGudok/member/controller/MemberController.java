@@ -312,7 +312,7 @@ public class MemberController {
 	}
 	
 	// 리뷰 삭제
-	@RequestMapping("reviewDelete.do")
+	@RequestMapping("mreviewDelete.do")
 	public String reviewDelete(HttpServletRequest request, Integer reviewNo) {// 민지
 //		Review review = mService.selectReview(reviewNo); 
 		

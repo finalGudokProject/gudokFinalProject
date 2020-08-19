@@ -301,7 +301,7 @@
 		          <tr>
 		            <td>${r.reviewDate}</td>
 		            <td>${r.reviewContent}</td>
-		            <c:url var="rdelete" value="reviewDelete.do">
+		            <c:url var="rdelete" value="mreviewDelete.do">
 		            	<c:param name="reviewNo" value="${r.reviewNo}"/>
 		            </c:url>
 		            <td>

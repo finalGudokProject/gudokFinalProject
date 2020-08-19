@@ -84,6 +84,25 @@
 		vertical-align:bottom;
 	}
 .starRv.on{background-position:0 0;}
+
+	.reviewImgD{
+		overflow:hidden;
+		text-align:center;
+		padding:2%;
+		border-top:1px dashed lightgray;
+	}
+	.reviewImgD img{
+		height:40%;
+		width:40%;
+		object-fit:cover;
+		transform:(1.0);
+		transition:transform.5s;
+	}
+	
+	.reviewImgD img:hover{
+		transform:scale(1.05);
+		transition:transform.5s;
+	}
 </style>
 <body>
 	<jsp:include page="../common/menubar.jsp"/>
@@ -117,20 +136,17 @@
 					<c:if test="${loginUser.memberId == r.memberId }">
 						<div class="col-3" style="text-align:right;padding-right:2%;">
 							<input type="hidden" value="${r.reviewNo }">
+							<input type="hidden" value="${r.itemNo }">
+							<input type="hidden" value="${r.reviewContent }">
+							<input type="hidden" value="${r.reviewRate }">
 							<img src="resources/images/retouch.png" class="retouchImgC" style="width:3.5rem;border:1px solid lightgray;" title="상품평 수정하기">
+							<img src="resources/images/reDelete.png" class="deleteImgC" style="width:3.5rem;border:1px solid lightgray;" title="상품평 삭제하기">
 						</div>
 					</c:if>
 				</div>
 				</td>
 			</tr>
-			<script>
-				$(function(){
-					$(".retouchImgC").on("click", function(){
-						var reviewNo = $(this).prev().val();
-						location.href="reviewUpdate.do";
-					})
-				})
-			</script>
+			
 			<tr>
 				<td>
 					<div class="starRev">
@@ -185,7 +201,7 @@
 							<div style="display:inline-block;color:gray;">등록일 : ${r.reviewDate }</div>
 						</c:if>
 						<c:if test="${r.reviewDate != r.reviewModify }">
-							<div style="display:inline-block;color:gray;">등록일 : ${r.reviewDate } / 수정일 : ${r.reviewModify }</div>
+							<div style="display:inline-block;color:gray;">등록일 : ${r.reviewDate } / 수정일 : ${r.reviewModify}</div>
 						</c:if>
 					</div>
 				</td>
@@ -194,19 +210,12 @@
 			<tbody style="padding:2%;">
 				<tr>
 					<td>
-						<div style="padding:2%;border-top:1px dashed lightgray;">
-						<c:if test="${!empty r.reviewImg1 && !empty r.reviewImg2}">
-							<img src="resources/iuploadFiles/${r.reviewImg1 }" class="reviewImgClass">
-							<img src="resources/iuploadFiles/${r.reviewImg2 }" class="reviewImgClass">
-						</c:if>
-						<c:if test="${!empty r.reviewImg1 && empty r.reviewImg2 }">
-							<img src="resources/iuploadFiles/${r.reviewImg1 }" class="reviewImgClass">
-						</c:if>
-						<c:if test="${empty r.reviewImg1 && !empty r.reviewImg2 }">
-							<img src="resources/iuploadFiles/${r.reviewImg2 }" class="reviewImgClass">
-						</c:if>
-						<c:if test="${empty r.reviewImg1 && empty r.reviewImg2 }">
-						</c:if>
+						<div class="reviewImgD">
+						<c:forEach var="i" items="${img }">
+							<c:if test="${i.reviewNo == r.reviewNo && !empty i.imageRename}">
+								<img src="${contextPath }/resources/iuploadFiles/${i.imageRename}" class="reviewImgClass">
+							</c:if>
+						</c:forEach>
 						</div>
 					</td>
 				</tr>
@@ -224,17 +233,15 @@
 		
 		</div>
 	</div>
-	
 	<script type="text/javascript">
 	    $(document).ready(function(){
-	        $(".retouchImgC").tooltip();
+	        $(".retouchImgC, .deleteImgC").tooltip();
 	    });
 	</script>
 	
 	<script>
 		$(function(){
-			$("div .retouchImgC").on("mouseenter", function(){
-				console.log("이미지");
+			$(".retouchImgC").on("mouseenter", function(){
 				$(this).attr("src","${contextPath }/resources/images/retouchHover.png").css("cursor","pointer");
 			}).on("mouseleave", function(){
 				$(this).attr("src","${contextPath }/resources/images/retouch.png");
@@ -248,7 +255,37 @@
 					if(result){
 						
 					}else{
-						swal("","모달창 띄워주기");
+						var reviewNo = $(this).parent().find("input:nth-child(1)").val();
+						var itemNo = $(this).parent().find("input:nth-child(2)").val();
+						var reviewContent = $(this).parent().find("input:nth-child(3)").val();
+						var reviewRate = $(this).parent().find("input:nth-child(4)").val();
+						var memberNo = "${loginUser.memberNo}";
+						var memberId = "${loginUser.memberId}";
+						var email = "${loginUser.email}";
+						
+						console.log("reviewNo : " + reviewNo + ",itemNo : " + itemNo + ",reviewContent : " + reviewContent
+								 + ",reviewRate : " + reviewRate + ",memberNo : " + memberNo+ ",memberId : " + memberId + ",email : " + email);
+						location.href="reviewDetail.do?reviewNo=" + reviewNo + "&itemNo=" + itemNo;
+					}
+				})
+			})
+			$(".deleteImgC").on("mouseenter", function(){
+				$(this).attr("src","${contextPath }/resources/images/reDeleteHover.jpg").css("cursor","pointer");
+			}).on("mouseleave", function(){
+				$(this).attr("src","${contextPath }/resources/images/reDelete.png");
+			}).on("click", function(){
+				swal({
+					text : "상품평을 삭제하시겠습니까?",
+					buttons : ["예", "아니오"],
+					closeOnEsc : false,
+					dangerMode : true,
+				}).then((result)=>{
+					if(result){
+						
+					}else{
+						var reviewNo = $(this).parent().find("input:nth-child(1)").val();
+						var itemNo = $(this).parent().find("input:nth-child(2)").val();
+						location.href="reviewDelete.do?reviewNo=" + reviewNo + "&itemNo=" + itemNo;
 					}
 				})
 			})
