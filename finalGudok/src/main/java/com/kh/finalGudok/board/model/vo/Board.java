@@ -172,5 +172,7 @@ public class Board implements Serializable {
 				+ bItem_no + ", rownum=" + rownum + "]";
 	}
 
+	
+	
 		
 }

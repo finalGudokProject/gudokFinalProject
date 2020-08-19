@@ -158,7 +158,7 @@ section {
 			<ul class="menu-list">
 				<li><a href="signUp.do">회원가입</a></li>
 				<li><a href="moveToLogin.do">로그인</a></li>
-				<li><a href="#">고객센터</a></li>
+				<li><a href="noticeList.do">고객센터</a></li>
 				<li><a href="#">Who is JH?</a></li>
 				<li><a href="payment.do">결제페이지</a>
 			</ul>
@@ -171,7 +171,7 @@ section {
 				</c:url> 
 				<li><a href="${elist}">마이페이지</li>
 				<li><a href="logout.do">로그아웃</a></li>
-				<li><a href="#">고객센터</a></li>
+				<li><a href="noticeList.do">고객센터</a></li>
 				<li><a href="#">Who is JH?</a></li>
 				<li><a href="payment.do">결제페이지</a>
 			</ul>

@@ -229,7 +229,7 @@
           <!-- Grid column -->
           <div class="col-md-2 mb-3">
           <h6 class="text-uppercase font-weight-bold">
-              <a href="#!">이용약관</a>
+              <a href="termsOfService.do">이용약관</a>
           </h6>
           </div>
           <!-- Grid column -->
@@ -237,7 +237,7 @@
           <!-- Grid column -->
           <div class="col-md-2 mb-3">
           <h6 class="text-uppercase font-weight-bold">
-              <a href="#!">개인정보처리방침</a>
+              <a href="privacyPolicy.do">개인정보처리방침</a>
           </h6>
           </div>
           <!-- Grid column -->
@@ -245,7 +245,7 @@
           <!-- Grid column -->
           <div class="col-md-2 mb-3">
           <h6 class="text-uppercase font-weight-bold">
-              <a href="#!">고객센터</a>
+              <a href="noticeList.do">고객센터</a>
           </h6>
           </div>
           <!-- Grid column -->

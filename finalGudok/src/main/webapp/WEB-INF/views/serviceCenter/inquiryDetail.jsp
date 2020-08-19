@@ -24,11 +24,11 @@
   }
   table {
     width: 100%;
-    border: 1px solid #444444;
+    border: 1px solid #CCCCCC !important;
     border-collapse: collapse;
   }
   th, td {
-    border: 1px solid #444444;
+    border: 1px solid #CCCCCC !important;
   }
   body {
     margin: 10px;
