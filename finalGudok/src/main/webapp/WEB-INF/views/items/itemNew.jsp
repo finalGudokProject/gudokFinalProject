@@ -28,6 +28,9 @@
 		line-height:100px;
 		text-align:center;
 	}
+	#cateName span:hover{
+		cursor:pointer;
+	}
 	#cateName img{
 		vertical-align:middle;
 	}
@@ -121,12 +124,6 @@
 		cursor:pointer;
 		background:lightyellow;
 	} */
-	
-	.sortTable td :hover{
-		cursor:pointer;
-		background:lightyellow;
-	}
-	
 	
 	.starR{
 	  background: url('http://miuu227.godohosting.com/images/icon/ico_review.png') no-repeat right 0;
@@ -262,6 +259,13 @@
 			</div>
 			<script>
 				$(function(){
+					$("#cateName span").on("click", function(){
+						location.href="itemNew.do";
+					})
+				})
+			</script>
+			<script>
+				$(function(){
 					console.log("${sortNo}");
 					if("${sortNo}" == "S1"){
 						$(".sortTable #newSort").css({"background":"lightyellow","font-weight":"bold"});
@@ -293,7 +297,14 @@
 	
 	<div class="row" id="itemsRowDiv">
 	
-	
+		<c:if test="${empty list }">
+		<div class="col-2"></div>
+			<div class="col-8" id="emptyDiv" style="margin-top:2%;border:1px solid lightgray;">
+				<div style="text-align:center;width:100%;"><img src="${contextPath }/resources/images/empty.png" style="width:30%;"></div>
+				<div style="text-align:center;width:100%;font-size:40px;">해당 카테고리의 상품이 존재하지 않습니다.</div>
+			</div>
+		<div class="col-2"></div>	
+		</c:if>
 	
 		<c:if test="${!empty list}">
 		<c:forEach var="i" items="${list }" varStatus="vs">
@@ -432,6 +443,24 @@
 		
 		</script>
 		</c:forEach>
+		<script>
+				$(function(){
+					$(".sortTable td").on("mouseenter", function(){
+						$(this).css("cursor","pointer");
+						$(this).children().find("span").css({"background":"lightyellow"});
+					}).on("mouseleave", function(){
+						if($(this).children().find("span").css("font-weight") == 700){
+							$(this).children().find("span").css({"background":"lightyellow"});
+						}else{
+							$(this).children().find("span").css({"background":"white"});
+						}
+					})
+				})
+			</script>
+		
+		<c:if test="${empty list }">
+		
+		</c:if>
 		<c:if test="${!empty list}">
 			<div class="col-12">
 			

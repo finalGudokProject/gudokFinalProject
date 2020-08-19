@@ -26,6 +26,10 @@
 		font-size:30px;
 		margin:3% 0 1% 7%;
 		line-height:100px;
+		width:16%;
+	}
+	#cateName span:hover{
+		cursor:pointer;
 	}
 	#cateName img{
 		vertical-align:middle;
@@ -125,10 +129,6 @@
 		background:lightyellow;
 	} */
 	
-	.sortTable td :hover{
-		cursor:pointer;
-		background:lightyellow;
-	}
 	
 	
 	.starR{
@@ -265,6 +265,13 @@
 			<div style="display:none;"><input type="text" name="categoryNo" id="categoryInput"></div>
 			<script>
 				$(function(){
+					$("#cateName span").on("click", function(){
+						location.href="itemLiving.do";
+					})
+				})
+			</script>
+			<script>
+				$(function(){
 					if("${categoryNo}" == "L1"){
 						$(".cateTableC #foodLife").css({"text-decoration":"underline","background":"lightyellow","font-weight":"bold"});
 					}else if("${categoryNo}" == "L2"){
@@ -348,7 +355,14 @@
 	
 	<div class="row" id="itemsRowDiv">
 	
-	
+		<c:if test="${empty list }">
+		<div class="col-2"></div>
+			<div class="col-8" id="emptyDiv" style="margin-top:2%;border:1px solid lightgray;">
+				<div style="text-align:center;width:100%;"><img src="${contextPath }/resources/images/empty.png" style="width:30%;"></div>
+				<div style="text-align:center;width:100%;font-size:40px;">해당 카테고리의 상품이 존재하지 않습니다.</div>
+			</div>
+		<div class="col-2"></div>	
+		</c:if>
 		
 		<c:if test="${!empty list}">
 		<c:forEach var="i" items="${list }" varStatus="vs">
@@ -468,6 +482,20 @@
 		</c:forEach>
 		</c:if>
 		</div>
+		<script>
+				$(function(){
+					$(".sortTable td").on("mouseenter", function(){
+						$(this).css("cursor","pointer");
+						$(this).children().find("span").css({"background":"lightyellow"});
+					}).on("mouseleave", function(){
+						if($(this).children().find("span").css("font-weight") == 700){
+							$(this).children().find("span").css({"background":"lightyellow"});
+						}else{
+							$(this).children().find("span").css({"background":"white"});
+						}
+					})
+				})
+			</script>
 		<c:forEach var="i" items="${list }" varStatus="vs">
 		<script>
 			$(function(){
@@ -487,6 +515,9 @@
 		
 		</script>
 		</c:forEach>
+		<c:if test="${empty list }">
+		
+		</c:if>
 		<c:if test="${!empty list}">
 			<div class="col-12">
 			

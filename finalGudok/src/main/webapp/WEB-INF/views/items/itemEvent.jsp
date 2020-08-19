@@ -27,6 +27,9 @@
 		margin-right:4rem;
 		line-height:100px;
 	}
+	#cateName span:hover{
+		cursor:pointer;
+	}
 	#cateName img{
 		vertical-align:middle;
 	}
@@ -120,12 +123,6 @@
 		cursor:pointer;
 		background:lightyellow;
 	} */
-	
-	.sortTable td :hover{
-		cursor:pointer;
-		background:lightyellow;
-	}
-	
 	
 	.starR{
 	  background: url('http://miuu227.godohosting.com/images/icon/ico_review.png') no-repeat right 0;
@@ -259,6 +256,13 @@
 				</tr>
 			</table>
 			</div>
+			<script>
+				$(function(){
+					$("#cateName span").on("click", function(){
+						location.href="itemEvent.do";
+					})
+				})
+			</script>
 			
 			<script>
 				$(function(){
@@ -272,6 +276,20 @@
 					}else if("${sortNo}" == "S4"){
 						$(".sortTable #lowSort").css({"background":"lightyellow","font-weight":"bold"});
 					}
+				})
+			</script>
+			<script>
+				$(function(){
+					$(".sortTable td").on("mouseenter", function(){
+						$(this).css("cursor","pointer");
+						$(this).children().find("span").css({"background":"lightyellow"});
+					}).on("mouseleave", function(){
+						if($(this).children().find("span").css("font-weight") == 700){
+							$(this).children().find("span").css({"background":"lightyellow"});
+						}else{
+							$(this).children().find("span").css({"background":"white"});
+						}
+					})
 				})
 			</script>
 			<script>
@@ -427,6 +445,10 @@
 		
 		</script>
 		</c:forEach>
+		</c:if>
+		
+		<c:if test="${empty list }">
+		
 		</c:if>
 		<c:if test="${!empty list}">
 			<div class="col-12">
