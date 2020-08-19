@@ -257,7 +257,7 @@ public class ItemDao {
 	public ArrayList<ItemListView> selectDLists(PageInfo pi, String sortNo) {
 		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
-<<<<<<< HEAD
+
 		HashMap<String, String> map = new HashMap<>();
 		map.put("test",sortNo);
 		return (ArrayList)sqlSessionTemplate.selectList("itemListMapper.selectDLists",map,rowBounds);
@@ -413,10 +413,7 @@ public class ItemDao {
 //		map.put("test",sortNo);
 //		return (ArrayList)sqlSessionTemplate.selectList("itemListMapper.selectDiLists",map,rowBounds);
 //	}
-=======
-		return (ArrayList)sqlSessionTemplate.selectList("itemListMapper.selectDiList",null,rowBounds);
-	}
->>>>>>> refs/remotes/origin/JinHee
+
 
 	public int selectBannerItemCount(int bi) {
 		return sqlSessionTemplate.selectOne("adminItemMapper.selectBannerItemCount",bi);
