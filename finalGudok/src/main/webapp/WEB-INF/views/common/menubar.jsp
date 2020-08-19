@@ -18,6 +18,21 @@ Bootstrap CSS
 <title>Menubar</title>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <style>
+/*폰트 적용*/
+body {
+	font-family: 'Jua', sans-serif;
+	color: #495057;
+}
+
+
+h3 {
+	color: black;
+}
+
+section {
+	margin-bottom: 50px;
+}
+
 /*상단 회원가입, 로그인, 고객센터 메뉴(#menu-list) */
 .menu-list {
 	line-height: 3;
@@ -78,6 +93,7 @@ Bootstrap CSS
 	margin-right: 50px;
 }
 
+/* 푸드, 리빙 카테고리 드롭다운 설정*/
 #food-menu, #living-menu {
 	background-color: #f8f9fa;
 	margin-left: 10px;
@@ -101,6 +117,7 @@ Bootstrap CSS
 	margin-left: 50px;
 }
 
+/*버튼 css 설정*/
 .btn {
 	border-color: #ced4da;
 	color: #495057;
@@ -111,23 +128,8 @@ Bootstrap CSS
 	color: black;
 }
 
-/* #searchBtn {
-	border-color: #ced4da;
-	color: #495057;
-} */
-
-/* #searchBtn:hover{
-	border-color: black;
-	color:black;
-} */
 ::placeholder {
 	font-size: small;
-}
-
-/*폰트 적용*/
-body {
-	font-family: 'Jua', sans-serif;
-	color: #495057;
 }
 
 #cardWrap>a {
@@ -137,14 +139,6 @@ body {
 a:hover {
 	text-decoration: none;
 	color: black;
-}
-
-h3 {
-	color: black;
-}
-
-section {
-	margin-bottom: 50px;
 }
 </style>
 <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap"
@@ -156,7 +150,7 @@ section {
 	<div class="userMenu">
 		<c:if test="${empty sessionScope.loginUser }">
 			<ul class="menu-list">
-				<li><a href="signUp.do">회원가입</a></li>
+				<li><a href="moveToSignUp.do">회원가입</a></li>
 				<li><a href="moveToLogin.do">로그인</a></li>
 				<li><a href="noticeList.do">고객센터</a></li>
 				<li><a href="#">Who is JH?</a></li>

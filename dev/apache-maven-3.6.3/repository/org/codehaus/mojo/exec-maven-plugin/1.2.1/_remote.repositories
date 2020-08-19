@@ -1,4 +1,11 @@
+<<<<<<< HEAD
 #NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
 #Thu Aug 13 16:50:26 KST 2020
 exec-maven-plugin-1.2.1.jar>central=
 exec-maven-plugin-1.2.1.pom>central=
+=======
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Thu Aug 13 14:10:00 KST 2020
+exec-maven-plugin-1.2.1.jar>central=
+exec-maven-plugin-1.2.1.pom>central=
+>>>>>>> refs/remotes/origin/dev_Jaemyung

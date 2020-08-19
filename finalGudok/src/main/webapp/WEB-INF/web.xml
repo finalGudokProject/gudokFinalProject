@@ -6,7 +6,8 @@
 	<!-- The definition of the Root Spring Container shared by all Servlets and Filters -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>/WEB-INF/spring/root-context.xml</param-value>
+		<param-value>/WEB-INF/spring/root-context.xml
+		/WEB-INF/spring/spring-security.xml</param-value>
 	</context-param>
 	
 	<!-- Creates the Spring Container shared by all Servlets and Filters -->
@@ -30,17 +31,25 @@
 		<url-pattern>*.do</url-pattern>
 	</servlet-mapping>
 
+	<!-- 예외처리 -->
+	<error-page>
+		<exception-type>java.lang.Exception</exception-type>
+		<location>/WEB-INF/views/common/errorPage.jsp</location>
+	</error-page>
+	
+	<!-- 회원가입 한글깨짐 방지 -->
 	<filter>
 		<!-- filter 안에는 filter-name, filter-class. init-pararm을 추가하자 -->
 		<filter-name>encodingFilter</filter-name>
 		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
 		<init-param>
-			<!-- encoding 값을 UTF-8로 지정하자 -->
 
+			<!-- encoding 값을 UTF-8로 지정 -->
 			<param-name>encoding</param-name>
 			<param-value>UTF-8</param-value>
 		</init-param>
 	</filter>
+	<!-- 위에 선언한 필터 적용을 위한 설정 -->
 	<filter-mapping>
 		<filter-name>encodingFilter</filter-name>
 		<url-pattern>/*</url-pattern>

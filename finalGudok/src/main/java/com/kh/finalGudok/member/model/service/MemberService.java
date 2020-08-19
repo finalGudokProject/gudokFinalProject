@@ -3,6 +3,7 @@ package com.kh.finalGudok.member.model.service;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+
 import com.kh.finalGudok.item.model.vo.Item;
 import com.kh.finalGudok.member.model.vo.Cart;
 import com.kh.finalGudok.member.model.vo.DeleteHeart;
@@ -11,6 +12,7 @@ import com.kh.finalGudok.member.model.vo.Exchange;
 import com.kh.finalGudok.member.model.vo.Heart;
 import com.kh.finalGudok.member.model.vo.Inquiry;
 import com.kh.finalGudok.member.model.vo.Member;
+
 import com.kh.finalGudok.member.model.vo.Point;
 import com.kh.finalGudok.member.model.vo.Reply;
 import com.kh.finalGudok.member.model.vo.Review;
@@ -35,10 +37,16 @@ public interface MemberService {
 
 	int insertExchange(Exchange e);
 
+	int checkIdDup(String id);
+
+	int insertMember(Member m);
+
+	int emailDupCheck(String email);
+
 
 	int updateSubscribe(int subscribeNo);
 
-//	Review selectReview(Integer reviewNo);
+	Review selectReview(Integer reviewNo);
 
 	int deleteReview(Integer reviewNo);
 

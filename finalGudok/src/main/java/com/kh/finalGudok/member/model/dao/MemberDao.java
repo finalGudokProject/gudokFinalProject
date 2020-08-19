@@ -59,13 +59,25 @@ public class MemberDao {
 		return sqlSessionTemplate.insert("memberMapper.insertExchange", e);
 	}
 
+	public int checkIdDup(String memberId) {
+		return sqlSessionTemplate.selectOne("memberMapper.idCheck", memberId);
+	}
+
+	public int insertMember(Member m) {
+		return sqlSessionTemplate.insert("memberMapper.insertMember", m);
+	}
+
+	public int emailDupCheck(String email) {
+		return sqlSessionTemplate.selectOne("memberMapper.emailDupCheck",email);
+	}
+
 	public int updateSubscribe(int subscribeNo) {
 		return sqlSessionTemplate.update("memberMapper.updateSubscribe", subscribeNo);
 	}
 
-//	public Review selectReview(Integer reviewNo) {
-//		return sqlSessionTemplate.selectOne("memberMapper.selectReview", reviewNo);
-//	}
+	public Review selectReview(Integer reviewNo) {
+		return sqlSessionTemplate.selectOne("memberMapper.selectReview", reviewNo);
+	}
 
 	public int deleteReview(Integer reviewNo) {
 		return sqlSessionTemplate.delete("memberMapper.deleteReview", reviewNo);

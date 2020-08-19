@@ -51,7 +51,11 @@ under the License.
    |
    | Default: ${user.home}/.m2/repository
   -->
+<<<<<<< HEAD
 <localRepository>C:\finalProjectGudok\finalGudok\dev\apache-maven-3.6.3\repository</localRepository>
+=======
+<localRepository>/Users/jaemyung/Desktop/finalProjectGudok/finalGudok/finalGudok/dev/apache-maven-3.6.3/repository</localRepository>
+>>>>>>> refs/remotes/origin/dev_Jaemyung
 
   <!-- interactiveMode
    | This will determine whether maven prompts you when it needs input. If set to false,
