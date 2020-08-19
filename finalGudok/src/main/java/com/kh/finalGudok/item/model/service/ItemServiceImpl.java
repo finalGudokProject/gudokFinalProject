@@ -12,17 +12,23 @@ import com.kh.finalGudok.item.model.vo.Board;
 import com.kh.finalGudok.item.model.vo.Cart;
 import com.kh.finalGudok.item.model.vo.Event;
 import com.kh.finalGudok.item.model.vo.Heart;
+<<<<<<< HEAD
 
 
 import com.kh.finalGudok.item.model.vo.Image;
+=======
+>>>>>>> refs/remotes/origin/JinHee
 import com.kh.finalGudok.item.model.vo.Item;
 import com.kh.finalGudok.item.model.vo.ItemListView;
 import com.kh.finalGudok.item.model.vo.PageInfo;
 import com.kh.finalGudok.item.model.vo.Review;
+<<<<<<< HEAD
 
 import com.kh.finalGudok.item.model.vo.ReviewImage;
 import com.kh.finalGudok.item.model.vo.ReviewView;
 import com.kh.finalGudok.member.model.vo.Member;
+=======
+>>>>>>> refs/remotes/origin/JinHee
 
 @Service("iService")
 public class ItemServiceImpl implements ItemService {
@@ -270,6 +276,7 @@ public class ItemServiceImpl implements ItemService {
 		return iDao.selectDiList(pi);
 	}
 
+<<<<<<< HEAD
 	@Override
 	public ArrayList<ItemListView> selectDLists(PageInfo pi,String sortNo) {
 		return iDao.selectDLists(pi,sortNo);
@@ -437,4 +444,60 @@ public class ItemServiceImpl implements ItemService {
 		
 		return iDao.deleteBannerItem(dEventArr);
 	}
+=======
+	@Override
+	public int updateEventStatusN(ArrayList<Event> dEventArr) {
+		return iDao.updateEventStatusN(dEventArr);
+		
+	}
+	
+	@Override
+	public int updateEventStatusY(ArrayList<Event> dEventArr) {
+		return iDao.updateEventStatusY(dEventArr);
+		
+	}
+
+
+	
+	/*
+	 * @Override public ArrayList<AdminItem> selectItemListA(PageInfo pi) {
+	 * 
+	 * return iDao.selectItemListA(pi); }
+	 */
+
+
+
+	@Override
+	public int getbannerItemCount(int eventNo) {
+		
+		return iDao.selectBannerItemCount(eventNo);
+	}
+
+	@Override
+	public ArrayList<BannerItem> selectBannerItem(int eventNo, PageInfo pi) {
+		
+		return iDao.selectBannerItem(eventNo,pi);
+	}
+
+	@Override
+	public ArrayList<AdminItem> selectItemListA(PageInfo pi) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int deleteBannerItem(int[] dEventArr) {
+		
+		return iDao.deleteBannerItem(dEventArr);
+	}
+
+	
+
+
+	
+	
+	
+	
+
+>>>>>>> refs/remotes/origin/JinHee
 }

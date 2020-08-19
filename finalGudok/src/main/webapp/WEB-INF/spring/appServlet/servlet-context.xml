@@ -22,6 +22,7 @@
 	</beans:bean>
 	
 	<context:component-scan base-package="com.kh.finalGudok" />
+<<<<<<< HEAD
 
 	<beans:bean id="jsonView"
       class="net.sf.json.spring.web.servlet.view.JsonView"/>
@@ -31,5 +32,16 @@
       <beans:property name="order" value="0"/>
    </beans:bean>
 	
+=======
+	
+	<beans:bean id="jsonView" 
+		class="net.sf.json.spring.web.servlet.view.JsonView"> <!--이걸 호출하면 에이작스 호출한곳으로 돌아감 --><!-- 얘는 초기값이 필요없음 -->
+	</beans:bean>	
+		
+	<beans:bean id="viewResolver"
+		class="org.springframework.web.servlet.view.BeanNameViewResolver">
+		<beans:property name="order" value="0"/>
+	</beans:bean>
+>>>>>>> refs/remotes/origin/JinHee
 	
 </beans:beans>

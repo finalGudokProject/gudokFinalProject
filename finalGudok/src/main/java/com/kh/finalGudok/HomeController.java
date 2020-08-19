@@ -22,7 +22,11 @@ public class HomeController {
 	 */
 	@RequestMapping(value = "home.do", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
+<<<<<<< HEAD
 		return "home";
+=======
+			return "admin/itemRegister";
+>>>>>>> refs/remotes/origin/JinHee
 	}
 	
 }

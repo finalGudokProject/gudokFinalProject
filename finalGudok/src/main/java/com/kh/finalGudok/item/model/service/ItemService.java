@@ -122,6 +122,7 @@ public interface ItemService {
 
 	ArrayList<ItemListView> selectDLists(PageInfo pi,String sortNo);
 
+<<<<<<< HEAD
 	ArrayList<ItemListView> selectMLists(PageInfo pi, String sortNo);
 
 	ArrayList<ItemListView> selectBLists(PageInfo pi, String sortNo);
@@ -179,4 +180,19 @@ public interface ItemService {
 	ArrayList<AdminItem> selectItemListA(PageInfo pi);
 
 	int deleteBannerItem(int[] dEventArr);
+=======
+	
+	int updateEventStatusN(ArrayList<Event> dEventArr);
+
+	int getbannerItemCount(int eventNo);
+
+	ArrayList<BannerItem> selectBannerItem(int eventNo, PageInfo pi);
+
+	ArrayList<AdminItem> selectItemListA(PageInfo pi);
+
+	int deleteBannerItem(int[] dEventArr);
+
+
+
+>>>>>>> refs/remotes/origin/JinHee
 }

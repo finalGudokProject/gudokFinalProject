@@ -2,21 +2,31 @@ package com.kh.finalGudok.item.controller;
 
 import static com.kh.finalGudok.common.pagination.getPageInfo;
 import static com.kh.finalGudok.common.pagination2.getPageInfo2;
+<<<<<<< HEAD
 
 import java.io.File;
 import java.io.IOException;
+=======
+
+import java.io.File;
+import java.io.IOException;
+>>>>>>> refs/remotes/origin/JinHee
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+<<<<<<< HEAD
 import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.annotations.Param;
 
+=======
+import javax.servlet.http.HttpSession;
+
+>>>>>>> refs/remotes/origin/JinHee
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,11 +42,16 @@ import com.kh.finalGudok.item.model.vo.AdminItem;
 import com.kh.finalGudok.item.model.vo.BannerItem;
 import com.kh.finalGudok.item.model.vo.Board;
 import com.kh.finalGudok.item.model.vo.Cart;
+<<<<<<< HEAD
 
 import com.kh.finalGudok.item.model.vo.Heart;
 import com.kh.finalGudok.item.model.vo.Image;
 import com.kh.finalGudok.item.model.vo.Event;
 import com.kh.finalGudok.item.model.vo.Heart;
+=======
+import com.kh.finalGudok.item.model.vo.Event;
+import com.kh.finalGudok.item.model.vo.Heart;
+>>>>>>> refs/remotes/origin/JinHee
 import com.kh.finalGudok.item.model.vo.Item;
 import com.kh.finalGudok.item.model.vo.ItemListView;
 import com.kh.finalGudok.item.model.vo.PageInfo;
@@ -670,6 +685,7 @@ public class ItemController {
 				throw new ItemException("이벤트 게시 변경 실패!");
 			}
 		}
+<<<<<<< HEAD
 
 	// 리뷰 수정
 	@RequestMapping("reviewUpdate.do")
@@ -698,6 +714,12 @@ public class ItemController {
 	}
 	
 	// 리뷰 쓰기
+=======
+		
+
+		
+		
+>>>>>>> refs/remotes/origin/JinHee
 	@RequestMapping(value="reviewInsert.do", method=RequestMethod.POST)
 	public String reviewInsert(Review r, Image i, ReviewImage ri, HttpServletRequest request, @RequestParam(value = "page", required = false)Integer page
 			, @RequestParam(value = "memberNo", required = false)int memberNo

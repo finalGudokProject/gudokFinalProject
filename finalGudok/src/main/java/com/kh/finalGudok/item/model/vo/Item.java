@@ -20,10 +20,17 @@ public class Item implements Serializable{
 	private Date itemDate;
 	private String itemRecommend;
 	private String categoryNo;
+<<<<<<< HEAD
 	private String itemMemo;
 	private String itemEventStatus;
 	private String sortNo;
 
+=======
+	private int eventNo;
+	private String itemMemo;
+
+	
+>>>>>>> refs/remotes/origin/JinHee
 	public Item() {
 		// TODO Auto-generated constructor stub
 	}
@@ -47,7 +54,12 @@ public class Item implements Serializable{
 		this.sortNo = sortNo;
 	}
 
+<<<<<<< HEAD
 
+=======
+
+
+>>>>>>> refs/remotes/origin/JinHee
 	public int getItemNo() {
 		return itemNo;
 	}
@@ -120,6 +132,7 @@ public class Item implements Serializable{
 	public void setItemMemo(String itemMemo) {
 		this.itemMemo = itemMemo;
 	}
+<<<<<<< HEAD
 
 	public String getItemEventStatus() {
 		return itemEventStatus;
@@ -134,6 +147,10 @@ public class Item implements Serializable{
 		this.sortNo = sortNo;
 	}
 
+=======
+
+	
+>>>>>>> refs/remotes/origin/JinHee
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
@@ -145,5 +162,12 @@ public class Item implements Serializable{
 				+ itemRecommend + ", categoryNo=" + categoryNo + ", itemMemo=" + itemMemo + ", itemEventStatus="
 				+ itemEventStatus + ", sortNo=" + sortNo + "]";
 	}
+<<<<<<< HEAD
+=======
+
+	
+
+	
+>>>>>>> refs/remotes/origin/JinHee
 	
 }
