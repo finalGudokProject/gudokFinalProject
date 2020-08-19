@@ -105,6 +105,28 @@
 		WHERE REVIEW_NO=#{reviewNo}
 	</update>
 	
+	
+	<select id="selectDeleteReview" parameterType="_int" resultMap="reviewViewResultSet">
+		SELECT *
+		FROM SELECT_REVIEW
+		WHERE REVIEW_NO=#{reviewNo}
+	</select>
+	
+	<delete id="imageDelete" parameterType="_int">
+		DELETE FROM IMAGE I
+		WHERE I.IMAGE_NO = 
+		    (SELECT RI.R_IMAGE_NO
+		    FROM REVIEW_IMAGE RI
+		    WHERE I.IMAGE_NO = RI.R_IMAGE_NO 
+		    AND RI.REVIEW_NO=#{reviewNo})
+	</delete>
+	
+	
+	<delete id="reviewImageDelete" parameterType="_int">
+		DELETE FROM REVIEW_IMAGE
+		WHERE REVIEW_NO=#{reviewNo}
+	</delete>
+	
 	<delete id="reviewDelete" parameterType="_int">
 		DELETE FROM REVIEW
 		WHERE REVIEW_NO=#{reviewNo}

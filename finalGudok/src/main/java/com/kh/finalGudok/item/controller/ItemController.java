@@ -363,7 +363,7 @@ public class ItemController {
 		}
 	}
 
-	// 
+	// 리뷰 상세보기
 	@RequestMapping("reviewDetail.do")
 	public ModelAndView reviewDetail(ModelAndView mv, @RequestParam("reviewNo") int reviewNo) {
 		ArrayList<ReviewView> rv = iService.selectReviewDetail(reviewNo);
@@ -387,15 +387,38 @@ public class ItemController {
 		return mv;
 	}
 	
+	
+	// 리뷰 삭제
 	@RequestMapping("reviewDelete.do")
-	public ModelAndView reviewDelete(ModelAndView mv, int reviewNo, int itemNo) {
+	public ModelAndView reviewDelete(HttpServletRequest request, ModelAndView mv, int reviewNo, int itemNo) {
 //		System.out.println("reviewNo 넘어 옴? : " + reviewNo);
-		int result = iService.reviewDelete(reviewNo);
-		if(result > 0) {
-			iService.updateReviewRate(itemNo);
-			mv.setViewName("redirect:itemReview.do?itemNo=" + itemNo);
+		
+		ArrayList<ReviewView> rv = iService.selectDeleteReview(reviewNo);
+		for(ReviewView r : rv) {
+			if(r.getImageOriginalName() != null) {
+				deleteFile(r.getImageRename(), request);
+			}
+		}
+		
+		int imResult = iService.imageDelete(reviewNo);
+		if(imResult > 0) {
+			iService.reviewImageDelete(reviewNo);
+			int result = iService.reviewDelete(reviewNo);
+			if(result > 0) {
+				/* iService.updateReviewRate(itemNo); */
+				mv.setViewName("redirect:itemReview.do?itemNo=" + itemNo);
+			}
 		}
 		return mv;
+	}
+	
+	private void deleteFile(String fileName, HttpServletRequest request) {
+		String root = request.getSession().getServletContext().getRealPath("resources");
+		String savePath = root + "\\iuploadFiles";
+		File f1 = new File(savePath + "\\" + fileName);
+		if(f1.exists()) {
+			f1.delete();
+		}
 	}
 	
 	// 리뷰 쓰기
