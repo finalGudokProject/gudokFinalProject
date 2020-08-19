@@ -104,4 +104,9 @@
 			, MEMBER_NO=#{memberNo}, MEMBER_ID=#{memberId}, EMAIL=#{email}
 		WHERE REVIEW_NO=#{reviewNo}
 	</update>
+	
+	<delete id="reviewDelete" parameterType="_int">
+		DELETE FROM REVIEW
+		WHERE REVIEW_NO=#{reviewNo}
+	</delete>
 </mapper>

@@ -465,44 +465,61 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 			$("#reviewBtn").on("click", function(e){
 				e.preventDefault();
 				/* console.log($("#reviewTxt").val().length); */
-				if($("#reviewTxt").val().length < 10){
-					swal("","10자 이상으로 입력해 주세요.","warning");
-				}else if($("input[name=reviewRadio]:checked").val() == "1" || $("input[name=reviewRadio]:checked").val() == "2"){
-					swal({
-						text : "무분별한 평점 테러는 다른 사람에게 피해를 줄 수 있습니다.\n 다시 작성하시겠습니까?",
-						icon : "warning",
-						buttons : ["예", "아니오"],
-						closeOnEsc: false,
-						dangerMode : true,
-					}).then((result)=>{
-						if(result){
-							swal("상품평","등록 완료되었습니다.","success").then((result)=>{
-								if(result){
-									$("#reviewForm").submit();
-								}
-							});
-						}else{
-							$("#reviewTxt").focus();
-						}
-					})	
-				}else{
-					swal({
-						text : "상품평을 등록하시겠습니까?",
-						buttons : ["예","아니오"],
-						closeOnEsc: false,
-						dangerMode : true,
-					}).then((result)=>{
-						if(result){
+				if(${loginUser.memberId == null}){
+					swal("","로그인한 회원만 사용 가능합니다.","error").then((result)=>{
+						swal({
+							text : "로그인 페이지로 이동하시겠습니까?",
+							buttons : ["예", "아니오"],
+							dangerMode : false,
+							closeOnEsc : false,
+						}).then((login)=>{
+							if(login){
+								
+							}else{
+								swal("","로그인 페이지로");
+							}
+						})
+					});
+				}else if(${loginUser.memberId != null}){
+					if($("#reviewTxt").val().length < 10){
+						swal("","10자 이상으로 입력해 주세요.","warning");
+					}else if($("input[name=reviewRadio]:checked").val() == "1" || $("input[name=reviewRadio]:checked").val() == "2"){
+						swal({
+							text : "무분별한 평점 테러는 다른 사람에게 피해를 줄 수 있습니다.\n 다시 작성하시겠습니까?",
+							icon : "warning",
+							buttons : ["예", "아니오"],
+							closeOnEsc: false,
+							dangerMode : true,
+						}).then((result)=>{
+							if(result){
+								swal("상품평","등록 완료되었습니다.","success").then((result)=>{
+									if(result){
+										$("#reviewForm").submit();
+									}
+								});
+							}else{
+								$("#reviewTxt").focus();
+							}
+						})	
+					}else{
+						swal({
+							text : "상품평을 등록하시겠습니까?",
+							buttons : ["예","아니오"],
+							closeOnEsc: false,
+							dangerMode : true,
+						}).then((result)=>{
+							if(result){
 
-						}else{
-							swal("상품평","등록 완료되었습니다.","success").then((result)=>{
-								if(result){
-									$("#reviewForm").submit();
-								}
-							})
-							
-						}
-					})
+							}else{
+								swal("상품평","등록 완료되었습니다.","success").then((result)=>{
+									if(result){
+										$("#reviewForm").submit();
+									}
+								})
+								
+							}
+						})
+					}
 				}
 			})
 		})
@@ -694,7 +711,7 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 					var memberId = "${loginUser.memberId}";
 					var email = "${loginUser.email}";
 					$(".modalAnsBtn").on("click", function(){
-					var content = $(this).parent().prev().val();
+						var content = $(this).parent().prev().val();
 						console.log(title + "," +content + "," + itemNo + "," + memberId);
 						if($("#ansText").val() <= 10){
 							swal("","10자 이상 입력해 주십시오.","error");
@@ -728,8 +745,6 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 							                	+"error: " + errorData);
 							               }
 									  })
-									
-									
 								}
 							})
 						}
@@ -942,68 +957,86 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 		var memberId = "${loginUser.memberId}";
 		var email = "${loginUser.email}";
 		$("#heart").click(function(){
-			if($("#heart").hasClass("liked")){
-				swal({
-					text : "찜목록에서 삭제하시겠습니까?",
-					icon : "warning",
-					buttons : ["예", "아니오"],
-					closeOnEsc: false,
-					dangerMode : true,
-				  }).then((result)=>{
-					  if(result){
-					      $("#heart").html('<i class="fa fa-heart" aria-hidden="true"></i>');
-					      $("#heart").addClass("liked");
-					  }else{
-						  $.ajax({
-							  url : "choiceDel.do",
-							  data : {itemNo:itemNo, memberNo:memberNo, memberId:memberId, email:email},
-							  type : "POST",
-							  success:function(data){
-								  if(data == "success"){
-									  $("#heart").html('<i class="fa fa-heart-o" aria-hidden="true"></i>');
-								      $("#heart").removeClass("liked");
-								      swal("찜하기","찜목록에서 삭제되었습니다.","success");
-								  }
-							  },
-							  error:function(request, status, errorData){
-				                	alert("error code: " + request.status + "\n"
-				                	+"message: " + request.responseText
-				                	+"error: " + errorData);
-				               }
-						  })
-					  }
-				  })
-			}else{
-				swal({
-					text : "찜목록에 추가하시겠습니까?",
-					buttons : ["예", "아니오"],
-					closeOnEsc: false,
-					dangerMode : true,
-				  }).then((result)=>{
-					  if(result){
-						  $("#heart").html('<i class="fa fa-heart-o" aria-hidden="true"></i>');
-					      $("#heart").removeClass("liked");
-					  }else{
-						  $.ajax({
-							  url : "choice.do",
-							  data : {itemNo:itemNo, memberNo:memberNo, memberId:memberId, email:email},
-							  type : "POST",
-							  success:function(data){
-								  if(data == "success"){
-									  $("#heart").html('<i class="fa fa-heart" aria-hidden="true"></i>');
-								      $("#heart").addClass("liked");
-								      swal("찜하기","찜목록에 추가되었습니다.","success");
-								  }
-							  },
-							  error:function(request, status, errorData){
-				                	alert("error code: " + request.status + "\n"
-				                	+"message: " + request.responseText
-				                	+"error: " + errorData);
-				               }
-						  })
-					  }
-				  })
+			if(memberId != ""){
+				if($("#heart").hasClass("liked")){
+					swal({
+						text : "찜목록에서 삭제하시겠습니까?",
+						icon : "warning",
+						buttons : ["예", "아니오"],
+						closeOnEsc: false,
+						dangerMode : true,
+					  }).then((result)=>{
+						  if(result){
+						      $("#heart").html('<i class="fa fa-heart" aria-hidden="true"></i>');
+						      $("#heart").addClass("liked");
+						  }else{
+							  $.ajax({
+								  url : "choiceDel.do",
+								  data : {itemNo:itemNo, memberNo:memberNo, memberId:memberId, email:email},
+								  type : "POST",
+								  success:function(data){
+									  if(data == "success"){
+										  $("#heart").html('<i class="fa fa-heart-o" aria-hidden="true"></i>');
+									      $("#heart").removeClass("liked");
+									      swal("찜하기","찜목록에서 삭제되었습니다.","success");
+									  }
+								  },
+								  error:function(request, status, errorData){
+					                	alert("error code: " + request.status + "\n"
+					                	+"message: " + request.responseText
+					                	+"error: " + errorData);
+					               }
+							  })
+						  }
+					  })
+				}else{
+					swal({
+						text : "찜목록에 추가하시겠습니까?",
+						buttons : ["예", "아니오"],
+						closeOnEsc: false,
+						dangerMode : true,
+					  }).then((result)=>{
+						  if(result){
+							  $("#heart").html('<i class="fa fa-heart-o" aria-hidden="true"></i>');
+						      $("#heart").removeClass("liked");
+						  }else{
+							  $.ajax({
+								  url : "choice.do",
+								  data : {itemNo:itemNo, memberNo:memberNo, memberId:memberId, email:email},
+								  type : "POST",
+								  success:function(data){
+									  if(data == "success"){
+										  $("#heart").html('<i class="fa fa-heart" aria-hidden="true"></i>');
+									      $("#heart").addClass("liked");
+									      swal("찜하기","찜목록에 추가되었습니다.","success");
+									  }
+								  },
+								  error:function(request, status, errorData){
+					                	alert("error code: " + request.status + "\n"
+					                	+"message: " + request.responseText
+					                	+"error: " + errorData);
+					               }
+							  })
+						  }
+					  })
+				}
+			}else if(memberId == ""){
+				swal("","로그인한 회원만 사용 가능합니다.","error").then((result)=>{
+					swal({
+						text : "로그인 페이지로 이동하시겠습니까?",
+						buttons : ["예", "아니오"],
+						dangerMode : false,
+						closeOnEsc : false,
+					}).then((login)=>{
+						if(login){
+							
+						}else{
+							swal("","로그인 페이지로");
+						}
+					})
+				});
 			}
+			
 		    /* if($("#heart").hasClass("liked")){
 		      $("#heart").html('<i class="fa fa-heart-o" aria-hidden="true"></i>');
 		      $("#heart").removeClass("liked");
@@ -1115,7 +1148,24 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 			var btn = document.getElementById("whatSpan");
 			var span = document.getElementsByClassName("close")[0];
 			btn.onclick = function() {
-				modal.style.display = "block";
+				if(${loginUser.memberId == null}){
+					swal("","로그인한 회원만 사용 가능합니다.","error").then((result)=>{
+						swal({
+							text : "로그인 페이지로 이동하시겠습니까?",
+							buttons : ["예", "아니오"],
+							dangerMode : false,
+							closeOnEsc : false,
+						}).then((login)=>{
+							if(login){
+								
+							}else{
+								swal("","로그인 페이지로");
+							}
+						})
+					});
+				}else if(${loginUser.memberId != null}){
+					modal.style.display = "block";
+				}
 			}
 			span.onclick = function() {
 				modal.style.display = "none";

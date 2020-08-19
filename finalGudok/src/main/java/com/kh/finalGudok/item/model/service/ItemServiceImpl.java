@@ -289,6 +289,11 @@ public class ItemServiceImpl implements ItemService {
 		return iDao.selectAllReviewImg(itemNo);
 	}
 
+	@Override
+	public int reviewDelete(int reviewNo) {
+		return iDao.reviewDelete(reviewNo);
+	}
+
 //	@Override
 //	public int l1Count() {
 //		return iDao.l1Count();

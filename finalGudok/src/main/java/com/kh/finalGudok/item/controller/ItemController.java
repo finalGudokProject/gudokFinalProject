@@ -371,6 +371,7 @@ public class ItemController {
 		return mv;
 	}
 	
+	// 리뷰 수정
 	@RequestMapping("reviewUpdate.do")
 	public ModelAndView reviewUpdate(Review r, ModelAndView mv, @RequestParam("itemNo") int itemNo) {
 //		System.out.println("Review : " + r);
@@ -379,7 +380,18 @@ public class ItemController {
 //		System.out.println("review update 결과 : " + result);
 		if(result > 0) {
 			int rateResult = iService.updateReviewRate(itemNo);
-			System.out.println("평균 update 확인 : " + rateResult);
+//			System.out.println("평균 update 확인 : " + rateResult);
+			mv.setViewName("redirect:itemReview.do?itemNo=" + itemNo);
+		}
+		return mv;
+	}
+	
+	@RequestMapping("reviewDelete.do")
+	public ModelAndView reviewDelete(ModelAndView mv, int reviewNo, int itemNo) {
+//		System.out.println("reviewNo 넘어 옴? : " + reviewNo);
+		int result = iService.reviewDelete(reviewNo);
+		if(result > 0) {
+			iService.updateReviewRate(itemNo);
 			mv.setViewName("redirect:itemReview.do?itemNo=" + itemNo);
 		}
 		return mv;

@@ -140,6 +140,7 @@
 							<input type="hidden" value="${r.reviewContent }">
 							<input type="hidden" value="${r.reviewRate }">
 							<img src="resources/images/retouch.png" class="retouchImgC" style="width:3.5rem;border:1px solid lightgray;" title="상품평 수정하기">
+							<img src="resources/images/reDelete.png" class="deleteImgC" style="width:3.5rem;border:1px solid lightgray;" title="상품평 삭제하기">
 						</div>
 					</c:if>
 				</div>
@@ -211,7 +212,7 @@
 					<td>
 						<div class="reviewImgD">
 						<c:forEach var="i" items="${img }">
-							<c:if test="${i.reviewNo == r.reviewNo }">
+							<c:if test="${i.reviewNo == r.reviewNo && !empty i.imageRename}">
 								<img src="${contextPath }/resources/iuploadFiles/${i.imageRename}" class="reviewImgClass">
 							</c:if>
 						</c:forEach>
@@ -234,14 +235,13 @@
 	</div>
 	<script type="text/javascript">
 	    $(document).ready(function(){
-	        $(".retouchImgC").tooltip();
+	        $(".retouchImgC, .deleteImgC").tooltip();
 	    });
 	</script>
 	
 	<script>
 		$(function(){
 			$(".retouchImgC").on("mouseenter", function(){
-				
 				$(this).attr("src","${contextPath }/resources/images/retouchHover.png").css("cursor","pointer");
 			}).on("mouseleave", function(){
 				$(this).attr("src","${contextPath }/resources/images/retouch.png");
@@ -266,6 +266,26 @@
 						console.log("reviewNo : " + reviewNo + ",itemNo : " + itemNo + ",reviewContent : " + reviewContent
 								 + ",reviewRate : " + reviewRate + ",memberNo : " + memberNo+ ",memberId : " + memberId + ",email : " + email);
 						location.href="reviewDetail.do?reviewNo=" + reviewNo + "&itemNo=" + itemNo;
+					}
+				})
+			})
+			$(".deleteImgC").on("mouseenter", function(){
+				$(this).attr("src","${contextPath }/resources/images/reDeleteHover.jpg").css("cursor","pointer");
+			}).on("mouseleave", function(){
+				$(this).attr("src","${contextPath }/resources/images/reDelete.png");
+			}).on("click", function(){
+				swal({
+					text : "상품평을 삭제하시겠습니까?",
+					buttons : ["예", "아니오"],
+					closeOnEsc : false,
+					dangerMode : true,
+				}).then((result)=>{
+					if(result){
+						
+					}else{
+						var reviewNo = $(this).parent().find("input:nth-child(1)").val();
+						var itemNo = $(this).parent().find("input:nth-child(2)").val();
+						location.href="reviewDelete.do?reviewNo=" + reviewNo + "&itemNo=" + itemNo;
 					}
 				})
 			})

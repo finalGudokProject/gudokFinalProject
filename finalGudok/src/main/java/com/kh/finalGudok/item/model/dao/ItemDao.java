@@ -303,6 +303,10 @@ public class ItemDao {
 		return (ArrayList)sqlSessionTemplate.selectList("reviewMapper.selectAllReviewImg", itemNo);
 	}
 
+	public int reviewDelete(int reviewNo) {
+		return sqlSessionTemplate.delete("reviewMapper.reviewDelete", reviewNo);
+	}
+
 
 
 //	public int l1Count() {

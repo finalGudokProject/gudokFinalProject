@@ -123,6 +123,8 @@ public interface ItemService {
 
 	ArrayList<ReviewView> selectAllReviewImg(int itemNo);
 
+	int reviewDelete(int reviewNo);
+
 //	int l1Count();
 //
 //	int l2Count();
