@@ -55,7 +55,7 @@ public class ItemController {
 			System.out.println("itemNew list : " + list);
 		}else if(sortNo != null) {
 			ArrayList<Item> list = iService.selectNewList(pi, sortNo);
-			mv.addObject("list",list).addObject("pi", pi).setViewName("items/itemNew");
+			mv.addObject("list",list).addObject("pi", pi).addObject("sortNo", sortNo).setViewName("items/itemNew");
 			System.out.println("itemNew list : " + list);
 		}
 		return mv;
@@ -159,32 +159,32 @@ public class ItemController {
 			int dListCounts = iService.dListCount();
 			PageInfo pi = getPageInfo(currentPage, dListCounts);
 			ArrayList<ItemListView> dLists = iService.selectDLists(pi,sortNo);
-			mv.addObject("list", dLists).addObject("pi", pi).addObject("foodChk","F0").setViewName("items/itemFood");
+			mv.addObject("list", dLists).addObject("pi", pi).addObject("foodChk","F0").addObject("categoryNo", categoryNo).addObject("sortNo", sortNo).setViewName("items/itemFood");
 		}else if(categoryNo.equals("F2") && sortNo != null) {
 			int mListCount = iService.mListCount();
 			PageInfo pi = getPageInfo(currentPage, mListCount);
 			ArrayList<ItemListView> mList = iService.selectMLists(pi, sortNo);
-			mv.addObject("list", mList).addObject("pi", pi).addObject("foodChk","F0").setViewName("items/itemFood");
+			mv.addObject("list", mList).addObject("pi", pi).addObject("foodChk","F0").addObject("categoryNo", categoryNo).addObject("sortNo", sortNo).setViewName("items/itemFood");
 		}else if(categoryNo.equals("F3") && sortNo != null) {
 			int bListCount = iService.bListCount();
 			PageInfo pi = getPageInfo(currentPage, bListCount);
 			ArrayList<ItemListView> bList = iService.selectBLists(pi, sortNo);
-			mv.addObject("list", bList).addObject("pi", pi).addObject("foodChk","F0").setViewName("items/itemFood");
+			mv.addObject("list", bList).addObject("pi", pi).addObject("foodChk","F0").addObject("categoryNo", categoryNo).addObject("sortNo", sortNo).setViewName("items/itemFood");
 		}else if(categoryNo.equals("F4") && sortNo != null) {
 			int sListCount = iService.sListCount();
 			PageInfo pi = getPageInfo(currentPage, sListCount);
 			ArrayList<ItemListView> sList = iService.selectSLists(pi, sortNo);
-			mv.addObject("list", sList).addObject("pi", pi).addObject("foodChk","F0").setViewName("items/itemFood");
+			mv.addObject("list", sList).addObject("pi", pi).addObject("foodChk","F0").addObject("categoryNo", categoryNo).addObject("sortNo", sortNo).setViewName("items/itemFood");
 		}else if(categoryNo.equals("F5") && sortNo != null) {
 			int hListCount = iService.hListCount();
 			PageInfo pi = getPageInfo(currentPage, hListCount);
 			ArrayList<ItemListView> hList = iService.selectHLists(pi, sortNo);
-			mv.addObject("list", hList).addObject("pi", pi).addObject("foodChk","F0").setViewName("items/itemFood");
+			mv.addObject("list", hList).addObject("pi", pi).addObject("foodChk","F0").addObject("categoryNo", categoryNo).addObject("sortNo", sortNo).setViewName("items/itemFood");
 		}else if(categoryNo.equals("F6") && sortNo != null) {
 			int diListCount = iService.diListCount();
 			PageInfo pi = getPageInfo(currentPage, diListCount);
 			ArrayList<ItemListView> diList = iService.selectDiLists(pi, sortNo);
-			mv.addObject("list", diList).addObject("pi", pi).addObject("foodChk","F0").setViewName("items/itemFood");
+			mv.addObject("list", diList).addObject("pi", pi).addObject("foodChk","F0").addObject("categoryNo", categoryNo).addObject("sortNo", sortNo).setViewName("items/itemFood");
 		}
 		return mv;
 	}
@@ -208,7 +208,7 @@ public class ItemController {
 			mv.addObject("list", list).addObject("pi", pi).setViewName("items/itemLiving");
 		}else if(sortNo != null) {
 			ArrayList<Item> list = iService.selectLivingList(pi, sortNo);
-			mv.addObject("list", list).addObject("pi", pi).setViewName("items/itemLiving");
+			mv.addObject("list", list).addObject("pi", pi).addObject("sortNo", sortNo).setViewName("items/itemLiving");
 		}
 		
 		return mv;
@@ -230,7 +230,7 @@ public class ItemController {
 			mv.addObject("list", list).addObject("pi", pi).setViewName("items/itemEvent");
 		}else if(sortNo != null) {
 			ArrayList<Item> list = iService.selectEventList(pi, sortNo);
-			mv.addObject("list", list).addObject("pi", pi).setViewName("items/itemEvent");
+			mv.addObject("list", list).addObject("pi", pi).addObject("sortNo",sortNo).setViewName("items/itemEvent");
 		}
 		return mv;
 	}

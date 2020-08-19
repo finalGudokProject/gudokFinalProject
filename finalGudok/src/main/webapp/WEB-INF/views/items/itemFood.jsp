@@ -121,7 +121,7 @@
 		background:lightyellow;
 	} */
 	
-	#sortTable td :hover{
+	.sortTable td :hover{
 		cursor:pointer;
 		background:lightyellow;
 	}
@@ -265,18 +265,32 @@
 			</table>
 			<script>
 				$(function(){
-					console.log("${categoryNo}");
-					if(${categoryNo == "F2"}){
+					console.log("${sortNo}");
+					if("${sortNo}" == "S1"){
+						$(".sortTable #newSort").css({"background":"lightyellow","font-weight":"bold"});
+					}else if("${sortNo}" == "S2"){
+						$(".sortTable #bestSort").css({"background":"lightyellow","font-weight":"bold"});
+					}else if("${sortNo}" == "S3"){
+						$(".sortTable #highSort").css({"background":"lightyellow","font-weight":"bold"});
+					}else if("${sortNo}" == "S4"){
+						$(".sortTable #lowSort").css({"background":"lightyellow","font-weight":"bold"});
+					}
+				})
+			</script>
+			<script>
+				$(function(){
+					/* console.log("${categoryNo}"); */
+					if("${categoryNo}" == "F2"){
 						$(".cateTableC #foodMilk").css({"text-decoration":"underline","background":"lightyellow","font-weight":"bold"});
-					}else if(${categoryNo == "F3"}){
+					}else if("${categoryNo}" == "F3"){
 						$(".cateTableC #foodBakery").css({"text-decoration":"underline","background":"lightyellow","font-weight":"bold"});
-					}else if(${categoryNo == "F6"}){
+					}else if("${categoryNo}" == "F6"){
 						$(".cateTableC #foodDiet").css({"text-decoration":"underline","background":"lightyellow","font-weight":"bold"});
-					}else if(${categoryNo == "F1"}){
+					}else if("${categoryNo}" == "F1"){
 						$(".cateTableC #foodDrink").css({"text-decoration":"underline","background":"lightyellow","font-weight":"bold"});
-					}else if(${categoryNo == "F4"}){
+					}else if("${categoryNo}" == "F4"){
 						$(".cateTableC #foodSimple").css({"text-decoration":"underline","background":"lightyellow","font-weight":"bold"});
-					}else if(${categoryNo == "F5"}){
+					}else if("${categoryNo}" == "F5"){
 						$(".cateTableC #foodHealth").css({"text-decoration":"underline","background":"lightyellow","font-weight":"bold"});
 					}
 				})
@@ -296,18 +310,18 @@
 			</script>
 		</div>
 			<div style="border-top:1px solid lightgray;border-bottom:1px solid lightgray;">
-			<table align="center" style="margin-bottom:1%;" id="sortTable">
+			<table align="center" style="margin-bottom:1%;" class="sortTable">
 				<tr>
-					<td class="sortRank"><input type="hidden" value="" class="catchHidden"><input type="hidden" value="S1" class="catchNew"><div class="sortDivC">
+					<td class="sortRank" id="newSort"><input type="hidden" value="" class="catchHidden"><input type="hidden" value="S1" class="catchNew"><div class="sortDivC">
 					<img src="${contextPath }/resources/images/newItem.png" class="sortClass"><span style="display:block;">신상품순</span>
 					</div></td>
-					<td class="sortRank"><input type="hidden" value="" class="catchHidden"><input type="hidden" value="S2" class="catchBest"><div class="sortDivC">
+					<td class="sortRank" id="bestSort"><input type="hidden" value="" class="catchHidden"><input type="hidden" value="S2" class="catchBest"><div class="sortDivC">
 					<img src="${contextPath }/resources/images/popul.png" class="sortClass"><span style="display:block;">인기순</span>
 					</div></td>
-					<td class="sortRank"><input type="hidden" value="" class="catchHidden"><input type="hidden" value="S3" class="catchHigh"><div class="sortDivC">
+					<td class="sortRank" id="highSort"><input type="hidden" value="" class="catchHidden"><input type="hidden" value="S3" class="catchHigh"><div class="sortDivC">
 					<img src="${contextPath }/resources/images/high.png" class="sortClass"><span style="display:block;">높은 가격순</span>
 					</div></td>
-					<td class="sortRank"><input type="hidden" value="" class="catchHidden"><input type="hidden" value="S4" class="catchLow"><div class="sortDivC">
+					<td class="sortRank" id="lowSort"><input type="hidden" value="" class="catchHidden"><input type="hidden" value="S4" class="catchLow"><div class="sortDivC">
 					<img src="${contextPath }/resources/images/low.png" class="sortClass"><span style="display:block;">낮은 가격순</span>
 					</div></td>
 				</tr>
