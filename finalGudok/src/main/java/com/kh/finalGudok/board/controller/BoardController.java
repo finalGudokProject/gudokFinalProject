@@ -37,12 +37,12 @@ public class BoardController {
 			currentPage = page;
 		}
 		
-		int listCount = bService.getListCount();
+		int listCount = bService.getListCountNotice();
 		
 		bPageInfo pi = getPageInfo(currentPage, listCount);
 		
 		// 페이징 처리가 끝나면 게시글을 추려오자
-		ArrayList<Board> list = bService.selectList(pi);
+		ArrayList<Board> list = bService.selectListNotice(pi);
 //		System.out.println(list);
 		if(list != null) {
 			mv.addObject("list",list);
@@ -56,14 +56,14 @@ public class BoardController {
 	}
 	
 	// Insert
-	@RequestMapping("adminNoticeInsert")
+	@RequestMapping("adminNoticeInsert.do")
 	public String adminNoticeInsert(){
 		return "admin/adminNoticeInsert";
 	}
 	
-	@RequestMapping("aNoticeInsert")
-	public String aNoticeInsert(HttpServletRequest request, Board b,
-			@RequestParam(value="uploadFile", required=false) MultipartFile file) { // 다중 업로드 파일은 List<MultipartFile> file 이용 찾아서 해봐		
+	@RequestMapping("noticeInsert.do")
+	public String noticeInsert(HttpServletRequest request, Board b,
+			@RequestParam(value="uploadNotice", required=false) MultipartFile file) { // 다중 업로드 파일은 List<MultipartFile> file 이용 찾아서 해봐		
 		// NoticeController에 있는 saveFile 메소드 가져오고 buploadFiles폴더로 수정하자
 		// 그리고 이번엔 날짜를 활용한 rename을 적용해 보자
 		
@@ -80,7 +80,7 @@ public class BoardController {
 		}
 		
 		int result1 = bService.insertNotice(b);
-		int result2 = bService.insertNoticeImg(b);
+		int result2 = bService.insertImage(b);
 		
 		if((result1>0&& result2<0) || (result1>0 && result2>0)) {
 			return "redirect:adminNoticeList.do";
@@ -141,7 +141,7 @@ public class BoardController {
 		int result = bService.addReadCount(bBoard_no); // 조회수가 증가 되어야만 게시물 상세보기가 가능하다
 		
 		if (result > 0) {
-			Board board = bService.selectAdminNoticeDetail(bBoard_no);
+			Board board = bService.selectIDetail(bBoard_no);
 			if(board != null) {
 				mv.addObject("board", board).addObject("currentPage",currentPage).setViewName("admin/adminNoticeDetail");
 			}else {
@@ -158,21 +158,21 @@ public class BoardController {
 		
 	// UpDate
 	
-	@RequestMapping("aNoticeUpdateView.do")
-	public ModelAndView boardUpdateView(ModelAndView mv, Integer bBoard_no,
+	@RequestMapping("adminNoticeUpdate.do")
+	public ModelAndView adminFAQUpdate(ModelAndView mv, Integer bBoard_no,
 										@RequestParam("page") Integer page) {
-		Board board = bService.selectAdminNoticeDetail(bBoard_no);
+		Board board = bService.selectIDetail(bBoard_no);
 		System.out.println(board);
 		mv.addObject("board", board).addObject("currentPage", page).setViewName("admin/adminNoticeUpdate");
 
 		return mv;
 	}
 	
-	@RequestMapping(value="aNoticeUpdate", method=RequestMethod.POST)
-	public ModelAndView adminNoticeUpdate(ModelAndView mv, Board b, 
+	@RequestMapping(value="noticeUpdate.do", method=RequestMethod.POST)
+	public ModelAndView noticeUpdate(ModelAndView mv, Board b, 
 											HttpServletRequest request,
 											@RequestParam("page") Integer page,
-											@RequestParam(value="uploadFile", required=false)
+											@RequestParam(value="uploadNotice", required=false)
 											MultipartFile file) {
 
 			if(!file.getOriginalFilename().equals("")) {	// 원래 파일명이 존재하면
@@ -190,8 +190,8 @@ public class BoardController {
 			b.setImagePath(savePath);
 			
 
-			int result1 = bService.updateAdminNoticeUpdateImg(b);
-			int result2 = bService.updateAdminNoticeUpdate(b);
+			int result1 = bService.updateImage(b);
+			int result2 = bService.updateBoard(b);
 			
 			if(result1>0 || result2>0) { 
 			mv.addObject("page",page).setViewName("redirect:adminNoticeList.do");
@@ -216,19 +216,19 @@ public class BoardController {
 		}
 	}
 	
-	@RequestMapping("adminNoticeDelete.do")
-	public String boardDelete(Integer bBoard_no, HttpServletRequest request) {
+	@RequestMapping("noticeDelete.do")
+	public String noticeDelete(Integer bBoard_no, HttpServletRequest request) {
 		System.out.println(bBoard_no);
-		Board b = bService.selectAdminNoticeDetail(bBoard_no);
+		Board b = bService.selectIDetail(bBoard_no);
 		System.out.println(b);
 		if(b.getOriginalFileName() != null) {
 			deleteFile(b.getRenameFileName(), request);
 		}
 		
 		// 게시글 삭제하기
-		int result1 = bService.deleteAdminNoticeImage(bBoard_no);
-		int result2 = bService.deleteAdminNoticeBoardImg(bBoard_no);
-		int result3 = bService.deleteAdminNoticeBoard(bBoard_no);
+		int result1 = bService.deleteImage(bBoard_no);
+		int result2 = bService.deleteBoardImage(bBoard_no);
+		int result3 = bService.deleteBoard(bBoard_no);
 		
 		if(result1 > 0 && result2 > 0 && result3 > 0) {
 			return "redirect:adminNoticeList.do";
@@ -238,10 +238,120 @@ public class BoardController {
 	}
 	
 	
-		
-
+	//------------------------------------------------------------------------------------
 	
+	// FAQ
+	
+	// 리스트 출력
+	@RequestMapping("adminFAQList.do")
+		public ModelAndView adminFAQList(ModelAndView mv, 
+		@RequestParam(value="page", required=false) Integer page) {	// 기본 자료형으로 받을 수 없기 때문에 Integer를 쓴다
 
+		int currentPage = 1;
+		if(page != null) {
+			currentPage = page;
+		}
+			
+		int listCount = bService.getListCountFAQ();
+			
+		bPageInfo pi = getPageInfo(currentPage, listCount);
+			
+
+		ArrayList<Board> list = bService.selectListFAQ(pi);
+
+			if(list != null) {
+				mv.addObject("list",list);
+				mv.addObject("pi",pi);
+				mv.setViewName("admin/adminFAQList");
+			}else {
+				throw new BoardException("게시글 전체 조회 실패!");
+			}
+			
+			return mv;
+		}
+
+	// Insert
+	@RequestMapping("adminFAQInsert.do")
+		public String adminFAQInsert(){
+		return "admin/adminFAQInsert";
+			}
+		
+	@RequestMapping("insertFAQ.do")
+	public String insertFAQ(HttpServletRequest request, Board b) { 
+
+			int result = bService.insertFAQ(b);
+
+			if(result > 0) {
+				return "redirect:adminFAQList.do";
+			}else {
+				throw new BoardException("게시글 등록 실패!");
+			}
+		}
+	
+	// Detail
+	@RequestMapping("adminFAQDetail.do")
+	public ModelAndView adminFAQDetail(ModelAndView mv, int bBoard_no, @RequestParam("page") Integer page) {
+		int currentPage = page;
+		
+		int result = bService.addReadCount(bBoard_no); // 조회수가 증가 되어야만 게시물 상세보기가 가능하다
+		
+		if (result > 0) {
+			Board board = bService.selectDetail (bBoard_no);
+			if(board != null) {
+				mv.addObject("board", board).addObject("currentPage",currentPage).setViewName("admin/adminFAQDetail");
+			}else {
+				throw new BoardException("게시글 조회 실패");
+			}			
+		}else {
+			throw new BoardException("게시글 조회수 증가 실패!");
+		}		
+		return mv;
+	}
+	
+	// Update
+	@RequestMapping("adminFAQUpdate.do")
+	public ModelAndView FAQUpdateView(ModelAndView mv, Integer bBoard_no,
+										@RequestParam("page") Integer page) {
+		Board board = bService.selectDetail (bBoard_no);
+		mv.addObject("board", board).addObject("currentPage", page).setViewName("admin/adminFAQUpdate");
+
+		return mv;
+	}
+	
+	@RequestMapping(value="FAQUpdate.do", method=RequestMethod.POST)
+	public ModelAndView FAQUpdate(ModelAndView mv, Board b, @RequestParam("page") Integer page) {
+
+			int result = bService.updateBoard(b);
+			
+			if(result > 0) { 
+			mv.addObject("page",page).setViewName("redirect:adminFAQList.do");
+			}else {
+			throw new BoardException("게시글 수정 실패!!");
+			}
+			
+			return mv;
+		
+	}
+	
+	
+	// Delete
+	@RequestMapping("FAQDelete.do")
+	public String FAQDelete(Integer bBoard_no, HttpServletRequest request) {
+		
+		int result = bService.deleteBoard(bBoard_no);
+		
+		if(result > 0) {
+			return "redirect:adminFAQList.do";
+		}else {
+			throw new BoardException("게시물 삭제 실패!");
+		}
+	}
+		
+	
+	//-------------------------------------------------------------------
+	
+		
+	//-----------------------------------------------
 	// serviceCenter
 	
 	// etc
@@ -258,8 +368,8 @@ public class BoardController {
 		return "event/privacyPolicy";
 	}
 
-	// Notice
-	// List
+	
+	// Notice List
 	@RequestMapping("noticeList.do")
 	public ModelAndView noticeList(ModelAndView mv, 
 			@RequestParam(value="page", required=false) Integer page) {	// 기본 자료형으로 받을 수 없기 때문에 Integer를 쓴다
@@ -269,13 +379,13 @@ public class BoardController {
 			currentPage = page;
 		}
 		
-		int listCount = bService.getListCount();
+		int listCount = bService.getListCountNotice();
 		
 		bPageInfo pi = getPageInfo(currentPage, listCount);
 		
-		// 페이징 처리가 끝나면 게시글을 추려오자
-		ArrayList<Board> list = bService.selectList(pi);
-//		System.out.println(list);
+
+		ArrayList<Board> list = bService.selectListNotice(pi);
+
 		if(list != null) {
 			mv.addObject("list",list);
 			mv.addObject("pi",pi);
@@ -288,7 +398,7 @@ public class BoardController {
 	}
 	
 	
-	// Detail
+	// Notice Detail
 	@RequestMapping("noticeDetail.do")
 	public ModelAndView noticeDetail(ModelAndView mv, int bBoard_no, @RequestParam("page") Integer page) {
 		int currentPage = page;
@@ -296,7 +406,7 @@ public class BoardController {
 		int result = bService.addReadCount(bBoard_no); // 조회수가 증가 되어야만 게시물 상세보기가 가능하다
 		
 		if (result > 0) {
-			Board board = bService.selectNoticeDetail(bBoard_no);
+			Board board = bService.selectDetail (bBoard_no);
 			if(board != null) {
 				mv.addObject("board", board).addObject("currentPage",currentPage).setViewName("serviceCenter/noticeDetail");
 			}else {
@@ -308,6 +418,256 @@ public class BoardController {
 		return mv;
 	}
 	
+	// FAQ List
+	@RequestMapping("FAQList.do")
+	public ModelAndView FAQList(ModelAndView mv, 
+			@RequestParam(value="page", required=false) Integer page) {	// 기본 자료형으로 받을 수 없기 때문에 Integer를 쓴다
+		// 페이징 관련 처리부터 하자
+		int currentPage = 1;
+		if(page != null) {
+			currentPage = page;
+		}
+		
+		int listCount = bService.getListCountFAQ();
+		
+		bPageInfo pi = getPageInfo(currentPage, listCount);
+		
+
+		ArrayList<Board> list = bService.selectListFAQ(pi);
+
+		if(list != null) {
+			mv.addObject("list",list);
+			mv.addObject("pi",pi);
+			mv.setViewName("serviceCenter/FAQList");
+		}else {
+			throw new BoardException("게시글 전체 조회 실패!");
+		}
+		
+		return mv;
+	}
 	
 
+	// FAQ Detail
+		@RequestMapping("FAQDetail.do")
+		public ModelAndView FAQDetail(ModelAndView mv, int bBoard_no, @RequestParam("page") Integer page) {
+			int currentPage = page;
+			
+			int result = bService.addReadCount(bBoard_no); // 조회수가 증가 되어야만 게시물 상세보기가 가능하다
+			
+			if (result > 0) {
+				Board board = bService.selectDetail (bBoard_no);
+				if(board != null) {
+					mv.addObject("board", board).addObject("currentPage",currentPage).setViewName("serviceCenter/FAQDetail");
+				}else {
+					throw new BoardException("게시글 조회 실패");
+				}			
+			}else {
+				throw new BoardException("게시글 조회수 증가 실패!");
+			}		
+			return mv;
+		}
+		
+	// productProposal List
+		@RequestMapping("productProposalList.do")
+		public ModelAndView productProposalList(ModelAndView mv, 
+				@RequestParam(value="page", required=false) Integer page) {	// 기본 자료형으로 받을 수 없기 때문에 Integer를 쓴다
+			// 페이징 관련 처리부터 하자
+			int currentPage = 1;
+			if(page != null) {
+				currentPage = page;
+			}
+			
+			int listCount = bService.getListCountProductProposal();
+			
+			bPageInfo pi = getPageInfo(currentPage, listCount);
+			
+
+			ArrayList<Board> list = bService.selectListProductProposal(pi);
+
+			if(list != null) {
+				mv.addObject("list",list);
+				mv.addObject("pi",pi);
+				mv.setViewName("serviceCenter/productProposalList");
+			}else {
+				throw new BoardException("게시글 전체 조회 실패!");
+			}
+			
+			return mv;
+		}
+		
+	// productProposal Detail
+		@RequestMapping("ProductProposalDetail")
+		public ModelAndView ProductProposalDetail(ModelAndView mv, int bBoard_no, @RequestParam("page") Integer page) {
+			int currentPage = page;
+			
+			int result = bService.addReadCount(bBoard_no); // 조회수가 증가 되어야만 게시물 상세보기가 가능하다
+			
+			if (result > 0) {
+				Board board = bService.selectIDetail(bBoard_no);
+				if(board != null) {
+					mv.addObject("board", board).addObject("currentPage",currentPage).setViewName("serviceCenter/productProposalDetail");
+				}else {
+					throw new BoardException("게시글 조회 실패");
+				}			
+			}else {
+				throw new BoardException("게시글 조회수 증가 실패!");
+			}		
+			return mv;
+		}
+		
+	// productProposal Insert
+		@RequestMapping("productProposalInsert.do")
+		public String productProposalInsert(){
+			return "serviceCenter/productProposalInsert";
+		}
+		
+		@RequestMapping("ProductProposalInsert.do")
+		public String ProductProposalInsert(HttpServletRequest request, Board b,
+				@RequestParam(value="uploadProposal", required=false) MultipartFile file) { 	
+			// NoticeController에 있는 saveFile 메소드 가져오고 buploadFiles폴더로 수정하자
+			// 그리고 이번엔 날짜를 활용한 rename을 적용해 보자
+			System.out.println(file.getOriginalFilename());
+			if(!file.getOriginalFilename().equals("")) {
+				
+				String renameFileName=pSaveFile(file,request);
+			      String root=request.getSession().getServletContext().getRealPath("resources");
+			      String savePath=root+"\\proposalUploadFiles";
+			      
+			      b.setOriginalFileName(file.getOriginalFilename());
+			      b.setRenameFileName(renameFileName);
+			      b.setImagePath(savePath);
+
+			}
+			
+			int result1 = bService.insertProductProposal(b);
+			int result2 = bService.insertImage(b);
+			
+			if((result1>0&& result2>0) || (result1>0 && result2<0)) {
+				return "redirect:productProposalList.do";
+			}else {
+				throw new BoardException("게시글 등록 실패!");
+			}
+		}
+		
+		// 파일이 저장 될 경로를 설정하는 메소드
+				private String pSaveFile(MultipartFile file, HttpServletRequest request) {
+					
+					String root = request.getSession().getServletContext().getRealPath("resources");
+					// request.getSession().getServletContext() -> webapp경로
+					// getRealPath -> File: 빼고나오는 경로
+					
+					String savePath = root + "\\proposalUploadFiles";
+					// 폴더가 없으면 만들면 되고 폴더가 없으면 이렇게 파일 이름을 써서 만든다
+					
+					File folder = new File(savePath);
+					
+					if(!folder.exists()) {	// webapp아래에 있는 resources 폴더 아래에
+											// nuloadFiles가 없어서 File객체를 찾을 수 없다면
+						folder.mkdirs();	// 폴더를 만들어라
+						
+					}
+					
+					// 공지글은 파일명 중복 제거는 신경쓰지 않고 했지만
+					// 게시판에서는 파일명을 날짜(업로드 시간)로 rename 해보자
+					
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+					String originFileName = file.getOriginalFilename();
+					String renameFileName = sdf.format(new java.sql.Date(System.currentTimeMillis()))
+							+ "." + originFileName.substring(originFileName.lastIndexOf(".")+1);
+					
+					
+					String filePath = folder + "\\" + renameFileName;
+					// 실제 저장 될 파일의 경로 + rename파일명	
+					
+					try {
+						file.transferTo(new File(filePath));
+						// 이 상태로는 파일 업로드가 되지 않는다.
+						// 왜냐면 파일 제한크기에 대한 설정을 주지 않았기 때문이다.
+						// root-context.xml에 업로드 제한 파일 크기를 지정해 주자.
+						
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					
+					
+					return renameFileName;
+				}
+		
+		// productProposal Delete
+		private void PdeleteFile(String fileName, HttpServletRequest request) {
+			String root = request.getSession().getServletContext().getRealPath("resources");
+			String savePath = root + "\\proposalUploadFiles";
+			
+			File f = new File(savePath + "\\" + fileName);
+			if(f.exists()) {
+				f.delete();
+			}
+		}
+		
+		@RequestMapping("proposalDelete.do")
+		public String proposalDelete(Integer bBoard_no, HttpServletRequest request) {
+			System.out.println(bBoard_no);
+			Board b = bService.selectIDetail(bBoard_no);
+			System.out.println(b);
+			if(b.getOriginalFileName() != null) {
+				PdeleteFile(b.getRenameFileName(), request);
+			}
+			
+			// 게시글 삭제하기
+			int result1 = bService.deleteImage(bBoard_no);
+			int result2 = bService.deleteBoardImage(bBoard_no);
+			int result3 = bService.deleteBoard(bBoard_no);
+			
+			if(result1 > 0 && result2 > 0 && result3 > 0) {
+				return "redirect:productProposalList.do";
+			}else {
+				throw new BoardException("게시물 삭제 실패!");
+			}
+		}
+		
+		// productProposal Update
+		@RequestMapping("productProposalUpdate.do")
+		public ModelAndView productProposalUpdate(ModelAndView mv, Integer bBoard_no,
+											@RequestParam("page") Integer page) {
+			Board board = bService.selectIDetail(bBoard_no);
+			System.out.println(board);
+			mv.addObject("board", board).addObject("currentPage", page).setViewName("serviceCenter/productProposalUpdate");
+
+			return mv;
+		}
+		
+		@RequestMapping(value="proposalUpdate.do", method=RequestMethod.POST)
+		public ModelAndView proposalUpdate(ModelAndView mv, Board b, 
+												HttpServletRequest request,
+												@RequestParam("page") Integer page,
+												@RequestParam(value="uploadProposal", required=false)
+												MultipartFile file) {
+
+				if(!file.getOriginalFilename().equals("")) {	// 원래 파일명이 존재하면
+					if(b.getRenameFileName() != null) {			// 바뀐이름이 존재하면
+					deleteFile(b.getRenameFileName(), request);	// 바뀐이름 삭제
+					}
+					String renameFileName = pSaveFile(file, request);
+				
+				
+				b.setOriginalFileName(file.getOriginalFilename());
+				b.setRenameFileName(renameFileName);
+				} 
+				String root=request.getSession().getServletContext().getRealPath("resources");
+				String savePath=root+"\\proposalUploadFiles";
+				b.setImagePath(savePath);
+				
+
+				int result1 = bService.updateImage(b);
+				int result2 = bService.updateBoard(b);
+				
+				if(result1>0 || result2>0) { 
+				mv.addObject("page",page).setViewName("redirect:productProposalList.do");
+				}else {
+				throw new BoardException("게시글 수정 실패!!");
+				}
+				
+				return mv;
+			
+		}
 }

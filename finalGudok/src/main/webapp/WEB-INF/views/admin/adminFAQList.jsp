@@ -67,9 +67,9 @@
     <div class="content">
       <div class="container box">
 
-        <div style="font-size: 30px;">공지사항</div>
+        <div style="font-size: 30px;">FAQ</div>
         
-        <form action="adminNoticeList.do" method="post" enctype="multipart/form-data">
+        <form action="adminFAQList.do" method="post" enctype="multipart/form-data">
             <div class="input-group" >
               <select class="custom-select" id="searchType" name="searchType" style="margin-left: 600px; width:50px" >
                 <option value="all">모두</option>
@@ -103,11 +103,11 @@
 					          		<td><input type="checkbox">
 					          		<td align="center">${b.rownum }</td>
 									<td align="center">
-										<c:url var="adminNoticeDetail" value="adminNoticeDetail.do">
+										<c:url var="adminFAQDetail" value="adminFAQDetail.do">
 											<c:param name="bBoard_no" value="${b.bBoard_no }"/>
 											<c:param name="page" value="${pi.currentPage }"/>
 										</c:url>
-										<a href="${adminNoticeDetail }">${b.bTitle }</a>
+										<a href="${adminFAQDetail }">${b.bTitle }</a>
 									</td>
 									<td align="center">${b.bWrite_date }</td>
 									<td align="center">${b.bRead_num }</td>
@@ -121,7 +121,7 @@
         </tbody>
       </table>
             <br><br>
-            &nbsp;&nbsp;<a href="adminNoticeInsert.do" type="button" class="btn btn-primary" style="float:right;">글쓰기</a> 
+            &nbsp;&nbsp;<a href="adminFAQInsert.do" type="button" class="btn btn-primary" style="float:right;">글쓰기</a> 
             <input type="submit" value="삭제" class="btn btn-primary" style="float:right; margin-right: 10px;">
     </form>
             <br><br><br>
@@ -141,7 +141,7 @@
 						   </svg></a></li>
                   		</c:if>
                    		<c:if test="${pi.currentPage gt 1 }">
-                     		<c:url var="blistBack" value="adminNoticeList.do">
+                     		<c:url var="blistBack" value="adminFAQList.do">
                         		<c:param name="page" value="${pi.currentPage-1 }"/>
                      		</c:url>
                             <li class="page-item-t">
@@ -159,7 +159,7 @@
                      </c:if>
                      
                            <c:if test="${p ne pi.currentPage }">
-                              <c:url var="blistCheck" value="adminNoticeList.do">
+                              <c:url var="blistCheck" value="adminFAQList.do">
                                  <c:param name="page" value="${p }"/>
                               </c:url>
                               <li class="page-item-t"><a class="page-link-t" href="${blistCheck }">${p } <span class="sr-only"></span></a>
@@ -176,7 +176,7 @@
 						   </svg></a></li>
                   		</c:if>
                    		<c:if test="${pi.currentPage lt pi.maxPage }">
-                     		<c:url var="blistAfter" value="adminNoticeList.do">
+                     		<c:url var="blistAfter" value="adminFAQList.do">
                         		<c:param name="page" value="${pi.currentPage+1 }"/>
                      		</c:url>
                             <li class="page-item-t">

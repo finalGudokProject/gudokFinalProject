@@ -502,7 +502,7 @@ label > span {
                                       </svg>&nbsp;&nbsp;고객센터 관리&nbsp;&nbsp;</b></label>
                                   <ul class="group-list sd_ul">
                                     <li><a href="adminNoticeList.do">공지사항</a></li>
-                                    <li><a href="#">FAQ</a></li>
+                                    <li><a href="adminFAQList.do">FAQ</a></li>
                                     <li><a href="#">상품제안</a></li>
                                     <li><a href="#">1:1 문의</a></li>
                                     <li><a href="#">이벤트</a></li>

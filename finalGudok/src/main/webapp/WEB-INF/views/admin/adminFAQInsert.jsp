@@ -143,8 +143,8 @@
     <div class="content">
       <div class="container box">
 
-            <form action="noticeInsert.do" method="post" enctype="multipart/form-data">
-                <div style="font-size: 30px;">공지사항</div><br>
+            <form action="insertFAQ.do" method="post" enctype="multipart/form-data">
+                <div style="font-size: 30px;">FAQ</div><br>
                 <hr style="border-color:rgb(0, 125, 255);">
                 <table style="text-align: center; margin-top:15px">
                     <tbody>
@@ -157,13 +157,6 @@
                         <tr>
                             <th style="padding:20px;">내용</th>
                             <td><textarea class="form-control" rows="22" style="resize: none; width:907px" name="bContent"></textarea></td>
-                        </tr>
-                        <tr>
-                            <th style="padding:20px;">이미지</th><td><div class="filebox bs3-primary preview-image">
-                            <input class="upload-name" value="파일선택" disabled="disabled" style="width: 200px;">
-                            <label for="input_file">업로드</label> 
-                            <input type="file" id="input_file" name="uploadNotice" class="upload-hidden"> 
-                        </div>
                         </tr>
                     </tbody>
                   </table>
@@ -187,55 +180,6 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
   
-    <script>
-        $(document).ready(function(){
-        var fileTarget = $('.filebox .upload-hidden');
     
-            fileTarget.on('change', function(){
-                if(window.FileReader){
-                    // 파일명 추출
-                    var filename = $(this)[0].files[0].name;
-                } 
-    
-                else {
-                    // Old IE 파일명 추출
-                    var filename = $(this).val().split('/').pop().split('\\').pop();
-                };
-    
-                $(this).siblings('.upload-name').val(filename);
-            });
-    
-            //preview image 
-            var imgTarget = $('.preview-image .upload-hidden');
-    
-            imgTarget.on('change', function(){
-                var parent = $(this).parent();
-                parent.children('.upload-display').remove();
-    
-                if(window.FileReader){
-                    //image 파일만
-                    if (!$(this)[0].files[0].type.match(/image\//)) return;
-                    
-                    var reader = new FileReader();
-                    reader.onload = function(e){
-                        var src = e.target.result;
-                        parent.prepend('<div class="upload-display"><div class="upload-thumb-wrap"><img src="'+src+'" class="upload-thumb"></div></div>');
-                    }
-                    reader.readAsDataURL($(this)[0].files[0]);
-                }
-    
-                else {
-                    $(this)[0].select();
-                    $(this)[0].blur();
-                    var imgSrc = document.selection.createRange().text;
-                    parent.prepend('<div class="upload-display"><div class="upload-thumb-wrap"><img class="upload-thumb"></div></div>');
-    
-                    var img = $(this).siblings('.upload-display').find('img');
-                    img[0].style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(enable='true',sizingMethod='scale',src=\""+imgSrc+"\")";        
-                }
-            });
-        });
-    
-    </script>
 </body>
 </html>

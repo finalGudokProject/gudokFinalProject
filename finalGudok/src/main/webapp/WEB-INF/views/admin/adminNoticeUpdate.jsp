@@ -138,7 +138,7 @@
       <div class="container box">
 
        
-            <form action="aNoticeUpdate.do" method="post" enctype="Multipart/form-data">
+            <form action="noticeUpdate.do" method="post" enctype="Multipart/form-data">
             	<input type="hidden" name="page" value="${currentPage }">
 				<input type="hidden" name="bBoard_no" value="${board.bBoard_no }">
 				<input type="hidden" name="renameFileName" value="${board.renameFileName }">
@@ -167,7 +167,7 @@
                             <th style="padding:20px;">이미지</th><td><div class="filebox bs3-primary preview-image">
                             <input class="upload-name" value="파일선택" disabled="disabled" style="width: 200px;">
                             <label for="input_file">업로드</label> 
-                            <input type="file" id="input_file" name="uploadFile" class="upload-hidden">
+                            <input type="file" id="input_file" name="uploadNotice" class="upload-hidden">
                         </div>
                         </tr>
                     </tbody>

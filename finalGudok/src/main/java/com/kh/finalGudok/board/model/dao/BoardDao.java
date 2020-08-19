@@ -16,56 +16,99 @@ public class BoardDao {
 	@Autowired
 	SqlSessionTemplate sqlSessionTemplate;
 	
-	public int getListCount() {
-		return sqlSessionTemplate.selectOne("boardMapper.getListCount");
+	public int getListCountNotice() {
+		return sqlSessionTemplate.selectOne("boardMapper.getListCountNotice");
 	}
 
-	public ArrayList<Board> selectList(bPageInfo pi) {
+	public ArrayList<Board> selectListNotice(bPageInfo pi) {
 		int offset = (pi.getCurrentPage() - 1)*pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		
-		return (ArrayList)sqlSessionTemplate.selectList("boardMapper.getBoardList", null, rowBounds);
+		return (ArrayList)sqlSessionTemplate.selectList("boardMapper.getBoardListNotice", null, rowBounds);
 	}
 
+	// FAQ
+	
+		public int getListCountFAQ() {
+			return sqlSessionTemplate.selectOne("boardMapper.getListCountFAQ");
+		}
+
+		public ArrayList<Board> selectListFAQ(bPageInfo pi) {
+			int offset = (pi.getCurrentPage() - 1)*pi.getBoardLimit();
+			RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+			
+			return (ArrayList)sqlSessionTemplate.selectList("boardMapper.getBoardListFAQ", null, rowBounds);
+		}
+		
+		
+	// ProductProposal
+		public int getListCountProductProposal() {
+			return sqlSessionTemplate.selectOne("boardMapper.getListCountProductProposal");
+		}
+
+		public ArrayList<Board> selectListProductProposal(bPageInfo pi) {
+			int offset = (pi.getCurrentPage() - 1)*pi.getBoardLimit();
+			RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+			
+			return (ArrayList)sqlSessionTemplate.selectList("boardMapper.getBoardListProductProposal", null, rowBounds);
+		}
+		
+		
+	// Count
 	public int addReadCount(int bBoard_no) {
 		return sqlSessionTemplate.update("boardMapper.updateCount", bBoard_no);
+	}
+
+	// Insert
+	public int insertImage(Board b) {
+		return sqlSessionTemplate.insert("boardMapper.insertImage", b);
 	}
 
 	public int insertNotice(Board b) {
 		return sqlSessionTemplate.insert("boardMapper.insertNotice", b);
 	}
 
-	public int insertNoticeImg(Board b) {
-		return sqlSessionTemplate.insert("boardMapper.insertNoticeImg", b);
+	public int insertFAQ(Board b) {
+		return sqlSessionTemplate.insert("boardMapper.insertFAQ",b);
 	}
 
-	public Board selectNoticeDetail(int bBoard_no) {
-		return sqlSessionTemplate.selectOne("boardMapper.selectNoticeDetail", bBoard_no);
+	public int insertProductProposal(Board b) {
+		return sqlSessionTemplate.insert("boardMapper.insertProductProposal", b);
+	}
+	
+	
+	// Detail 세부내용
+	public Board selectDetail(int bBoard_no) {
+		return sqlSessionTemplate.selectOne("boardMapper.selectDetail", bBoard_no);
 	}
 
-	public Board selectAdminNoticeDetail(int bBoard_no) {
-		return sqlSessionTemplate.selectOne("boardMapper.selectAdminNoticeDetail", bBoard_no);
+	public Board selectIDetail(int bBoard_no) {
+		return sqlSessionTemplate.selectOne("boardMapper.selectIDetail", bBoard_no);
 	}
 
-	public int deleteAdminNoticeBoard(Integer bBoard_no) {
-		return sqlSessionTemplate.delete("boardMapper.deleteAdminNoticeBoard",bBoard_no);
+	// Update 수정
+
+	public int updateImage(Board b) {
+		return sqlSessionTemplate.update("boardMapper.updateImage", b);
 	}
 
-	public int deleteAdminNoticeImage(Integer bBoard_no) {
-		return sqlSessionTemplate.delete("boardMapper.deleteAdminNoticeImage",bBoard_no);
+	public int updateBoard(Board b) {
+		return sqlSessionTemplate.update("boardMapper.updateBoard", b);
 	}
 
-	public int deleteAdminNoticeBoardImg(Integer bBoard_no) {
-		return sqlSessionTemplate.delete("boardMapper.deleteAdminNoticeBoardImg",bBoard_no);
+	// Delete 삭제
+	public int deleteImage(Integer bBoard_no) {
+		return sqlSessionTemplate.delete("boardMapper.deleteImage",bBoard_no);
 	}
-
-	public int updateAdminNoticeUpdate(Board b) {
-		return sqlSessionTemplate.update("boardMapper.updateAdminNoticeUpdate", b);
+	
+	public int deleteBoardImage(Integer bBoard_no) {
+		return sqlSessionTemplate.delete("boardMapper.deleteBoardImage",bBoard_no);
 	}
-
-	public int updateAdminNoticeUpdateImg(Board b) {
-		return sqlSessionTemplate.update("boardMapper.updateAdminNoticeUpdateImg", b);
+	
+	public int deleteBoard(Integer bBoard_no) {
+		return sqlSessionTemplate.delete("boardMapper.deleteBoard",bBoard_no);
 	}
+	
 
 
 }

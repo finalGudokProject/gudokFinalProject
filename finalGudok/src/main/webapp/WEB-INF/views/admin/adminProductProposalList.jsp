@@ -5,11 +5,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
-    <!-- Bootstrap CSS -->
+<!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
-    <title></title>
-    <style>
+<title></title>
+<style>
 body{
     font-family: 'Noto Sans KR', sans-serif;
 }
@@ -222,11 +222,12 @@ label > span {
     }
     table {
     width: 100%;
-    border: 1px solid #444444;
+    border-top: 1px solid #444444;
     border-collapse: collapse;
   }
   th, td {
-    border: 1px solid #444444;
+    border-bottom: 1px solid #444444;
+    padding: 10px;
   }
   
   #list a{
@@ -333,19 +334,11 @@ label > span {
             /*가운데 정렬*/
             align-items: center;
         }
-     
-
-
-
 
 
     </style>
-  </head>
-
-
-
-
-  <body>
+</head>
+<body>
     <!--사이드바-->
 
  
@@ -468,35 +461,68 @@ label > span {
     <div class="content">
       <div class="container box">
 
-       
+        <div style="font-size: 30px;">상품제안</div>
+        
+            <div class="input-group" >
+              <select class="custom-select" id="inputGroupSelect04" style="margin-left: 400px;" >
+                <option selected>모두</option>
+                <option value="1">제목</option>
+                <option value="2">내용</option>
+                <option value="3">제목+내용</option>
+              </select>
+              <input type="text" class="form-control" style="float:right; width:100px;height: 38px;">
+              <div class="input-group-append" style="float:right; width: 75px; height: 38px;">
+                <button type="button" class="btn btn-primary" >검색</button>
+              </div>
+            </div>
+            <br>
+
             <form>
-                <div style="font-size: 30px;">FAQ</div><br>
-                <hr style="border-color:rgb(0, 125, 255);">
-                <table style="text-align: center; margin-top:15px">
-                    <tbody>
-                        <tr>
-                            <th style="padding:20px;" >제목</th>
-                            <td>
-                                <textarea class="form-control" rows="1" style="resize: none;width:907px;"></textarea>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th style="padding:20px;">내용</th>
-                            <td><textarea class="form-control" rows="22" style="resize: none;"></textarea></td>
-                        </tr>
-                    </tbody>
-                  </table>
-          
-    
-                </form>
+          <table style="text-align: center; margin-top:15px">
+        <thead>
+          <tr>
+            <th><input type="checkbox"></th><th style="width:10%">번호</th><th style="width:45%">제목</th><th style="width:20%">작성일</th><th style="width:10%">조회수</th>
+          </tr>
+        </thead>
+        <tbody >
+          <tr>
+            <th><input type="checkbox"></th><td>1</td><td>바게트빵 추가해주세요</td><td>2020.08.04</td><td>0</td>
+          </tr>
+        
+        </tbody>
+      </table>
+    </form>
             <br><br>
-            &nbsp;&nbsp;<a href="ad_FAQ.html" type="button" class="btn btn-primary" style="float:right;">목록으로</a>
-            <input type="submit" value="저장" class="btn btn-primary" style="float:right; margin-right: 10px;">
+            &nbsp;&nbsp;<a href="ad_proposal_detail.html" type="button" class="btn btn-primary" style="float:right;">글쓰기</a> 
+            <input type="submit" value="삭제" class="btn btn-primary" style="float:right; margin-right: 10px;">
             <br><br><br>
+
+                    <!------페이징 처리----->
+                    <div class="page-center">
+                      <ul class="pagination-t">
+  
+                          <!-- disabled: 페이지 비활성화 -->
+                          <li class="page-item-t disabled-t"><a class="page-link-t" href="#"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-chevron-left" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                              <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+                            </svg></a></li>
+  
+                          <li class="page-item-t"><a class="page-link-t" href="#">1</a></li>
+  
+                          <!-- disabled: 해당 버튼 활성화 -->
+                          <li class="page-item-t active-t" aria-current="page-t">
+                              <a class="page-link-t" href="#">2 <span class="sr-only">(current)</span></a>
+                          </li>
+                          <li class="page-item-t"><a class="page-link-t" href="#">3</a></li>
+                          <li class="page-item-t"><a class="page-link-t" href="#"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-chevron-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                              <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+                            </svg></a></li>
+                      </ul>
+  
+                  </div>
 
     </div><!--하얀박스 있는부분 끝-->
   </div><!--회색바탕 div-->
- 
+  
 
    
 
@@ -508,6 +534,5 @@ label > span {
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-
-</body>
+  </body>
 </html>

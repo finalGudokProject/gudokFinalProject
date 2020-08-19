@@ -59,27 +59,21 @@
 	                        <span style="margin:auto">
 	                        ${board.bContent }
 	                        </span>
-	                        <br><br>
-	                        <c:if test="${!empty  board.originalFileName }">
-		                        <center>
-	                          		<img src="${contextPath }/resources/aNoticeUploadFiles/${board.renameFileName }">
-	                        	</center>
-                        	</c:if>
 	                      </td>
 	                  </tr>
 	                </tbody>
               	</table>
             <br><br>
-            <c:url var="noticeUpdateView" value="adminNoticeUpdate.do">
+            <c:url var="FAQUpdateView" value="adminFAQUpdate.do">
 						<c:param name="bBoard_no" value="${board.bBoard_no }"/>
 						<c:param name="page" value="${currentPage }"/>
 			</c:url>
-			<c:url var="noticeDelete" value="noticeDelete.do">
+			<c:url var="FAQDelete" value="FAQDelete.do">
 						<c:param name="bBoard_no" value="${board.bBoard_no }"/>
 			</c:url>
-            &nbsp;&nbsp;<a href="adminNoticeList.do" type="button" class="btn btn-primary" style="float:right;">목록으로</a>
-            <a href="${noticeUpdateView }" type="button" class="btn btn-primary" style="float:right;margin-right:10px">수정</a>
-            <a href="${noticeDelete }" type="button" class="btn btn-primary" style="float:right;margin-right:10px">삭제</a>
+            &nbsp;&nbsp;<a href="adminFAQList.do" type="button" class="btn btn-primary" style="float:right;">목록으로</a>
+            <a href="${FAQUpdateView }" type="button" class="btn btn-primary" style="float:right;margin-right:10px">수정</a>
+            <a href="${FAQDelete }" type="button" class="btn btn-primary" style="float:right;margin-right:10px">삭제</a>
            
             <br><br><br>
             
