@@ -272,4 +272,96 @@ public class ItemDao {
 		
 		return sqlSessionTemplate.delete("adminItemMapper.deleteBannerItem",itemArr);
 	}
+
+	public int updateItemStatusY(ArrayList<BannerItem> iArr) {
+		
+		return sqlSessionTemplate.update("adminItemMapper.updateItemStatusY",iArr);
+	}
+	
+public int updateItemStatusN(ArrayList<BannerItem> iArr) {
+		
+		return sqlSessionTemplate.update("adminItemMapper.updateItemStatusN",iArr);
+	}
+
+public BannerItem selectAdminItem(int itemNo) {
+	
+	return sqlSessionTemplate.selectOne("adminItemMapper.selectAdminItem",itemNo);
+	}
+
+public int updateitem(BannerItem i) {
+	
+	return sqlSessionTemplate.update("adminItemMapper.updateItem",i);
+	}
+
+public int deleteEventItem(BannerItem i) {
+	
+	return sqlSessionTemplate.delete("adminItemMapper.deleteBannerItem",i);
+}
+
+public int updateItemImg(BannerItem i) {
+	
+	return sqlSessionTemplate.update("adminItemMapper.updateItemImg",i);
+}
+
+public int selectImageNo(BannerItem i) {
+	
+	return sqlSessionTemplate.selectOne("adminItemMapper.selectImageNo",i);
+
+}
+
+public int selectItemCountA() {
+	
+	return sqlSessionTemplate.selectOne("adminItemMapper.selectItemCountA");
+}
+
+public BannerItem selectDeleteItem(int i) {
+	return sqlSessionTemplate.selectOne("adminItemMapper.selectDeleteItem",i);
+}
+
+public int deleteItemA(int i) {
+	return sqlSessionTemplate.delete("adminItemMapper.deleteItemA",i);
+}
+
+public int deleteImgA(int i) {
+	return sqlSessionTemplate.delete("adminItemMapper.deleteImgA",i);
+}
+
+public int deleteItemImgA(int i) {
+	return sqlSessionTemplate.delete("adminItemMapper.deleteItemImgA",i);
+}
+
+public int deleteItemEvent(int i) {
+	return sqlSessionTemplate.delete("adminItemMapper.deleteItemEvent",i);
+}
+
+public ArrayList<BannerItem> selectEventOption() {
+	
+	return (ArrayList)sqlSessionTemplate.selectList("adminItemMapper.selectEventOption");
+}
+
+public ArrayList<BannerItem> selectItems(PageInfo pi) {
+	int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+	RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+	return (ArrayList)sqlSessionTemplate.selectList("adminItemMapper.selectItems",null,rowBounds);
+}
+
+public int selectNonEventItemCnt() {
+	
+	return sqlSessionTemplate.selectOne("adminItemMapper.selectNonEventItemCnt");
+}
+
+public int updateItemEventStatus(int i) {
+	
+	return sqlSessionTemplate.update("adminItemMapper.updateItemEventStatus",i);
+}
+
+public int insertEventItem(BannerItem i) {
+	
+	return sqlSessionTemplate.insert("adminItemMapper.insertEventItem",i);
+}
+
+public int deleteEventItemBefor(BannerItem i) {
+	
+	return sqlSessionTemplate.delete("adminItemMapper.deleteEventItemBefore",i);
+}
 }

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+       <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
  <head>
@@ -406,6 +407,7 @@ label > span {
 
   <body>
     <!--사이드바-->
+    <c:set var="contextPath" value="${pageContext.servletContext.contextPath }" scope="application"/>
     <div class="container-fluid" style="background-color: red;" >
         <div class="row">
             <div class="col-md-3 bd-sidebar">
@@ -438,7 +440,7 @@ label > span {
                                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                   <ul class="group-list sd_ul">
                                     <li><a href="iInsertView.do">상품 등록</a></li>
-                                    <li><a href="#">판매 상품 리스트</a></li>
+                                    <li><a href="itemListA.do">판매 상품 리스트</a></li>
                                     <li><a href="eList.do">배너 리스트</a></li>
                                     
                                   </ul>
@@ -533,7 +535,7 @@ label > span {
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 
-   
+    <script src="https://code.jquery.com/jquery-3.4.1.js" type="text/javascript"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
   </body>
