@@ -115,7 +115,7 @@
        padding: 1% 1%;
        margin-right: 3%;
        text-decoration: none;
-       width: 17%;
+       width: 20%;
        font-size: 0.8em;
        text-align: center;
    }
@@ -173,6 +173,10 @@
        -o-transition: opacity .5s, top .5s;
        transition: opacity .5s, top .5s;
    }
+   
+   .popup table{
+   		width:100%;
+   }
 
    .overlay:target+.popup {
        top: 50%;
@@ -226,6 +230,7 @@
    .popup input[type="password"]{
        border: 1px solid gray;
    }
+   
 </style>
 </head>
 <body>
@@ -341,25 +346,30 @@
             <a href="#x" class="overlay" id="password_form"></a>
             <div class="popup">
                 <h4>비밀번호 변경</h4>
-                <div>
-                <table>
-                    <tr>
-                    <td style="width: 100px;"><b>현재 비밀번호</b></td>
-                    <td style="width: 100px"><input type="password"></td>
-                    </tr>
-                    <tr>
-                        <td style="width: 100px;"><b>변경 비밀번호</b></td>
-                        <td><input type="password"></td>
-                    </tr>
-                    <tr>
-                        <td style="width: 300px;"><b>변경 비밀번호 확인</b></td>
-                        <td><input type="password"></td>
-                    </tr>
-                </table>
-                </div>
-                <div style="text-align: center;">
-                <button>변경</button>
-                </div>
+                <form action="modifyPassword.do" method="post">
+	                <div>
+		                <table>
+		                	<input type="hidden" name="memberId" value="${loginUser.memberId}">
+		                    <tr>
+			                    <td><b>현재 비밀번호</b></td>
+			                    <td style="width: 100px"><input type="password" name="memberPwd"></td>
+		                    </tr>
+		                    <tr>
+		                        <td><b>변경 비밀번호</b></td>
+		                        <td><input type="password" class="password" id="password1" name="changeMemberPwd"></td>
+		                        <td style="width: 250px"><span id="pwdInfo">8-15자 영어,숫자,특수문자 혼합 사용</span></td>
+		                    </tr>
+		                    <tr>
+		                        <td style="width: 130px;"><b>변경 비밀번호 확인</b></td>
+		                        <td><input type="password" class="password" id="password2"></td>
+		                        <td style="width: 200px"><span id="pwdCheckInfo"></span></td>
+		                    </tr>
+		                </table>
+	                </div>
+	                <div style="text-align: center;">
+	                <button>변경</button>
+	                </div>
+                </form>
                 <a class="close" href="#close"></a>
             </div>
         </div>
@@ -372,6 +382,30 @@
         $(function () {
             $("#postcodify_search_button").postcodifyPopUp();
         })
+    </script>
+    
+    <script>
+    	$(function(){
+    		$(".password").keyup(function(){
+    			// 비밀번호 영 대,소문자, 특수문자, 숫자 8~15자
+    			var regPwd = /^.*(?=^.{8,15}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;
+    			var pwd1 = $("#password1").val();				
+    			var pwd2 = $("#password2").val();				
+    			
+    			if(pwd1 != "" && pwd2 != "" && pwd1 != pwd2){
+    				$("#pwdCheckInfo").html("비밀번호 미일치");
+    				$("#pwdCheck").val(0);
+    			}
+    			if(pwd1 == pwd2 && pwd1 != "" && pwd2 != "" && regPwd.test(pwd1) == true && regPwd.test(pwd2) == true){
+    				$("#pwdCheckInfo").html("사용가능");
+    				$("#pwdCheck").val(1);
+    			}
+    			if(pwd1 == "" || pwd2 == ""){
+    				$("#pwdCheckInfo").html("");
+    				$("#pwdCheck").val(0);
+    			}
+    		})
+    	})
     </script>
 </body>
 </html>

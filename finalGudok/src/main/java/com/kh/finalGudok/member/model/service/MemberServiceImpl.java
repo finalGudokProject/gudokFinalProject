@@ -167,6 +167,11 @@ public class MemberServiceImpl implements MemberService {
 		return mDao.deleteCart(map);
 	}
 
+	@Override
+	public int updatePassword(Member m) {
+		return mDao.updatePassword(m);
+	}
+
 
 
 }

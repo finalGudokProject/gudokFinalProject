@@ -70,5 +70,7 @@ public interface MemberService {
 
 	int deleteCart(HashMap map);
 
+	int updatePassword(Member m);
+
 }
 

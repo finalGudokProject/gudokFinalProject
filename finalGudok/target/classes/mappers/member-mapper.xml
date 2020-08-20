@@ -270,4 +270,10 @@
 	<select id="deleteCart" parameterType="hashMap">
 		DELETE FROM CART WHERE MEMBER_NO=#{memberNo} AND CART_NO=#{cartNo}
 	</select>
-</mapper>
+	
+	<update id="updatePassword" parameterType="Member">
+		UPDATE MEMBER
+	  	SET MEMBER_PWD=#{memberPwd}
+	  	WHERE MEMBER_ID=#{memberId}
+	</update>
+ </mapper>

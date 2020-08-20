@@ -122,4 +122,8 @@ public class MemberDao {
 	public int deleteCart(HashMap map) {
 		return sqlSessionTemplate.delete("memberMapper.deleteCart", map);
 	}
+
+	public int updatePassword(Member m) {
+		return sqlSessionTemplate.update("memberMapper.updatePassword", m);
+	}
 }

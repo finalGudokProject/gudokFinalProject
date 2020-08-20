@@ -629,6 +629,7 @@ public class MemberController {
 		}
 	}
 	
+	// 1:1문의 답변
 	@RequestMapping("inquiryReply.do")
 	@ResponseBody
 	public void inquiryReply(HttpServletResponse response, HttpServletRequest request, Integer boardNo) throws JsonIOException, IOException {
@@ -652,6 +653,51 @@ public class MemberController {
 		
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 		gson.toJson(reply, response.getWriter());
+	}
+	
+	// 비밀번호 변경
+	@RequestMapping("modifyPassword.do")
+	public String modifyPassword(Member m, Model model, @RequestParam(value="changeMemberPwd") String changeMemberPwd) {
+		
+		Member loginUser = mService.loginMember(m);
+		
+		System.out.println(m);
+		System.out.println(loginUser);
+		
+		// 내부적으로 복호화 처리가 이루어진다. (암호화된 회원만 로그인 가능)
+		if(bcryptPasswordEncoder.matches(m.getMemberPwd(), loginUser.getMemberPwd())) {	// 로그인 할 멤버 객체가 조회 되었을 시
+			
+			String encPwd = bcryptPasswordEncoder.encode(changeMemberPwd);
+//			System.out.println(encPwd);
+
+			m.setMemberPwd(encPwd);
+			
+			int result = mService.updatePassword(m);
+			
+			System.out.println("비밀번호 변경 후 : " + m);
+			
+			if(result > 0) {
+				// 회원정보가 수정되면 현재 로그인 한 사람의 정보를
+				// 업데이트 시키기 위해 session에 수정된 객체를 담아줘야 된다.
+				// @SessionAttribute("loginUser")를 클래스 위에 달아줬기 때문에
+				// model에 수정된 회원 객체를 담자
+				model.addAttribute("loginUser", m);
+			} else {
+				throw new MemberException("수정 실패!");
+			}
+			
+			model.addAttribute("loginUser", loginUser);
+			
+			return "mypage/memberInfoView";
+		} else {				// 로그인 실패시
+			throw new MemberException("본인확인 실패");
+			// 예외를 발생시켜서 에러페이지로 넘어갈 껀데
+			// 우선 예외 클래스는 RuntimeException을 상속 받아
+			// 예외 처리가 따로 필요 없다.
+			
+			// 그리고 예외가 발생 했을 때 common에 있는 errorPage에서
+			// 처리될 수 있도록 web.xml에 공용 에러 페이지를 등록하러 가자!
+		}
 	}
 }
 
