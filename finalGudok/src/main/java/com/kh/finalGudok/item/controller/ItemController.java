@@ -243,6 +243,7 @@ public class ItemController {
 //		System.out.println("증가함? : " + result);
 		if(result > 0) {
 			ItemListView ilv = iService.selectItem(itemNo);
+			
 			if(ilv != null) {
 				mv.addObject("ilv", ilv).addObject("currentPage", currentPage).setViewName("items/itemDetail");
 			}else {
