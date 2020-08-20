@@ -314,6 +314,11 @@ public class ItemServiceImpl implements ItemService {
 		return iDao.imageDelete(reviewNo);
 	}
 
+	@Override
+	public int checkImage(int reviewNo) {
+		return iDao.checkImage(reviewNo);
+	}
+
 //	@Override
 //	public int l1Count() {
 //		return iDao.l1Count();

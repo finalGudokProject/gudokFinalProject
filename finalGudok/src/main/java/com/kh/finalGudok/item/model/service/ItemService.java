@@ -133,6 +133,8 @@ public interface ItemService {
 
 	int imageDelete(int reviewNo);
 
+	int checkImage(int reviewNo);
+
 //	int l1Count();
 //
 //	int l2Count();

@@ -323,6 +323,10 @@ public class ItemDao {
 		return sqlSessionTemplate.delete("reviewMapper.imageDelete", reviewNo);
 	}
 
+	public int checkImage(int reviewNo) {
+		return sqlSessionTemplate.selectOne("reviewMapper.checkImage", reviewNo);
+	}
+
 
 
 //	public int l1Count() {

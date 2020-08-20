@@ -27,6 +27,11 @@
 		<result property="memberName" column="MEMBER_NAME"/>
 	</resultMap>
 
+	<resultMap type="ReviewImage" id="reviewImageResult">
+		<id property="reviewImageNo" column="REVIEWIMAGE_NO"/>
+		<result property="reviewNo" column="REVIEW_NO"/>
+		<result property="rImageNo" column="R_IMAGE_NO"/>
+	</resultMap>
 	<select id="selectReview" parameterType="int" resultMap="reviewResultSet">
 		SELECT *
 		FROM REVIEW R
@@ -121,6 +126,11 @@
 		    AND RI.REVIEW_NO=#{reviewNo})
 	</delete>
 	
+	<select id="checkImage" resultType="_int">
+		SELECT COUNT(*)
+		FROM REVIEW_IMAGE
+		WHERE REVIEW_NO=#{reviewNo}
+	</select>
 	
 	<delete id="reviewImageDelete" parameterType="_int">
 		DELETE FROM REVIEW_IMAGE
@@ -131,4 +141,6 @@
 		DELETE FROM REVIEW
 		WHERE REVIEW_NO=#{reviewNo}
 	</delete>
+	
+	
 </mapper>

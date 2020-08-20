@@ -399,13 +399,23 @@ public class ItemController {
 				deleteFile(r.getImageRename(), request);
 			}
 		}
-		
-		int imResult = iService.imageDelete(reviewNo);
-		if(imResult > 0) {
-			iService.reviewImageDelete(reviewNo);
-			int result = iService.reviewDelete(reviewNo);
-			if(result > 0) {
-				/* iService.updateReviewRate(itemNo); */
+		int chkImg = iService.checkImage(reviewNo);
+		System.out.println("ReviewImage 조회 되나? : " + chkImg);
+		if(chkImg > 0) {
+			int imResult = iService.imageDelete(reviewNo);
+			if(imResult > 0) {
+				iService.reviewImageDelete(reviewNo);
+			}
+		}
+		int result = iService.reviewDelete(reviewNo);
+
+		if(result > 0) {
+			ArrayList<Review> review = iService.selectAllReview(itemNo);
+			if(review.size() == 0) {
+				iService.updateReviewRate(itemNo);
+				mv.setViewName("redirect:itemReview.do?itemNo=" + itemNo);
+			}else {
+				iService.updateReviewRate(itemNo);
 				mv.setViewName("redirect:itemReview.do?itemNo=" + itemNo);
 			}
 		}
