@@ -158,6 +158,19 @@ public interface ItemService {
 
 	int reviewDelete(int reviewNo);
 
+	Item reviewItemName(int itemNo);
+
+	ArrayList<ReviewView> selectDeleteReview(int reviewNo);
+
+	int reviewImageDelete(int reviewNo);
+
+	int imageDelete(int reviewNo);
+
+	int checkImage(int reviewNo);
+
+	int updateReviewRate0(int itemNo);
+
+
 //	int l1Count();
 //
 //	int l2Count();

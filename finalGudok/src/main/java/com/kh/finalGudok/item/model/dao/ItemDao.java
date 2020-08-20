@@ -376,6 +376,30 @@ public class ItemDao {
 		return sqlSessionTemplate.delete("reviewMapper.reviewDelete", reviewNo);
 	}
 
+	public Item reviewItemName(int itemNo) {
+		return sqlSessionTemplate.selectOne("itemMapper.reviewItemName", itemNo);
+	}
+
+	public ArrayList<ReviewView> selectDeleteReview(int reviewNo) {
+		return (ArrayList)sqlSessionTemplate.selectList("reviewMapper.selectDeleteReview", reviewNo);
+	}
+
+	public int reviewImageDelete(int reviewNo) {
+		return sqlSessionTemplate.delete("reviewMapper.reviewImageDelete", reviewNo);
+	}
+
+	public int imageDelete(int reviewNo) {
+		return sqlSessionTemplate.delete("reviewMapper.imageDelete", reviewNo);
+	}
+
+	public int checkImage(int reviewNo) {
+		return sqlSessionTemplate.selectOne("reviewMapper.checkImage", reviewNo);
+	}
+
+	public int updateReviewRate0(int itemNo) {
+		return sqlSessionTemplate.update("reviewMapper.updateReviewRate0", itemNo);
+	}
+
 
 
 //	public int l1Count() {

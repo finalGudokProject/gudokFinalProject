@@ -4,6 +4,7 @@
 
 	<resultMap type="ItemListView" id="itemListResultSet">
 		<id property="itemNo" column="ITEM_NO"/>
+		<result property="categoryName" column="CATEGORY_NAME"/>
 		<result property="categoryNo" column="CATEGORY_NO"/>
 		<result property="itemDate" column="ITEM_DATE"/>
 		<result property="itemName" column="ITEM_NAME"/>
@@ -408,4 +409,5 @@
 			</otherwise>
 		</choose>
 	</select>
+	
 </mapper>

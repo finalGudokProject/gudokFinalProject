@@ -363,6 +363,37 @@ public class ItemServiceImpl implements ItemService {
 		return iDao.reviewDelete(reviewNo);
 	}
 
+	@Override
+	public Item reviewItemName(int itemNo) {
+		return iDao.reviewItemName(itemNo);
+	}
+
+	@Override
+	public ArrayList<ReviewView> selectDeleteReview(int reviewNo) {
+		return iDao.selectDeleteReview(reviewNo);
+	}
+
+	@Override
+	public int reviewImageDelete(int reviewNo) {
+		return iDao.reviewImageDelete(reviewNo);
+	}
+
+	@Override
+	public int imageDelete(int reviewNo) {
+		return iDao.imageDelete(reviewNo);
+	}
+
+	@Override
+	public int checkImage(int reviewNo) {
+		return iDao.checkImage(reviewNo);
+	}
+
+	@Override
+	public int updateReviewRate0(int itemNo) {
+		return iDao.updateReviewRate0(itemNo);
+	}
+
+
 //	@Override
 //	public int l1Count() {
 //		return iDao.l1Count();

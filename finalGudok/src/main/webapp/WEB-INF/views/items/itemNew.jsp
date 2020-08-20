@@ -28,6 +28,9 @@
 		line-height:100px;
 		text-align:center;
 	}
+	#cateName span:hover{
+		cursor:pointer;
+	}
 	#cateName img{
 		vertical-align:middle;
 	}
@@ -119,14 +122,8 @@
 	
 	/* .sortDivC :hover{
 		cursor:pointer;
-		background:lightyellow;
+		background:yellow;
 	} */
-	
-	#sortTable td :hover{
-		cursor:pointer;
-		background:lightyellow;
-	}
-	
 	
 	.starR{
 	  background: url('http://miuu227.godohosting.com/images/icon/ico_review.png') no-repeat right 0;
@@ -243,23 +240,44 @@
 		<span>신상품</span>
 		</div>
 			<div style="border-top:1px solid lightgray;border-bottom:1px solid lightgray;">
-			<table align="center" style="margin-bottom:1%;" id="sortTable">
+			<table align="center" style="margin-bottom:1%;" class="sortTable">
 				<tr>
-					<td class="sortRank"><input type="hidden" value="" class="catchHidden"><input type="hidden" value="S1" class="catchNew"><div class="sortDivC">
+					<td class="sortRank" id="newSort"><input type="hidden" value="" class="catchHidden"><input type="hidden" value="S1" class="catchNew"><div class="sortDivC">
 					<img src="${contextPath }/resources/images/newItem.png" class="sortClass"><span style="display:block;">신상품순</span>
 					</div></td>
-					<td class="sortRank"><input type="hidden" value="" class="catchHidden"><input type="hidden" value="S2" class="catchBest"><div class="sortDivC">
+					<td class="sortRank" id="bestSort"><input type="hidden" value="" class="catchHidden"><input type="hidden" value="S2" class="catchBest"><div class="sortDivC">
 					<img src="${contextPath }/resources/images/popul.png" class="sortClass"><span style="display:block;">인기순</span>
 					</div></td>
-					<td class="sortRank"><input type="hidden" value="" class="catchHidden"><input type="hidden" value="S3" class="catchHigh"><div class="sortDivC">
+					<td class="sortRank" id="highSort"><input type="hidden" value="" class="catchHidden"><input type="hidden" value="S3" class="catchHigh"><div class="sortDivC">
 					<img src="${contextPath }/resources/images/high.png" class="sortClass"><span style="display:block;">높은 가격순</span>
 					</div></td>
-					<td class="sortRank"><input type="hidden" value="" class="catchHidden"><input type="hidden" value="S4" class="catchLow"><div class="sortDivC">
+					<td class="sortRank" id="lowSort"><input type="hidden" value="" class="catchHidden"><input type="hidden" value="S4" class="catchLow"><div class="sortDivC">
 					<img src="${contextPath }/resources/images/low.png" class="sortClass"><span style="display:block;">낮은 가격순</span>
 					</div></td>
 				</tr>
 			</table>
 			</div>
+			<script>
+				$(function(){
+					$("#cateName span").on("click", function(){
+						location.href="itemNew.do";
+					})
+				})
+			</script>
+			<script>
+				$(function(){
+					console.log("${sortNo}");
+					if("${sortNo}" == "S1"){
+						$(".sortTable #newSort .sortDivC span").css({"background":"yellow","font-weight":"bold"});
+					}else if("${sortNo}" == "S2"){
+						$(".sortTable #bestSort .sortDivC span").css({"background":"yellow","font-weight":"bold"});
+					}else if("${sortNo}" == "S3"){
+						$(".sortTable #highSort .sortDivC span").css({"background":"yellow","font-weight":"bold"});
+					}else if("${sortNo}" == "S4"){
+						$(".sortTable #lowSort .sortDivC span").css({"background":"yellow","font-weight":"bold"});
+					}
+				})
+			</script>
 			<script>
 				$(function(){
 					$(".sortRank").on("click", function(){
@@ -279,7 +297,14 @@
 	
 	<div class="row" id="itemsRowDiv">
 	
-	
+		<c:if test="${empty list }">
+		<div class="col-2"></div>
+			<div class="col-8" id="emptyDiv" style="margin-top:2%;border:1px solid lightgray;">
+				<div style="text-align:center;width:100%;"><img src="${contextPath }/resources/images/empty.png" style="width:30%;"></div>
+				<div style="text-align:center;width:100%;font-size:40px;">해당 카테고리의 상품이 존재하지 않습니다.</div>
+			</div>
+		<div class="col-2"></div>	
+		</c:if>
 	
 		<c:if test="${!empty list}">
 		<c:forEach var="i" items="${list }" varStatus="vs">
@@ -418,6 +443,28 @@
 		
 		</script>
 		</c:forEach>
+		<script>
+				$(function(){
+					$(".sortTable td").on("mouseenter", function(){
+						$(this).css("cursor","pointer");
+						if($(this).children().find("span").css("font-weight") == 700){
+							$(this).children().find("span").css({"background":"yellow","text-decoration":"underline"});
+						}else{
+							$(this).children().find("span").css({"background":"yellow"});
+						}
+					}).on("mouseleave", function(){
+						if($(this).children().find("span").css("font-weight") == 700){
+							$(this).children().find("span").css({"background":"yellow","text-decoration":"none"});
+						}else{
+							$(this).children().find("span").css({"background":"white"});
+						}
+					})
+				})
+		</script>
+		
+		<c:if test="${empty list }">
+		
+		</c:if>
 		<c:if test="${!empty list}">
 			<div class="col-12">
 			

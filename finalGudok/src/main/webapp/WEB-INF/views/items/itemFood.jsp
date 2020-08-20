@@ -2,10 +2,16 @@
     pageEncoding="UTF-8"%>
     <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+    
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
+	<!-- sweetalert시작 -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	<link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
+	<!-- sweetalert끝 -->
 <title>Insert title here</title>
 <style>
 	
@@ -22,15 +28,19 @@
 		text-align:left;
 		border:1px solid black;
 	}
-	#cateName{
+	.cateName{
 		font-size:30px;
 		margin:3% 0 1% 7%;
 		line-height:100px;
+		width:16%;
 	}
-	#cateName img{
+	.cateName span:hover{
+		cursor:pointer;
+	}
+	.cateName img{
 		vertical-align:middle;
 	}
-	#cateName span{
+	.cateName span{
 		vertical-align:middle;
 	}
 	
@@ -121,11 +131,6 @@
 		background:lightyellow;
 	} */
 	
-	#sortTable td :hover{
-		cursor:pointer;
-		background:lightyellow;
-	}
-	
 	
 	.starR{
 	  background: url('http://miuu227.godohosting.com/images/icon/ico_review.png') no-repeat right 0;
@@ -211,7 +216,7 @@
 	}
 	
 	.cateTableC td:hover{
-		background:lightyellow;
+		background:yellow;
 		cursor:pointer;
 	}
 	.detailDiv :hover{
@@ -240,7 +245,7 @@
 <div class="container">
 	<div class="row">
 	<div class="col-md-12">
-		<div id="cateName" style="font-size:50px;">
+		<div class="cateName" style="font-size:50px;">
 		<img src="${contextPath }/resources/images/food.png" style="width:70px;height:70px;">
 		<span>푸드
 			<c:if test="${foodChk != 'F0'}">
@@ -265,9 +270,67 @@
 			</table>
 			<script>
 				$(function(){
+					$(".cateName span").on("click", function(){
+						location.href="itemFood.do";
+					})
+				})
+			</script>
+			<script>
+				$(function(){
+					$(".sortTable td").on("mouseenter", function(){
+						$(this).css("cursor","pointer");
+						if($(this).children().find("span").css("font-weight") == 700){
+							$(this).children().find("span").css({"background":"yellow","text-decoration":"underline"});
+						}else{
+							$(this).children().find("span").css({"background":"yellow"});
+						}
+					}).on("mouseleave", function(){
+						if($(this).children().find("span").css("font-weight") == 700){
+							$(this).children().find("span").css({"background":"yellow","text-decoration":"none"});
+						}else{
+							$(this).children().find("span").css({"background":"white"});
+						}
+					})
+				})
+			</script>
+			<script>
+				$(function(){
+					console.log("${sortNo}");
+					if("${sortNo}" == "S1"){
+						$(".sortTable #newSort .sortDivC span").css({"background":"yellow","font-weight":"bold"});
+					}else if("${sortNo}" == "S2"){
+						$(".sortTable #bestSort .sortDivC span").css({"background":"yellow","font-weight":"bold"});
+					}else if("${sortNo}" == "S3"){
+						$(".sortTable #highSort .sortDivC span").css({"background":"yellow","font-weight":"bold"});
+					}else if("${sortNo}" == "S4"){
+						$(".sortTable #lowSort .sortDivC span").css({"background":"yellow","font-weight":"bold"});
+					}
+				})
+			</script>
+			<script>
+				$(function(){
+					/* console.log("${categoryNo}"); */
+					if("${categoryNo}" == "F2"){
+						$(".cateTableC #foodMilk").css({"text-decoration":"underline","background":"yellow","font-weight":"bold"});
+					}else if("${categoryNo}" == "F3"){
+						$(".cateTableC #foodBakery").css({"text-decoration":"underline","background":"yellow","font-weight":"bold"});
+					}else if("${categoryNo}" == "F6"){
+						$(".cateTableC #foodDiet").css({"text-decoration":"underline","background":"yellow","font-weight":"bold"});
+					}else if("${categoryNo}" == "F1"){
+						$(".cateTableC #foodDrink").css({"text-decoration":"underline","background":"yellow","font-weight":"bold"});
+					}else if("${categoryNo}" == "F4"){
+						$(".cateTableC #foodSimple").css({"text-decoration":"underline","background":"yellow","font-weight":"bold"});
+					}else if("${categoryNo}" == "F5"){
+						$(".cateTableC #foodHealth").css({"text-decoration":"underline","background":"yellow","font-weight":"bold"});
+					}
+				})
+			</script>
+			<script>
+				$(function(){
 					$(".sortCate").on("click", function(){
-						var sort = $(this).find("input").val();
-						location.href="foodSort.do?categoryNo="+sort;
+						var categoryNo = $(this).find("input").val();
+						location.href="foodSort.do?categoryNo=" + categoryNo;
+						
 					})
 					$(".detailDiv").on("mouseenter", function(){
 						$(this).css({"box-shadow":"1px 1px 20px lightgray", "transition":"0.3s"});
@@ -278,19 +341,19 @@
 			</script>
 		</div>
 			<div style="border-top:1px solid lightgray;border-bottom:1px solid lightgray;">
-			<table align="center" style="margin-bottom:1%;" id="sortTable">
+			<table align="center" style="margin-bottom:1%;" class="sortTable">
 				<tr>
-					<td class="sortRank"><input type="hidden" value="" class="catchHidden"><input type="hidden" value="S1" class="catchNew"><div class="sortDivC">
-					<img src="${contextPath }/resources/images/newItem.png" class="sortClass"><span style="display:block;">신상품순</span>
+					<td class="sortRank" id="newSort"><input type="hidden" value="" class="catchHidden"><input type="hidden" value="S1" class="catchNew"><div class="sortDivC">
+					<img src="${contextPath }/resources/images/newItem.png" class="sortClass"><span class="sortSpan" style="display:block;font-weight:normal;">신상품순</span>
 					</div></td>
-					<td class="sortRank"><input type="hidden" value="" class="catchHidden"><input type="hidden" value="S2" class="catchBest"><div class="sortDivC">
-					<img src="${contextPath }/resources/images/popul.png" class="sortClass"><span style="display:block;">인기순</span>
+					<td class="sortRank" id="bestSort"><input type="hidden" value="" class="catchHidden"><input type="hidden" value="S2" class="catchBest"><div class="sortDivC">
+					<img src="${contextPath }/resources/images/popul.png" class="sortClass"><span class="sortSpan" style="display:block;font-weight:normal;">인기순</span>
 					</div></td>
-					<td class="sortRank"><input type="hidden" value="" class="catchHidden"><input type="hidden" value="S3" class="catchHigh"><div class="sortDivC">
-					<img src="${contextPath }/resources/images/high.png" class="sortClass"><span style="display:block;">높은 가격순</span>
+					<td class="sortRank" id="highSort"><input type="hidden" value="" class="catchHidden"><input type="hidden" value="S3" class="catchHigh"><div class="sortDivC">
+					<img src="${contextPath }/resources/images/high.png" class="sortClass"><span class="sortSpan" style="display:block;font-weight:normal;">높은 가격순</span>
 					</div></td>
-					<td class="sortRank"><input type="hidden" value="" class="catchHidden"><input type="hidden" value="S4" class="catchLow"><div class="sortDivC">
-					<img src="${contextPath }/resources/images/low.png" class="sortClass"><span style="display:block;">낮은 가격순</span>
+					<td class="sortRank" id="lowSort"><input type="hidden" value="" class="catchHidden"><input type="hidden" value="S4" class="catchLow"><div class="sortDivC">
+					<img src="${contextPath }/resources/images/low.png" class="sortClass"><span class="sortSpan" style="display:block;font-weight:normal;">낮은 가격순</span>
 					</div></td>
 				</tr>
 			</table>
@@ -300,24 +363,35 @@
 					$(".sortRank").on("click", function(){
 						var hidden1 = $("#hiddenCategory").val();
 						$(".catchHidden").val(hidden1);
-						var hidden1 = $(this).find("input:nth-child(1)").val();
-						var hidden2 = $(this).find("input:nth-child(2)").val();
+						var categoryNo = $(this).find("input:nth-child(1)").val();
+						var sortNo = $(this).find("input:nth-child(2)").val();
 						
 						if($("#categoryF0").val() == ""){
-							console.log(hidden1);
-							console.log(hidden2);
-							location.href="fSort.do?categoryNo=" + hidden1 + "&sortNo=" + hidden2;
+							/* console.log(categoryNo);
+							console.log(sortNo); */
+							if(categoryNo != ""){
+								location.href="fSort.do?categoryNo=" + categoryNo + "&sortNo=" + sortNo;
+							}else if(categoryNo == ""){
+								swal("","정렬할 상품이 없습니다.","error");
+							}
 						}else if($("#categoryF0").val() == "F0"){
-							location.href="itemFood.do?sortNo=" + hidden2;
+							location.href="itemFood.do?sortNo=" + sortNo;
 						}
 					})
 				})
 			</script>
-			
-	</div>
+		</div>
 	
 	<div class="row" id="itemsRowDiv">
-	
+		
+		<c:if test="${empty list }">
+		<div class="col-2"></div>
+			<div class="col-8" id="emptyDiv" style="margin-top:2%;border:1px solid lightgray;">
+				<div style="text-align:center;width:100%;"><img src="${contextPath }/resources/images/empty.png" style="width:30%;"></div>
+				<div style="text-align:center;width:100%;font-size:40px;">해당 카테고리의 상품이 존재하지 않습니다.</div>
+			</div>
+		<div class="col-2"></div>	
+		</c:if>
 	
 	
 		<c:if test="${!empty list}">
@@ -458,6 +532,10 @@
 		
 		</script>
 		</c:forEach>
+		
+		<c:if test="${empty list}">
+		
+		</c:if>
 		<c:if test="${!empty list}">
 			<div class="col-12">
 			

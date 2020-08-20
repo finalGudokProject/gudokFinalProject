@@ -109,7 +109,7 @@
 	
 	<div style="padding:1% 0 1% 18%;">
 			<img src="${contextPath }/resources/images/reviewImg.png" style="width:7%;height:7%;">
-			<span style="vertical-align:middle;font-size:50px;"><b>해당 상품 전체 상품평</b></span>
+			<span style="vertical-align:middle;font-size:50px;"><b>${item.itemName } 전체 상품평</b></span>
 		</div>
 	<div class="container">
 		<div class="row">
@@ -118,7 +118,7 @@
 		<c:if test="${empty review}">
 		<div style="width:100%;border:1px solid lightgray;border-radius:5rem;">
 			<div style="text-align:center;width:100%;"><img src="${contextPath }/resources/images/empty.png" style="width:30%;"></div>
-			<div style="text-align:center;width:100%;font-size:40px;">해당 상품의 상품평이 존재하지 않습니다.</div>
+			<div style="text-align:center;width:100%;font-size:40px;">${item.itemName } 상품평이 존재하지 않습니다.</div>
 		</div>
 		
 		</c:if>
@@ -197,10 +197,10 @@
 								<span class="starRv on">5</span>
 							</c:otherwise>
 						</c:choose>
-						<c:if test="${r.reviewDate == r.reviewModify }">
+						<c:if test="${!empty r.reviewDate && empty r.reviewModify }">
 							<div style="display:inline-block;color:gray;">등록일 : ${r.reviewDate }</div>
 						</c:if>
-						<c:if test="${r.reviewDate != r.reviewModify }">
+						<c:if test="${!empty r.reviewDate && !empty r.reviewModify }">
 							<div style="display:inline-block;color:gray;">등록일 : ${r.reviewDate } / 수정일 : ${r.reviewModify}</div>
 						</c:if>
 					</div>
