@@ -13,13 +13,18 @@ import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.finalGudok.member.model.exception.MemberException;
@@ -36,6 +41,8 @@ public class MemberController {
 	private BCryptPasswordEncoder bcryptPasswordEncoder;
 	@Autowired
 	private JavaMailSender mailSender;
+	@Autowired
+	private Member m;
 
 
 	@RequestMapping("moveToLogin.do")
@@ -168,24 +175,46 @@ public class MemberController {
 //		return "home";
 //	}
 
-	@RequestMapping("signUp.do")
-	public String signUp(Member m) {
+	@RequestMapping(value="signUp.do", method=RequestMethod.POST)
+	@ResponseBody
+	public String signUp(@RequestBody String param) throws ParseException {
 
+		JSONParser parser = new JSONParser();
+		JSONObject jobj = (JSONObject)parser.parse(param);
+		
+		String id = (String)jobj.get("id");
+		String pwd = (String)jobj.get("pwd");
+		String name = (String)jobj.get("name");
+		String email = (String)jobj.get("email");
+		String address1 = (String)jobj.get("address1");
+		String address2 = (String)jobj.get("address2");
+		String address3 = (String)jobj.get("address3");
+		String gender = (String)jobj.get("gender");
+
+		
 		// web.xml에 한글 깨짐 방지를 위해 필터 등록
 		// bCrypt로 암호화 처리 -> 관련 라이브러리 추가, xml만들어서 bean 설정
 		// @Autowired 선언
-		String encPwd = bcryptPasswordEncoder.encode(m.getMemberPwd());
-//		System.out.println(encPwd);
-
-		// setter를 통해 암호화 된 비밀번호로 교체
+		String encPwd = bcryptPasswordEncoder.encode(pwd);
+		
+		// Member객체에 담기
+		m.setMemberId(id);
 		m.setMemberPwd(encPwd);
+		m.setMemberName(name);
+		m.setEmail(email);
+		m.setAddress1(address1);
+		m.setAddress2(address2);
+		m.setAddress3(address3);
+		m.setGender(gender);
+		
+		System.out.println(m);
 		
 		int result = mService.insertMember(m);
 
 		if (result > 0) {
-			return "home";
+			return "success";
 		} else {
-			throw new MemberException("회원가입 실패!");
+			throw new MemberException("회원가입 실패");
 		}
 
 	}
@@ -228,8 +257,8 @@ public class MemberController {
         String authCode = String.valueOf(random);
 
         map.put("emailCheckResult", emailCheckResult);
-        map.put("authCode", authCode);
-		
+        
+        if(emailCheckResult == true) {
 		MimeMessage msg = mailSender.createMimeMessage();
         
 		try {
@@ -248,6 +277,8 @@ public class MemberController {
         }
 		
         mailSender.send(msg);
+        map.put("authCode", authCode);
+        }
 		
         mv.addAllObjects(map);
 		mv.setViewName("jsonView");

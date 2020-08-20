@@ -71,8 +71,44 @@ td {
 	right: 10px;
 }
 
-span{
-	font-size:0.8em;
+span {
+	font-size: 0.8em;
+}
+
+.modal{
+	width:400px;
+	height:250px;
+}
+
+#modalWrap{
+	position:fixed;
+	top:30%;
+	left:36%;
+}
+
+#modalContent{
+	width:400px;
+	height:250px;
+}
+
+#modalHeader{
+	align:center;
+	text-align: center;
+	border-bottom:1px solid #ced4da;
+}
+
+#modalTitle{
+	font-size:1.8em;
+	padding-top:40px;
+	padding-bottom:30px;
+}
+
+#modalBody{
+	align:center;
+	text-align: center;
+	padding-top:50px;
+	padding-bottom:30px;
+	font-size:1.2em;
 }
 
 </style>
@@ -85,8 +121,8 @@ span{
 		<h2 align="center" id="titleTag" style="color: black;">회원가입</h2>
 		<br>
 
-		<div id="signUpDiv">
-			<form action="signUp.do" method="post" id="signUpForm" onsubmit="return validate();">
+		<div id="si5gnUpDiv">
+			<form id="signUpForm">
 				<table align="center" width="500" id="signUpTb">
 					<tr>
 						<td>*아이디</td>
@@ -181,13 +217,27 @@ span{
 					<tr>
 						<td></td>
 						<td colspan="2" id="btnTd">
-							<button type="submit" class="btn" id="submitBtn">가입하기</button>
+							<button type="button" class="btn" id="submitBtn" onclick="validate();">가입하기</button>
 							<button type="reset" class="btn">취소하기</button>
 						</td>
 					</tr>
 				</table>
 			</form>
 		</div>
+	
+	<!-- 로그인 성공 시 모달 띄우기 -->	
+	<div id="modalWrap" class="modal">
+	    <div class="modal-content" id="modalContent">
+	      <div id="modalHeader">
+	        <h5 id="modalTitle">회원가입이 완료되었습니다.</h5>
+	      </div>
+	      <div id="modalBody">
+	        <a href="home.do">홈 화면으로 이동</a>
+	        &nbsp;&nbsp;&nbsp;
+	        <a href="moveToLogin.do">로그인 페이지로 이동</a>
+	      </div>
+	    </div>
+	</div>
 
 	</section>
 	<!-- Footer -->
@@ -198,7 +248,7 @@ span{
 	<script>
 		// 아이디 유효성 검사
 		$(function() {
-			// 아이디 영어,숫자만 4-15자리
+			// 아이디 정규표현식(영어,숫자만 4-15자리)
 			var regId = /^[a-zA-z0-9]{4,15}$/;
 			$("#memberId").on("keyup", function() {
 						var memberId = $(this).val().trim();
@@ -241,7 +291,7 @@ span{
 	
 		// 비밀번호 일치여부 확인
 		$(".pw").keyup(function(){
-			// 비밀번호 영 대,소문자, 특수문자, 숫자 8~15자
+			// 비밀번호 정규표현식(영어, 특수문자, 숫자 혼합 8~15자)
 			var regPwd = /^.*(?=^.{8,15}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;
 			var pwd1 = $("#pwd1").val();				
 			var pwd2 = $("#pwd2").val();				
@@ -262,7 +312,7 @@ span{
         
 		// 이메일 인증 확인
 		$(function() {
-			// 이메일 양식 체크
+			// 이메일 정규표현식
 			var regEmail = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
 			$("#verifyEmail").on("click", function() {
 						var memberEmail = $("#email").val();
@@ -281,6 +331,8 @@ span{
 									} else {
 										// 중복되는 이메일이 있을 경우
 										alert("이미 사용중인 이메일입니다.");
+										$("#email").val("");
+										$("#email").focus();
 									}
 									// 메일로 발송 된 인증번호 hidden tag에 저장
 									$("#authCode").val(data.authCode);
@@ -321,10 +373,9 @@ span{
 	</script>
 	
 	<script>
-	// 회원가입 유효성검사
+		// 회원가입 유효성검사
 		function validate(){
-
-			// 아이디
+ 			// 아이디
 			if($("#memberId").val() == ""){
 				alert("아이디를 입력하세요.");
 				$("#memberId").focus();
@@ -369,7 +420,34 @@ span{
 				return false;
 			}
 			
-			confirm("회원가입이 완료되었습니다.");
+			var obj = new Object();
+			obj.id=$("#memberId").val();
+			obj.pwd=$("#pwd1").val();
+			obj.name=$("#name").val();
+			obj.email=$("#email").val();
+			obj.address1=$("#address1").val();
+			obj.address2=$("#address2").val();
+			obj.address3=$("#address3").val();
+			obj.gender=$("input[name='gender']:checked").val();
+
+			$.ajax({
+				url:"signUp.do",
+				type:"post",
+				data:JSON.stringify(obj),
+				contentType:"application/json;charset=utf-8",
+				success:function(data){
+					if(data == "success"){
+						$("#modalWrap").show();
+					}
+				},
+				error : function(request, status, errorData) {
+					alert("error code: " + request.status
+							+ "\n" + "message: "
+							+ request.responseText + "error: "
+							+ errorData);
+				}
+			})
+			
 		}
 	</script>
 	<!-- Optional JavaScript -->
