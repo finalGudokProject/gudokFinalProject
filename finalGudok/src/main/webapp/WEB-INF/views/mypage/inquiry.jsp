@@ -329,6 +329,11 @@
 			              <div style="border:1px solid black; width: 40%; height:30px; margin: 0 auto;"><span style="line-height:30px;">답변대기</span></div>
 			            </td>
 	          		</c:if>
+	          		<c:if test="${empty i.inquiryYN}">
+	          			<td>
+			              <div style="border:1px solid black; width: 40%; height:30px; margin: 0 auto;"><span style="line-height:30px;">답변대기</span></div>
+			            </td>
+	          		</c:if>
 		            <c:if test="${i.inquiryYN eq 'Y'}">
 	          			<td>
 			              <div style="border:1px solid black; width: 40%; height:30px; margin: 0 auto;"><span style="line-height:30px;">답변완료</span></div>
@@ -338,7 +343,7 @@
 		            <td>${i.content}</td>
 	            	<td>${i.writeDate}</td>
 	          </tr>
-	          <tr id="reply">
+	          <tr id="reply" style="display:none;">
 	          </tr>
 	          </c:forEach>
 	        </table>

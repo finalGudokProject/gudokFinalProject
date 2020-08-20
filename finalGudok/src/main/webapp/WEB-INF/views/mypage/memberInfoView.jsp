@@ -303,7 +303,7 @@
 	            <table>
 	                <tr>
 	                    <td style="width: 25%;">이름</td>
-	                    <td>${loginUser.memberName }</td>
+	                    <td><input type="text" name="memberName" value="${loginUser.memberName}" readonly></td>
 	                </tr>
 	                <tr>
 	                    <td>아이디</td>
@@ -319,20 +319,16 @@
 	                </tr>
 	                <tr>
 	                    <td>우편번호</td>
-	                    <td><input type="text" name="address1" class="postcodify_postcode5" value="${loginUser.address1}" size="6">
+	                    <td><input type="text" name="address1" class="postcodify_postcode5" value="${loginUser.address1}" size="10">
 	                        <button type="button" id="postcodify_search_button">주소변경</button>
 	                </tr>
 	                <tr>
 	                    <td>도로명 주소</td>
-	                    <td><input type="text" name="address2" class="postcodify_address" value="${loginUser.address2}"></td>
+	                    <td><input type="text" name="address2" class="postcodify_address" value="${loginUser.address2}" size="30"></td>
 	                </tr>
 	                <tr>
 	                    <td>상세 주소</td>
-	                    <td><input type="text" name="address3" class="postcodify_extra_info" value="${loginUser.address3}"></td>
-	                </tr>
-	                <tr>
-	                    <td>전화번호</td>
-	                    <td><input type="text" name="phone" value="${loginUser.phone}"></td>
+	                    <td><input type="text" name="address3" class="postcodify_extra_info" value="${loginUser.address3}" size="30"></td>
 	                </tr>
 	            </table>
 	

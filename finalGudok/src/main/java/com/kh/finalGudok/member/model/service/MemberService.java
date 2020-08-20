@@ -23,7 +23,7 @@ public interface MemberService {
 	Member loginMember(Member m);
 
 	// 마이페이지
-	int confirmMember(Member m);
+	Member confirmMember(Member m);
 
 	ArrayList<Point> selectPointList(Integer memberNo);
 
@@ -67,6 +67,8 @@ public interface MemberService {
 	int addCart(HashMap map);
 
 	Reply selectReply(Integer boardNo);
+
+	int deleteCart(HashMap map);
 
 }
 

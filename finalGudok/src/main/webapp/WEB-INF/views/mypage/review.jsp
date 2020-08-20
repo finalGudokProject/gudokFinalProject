@@ -306,7 +306,7 @@
 		            </c:url>
 		            <td>
 		              <button >수정</button>
-		              <button type="button" onclick="location.href='${rdelete}'">삭제</button>
+		              <button type="button" onclick="deleteReivew(${r.reviewNo});">삭제</button>
 		            </td>
 		          </tr>
 	          </c:forEach>
@@ -316,5 +316,14 @@
     </div>
     <br style="clear:both;">
 	<jsp:include page="../common/footer.jsp"/>
+	<script>
+		function deleteReivew(reviewNo){
+			var confirm_val = confirm("정말 삭제하시겠습니까?");
+			
+			if(confirm_val){
+				location.href='mreviewDelete.do?reviewNo='+reviewNo;
+			}
+		}
+	</script>
 </body>
 </html>

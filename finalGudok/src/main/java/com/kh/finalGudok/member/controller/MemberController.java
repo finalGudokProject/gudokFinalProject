@@ -3,21 +3,16 @@ package com.kh.finalGudok.member.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
-
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
+import java.util.Random;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -29,15 +24,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
-
 import com.kh.finalGudok.item.model.vo.Item;
 import com.kh.finalGudok.member.model.exception.MemberException;
 import com.kh.finalGudok.member.model.service.MemberService;
@@ -53,7 +47,7 @@ import com.kh.finalGudok.member.model.vo.Reply;
 import com.kh.finalGudok.member.model.vo.Review;
 import com.kh.finalGudok.member.model.vo.Withdrawal;
 
-//@SessionAttributes("loginUser")
+@SessionAttributes("loginUser")
 @Controller
 public class MemberController {
 
@@ -267,6 +261,12 @@ public class MemberController {
 		return "mypage/heart";
 	}
 	
+	// 찜 목록 페이지
+	@RequestMapping("cartView.do")
+	public String cartView() {
+		return "mypage/cart";
+	}
+	
 	// 찜 목록 불러오기(ajax)
 	@RequestMapping("heartList.do")
 	@ResponseBody
@@ -283,20 +283,34 @@ public class MemberController {
 	// 본인 확인
 	@RequestMapping(value="memberConfirm.do", method=RequestMethod.POST)
 	public String memberConfirm(Member m, HttpSession session, Model model) { // 민지
-		int result = mService.confirmMember(m);
+		Member loginUser = mService.loginMember(m);
 		
-		if(result > 0) {			
+		System.out.println(m);
+		System.out.println(loginUser);
+		
+		// 내부적으로 복호화 처리가 이루어진다. (암호화된 회원만 로그인 가능)
+		if(bcryptPasswordEncoder.matches(m.getMemberPwd(), loginUser.getMemberPwd())) {	// 로그인 할 멤버 객체가 조회 되었을 시
+			model.addAttribute("loginUser", loginUser);
 			return "mypage/memberInfoView";
-		} else {
-			return "home";
+		} else {				// 로그인 실패시
+			throw new MemberException("본인확인 실패");
+			// 예외를 발생시켜서 에러페이지로 넘어갈 껀데
+			// 우선 예외 클래스는 RuntimeException을 상속 받아
+			// 예외 처리가 따로 필요 없다.
+			
+			// 그리고 예외가 발생 했을 때 common에 있는 errorPage에서
+			// 처리될 수 있도록 web.xml에 공용 에러 페이지를 등록하러 가자!
 		}
+		
 	}
 	
 	// 회원 정보 수정
 	@RequestMapping(value="memberModify.do", method=RequestMethod.POST)
-	public String memberModify(Member m, HttpSession session, Model model) { // 민지
-
+	public String memberModify(Member m, Model model) { // 민지
+		
 		int result = mService.updateMember(m);
+		
+		System.out.println("회원정보 수정 후  : " +m);
 		
 		if(result > 0) {
 			// 회원정보가 수정되면 현재 로그인 한 사람의 정보를
@@ -308,7 +322,7 @@ public class MemberController {
 			throw new MemberException("수정 실패!");
 		}
 		
-		return "home";
+		return "mypage/memberInfoView";
 	}
 	
 	// 적립금 내역
@@ -397,22 +411,18 @@ public class MemberController {
 	}
 	
 	// 장바구니 내역
-	@RequestMapping(value="cartList.do")
-	public ModelAndView cartList(ModelAndView mv, Integer memberNo) { // 민지
+	@RequestMapping("cartList.do")
+	@ResponseBody
+	public void cartList(HttpServletResponse response, Integer memberNo) throws JsonIOException, IOException { // 민지
 		ArrayList<Cart> list = mService.selectCartList(memberNo);
 		
 		System.out.println("장바구니 내역 : " + list);
 		
-		if(list != null) {
-			mv.addObject("list", list);
-			mv.setViewName("mypage/cart");
-		} else {
-			throw new MemberException("장바구니 리스트 불러오기 실패");
-		}
+		response.setContentType("application/json;charset=utf-8");
 		
-		return mv;
+		new Gson().toJson(list, response.getWriter());
 	}
-	
+
 	// 교환 신청
 	@RequestMapping("exchangeInsert.do")
 	public String exchangeInsert(HttpServletRequest request, Exchange e) { // 민지
@@ -561,6 +571,46 @@ public class MemberController {
 			return "success";
 		} else {
 			throw new MemberException("찜 삭제 실패");
+		}
+	}
+	
+	// 장바구니 삭제
+	@RequestMapping("cartDelete.do")
+	@ResponseBody
+	public String cartDelete(HttpSession session, HttpServletRequest request, @RequestParam(value="checkArr[]")List<String> cartList) {
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		
+		System.out.println("선택삭제 실행됨");
+		
+		System.out.println(cartList);
+		
+		DeleteHeart dh = new DeleteHeart();
+		
+		int cartNo;
+		
+		int memberNo = loginUser.getMemberNo();
+		
+		int result = 0;
+		
+		for(int i = 0; i <cartList.size(); i++) {
+			cartNo = Integer.parseInt(cartList.get(i));
+			
+			HashMap map = new HashMap<Integer, Integer>();
+			
+			map.put("cartNo", cartNo);
+			map.put("memberNo", memberNo);
+
+			result = mService.deleteCart(map);
+			
+			result += result;
+			
+		}
+		
+		
+		if(result > 0) {			
+			return "success";
+		} else {
+			throw new MemberException("장바구니 삭제 실패");
 		}
 	}
 	

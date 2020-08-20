@@ -31,7 +31,7 @@ public class MemberDao {
 	}
 
 	// 마이페이지
-	public int confirmMember(Member m) {
+	public Member confirmMember(Member m) {
 		return sqlSessionTemplate.selectOne("memberMapper.memberConfirm", m);
 	}
 
@@ -117,5 +117,9 @@ public class MemberDao {
 
 	public Reply selectReply(Integer boardNo) {
 		return sqlSessionTemplate.selectOne("memberMapper.selectReply", boardNo);
+	}
+
+	public int deleteCart(HashMap map) {
+		return sqlSessionTemplate.delete("memberMapper.deleteCart", map);
 	}
 }

@@ -124,10 +124,10 @@
 		AND MEMBER_STATUS='N'
 	</select>
 	
-	<select id="memberConfirm" parameterType="Member" resultType="_int">
+	<select id="memberConfirm" parameterType="Member" resultMap="memberResultSet">
 		SELECT *
 		FROM MEMBER
-		WHERE MEMBER_PWD=#{memberPwd}
+		WHERE MEMBER_NO=#{memberNo}
 		AND MEMBER_STATUS='N'
 	</select>
 	
@@ -194,7 +194,7 @@
 	
 	<update id="updateMember" parameterType="Member">
 		UPDATE MEMBER
-	  	SET EMAIL=#{email}, ADDRESS_1=#{address1}, ADDRESS_2=#{address2}, ADDRESS_3=#{address3}, PHONE=#{phone}, MODIFY_DATE=SYSDATE
+	  	SET EMAIL=#{email}, ADDRESS_1=#{address1}, ADDRESS_2=#{address2}, ADDRESS_3=#{address3}, MODIFY_DATE=SYSDATE
 	  	WHERE MEMBER_ID=#{memberId}
 	</update>
 	
@@ -211,7 +211,7 @@
 	<select id="selectInquiryList" parameterType="int" resultMap="inquiryResultSet">
 		SELECT *
 		FROM BOARD B
-		JOIN INQUIRY I ON (B.BOARD_NO = I.BOARD_NO)
+		LEFT JOIN INQUIRY I ON (B.BOARD_NO = I.BOARD_NO)
 		WHERE BOARD_CODE='O' AND MEMBER_NO=#{memberNo}
 	</select>
 	
@@ -265,5 +265,9 @@
 	
 	<select id="emailDupCheck" parameterType="String" resultType="_int">
 		SELECT COUNT(*) FROM MEMBER WHERE EMAIL=#{email}
+	</select>
+	
+	<select id="deleteCart" parameterType="hashMap">
+		DELETE FROM CART WHERE MEMBER_NO=#{memberNo} AND CART_NO=#{cartNo}
 	</select>
 </mapper>

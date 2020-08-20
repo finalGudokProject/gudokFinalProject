@@ -282,6 +282,7 @@
 	      <div id="check">
 	        <h2 class="title" style="color:black; margin-top:3%;">본인확인</h2>
 			<form action="memberConfirm.do" method="post">
+				<input type="hidden" name="memberId" value="${loginUser.memberId}">
 				<input type="password" name="memberPwd" placeholder="비밀번호를 입력해주세요.">
 		        <br>
 		        <button>확인</button>

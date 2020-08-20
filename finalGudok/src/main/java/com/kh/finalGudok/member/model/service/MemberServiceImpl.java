@@ -37,7 +37,7 @@ public class MemberServiceImpl implements MemberService {
 
 	// 마이페이지
 	@Override
-	public int confirmMember(Member m) {
+	public Member confirmMember(Member m) {
 		return mDao.confirmMember(m);
 	}
 
@@ -160,6 +160,11 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public Reply selectReply(Integer boardNo) {
 		return mDao.selectReply(boardNo);
+	}
+
+	@Override
+	public int deleteCart(HashMap map) {
+		return mDao.deleteCart(map);
 	}
 
 
