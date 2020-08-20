@@ -1,3 +1,9 @@
+<<<<<<< HEAD
 #NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
 #Thu Aug 13 20:00:49 KST 2020
 maven-parent-9.pom>central=
+=======
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Thu Aug 13 14:10:07 KST 2020
+maven-parent-9.pom>central=
+>>>>>>> refs/remotes/origin/dev_Jaemyung

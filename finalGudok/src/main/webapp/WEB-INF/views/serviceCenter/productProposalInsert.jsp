@@ -24,22 +24,14 @@
   }
   table {
     width: 100%;
-    border: 1px solid #444444;
+    border-top: 1px solid #CCCCCC !important;
     border-collapse: collapse;
   }
   th, td {
-    border: 1px solid #444444;
+    border-bottom: 1px solid #CCCCCC !important;
+    padding: 10px;
   }
-        body {margin: 10px;}
-.where {
-  display: block;
-  margin: 25px 15px;
-  font-size: 11px;
-  color: #000;
-  text-decoration: none;
-  font-family: verdana;
-  font-style: italic;
-} 
+  body {margin: 10px;}
 
 .filebox input[type="file"] {
     position: absolute;
@@ -127,63 +119,46 @@
     <div class="container">
     <div class="row">
       <div class="col-3">
-        <h1 align="center">고객센터</h1>
+        <h1 align="center">상품제안</h1>
         <ul class="list" id="list">
-            <li style="margin-bottom: 5%;"><img src="resources/images/Alert.png" style="width:20%; height:20%;margin-bottom:3%"><a id="notice" href="notice.html">공지사항</a></li>
-            <li style="margin-bottom: 5%;"><img src="resources/images/FAQ.png" style="width:20%; height:20%;margin-bottom:3%"><a id="FAQ"  href="FAQ.html">FAQ</a></li>
-            <li style="margin-bottom: 5%;"><img src="resources/images/inquiary.png" style="width:20%; height:20%;margin-bottom:3%"><a id="inquiary" href="inquriary.html">1:1문의</a></li>
-            <li style="margin-bottom: 5%;"><img src="resources/images/proposal.png" style="width:20%; height:20%;margin-bottom:3%"><a id="product_proposal" style="color:rgb(0, 125, 255);" readonly>상품제안</a></li>
-            <li style="margin-bottom: 5%;"><img src="resources/images/benefit.png" style="width:20%; height:20%;margin-bottom:3%"><a id="tier_benefit"  href="benefit.html">등급별 혜택</a></li>
+			<li style="margin-bottom: 5%;"><img src="resources/images/Alert.png" style="width:20%; height:20%;margin-bottom:3%"><a href="noticeList.do">공지사항</a></li>
+            <li style="margin-bottom: 5%;"><img src="resources/images/FAQ.png" style="width:20%; height:20%;margin-bottom:3%"><a href="FAQList.do">FAQ</a></li>
+            <li style="margin-bottom: 5%;"><img src="resources/images/inquiary.png" style="width:20%; height:20%;margin-bottom:3%"><a href="inquriaryList.do">1:1문의</a></li>
+            <li style="margin-bottom: 5%;"><img src="resources/images/proposal.png" style="width:20%; height:20%;margin-bottom:3%"><a style="color:rgb(0, 125, 255);" readonly">상품제안</a></li>
+            <li style="margin-bottom: 5%;"><img src="resources/images/benefit1.png" style="width:20%; height:20%;margin-bottom:3%"><a href="tierOfBenefit.do">등급별 혜택</a></li>        
         </ul>
       </div>
       <div class="col-9">
         
-          <form>
+          <form action="ProductProposalInsert.do" method="post" enctype="multipart/form-data">
             <div style="font-size: 30px;">상품제안</div>
             <hr style="border-color:rgb(0, 125, 255);">
             <table style="text-align: center; margin-top:15px">
-                <tbody >
-                    <tr>
-                        <th style="width:10%; padding:20px;">제안유형</th>
-                        <td style="width: 39%;" colspan="3">
-                            <select name="type" style="float:left; margin-left:35%; height:30px ;width:200px;">
-                                <option value="">제안유형을 선택 해주세요</option>
-                                <option value="dairy_product">유제품</option>
-                                <option value="bakery">베이커리</option>
-                                <option value="diet">다이어트 식단</option>
-                                <option value="drink">음료</option>
-                                <option value="convenience_food">간편식품</option>
-                                <option value="health_food">건강식품</option>
-                                <option value="household_goods">생활용품</option>
-                                <option value="bodycare">바디케어</option>
-                                <option value="home_decoration">홈데코</option>
-                                <option value="etc">기타</option>
-                            </select>
-                        </td>
-                    </tr>
+                <tbody>
                     <tr>
                         <th style="width:10%; padding:20px;">제목</th>
                         <td style="width: 39%;" colspan="3">
-                            <textarea class="form-control" rows="1" style="resize: none;  margin-left:10%;width:550px;"></textarea>
+                            <textarea class="form-control" rows="1" style="resize: none;  margin-left:10%;width:550px;" name="bTitle"></textarea>
                         </td>
                     </tr>
                     <tr>
-                        <th style="padding:20px;">내용</th><td colspan="3"><textarea class="form-control" rows="20" style="resize: none;"></textarea></td>
+                        <th style="padding:20px;">내용</th><td colspan="3"><textarea class="form-control" rows="20" style="resize: none;" name="bContent"></textarea></td>
                     </tr>
                     <tr>
                         <th style="padding:20px;">이미지</th><td colspan="3"><div class="filebox bs3-primary preview-image">
                         <input class="upload-name" value="파일선택" disabled="disabled" style="width: 200px;">
                         <label for="input_file">업로드</label> 
-                        <input type="file" id="input_file" class="upload-hidden"> 
+                        <input type="file" id="input_file" name="uploadProposal" class="upload-hidden"> 
                     </div>
                     </tr>
                 </tbody>
               </table>
       
 
+            <br><br>
+             &nbsp;&nbsp;<a href="javascript:history.go(-1)" type="button" class="btn btn-primary" style="float:right;">이전으로</a>
+            <input type="submit" value="작성하기" class="btn btn-primary" style="float:right; margin-right: 10px;">
             </form>
-            <br><br><br>
-            <input type="submit" value="작성하기" class="btn btn-primary" style="float:right;">
             </div>
             </div>
             </div>

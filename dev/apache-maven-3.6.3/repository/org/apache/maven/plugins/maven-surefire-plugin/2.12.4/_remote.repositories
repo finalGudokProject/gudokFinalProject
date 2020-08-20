@@ -1,0 +1,11 @@
+<<<<<<< HEAD
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Thu Aug 13 16:49:16 KST 2020
+maven-surefire-plugin-2.12.4.jar>central=
+maven-surefire-plugin-2.12.4.pom>central=
+=======
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Thu Aug 13 14:10:03 KST 2020
+maven-surefire-plugin-2.12.4.jar>central=
+maven-surefire-plugin-2.12.4.pom>central=
+>>>>>>> refs/remotes/origin/dev_Jaemyung

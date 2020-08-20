@@ -13,8 +13,6 @@ public class Review implements Serializable{
 	private int itemNo;
 	private String reviewContent;
 	private String reviewRate;
-	private String reviewImg1;
-	private String reviewImg2;
 	private Date reviewDate;
 	private Date reviewModify;
 	private int memberNo;
@@ -24,16 +22,24 @@ public class Review implements Serializable{
 	public Review() {
 		// TODO Auto-generated constructor stub
 	}
+	
 
-	public Review(int reviewNo, int itemNo, String reviewContent, String reviewRate, String reviewImg1,
-			String reviewImg2, Date reviewDate, Date reviewModify, int memberNo, String memberId, String email) {
+	public Review(int reviewNo, String reviewContent, String reviewRate, Date reviewModify) {
+		super();
+		this.reviewNo = reviewNo;
+		this.reviewContent = reviewContent;
+		this.reviewRate = reviewRate;
+		this.reviewModify = reviewModify;
+	}
+
+
+	public Review(int reviewNo, int itemNo, String reviewContent, String reviewRate, Date reviewDate, Date reviewModify,
+			int memberNo, String memberId, String email) {
 		super();
 		this.reviewNo = reviewNo;
 		this.itemNo = itemNo;
 		this.reviewContent = reviewContent;
 		this.reviewRate = reviewRate;
-		this.reviewImg1 = reviewImg1;
-		this.reviewImg2 = reviewImg2;
 		this.reviewDate = reviewDate;
 		this.reviewModify = reviewModify;
 		this.memberNo = memberNo;
@@ -71,22 +77,6 @@ public class Review implements Serializable{
 
 	public void setReviewRate(String reviewRate) {
 		this.reviewRate = reviewRate;
-	}
-
-	public String getReviewImg1() {
-		return reviewImg1;
-	}
-
-	public void setReviewImg1(String reviewImg1) {
-		this.reviewImg1 = reviewImg1;
-	}
-
-	public String getReviewImg2() {
-		return reviewImg2;
-	}
-
-	public void setReviewImg2(String reviewImg2) {
-		this.reviewImg2 = reviewImg2;
 	}
 
 	public Date getReviewDate() {
@@ -136,14 +126,10 @@ public class Review implements Serializable{
 	@Override
 	public String toString() {
 		return "Review [reviewNo=" + reviewNo + ", itemNo=" + itemNo + ", reviewContent=" + reviewContent
-				+ ", reviewRate=" + reviewRate + ", reviewImg1=" + reviewImg1 + ", reviewImg2=" + reviewImg2
-				+ ", reviewDate=" + reviewDate + ", reviewModify=" + reviewModify + ", memberNo=" + memberNo
-				+ ", memberId=" + memberId + ", email=" + email + "]";
+				+ ", reviewRate=" + reviewRate + ", reviewDate=" + reviewDate + ", reviewModify=" + reviewModify
+				+ ", memberNo=" + memberNo + ", memberId=" + memberId + ", email=" + email + "]";
 	}
 
-	
-
-	
 	
 
 }

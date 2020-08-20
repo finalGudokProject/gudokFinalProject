@@ -234,9 +234,15 @@
                 <a href="#home"><img src="resources/images/delivery.png"
                         style="width: 25%; height: 25%; margin-right: 4%;">구독배송</a>
                 <ul>
-                    <li><a href="subscribeList.do">구독 조회</a></li>
-                    <li><a href="deliveryLookup.do">배송 조회</a></li>
-                    <li><a href="exchangeList.do">교환 내역</a></li>
+                    <li><a href="#">구독 조회</a></li>
+                    <c:url var="dlist" value="deliveryList.do">
+						<c:param name="memberNo" value="${loginUser.memberNo}"/>
+					</c:url> 
+                    <li><a href="${dlist}">배송 조회</a></li>
+                    <c:url var="elist" value="exchangeList.do">
+						<c:param name="memberNo" value="${loginUser.memberNo}"/>
+					</c:url> 
+                    <li><a href="${elist}">교환 내역</a></li>
                 </ul>
             </li>
             <li>
@@ -244,23 +250,44 @@
                         style="width: 25%; height: 25%; margin-right: 4%;">나의혜택</a>
                 <ul>
                     <li><a href="#">회원 등급</a></li>
-                    <li><a href="#">적립금 내역</a></li>
+                    <c:url var="plist" value="pointList.do">
+							<c:param name="memberNo" value="${loginUser.memberNo}"/>
+					</c:url> 
+                    <li><a href="${plist}">적립금 내역</a></li>
                 </ul>
             </li>
-            <li><a href="#contact"><img src="resources/images/cart.png"
+            <c:url var="clist" value="cartList.do">
+				<c:param name="memberNo" value="${loginUser.memberNo}"/>
+			</c:url> 
+            <li><a href="${clist}"><img src="resources/images/cart.png"
                         style="width: 25%; height: 25%; margin-right: 4%;">장바구니</a></li>
-            <li><a href="#about"><img src="resources/images/heart.png" style="width: 25%; height: 25%; margin-right: 4%;">찜</a>
+            <c:url var="hlist" value="heartList.do">
+				<c:param name="memberNo" value="${loginUser.memberNo}"/>
+			</c:url> 
+            <li><a href="${hlist}"><img src="resources/images/heart.png" style="width: 25%; height: 25%; margin-right: 4%;">찜</a>
             </li>
-            <li><a href="#about"><img src="resources/images/review.png"
+            <c:url var="rlist" value="reviewList.do">
+				<c:param name="memberNo" value="${loginUser.memberNo}"/>
+			</c:url> 
+            <li><a href="${rlist}"><img src="resources/images/review.png"
                         style="width: 25%; height: 25%; margin-right: 4%;">상품리뷰</a></li>
-            <li><a href="#about"><img src="resources/images/inquiry.png"
+            <c:url var="ilist" value="inquiryList.do">
+				<c:param name="memberNo" value="${loginUser.memberNo}"/>
+			</c:url>
+            <li><a href="${ilist}"><img src="resources/images/inquiry.png"
                         style="width: 25%; height: 25%; margin-right: 4%;">1:1문의</a></li>
             <li>
                 <a href="#about"><img src="resources/images/member_information.png"
                         style="width: 25%; height: 25%; margin-right: 4%;">회원정보</a>
                 <ul>
-                    <li><a href="#">회원정보 확인</a></li>
-                    <li><a href="#">회원탈퇴</a></li>
+                	<c:url var="myInfo" value="myInfo.do">
+						<c:param name="memberNo" value="${loginUser.memberNo}"/>
+					</c:url>
+                    <li><a href="${myInfo}">회원정보 확인</a></li>
+                    <c:url var="withdrawal" value="myWithdrawal.do">
+						<c:param name="memberNo" value="${loginUser.memberNo}"/>
+					</c:url>
+                    <li><a href="${withdrawal}">회원탈퇴</a></li>
                 </ul>
             </li>
         </ul>
@@ -274,7 +301,7 @@
 	              <br>
 	              <span class="grade">알 <span class="etc">&nbsp;등급</span></span>
 	              <br>
-	              <span><a href="#" style="color: black; font-size: 0.9em;">등급 혜택보기 ></a></span>
+	              <span><a href="#" style="color: black; font-size: 0.8em;">등급 혜택보기</a></span>
 	            </div>
 	          </div>
 	          <div class="subscribe">
@@ -286,16 +313,22 @@
 	          </div>
 	          <div class="cart">
 	            <div class="sub">
-	              <span class="title"><a href="#" style="color: black;">장바구니</a></span>
+		            <c:url var="clist" value="cartList.do">
+						<c:param name="memberNo" value="${loginUser.memberNo}"/>
+					</c:url> 
+	              <span class="title"><a href="${clist}" style="color: black;">장바구니</a></span>
 	              <br><br>
-	              <span class="count"><a href="#" style="color :#115D8C;">0<span class="etc">&nbsp;건</span></a></span>
+	              <span class="count"><a href="${clist}" style="color :#115D8C;">0<span class="etc">&nbsp;건</span></a></span>
 	            </div>
 	          </div>
 	          <div class="point">
 	            <div class="sub">
-	              <span class="title"><a href="#" style="color: black;">적립금</a></span>
+	            	<c:url var="plist" value="pointList.do">
+						<c:param name="memberNo" value="${loginUser.memberNo}"/>
+					</c:url>
+	              <span class="title"><a href="${plist}" style="color: black;">적립금</a></span>
 	              <br><br>
-	              <span class="count"><a href="#" style="color :#115D8C;">0<span class="etc">&nbsp;건</span></a></span>
+	              <span class="count"><a href="${plist}" style="color :#115D8C;">0<span class="etc">&nbsp;건</span></a></span>
 	            </div>
 	          </div>
 	        </div>
@@ -303,17 +336,23 @@
 	      <span class="sub_content" style="font-size: 1.5em;">장바구니</span>
 	      <br><br><br>
 	      <table class="cartTable">
-	        <tr>
-	          <td style="width: 10%" class="top bottom"><input type="checkbox" class="check_all">&nbsp;&nbsp;전체선택</td>
-	          <td style="width: 45%;" colspan="2" class="top bottom">상품명</td>
-	          <td style="width: 15%;" class="top bottom">주기</td>
-	          <td style="width: 15%;" class="top bottom">수량</td>
-	          <td style="width: 15%;" class="top bottom">주문금액</td>
-	        </tr>
-	        <c:forEach var="c" items="${list}">
-		        <tr>
+	      	<thead>
+	      		<tr class="cartList">
+		          <td style="width: 10%" class="top bottom"><input type="checkbox" class="check_all">&nbsp;&nbsp;전체선택</td>
+		          <td style="width: 45%;" colspan="2" class="top bottom">상품명</td>
+		          <td style="width: 15%;" class="top bottom">주기</td>
+		          <td style="width: 15%;" class="top bottom">수량</td>
+		          <td style="width: 15%;" class="top bottom">주문금액</td>
+		        </tr>
+	      	</thead>
+	        <tbody class="tbody">
+	        
+	        </tbody>
+	        
+	        <%-- <c:forEach var="c" items="${list}">
+		        <tr class="cartList">
 		          <td class="bottom">
-		          	<input type="checkbox" checked="" name="check" style="margin: auto 0;" class="check" onclick="priceSum(${c.itemPrice})" >
+		          	<input type="checkbox" name="check" style="margin: auto 0;" class="check" value="${c.itemPrice * c.cartCount}" data-cartnum="${ }">
 		          </td>
 		          <td style="width: 15%;" class="bottom">
 		            <div class="image">
@@ -366,17 +405,17 @@
 		            <span class="amount" style="display: inline-block; width: 40px;">${c.cartCount }</span>
 		            <img class="plus" src="resources/images/my_plus.png" style="width: 10%; height: auto;">
 		          </td>
-		          <c:set var="price" value="${c.itemPrice}"/>
+		          <c:set var="price" value="${c.itemPrice * c.cartCount}"/>
 		          <td class="bottom tprice">
-		          	<span class="price"><fmt:formatNumber value="${c.itemPrice}" pattern="#,###"/></span>
+		          	<span class="price"><fmt:formatNumber value="${price}" pattern="#,###"/></span>
 		          	<span>원</span>
 		          </td>
 		        </tr>
-	        </c:forEach>
+	        </c:forEach> --%>
 	      </table>
 	
 	      <div class="delete">
-	        <button>선택삭제</button>
+	        <button onclick="deleteCart();">선택삭제</button>
 	      </div>
 	
 	      <div class="price" style="width: 100%; margin: 0 auto; margin-top: 10%;">
@@ -388,12 +427,12 @@
 	            <td>최종 주문금액</td>
 	          </tr>
 	          <tr style="height: 80px;">
-	            <td><span style="font-size:1.2em" class="totalPrice"><fmt:formatNumber value="${price}" pattern="#,###"/></span><span>원</span></td>
+	            <td><span style="font-size:1.2em" class="totalPrice"><fmt:formatNumber value="0" pattern="#,###"/></span><span>원</span></td>
 	            <td><span style="font-size:1.2em">0</span><span>원</span></td>
 	            <td><span style="font-size:1.2em" class="deliveryPrice">2,500</span><span>원</span></td>
 	            <fmt:parseNumber var="numberType" value="${price}"/>
 	            <c:set var="paymentPrice" value="${numberType + 2500}"/>
-	            <td><span style="font-size:1.2em" class="paymentPrice"><fmt:formatNumber value="${paymentPrice}" pattern="#,###"/></span><span>원</span></td>
+	            <td><span style="font-size:1.2em" class="paymentPrice"><fmt:formatNumber value="0" pattern="#,###"/></span><span>원</span></td>
 	          </tr>
 	        </table>
 	      </div>
@@ -406,139 +445,298 @@
     </div>
     <br style="clear:both;">
     <jsp:include page="../common/footer.jsp"/>
-    
-    <script>
-    	var total = 0;
-    	function priceSum(price){
-			var price1 = $(this).parent('td').siblings('.tprice').children('.price').text();
-			alert(price1);
-    		if($(this).is(":checked") == false) {
-    			alert("체크 클릭");
-    			alert(price);
-		        $(this).attr("checked");
-	    		var sum = 0;
-	    		var deliveryPrice = parseInt($('.deliveryPrice').text().replace(/\,/g, ""), 10);
-	    		
-	    		sum = sum + price;
-	    		total = total + sum;
-	    		
-	    		var paymentPrice = total + deliveryPrice;
-	    		
-	    		total = String(total);
-	    		total = total.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
-	    		
-	    		paymentPrice = String(paymentPrice);
-		        paymentPrice = paymentPrice.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
-	    		
-		        alert(total);
-		        
-		        $('.totalPrice').text(total);
-		        $('.paymentPrice').text(paymentPrice);
-		        
-		        total = parseInt(total.replace(/\,/g, ""), 10);
-    		} else{
-    			alert("체크 해제");
-    			var sum = 0;
-	    		var deliveryPrice = parseInt($('.deliveryPrice').text().replace(/\,/g, ""), 10);
+  
+  <script>
+	$(function(){
+		getCartList();
+  	});
+	
+	  function deleteCart(){
+			var confirm_val = confirm("정말 삭제하시겠습니까?");
+			
+			if(confirm_val){
+				var checkArr = new Array();
+				
+				$("input[class='check']:checked").each(function(){
+					checkArr.push($(this).attr("data-cartNum"))
+				});
+				
+				$.ajax({
+					url:"cartDelete.do",
+					type:"post",
+					data:{checkArr:checkArr},
+					success:function(data){
+						if(data == "success"){ 
+							getCartList();
+					}
+					},
+					error:function(request, status, errorData){
+	                  alert("error code: " + request.status + "\n"
+	                        +"message: " + request.responseText
+	                        +"error: " + errorData);
+					}
+				});
+			}
+		}
+	  
+	  function getCartList(){
+			var memberNo = ${loginUser.memberNo};
+			
+			$.ajax({
+				url:"cartList.do",
+				data:{memberNo:memberNo},
+				dataType:"json",
+				success:function(data){
+					console.log(data);
+					
+					$tableBody = $(".cartTable .tbody");
+					$tableBody.html("");
+					
+					var $tr;
+					var $td;
+					var $checkbox;
+					var $imageTd;
+					var $imageDiv
+					var $img;
+					var $productTd;
+					var $productSpan;
+					var $cycleTd;
+					var $cycleSelect;
+					var $cycleOption1;
+					var $cycleOption2;
+					var $cycleOption3;
+					var $cycleOption4;
+					var $countTd;
+					var $minus;
+					var $amount;
+					var $plus;
+					var $totalPriceTd;
+					var $totalPrice;
+					var $won;
+					
+					if(data.length > 0 ){	// 댓글이 하나 이상 존재하면
+						for(var i in data){
+							var cartNo = parseInt(data[i].heartNo);
+							
+							$tr = $("<tr class='cartList'>");
+							$td = $("<td class='bottom'>");
+							$checkBox = $("<input type='checkbox' name='check' class='check' style='margin: auto 0;'>").attr('data-cartNum', data[i].cartNo).attr('value',data[i].itemPrice * data[i].cartCount);			
+							$imageTd = $("<td style='width:15%' class='bottom'>");
+							$imageDiv = $("<div class='image'>")
+							$img = $("<img src='resources/images/milk.jpg'>");
+							$productTd = $("<td class='bottom'>");
+							$productSpan = $("<span style='float:left; margin-left: 1%;'>").text(data[i].itemName);
+							$cycleTd = $("<td class='bottom'>");
+							$cycleSelect = $("<select style='width:60%; height:30px'>");
+							if(data[i].cartSubs == '1주'){								
+								$cycleOption1 = $("<option selected>").text("1주");
+								$cycleOption2 = $("<option>").text("2주");
+								$cycleOption3 = $("<option>").text("3주");
+								$cycleOption4 = $("<option>").text("4주");
+							} else if(data[i].cartSubs == '2주'){								
+								$cycleOption1 = $("<option>").text("1주");
+								$cycleOption2 = $("<option selected>").text("2주");
+								$cycleOption3 = $("<option>").text("3주");
+								$cycleOption4 = $("<option>").text("4주");
+							} else if(data[i].cartSubs == '3주'){								
+								$cycleOption1 = $("<option>").text("1주");
+								$cycleOption2 = $("<option>").text("2주");
+								$cycleOption3 = $("<option selected>").text("3주");
+								$cycleOption4 = $("<option>").text("4주");
+							} else{
+								$cycleOption1 = $("<option>").text("1주");
+								$cycleOption2 = $("<option>").text("2주");
+								$cycleOption3 = $("<option>").text("3주");
+								$cycleOption4 = $("<option selected>").text("4주");
+							}
+							$countTd = $("<td class='bottom'>");
+							$minus = $("<img class='minus' src = 'resources/images/my_minus.png' style='width: 10%; height: auto; cursor:pointer;'>");
+							$amount = $("<span class='amount' style='display:inline-block; width:40px;'>").text(data[i].cartCount);
+							$plus = $("<img class='plus' src='resources/images/my_plus.png' style='width: 10%; height: auto; cursor:pointer;'>");
+							$totalPriceTd = $("<td class='bottom tprice'>");
+							var str = String(data[i].itemPrice * data[i].cartCount);
+							var price = str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+							$totalPrice = $("<span class='price' style='display: inline-block; width: 45px;'>").text(price);
+							$won = $("<span>").text("원");
+							
+							$td.append($checkBox);
+							$imageDiv.append($img);
+							$imageTd.append($imageDiv);
+							$productTd.append($productSpan);
+							$cycleSelect.append($cycleOption1);
+							$cycleSelect.append($cycleOption2);
+							$cycleSelect.append($cycleOption3);
+							$cycleSelect.append($cycleOption4);
+							$cycleTd.append($cycleSelect);
+							$countTd.append($minus);
+							$countTd.append($amount);
+							$countTd.append($plus);
+							$totalPriceTd.append($totalPrice);
+							$totalPriceTd.append($won);
+							
+							$tr.append($td);
+							$tr.append($imageTd);
+							$tr.append($productTd);
+							$tr.append($cycleTd);
+							$tr.append($countTd);
+							$tr.append($totalPriceTd);
+							
+							$tableBody.append($tr);
+						}
+					} else{					// 댓글이 없으면
+						$tr = $("<tr>");
+						$rContent = $("<td colspan='3'>").text("등록 된 댓글이 없습니다.");
+						
+						$tr.append($rContent);
+						$tableBody.append($tr);
+					}
+				},
+				error:function(request, status, errorData){
+	                alert("error code: " + request.status + "\n"
+	                      +"message: " + request.responseText
+	                      +"error: " + errorData);
+	           }
 
-	    		total = total - price;
-	    		
-	    		var paymentPrice = total + deliveryPrice;
-	    		
-	    		total = String(total);
-	    		total = total.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
-	    		
-	    		paymentPrice = String(paymentPrice);
-		        paymentPrice = paymentPrice.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
-	    		
-		        alert(total);
-		        
-		        $('.totalPrice').text(total);
-		        $('.paymentPrice').text(paymentPrice);
-		        
-		        total = parseInt(total.replace(/\,/g, ""), 10);
-    		}
-    	}
+			})
+	  }
+  </script>
+  
+  <script>
+    	$(function(){
+    		function addComma(num) {
+			 	var regexp = /\B(?=(\d{3})+(?!\d))/g;
+				return num.toString().replace(regexp, ',');
+			}
+    		
+    		var sum = 0;
+    		var paymentPrice = 0;
+    		
+    		$(".check_all").on("click", function(){
+				if($(".check_all").prop("checked")){
+					$("input[type=checkbox]").prop("checked",true);
+					/* check = $("input:checkbox[class=check]:checked").length;
+					$("#delBtn").val(check + "개 상품 삭제하기");
+					$("#frontCount").text(check); */
+					$("input:checkbox[class=check]:checked").each(function(){
+						sum += Number($(this).val());
+						
+						var deliveryPrice = parseInt($('.deliveryPrice').text().replace(/\,/g, ""), 10);
+						
+						paymentPrice = sum + deliveryPrice;
+						
+						$('.totalPrice').text(addComma(sum));
+						$('.paymentPrice').text(addComma(paymentPrice));
+						
+						console.log(sum);
+					})
+				}else{
+					$("input[type=checkbox]").prop("checked",false);
+					/* check = $("input:checkbox[class=chk]:checked").length;
+					$("#delBtn").val("장바구니 삭제하기");
+					$("#frontCount").text("0"); */
+					sum = 0;
+					var deliveryPrice = parseInt($('.deliveryPrice').text().replace(/\,/g, ""), 10);
+					
+					paymentPrice = sum + deliveryPrice;
+					
+					$('.totalPrice').text(addComma(sum));
+					$('.paymentPrice').text(addComma(paymentPrice));
+				}
+			});
+    		
+    		$(document).on('click', '.check', function(){
+				/* if($("#allChk").prop("checked")){
+					$("#allChk").prop("checked",false);
+				} */
+				if($(this).prop("checked")){
+					alert("체크");
+					/* check++;
+					$("#delBtn").val(check + "개 상품 삭제하기");
+					$("#frontCount").text(check); */
+					
+					sum += Number($(this).val());
+					
+					var deliveryPrice = parseInt($('.deliveryPrice').text().replace(/\,/g, ""), 10);
+					
+					paymentPrice = sum + deliveryPrice;
+					
+					$('.totalPrice').text(addComma(sum));
+					$('.paymentPrice').text(addComma(paymentPrice));
+					/* $("#paymentBtn").val(addComma(sum)+"원 결제하기");
+					$("#totalPriceTd").text("총 주문 금액 : " + addComma(sum)+"원"); */
+				}else{
+					/* check--; */
+					sum -= Number($(this).val());
+					paymentPrice -= Number($(this).val());
+					/* $("#frontCount").text(check);
+					if(check != 0){
+						$("#delBtn").val("상품을 선택해 주세요.");
+						$("#paymentBtn").val(addComma(sum)+"원 결제하기");
+						$("#totalPriceTd").text("총 주문 금액 : " + addComma(sum)+"원");
+					}else{
+						$("#paymentBtn").val("상품을 선택해 주세요.");
+						$("#delBtn").val(check + "개 상품 삭제하기");
+						$("#totalPriceTd").text("결제하실 상품을 선택해 주세요.");
+					} */
+					
+					$('.totalPrice').text(addComma(sum));
+					$('.paymentPrice').text(addComma(paymentPrice));
+				}
+			});
+    	})
     </script>
     
     <script>
-    	
 	    $(function () {
-	      $('.minus').click(function (e) {
-	        e.preventDefault();
-	        var stat = $(this).siblings('.amount').text();
-	        var num = parseInt(stat, 10);
-	        var currentPrice = $(this).parent('td').next('td').children('.price').text();
-	        var price = parseInt(currentPrice.replace(/\,/g, ""), 10);
-	        var itemPrice = price / num;
-	        var deliveryPrice = parseInt($('.deliveryPrice').text().replace(/\,/g, ""), 10);
-	        
-	        num--;
+	    	function addComma(num) {
+			 	var regexp = /\B(?=(\d{3})+(?!\d))/g;
+				return num.toString().replace(regexp, ',');
+			}
+	    	
+	    	$(document).on('click', '.minus', function(e){
+		        e.preventDefault();
+		        var stat = $(this).siblings('.amount').text();
+		        var num = parseInt(stat, 10);
+		        var currentPrice = $(this).parent('td').next('td').children('.price').text();
+		        var price = parseInt(currentPrice.replace(/\,/g, ""), 10);
+		        var itemPrice = price / num;
+		        var deliveryPrice = parseInt($('.deliveryPrice').text().replace(/\,/g, ""), 10);
+		        
+		        num--;
+		
+		        if (num <= 0) {
+		          alert('주문 최소 수량은 1개입니다.');
+		          num = 1;
+		        }
+				
+		        var totalPrice = itemPrice * num;
 	
-	        if (num <= 0) {
-	          alert('주문 최소 수량은 1개입니다.');
-	          num = 1;
-	        }
+		        $(this).siblings('.amount').text(num);
+		        $(this).parent('td').next('td').children('.price').text(addComma(totalPrice));
+		        $(this).parent().prev().prev().prev().prev().children('.check').val(totalPrice);
+	
+		      });
 			
-	        var totalPrice = itemPrice * num;
-	        
-	        var paymentPrice = totalPrice + deliveryPrice;
-	        
-	       
-	        totalPrice = String(totalPrice);
-	        totalPrice = totalPrice.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
-	        
-	        paymentPrice = String(paymentPrice);
-	        paymentPrice = paymentPrice.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
-	        
-	        $(this).siblings('.amount').text(num);
-	        $(this).parent('td').next('td').children('.price').text(totalPrice);
-	        
-	        $('.totalPrice').text(totalPrice);
-	        $('.paymentPrice').text(paymentPrice);
-	      });
+	    	$(document).on('click', '.plus', function(e){
+		        e.preventDefault();
+		        var stat = $(this).siblings('.amount').text();
+		        var num = parseInt(stat, 10);
+		        var currentPrice = $(this).parent('td').next('td').children('.price').text();
+		        var price = parseInt(currentPrice.replace(/\,/g, ""), 10);
+		        var itemPrice = price / num;
+		        var deliveryPrice = parseInt($('.deliveryPrice').text().replace(/\,/g, ""), 10);
+		        
+		        num++;
+		        
+		        var totalPrice = itemPrice * num;
 	
-	      $('.plus').click(function (e) {
-	        e.preventDefault();
-	        var stat = $(this).siblings('.amount').text();
-	        var num = parseInt(stat, 10);
-	        var currentPrice = $(this).parent('td').next('td').children('.price').text();
-	        var price = parseInt(currentPrice.replace(/\,/g, ""), 10);
-	        var itemPrice = price / num;
-	        var deliveryPrice = parseInt($('.deliveryPrice').text().replace(/\,/g, ""), 10);
-	        
-	        num++;
-	        
-	        var totalPrice = itemPrice * num;
-	        
-	        var paymentPrice = totalPrice + deliveryPrice;
-	        
-	        totalPrice = String(totalPrice);
-	        totalPrice = totalPrice.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
-	        
-	        paymentPrice = String(paymentPrice);
-	        paymentPrice = paymentPrice.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+		        $(this).siblings('.amount').text(num);
+		        $(this).parent('td').next('td').children('.price').text(addComma(totalPrice));
+		        $(this).parent().prev().prev().prev().prev().children('.check').val(totalPrice);
 	
-	        $(this).siblings('.amount').text(num);
-	        $(this).parent('td').next('td').children('.price').text(totalPrice);
-	        
-	        $('.totalPrice').text(totalPrice);
-	        $('.paymentPrice').text(paymentPrice);
-	      });
+		   });
 	    });
   </script>
 
-  <script>
-    $( document ).ready( function() {
-      $( '.check_all' ).click( function() {
-        $( '.check' ).prop( 'checked', this.checked );
-        if(checked){
-				  $(":checkbox[name=checkbox]").prop("checked", true);
-			  } else {
-				  $(":checkbox[name=checkbox]").prop("checked", false);
-			  }
-      });
-    });
-  </script>
 </body>
 </html>

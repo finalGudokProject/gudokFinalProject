@@ -175,81 +175,120 @@
 	<jsp:include page="../common/menubar.jsp"/>
 	
 	<div id="content">
-    <ul class="myPage_Menu">
-      <li>
-        <a href="#home"><img src="resources/images/delivery.png" style="width: 25%; height: 25%; margin-right: 4%;">구독배송</a>
-        <ul>
-          <li><a href="#">구독 조회</a></li>
-          <li><a href="#">배송 조회</a></li>
-          <li><a href="#">교환 내역</a></li>
+    	<ul class="myPage_Menu">
+            <li>
+                <a href="#home"><img src="resources/images/delivery.png"
+                        style="width: 25%; height: 25%; margin-right: 4%;">구독배송</a>
+                <ul>
+                    <li><a href="#">구독 조회</a></li>
+                    <c:url var="dlist" value="deliveryList.do">
+						<c:param name="memberNo" value="${loginUser.memberNo}"/>
+					</c:url> 
+                    <li><a href="${dlist}">배송 조회</a></li>
+                    <c:url var="elist" value="exchangeList.do">
+						<c:param name="memberNo" value="${loginUser.memberNo}"/>
+					</c:url> 
+                    <li><a href="${elist}">교환 내역</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#news"><img src="resources/images/my_benefit.png"
+                        style="width: 25%; height: 25%; margin-right: 4%;">나의혜택</a>
+                <ul>
+                    <li><a href="#">회원 등급</a></li>
+                    <c:url var="plist" value="pointList.do">
+							<c:param name="memberNo" value="${loginUser.memberNo}"/>
+					</c:url> 
+                    <li><a href="${plist}">적립금 내역</a></li>
+                </ul>
+            </li>
+            <c:url var="clist" value="cartList.do">
+				<c:param name="memberNo" value="${loginUser.memberNo}"/>
+			</c:url> 
+            <li><a href="${clist}"><img src="resources/images/cart.png"
+                        style="width: 25%; height: 25%; margin-right: 4%;">장바구니</a></li>
+            <c:url var="hlist" value="heartList.do">
+				<c:param name="memberNo" value="${loginUser.memberNo}"/>
+			</c:url> 
+            <li><a href="${hlist}"><img src="resources/images/heart.png" style="width: 25%; height: 25%; margin-right: 4%;">찜</a>
+            </li>
+            <c:url var="rlist" value="reviewList.do">
+				<c:param name="memberNo" value="${loginUser.memberNo}"/>
+			</c:url> 
+            <li><a href="${rlist}"><img src="resources/images/review.png"
+                        style="width: 25%; height: 25%; margin-right: 4%;">상품리뷰</a></li>
+            <c:url var="ilist" value="inquiryList.do">
+				<c:param name="memberNo" value="${loginUser.memberNo}"/>
+			</c:url>
+            <li><a href="${ilist}"><img src="resources/images/inquiry.png"
+                        style="width: 25%; height: 25%; margin-right: 4%;">1:1문의</a></li>
+            <li>
+                <a href="#about"><img src="resources/images/member_information.png"
+                        style="width: 25%; height: 25%; margin-right: 4%;">회원정보</a>
+                <ul>
+                	<c:url var="myInfo" value="myInfo.do">
+						<c:param name="memberNo" value="${loginUser.memberNo}"/>
+					</c:url>
+                    <li><a href="${myInfo}">회원정보 확인</a></li>
+                    <c:url var="withdrawal" value="myWithdrawal.do">
+						<c:param name="memberNo" value="${loginUser.memberNo}"/>
+					</c:url>
+                    <li><a href="${withdrawal}">회원탈퇴</a></li>
+                </ul>
+            </li>
         </ul>
-      </li>
-      <li>
-        <a href="#news"><img src="resources/images/my_benefit.png" style="width: 25%; height: 25%; margin-right: 4%;">나의혜택</a>
-        <ul>
-          <li><a href="#">회원 등급</a></li>
-          <li><a href="#">적립금 내역</a></li>
-        </ul>
-      </li>
-      <li><a href="#contact"><img src="resources/images/cart.png" style="width: 25%; height: 25%; margin-right: 4%;">장바구니</a></li>
-      <li><a href="#about"><img src="resources/images/heart.png" style="width: 25%; height: 25%; margin-right: 4%;">찜</a></li>
-      <li><a href="#about"><img src="resources/images/review.png" style="width: 25%; height: 25%; margin-right: 4%;">상품리뷰</a></li>
-      <li><a href="#about"><img src="resources/images/inquiry.png" style="width: 25%; height: 25%; margin-right: 4%;">1:1문의</a>
-      </li>
-      <li>
-        <a href="#about"><img src="resources/images/member_information.png"
-            style="width: 25%; height: 25%; margin-right: 4%;">회원정보</a>
-        <ul>
-          <li><a href="#">회원정보 확인</a></li>
-          <li><a href="#">회원탈퇴</a></li>
-        </ul>
-      </li>
-    </ul>
-    <div class="content_sub">
-      <div class="content_member">
-        <div class="member_info">
-          <div class="member">
-            <div class="sub">
-              <span class="name">${loginUser.memberName } <span class="etc">&nbsp;님</span></span>
-              <br>
-              <span class="grade">알 <span class="etc">&nbsp;등급</span></span>
-              <br>
-              <span><a href="#" style="color: black; font-size: 0.8em;">등급 혜택보기</a></span>
-            </div>
-          </div>
-          <div class="subscribe">
-            <div class="sub">
-              <span class="title"><a href="#" style="color: black;">구독</a></span>
-              <br><br>
-              <span class="count"><a href="#" style="color :#115D8C;">0<span class="etc">&nbsp;건</span></a></span>
-            </div>
-          </div>
-          <div class="cart">
-            <div class="sub">
-              <span class="title"><a href="#" style="color: black;">장바구니</a></span>
-              <br><br>
-              <span class="count"><a href="#" style="color :#115D8C;">0<span class="etc">&nbsp;건</span></a></span>
-            </div>
-          </div>
-          <div class="point">
-            <div class="sub">
-              <span class="title"><a href="#" style="color: black;">적립금</a></span>
-              <br><br>
-              <span class="count"><a href="#" style="color :#115D8C;">0<span class="etc">&nbsp;건</span></a></span>
-            </div>
-          </div>
-        </div>
-      </div>
+   		<div class="content_sub">
+	      <div class="content_member">
+	        <div class="member_info">
+	          <div class="member">
+	            <div class="sub">
+	              <span class="name">${loginUser.memberName } <span class="etc">&nbsp;님</span></span>
+	              <br>
+	              <span class="grade">알 <span class="etc">&nbsp;등급</span></span>
+	              <br>
+	              <span><a href="#" style="color: black; font-size: 0.8em;">등급 혜택보기</a></span>
+	            </div>
+	          </div>
+	          <div class="subscribe">
+	            <div class="sub">
+	              <span class="title"><a href="#" style="color: black;">구독</a></span>
+	              <br><br>
+	              <span class="count"><a href="#" style="color :#115D8C;">0<span class="etc">&nbsp;건</span></a></span>
+	            </div>
+	          </div>
+	          <div class="cart">
+	            <div class="sub">
+		            <c:url var="clist" value="cartList.do">
+						<c:param name="memberNo" value="${loginUser.memberNo}"/>
+					</c:url> 
+	              <span class="title"><a href="${clist}" style="color: black;">장바구니</a></span>
+	              <br><br>
+	              <span class="count"><a href="${clist}" style="color :#115D8C;">0<span class="etc">&nbsp;건</span></a></span>
+	            </div>
+	          </div>
+	          <div class="point">
+	            <div class="sub">
+	            	<c:url var="plist" value="pointList.do">
+						<c:param name="memberNo" value="${loginUser.memberNo}"/>
+					</c:url>
+	              <span class="title"><a href="${plist}" style="color: black;">적립금</a></span>
+	              <br><br>
+	              <span class="count"><a href="${plist}" style="color :#115D8C;">0<span class="etc">&nbsp;건</span></a></span>
+	            </div>
+	          </div>
+	        </div>
+	      </div>
 
-      <div id="check">
-        <h2 class="title" style="color:black; margin-top:3%;">본인확인</h2>
-		<form action="memberConfirm.do" method="post">
-			<input type="password" name="memberPwd" placeholder="비밀번호를 입력해주세요.">
-	        <br>
-	        <button>확인</button>
-        </form>
-      </div>
-    </div>
+	      <div id="check">
+	        <h2 class="title" style="color:black; margin-top:3%;">본인확인</h2>
+			<form action="memberConfirm.do" method="post">
+				<input type="hidden" name="memberId" value="${loginUser.memberId}">
+				<input type="password" name="memberPwd" placeholder="비밀번호를 입력해주세요.">
+		        <br>
+		        <button>확인</button>
+	        </form>
+	      </div>
+    	</div>
   </div>
   <br style="clear:both;">
   <jsp:include page="../common/footer.jsp"/>

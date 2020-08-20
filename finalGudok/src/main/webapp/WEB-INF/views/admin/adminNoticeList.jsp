@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -70,15 +71,15 @@
         
         <form action="adminNoticeList.do" method="post" enctype="multipart/form-data">
             <div class="input-group" >
-              <select class="custom-select" id="inputGroupSelect04" style="margin-left: 600px; width:50px" >
-                <option selected>모두</option>
-                <option value="1">제목</option>
-                <option value="2">내용</option>
-                <option value="3">제목+내용</option>
+              <select class="custom-select" id="searchType" name="searchType" style="margin-left: 600px; width:50px" >
+                <option value="all">모두</option>
+                <option value="title">제목</option>
+                <option value="content">내용</option>            
+                <option value="titleContent">제목+내용</option>
               </select>
-              <input type="text" class="form-control" style="float:right; width:100px;height: 38px;">
-              <div class="input-group-append" style="float:right; width: 75px; height: 38px;">
-                <input type="submit" value="검색"  class="btn btn-primary">
+              <input type="text" class="form-control" id="keyword" name="keyword" value="" style="float:right; width:150px;height: 38px;" placeholder="검색어를 입력하세요">
+              <div class="input-group-append" style="float:right; width: 75px; height: 38px;">                
+                <input type="submit" value="검색" id="searchBtn" name="searchBtn" class="btn btn-primary" style="height:38px">
               </div>
             </div>
             <br>
@@ -95,21 +96,28 @@
           </tr>
         </thead>
         <tbody >
-        <c:forEach var="b" items="${list }">
-          <tr>
-          		<td><input type="checkbox">
-          		<td align="center">${b.rownum }</td>
-				<td align="center">
-					<c:url var="noticeDetail" value="adminNoticeDetail.do">
-						<c:param name="bBoard_no" value="${b.bBoard_no }"/>
-						<c:param name="page" value="${pi.currentPage }"/>
-					</c:url>
-					<a href="${noticeDetail }">${b.bTitle }</a>
-				</td>
-				<td align="center">${b.bWrite_date }</td>
-				<td align="center">${b.bRead_num }</td>
-          </tr>
-		</c:forEach>
+	        <c:choose>
+		      			<c:when test="${fn:length(list)>0 }">
+					        <c:forEach var="b" items="${list }">
+					          <tr>
+					          		<td><input type="checkbox">
+					          		<td align="center">${b.rownum }</td>
+									<td align="center">
+										<c:url var="adminNoticeDetail" value="adminNoticeDetail.do">
+											<c:param name="bBoard_no" value="${b.bBoard_no }"/>
+											<c:param name="page" value="${pi.currentPage }"/>
+										</c:url>
+										<a href="${adminNoticeDetail }">${b.bTitle }</a>
+									</td>
+									<td align="center">${b.bWrite_date }</td>
+									<td align="center">${b.bRead_num }</td>
+					          </tr>
+							</c:forEach>
+						</c:when>
+						<c:otherwise>
+							<td colspan="5">조회된 결과가 없습니다.</td>
+						</c:otherwise>
+			</c:choose>
         </tbody>
       </table>
             <br><br>
@@ -117,33 +125,77 @@
             <input type="submit" value="삭제" class="btn btn-primary" style="float:right; margin-right: 10px;">
     </form>
             <br><br><br>
+                  
+                  
+                  
+                  
+      			<!------페이징 처리----->
+                <div class="page-center">
+                    <c:choose>
+	      			<c:when test="${fn:length(list)>0 }">
+                    <ul class="pagination-t">
+                       <!-- 이전 -->
+                        <c:if test="${pi.currentPage eq 1 }">
+                           <li class="page-item-t disabled-t"><a class="page-link-t"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-left-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  						   <path d="M3.86 8.753l5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/>
+						   </svg></a></li>
+                  		</c:if>
+                   		<c:if test="${pi.currentPage gt 1 }">
+                     		<c:url var="blistBack" value="adminNoticeList.do">
+                        		<c:param name="page" value="${pi.currentPage-1 }"/>
+                     		</c:url>
+                            <li class="page-item-t">
+                            <a class="page-link-t" href="${blistBack }">
+                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-left-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+     						<path d="M3.86 8.753l5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/>
+   							</svg></a></li>
+                  		</c:if>
+                  
+                  <!-- 번호들 -->
+                  <c:forEach var="p" begin="${pi.startPage }" end="${pi.endPage }">
+                     
+                     <c:if test="${p eq pi.currentPage }">
+                                <li class="page-item-t  active-t"><a class="page-link-t">${p }<span class="sr-only"></span></a></li>
+                     </c:if>
+                     
+                           <c:if test="${p ne pi.currentPage }">
+                              <c:url var="blistCheck" value="adminNoticeList.do">
+                                 <c:param name="page" value="${p }"/>
+                              </c:url>
+                              <li class="page-item-t"><a class="page-link-t" href="${blistCheck }">${p } <span class="sr-only"></span></a>
+                              </li>
+                          </c:if>
+                        </c:forEach>
+                        
+                        
+                        <!-- 이후 -->
+                        <c:if test="${pi.currentPage eq pi.maxPage }">
+                           <li class="page-item-t disabled-t"><a class="page-link-t">
+                           <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-right-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+						   <path d="M12.14 8.753l-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
+						   </svg></a></li>
+                  		</c:if>
+                   		<c:if test="${pi.currentPage lt pi.maxPage }">
+                     		<c:url var="blistAfter" value="adminNoticeList.do">
+                        		<c:param name="page" value="${pi.currentPage+1 }"/>
+                     		</c:url>
+                            <li class="page-item-t">
+                            <a class="page-link-t" href="${blistAfter }">
+                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-right-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  							<path d="M12.14 8.753l-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
+							</svg></a></li>
+                  		</c:if>
+                    </ul>
+					</c:when>
+					<c:otherwise>
 
-                    <!------페이징 처리----->
-                    <div class="page-center">
-                      <ul class="pagination-t">
-  
-                          <!-- disabled: 페이지 비활성화 -->
-                          <li class="page-item-t disabled-t"><a class="page-link-t" href="#"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-chevron-left" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                              <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
-                            </svg></a></li>
-  
-                          <li class="page-item-t"><a class="page-link-t" href="#">1</a></li>
-  
-                          <!-- disabled: 해당 버튼 활성화 -->
-                          <li class="page-item-t active-t" aria-current="page-t">
-                              <a class="page-link-t" href="#">2 <span class="sr-only">(current)</span></a>
-                          </li>
-                          <li class="page-item-t"><a class="page-link-t" href="#">3</a></li>
-                          <li class="page-item-t"><a class="page-link-t" href="#"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-chevron-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                              <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
-                            </svg></a></li>
-                      </ul>
-  
-                  </div>
+					</c:otherwise>
+				</c:choose>
+                </div>
 
     </div><!--하얀박스 있는부분 끝-->
   </div><!--회색바탕 div-->
-  
+ 
 
    
 

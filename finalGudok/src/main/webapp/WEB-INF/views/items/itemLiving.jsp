@@ -6,6 +6,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
+	<!-- sweetalert시작 -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	<link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
+	<!-- sweetalert끝 -->
 <title>Insert title here</title>
 <style>
 	
@@ -26,12 +31,20 @@
 		font-size:30px;
 		margin:3% 0 1% 7%;
 		line-height:100px;
+		width:16%;
+	}
+	#cateName span:hover{
+		cursor:pointer;
 	}
 	#cateName img{
 		vertical-align:middle;
 	}
 	#cateName span{
 		vertical-align:middle;
+	}
+	
+	.detailDiv :hover{
+		cursor:pointer;
 	}
 	
 	/* 상품 리스트 정렬 CSS */
@@ -121,12 +134,6 @@
 		background:lightyellow;
 	} */
 	
-	#sortTable td :hover{
-		cursor:pointer;
-		background:lightyellow;
-	}
-	
-	
 	.starR{
 	  background: url('http://miuu227.godohosting.com/images/icon/ico_review.png') no-repeat right 0;
 	  background-size: auto 100%;
@@ -209,7 +216,26 @@
 	.page-link, .page-item{
 		font-size:30px;
 	}
+	.cateTableC td:hover{
+		background:yellow;
+		cursor:pointer;
+	}
 	
+	.cardHeader{
+		overflow:hidden;
+	}
+	.cardHeader img{
+		height:100%;
+		width:100%;
+		object-fit:cover;
+		transform:(1.0);
+		transition:transform.5s;
+	}
+	
+	.cardHeader img:hover{
+		transform:scale(1.1);
+		transition:transform.5s;
+	}
 
 </style>
 </head>
@@ -220,40 +246,121 @@
 	<div class="col-md-12">
 		<div id="cateName" style="font-size:50px;">
 		<img src="${contextPath }/resources/images/living.png" style="width:70px;height:70px;">
-		<span>리빙</span>
+		<span>리빙
+			<c:if test="${livingChk != 'L0'}">
+				<input type="hidden" id="categoryL0" value="L0">
+			</c:if>
+			<c:if test="${livingChk == 'L0' }">
+				<input type="hidden" id="categoryL0" value="">
+			</c:if>
+		</span>
+		
 		</div>
-		<div style="margin:0 0 3% 0%">
-			<table style="display:block;">
+		
+		<div style="margin:0 0 3% 2%">
+			<table style="display:block;" class="cateTableC">
 				<tr>
-					<td style="width:10%;"><span>생활용품</span></td>
-					<td style="width:10%;"><span>바디케어</span></td>
-					<td style="width:10%;"><span>홈데코</span></td>
+					<td style="width:10%;" id="foodLife" class="sortCate"><input type="hidden" value="L1">생활용품</td>
+					<td style="width:10%;" id="foodBody" class="sortCate"><input type="hidden" value="L2">바디케어</td>
+					<td style="width:10%;" id="foodDeco" class="sortCate"><input type="hidden" value="L3">홈데코</td>
 				</tr>
 			</table>
+			<div style="display:none;"><input type="text" name="categoryNo" id="categoryInput"></div>
+			<script>
+				$(function(){
+					$("#cateName span").on("click", function(){
+						location.href="itemLiving.do";
+					})
+				})
+			</script>
+			<script>
+				$(function(){
+					if("${categoryNo}" == "L1"){
+						$(".cateTableC #foodLife").css({"text-decoration":"underline","background":"yellow","font-weight":"bold"});
+					}else if("${categoryNo}" == "L2"){
+						$(".cateTableC #foodBody").css({"text-decoration":"underline","background":"yellow","font-weight":"bold"});
+					}else if("${categoryNo}" == "L3"){
+						$(".cateTableC #foodDeco").css({"text-decoration":"underline","background":"yellow","font-weight":"bold"});
+					}
+				})
+			</script>
+			
+			<script>
+				$(function(){
+					if("${sortNo}" == "S1"){
+						$(".sortTable #newSort .sortDivC span").css({"background":"yellow","font-weight":"bold"});
+					}else if("${sortNo}" == "S2"){
+						$(".sortTable #bestSort .sortDivC span").css({"background":"yellow","font-weight":"bold"});
+					}else if("${sortNo}" == "S3"){
+						$(".sortTable #highSort .sortDivC span").css({"background":"yellow","font-weight":"bold"});
+					}else if("${sortNo}" == "S4"){
+						$(".sortTable #lowSort .sortDivC span").css({"background":"yellow","font-weight":"bold"});
+					}
+				})
+			</script>
+			
+			<script>
+				$(function(){
+					$(".sortCate").on("click", function(){
+						var sort = $(this).find("input").val();
+						$("#categoryInput").val(sort);
+						location.href="livingSort.do?categoryNo="+sort;
+						
+					})
+					$(".detailDiv").on("mouseenter", function(){
+						$(this).css({"box-shadow":"1px 1px 20px lightgray", "transition":"0.3s"});
+					}).on("mouseleave", function(){
+						$(this).css({"border":"1px solid lightgray","box-shadow":"none"});
+					})
+				})
+				
+			</script>
 		</div>
 			<div style="border-top:1px solid lightgray;border-bottom:1px solid lightgray;">
-			<table align="center" style="margin-bottom:1%;" id="sortTable">
+			<table align="center" style="margin-bottom:1%;" class="sortTable">
 				<tr>
-					<td><div class="sortDivC">
+					<td class="sortRank" id="newSort"><input type="hidden" value="" class="catchHidden"><input type="hidden" value="S1" class="catchNew"><div class="sortDivC">
 					<img src="${contextPath }/resources/images/newItem.png" class="sortClass"><span style="display:block;">신상품순</span>
 					</div></td>
-					<td><div class="sortDivC">
+					<td class="sortRank" id="bestSort"><input type="hidden" value="" class="catchHidden"><input type="hidden" value="S2" class="catchBest"><div class="sortDivC">
 					<img src="${contextPath }/resources/images/popul.png" class="sortClass"><span style="display:block;">인기순</span>
 					</div></td>
-					<td><div class="sortDivC">
+					<td class="sortRank" id="highSort"><input type="hidden" value="" class="catchHidden"><input type="hidden" value="S3" class="catchHigh"><div class="sortDivC">
 					<img src="${contextPath }/resources/images/high.png" class="sortClass"><span style="display:block;">높은 가격순</span>
 					</div></td>
-					<td><div class="sortDivC">
+					<td class="sortRank" id="lowSort"><input type="hidden" value="" class="catchHidden"><input type="hidden" value="S4" class="catchLow"><div class="sortDivC">
 					<img src="${contextPath }/resources/images/low.png" class="sortClass"><span style="display:block;">낮은 가격순</span>
 					</div></td>
 				</tr>
 			</table>
 			</div>
+			<script>
+				$(function(){
+			 		$(".sortRank").on("click", function(){
+						var hidden1 = $("#hiddenCategory").val();
+						$(".catchHidden").val(hidden1);
+						var categoryNo = $(this).find("input:nth-child(1)").val();
+						var sortNo = $(this).find("input:nth-child(2)").val();
+						
+						if($("#categoryL0").val() == ""){
+							/* console.log(categoryNo);
+							console.log(sortNo); */
+							if(categoryNo != ""){
+								location.href="livingSort.do?categoryNo=" + categoryNo + "&sortNo=" + sortNo;
+							}else if(categoryNo == ""){
+								swal("","정렬할 상품이 없습니다.","error");
+							}
+						}else if($("#categoryL0").val() == "L0"){
+							location.href="itemLiving.do?sortNo=" + sortNo;
+						}
+					})
+					
+				})
+			</script>
 			
 	</div>
 	
-	
-	
+	<div class="row" id="itemsRowDiv">
 	
 		<c:if test="${empty list }">
 		<div class="col-2"></div>
@@ -263,8 +370,8 @@
 			</div>
 		<div class="col-2"></div>	
 		</c:if>
-		<c:if test="${!empty list }">
-		<div class="row" id="itemsRowDiv">
+		
+		<c:if test="${!empty list}">
 		<c:forEach var="i" items="${list }" varStatus="vs">
 		<c:url var="idetail" value="idetail.do">
 			<c:param name="itemNo" value="${i.itemNo }"/>
@@ -273,8 +380,9 @@
 		</c:url>
 		<fmt:formatNumber var="discountPrice" value="${(i.itemPrice - i.itemPrice*(i.itemDiscount/100))}" type="number"/>
 		<fmt:formatNumber var="itemPrice" value="${i.itemPrice}" type="number"/>
-			<div class="col-4" onclick="location.href='${idetail}'">
-				<div class="card">
+		<input type="hidden" value="${i.categoryNo}" id="hiddenCategory">
+			<div class="col-4" onclick="location.href='${idetail}'" class="detailDiv">
+				<div class="card detailDiv">
 					<c:if test="${i.itemDiscount != 0}" >
 					<div class="cardHeader">
 						<div class="circle">
@@ -287,12 +395,13 @@
 					
 					<c:if test="${i.itemDiscount == 0}">
 					<div class="cardHeader">
-					<img src="resources/images/breadLogo.jpg" class="card-img-top" alt="...">
+					<img src="resources/images/kimchi.png" class="card-img-top" alt="...">
 					</div>
 					</c:if>
 					<div class="cardBody">
 						<h3 class="card-title"><b>${i.itemName }</b></h3>
-						<h5>${i.itemMemo }</h5>
+						<c:if test="${!empty i.itemMemo }"><h5>${i.itemMemo}</h5></c:if>
+						<c:if test="${empty i.itemMemo }"><h5>${i.itemName}입니다.</h5></c:if>
 						<div class="itemPriceDiv">
 						<c:if test="${i.itemDiscount != 0}">
 							<s style="color:red;">${itemPrice }원</s>→${discountPrice }원
@@ -356,7 +465,15 @@
 						</div>
 						
 						
-						  <div id="rateId">(평점 : ${i.itemRate }점 / 찜한 사람 : ${i.itemChoice }명)</div>
+						  <div id="rateId">
+							  <c:if test="${i.itemRate == 0}">
+							  	(평점 : 0점 / 찜한 사람 : ${i.itemChoice }명)
+							  </c:if>
+							  <c:if test="${i.itemRate != 0}">
+							  	(평점 : ${i.itemRate}점 / 찜한 사람 : ${i.itemChoice }명)
+							  </c:if>
+						  </div>
+						  
 						</div>
 						<div class="row">
 							<div class="col-4" id="btnBlank"></div>
@@ -370,23 +487,48 @@
 				</div>
 			</div>
 		</c:forEach>
-		</div>
 		</c:if>
+		</div>
+		<script>
+				$(function(){
+					$(".sortTable td").on("mouseenter", function(){
+						$(this).css("cursor","pointer");
+						if($(this).children().find("span").css("font-weight") == 700){
+							$(this).children().find("span").css({"background":"yellow","text-decoration":"underline"});
+						}else{
+							$(this).children().find("span").css({"background":"yellow"});
+						}
+					}).on("mouseleave", function(){
+						if($(this).children().find("span").css("font-weight") == 700){
+							$(this).children().find("span").css({"background":"yellow","text-decoration":"none"});
+						}else{
+							$(this).children().find("span").css({"background":"white"});
+						}
+					})
+				})
+			</script>
 		<c:forEach var="i" items="${list }" varStatus="vs">
 		<script>
 			$(function(){
-				$("#preview${vs.index}").on("click", function(){
+				$("#preview${vs.index}").on("click", function(event){
 					var preview = $(this).attr("id");
 					console.log(preview);
 					var review = $(this).next().val();
 					console.log(review);
-					
+					event.stopPropagation();
+				})
+				$("#preview${vs.index}").on("click",function(){
+					var itemNo = $(this).next().val();
+					location.href="itemReview.do?itemNo="+itemNo;
 				})
 			})
+			
 		
 		</script>
 		</c:forEach>
+		<c:if test="${empty list }">
 		
+		</c:if>
 		<c:if test="${!empty list}">
 			<div class="col-12">
 			
@@ -411,7 +553,7 @@
 						<li class="page-item disabled"><a class="page-link" href="#" tabindex="-1">${p }</a></li>
 					</c:if>
 					<c:if test="${p != pi.currentPage }">
-						<c:url var="ilistCheck" value="itemLiving.do">
+						<c:url var="ilistCheck" value="itemFood.do">
 							<c:param name="page" value="${p}"/>
 						</c:url>
 						<li class="page-item"><a class="page-link" href="${ilistCheck }">${p }</a></li>
@@ -424,7 +566,7 @@
 				    </li>
 				</c:if>
 				<c:if test = "${pi.currentPage lt pi.maxPage}">
-					<c:url var = "ilistAfter" value = "itemLiving.do">
+					<c:url var = "ilistAfter" value = "itemFood.do">
 						<c:param name="page" value="${pi.currentPage + 1 }"/>
 					</c:url>
 					<li class="page-item">
@@ -459,7 +601,7 @@
 		})
 	})
 	</script>
-	<script>
+	<!-- <script>
 		$(function(){
 			$(".cardHeader, .cardBody, #btnBlank, .cardFooter").click(function(){
 				var itemNo = $(this).find("input[type=hidden]").val();
@@ -469,8 +611,6 @@
 				$(this).css("cursor","pointer");
 			})
 		})
-	</script>
-	
-<jsp:include page="../common/footer.jsp"/>
+	</script> -->
 </body>
 </html>

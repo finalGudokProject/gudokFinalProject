@@ -180,6 +180,21 @@
       margin-right: 10%;
       margin-top: 3%;
     }
+    
+    #reply {
+    	background:#ccc;
+	    animation: fadein 2s;
+	   	-webkit-animation: fadein 2s; /* Safari and Chrome */
+	}
+	
+	@keyframes fadein {
+	    from {
+	        opacity:0;
+	    }
+	    to {
+	        opacity:1;
+	    }
+	}
 
 </style>
 </head>
@@ -193,8 +208,14 @@
                         style="width: 25%; height: 25%; margin-right: 4%;">구독배송</a>
                 <ul>
                     <li><a href="#">구독 조회</a></li>
-                    <li><a href="#">배송 조회</a></li>
-                    <li><a href="#">교환 내역</a></li>
+                    <c:url var="dlist" value="deliveryList.do">
+						<c:param name="memberNo" value="${loginUser.memberNo}"/>
+					</c:url> 
+                    <li><a href="${dlist}">배송 조회</a></li>
+                    <c:url var="elist" value="exchangeList.do">
+						<c:param name="memberNo" value="${loginUser.memberNo}"/>
+					</c:url> 
+                    <li><a href="${elist}">교환 내역</a></li>
                 </ul>
             </li>
             <li>
@@ -202,23 +223,44 @@
                         style="width: 25%; height: 25%; margin-right: 4%;">나의혜택</a>
                 <ul>
                     <li><a href="#">회원 등급</a></li>
-                    <li><a href="#">적립금 내역</a></li>
+                    <c:url var="plist" value="pointList.do">
+							<c:param name="memberNo" value="${loginUser.memberNo}"/>
+					</c:url> 
+                    <li><a href="${plist}">적립금 내역</a></li>
                 </ul>
             </li>
-            <li><a href="#contact"><img src="resources/images/cart.png"
+            <c:url var="clist" value="cartList.do">
+				<c:param name="memberNo" value="${loginUser.memberNo}"/>
+			</c:url> 
+            <li><a href="${clist}"><img src="resources/images/cart.png"
                         style="width: 25%; height: 25%; margin-right: 4%;">장바구니</a></li>
-            <li><a href="#about"><img src="resources/images/heart.png" style="width: 25%; height: 25%; margin-right: 4%;">찜</a>
+            <c:url var="hlist" value="heartList.do">
+				<c:param name="memberNo" value="${loginUser.memberNo}"/>
+			</c:url> 
+            <li><a href="${hlist}"><img src="resources/images/heart.png" style="width: 25%; height: 25%; margin-right: 4%;">찜</a>
             </li>
-            <li><a href="#about"><img src="resources/images/review.png"
+            <c:url var="rlist" value="reviewList.do">
+				<c:param name="memberNo" value="${loginUser.memberNo}"/>
+			</c:url> 
+            <li><a href="${rlist}"><img src="resources/images/review.png"
                         style="width: 25%; height: 25%; margin-right: 4%;">상품리뷰</a></li>
-            <li><a href="#about"><img src="resources/images/inquiry.png"
+            <c:url var="ilist" value="inquiryList.do">
+				<c:param name="memberNo" value="${loginUser.memberNo}"/>
+			</c:url>
+            <li><a href="${ilist}"><img src="resources/images/inquiry.png"
                         style="width: 25%; height: 25%; margin-right: 4%;">1:1문의</a></li>
             <li>
                 <a href="#about"><img src="resources/images/member_information.png"
                         style="width: 25%; height: 25%; margin-right: 4%;">회원정보</a>
                 <ul>
-                    <li><a href="#">회원정보 확인</a></li>
-                    <li><a href="#">회원탈퇴</a></li>
+                	<c:url var="myInfo" value="myInfo.do">
+						<c:param name="memberNo" value="${loginUser.memberNo}"/>
+					</c:url>
+                    <li><a href="${myInfo}">회원정보 확인</a></li>
+                    <c:url var="withdrawal" value="myWithdrawal.do">
+						<c:param name="memberNo" value="${loginUser.memberNo}"/>
+					</c:url>
+                    <li><a href="${withdrawal}">회원탈퇴</a></li>
                 </ul>
             </li>
         </ul>
@@ -244,16 +286,22 @@
 	          </div>
 	          <div class="cart">
 	            <div class="sub">
-	              <span class="title"><a href="#" style="color: black;">장바구니</a></span>
+		            <c:url var="clist" value="cartList.do">
+						<c:param name="memberNo" value="${loginUser.memberNo}"/>
+					</c:url> 
+	              <span class="title"><a href="${clist}" style="color: black;">장바구니</a></span>
 	              <br><br>
-	              <span class="count"><a href="#" style="color :#115D8C;">0<span class="etc">&nbsp;건</span></a></span>
+	              <span class="count"><a href="${clist}" style="color :#115D8C;">0<span class="etc">&nbsp;건</span></a></span>
 	            </div>
 	          </div>
 	          <div class="point">
 	            <div class="sub">
-	              <span class="title"><a href="#" style="color: black;">적립금</a></span>
+	            	<c:url var="plist" value="pointList.do">
+						<c:param name="memberNo" value="${loginUser.memberNo}"/>
+					</c:url>
+	              <span class="title"><a href="${plist}" style="color: black;">적립금</a></span>
 	              <br><br>
-	              <span class="count"><a href="#" style="color :#115D8C;">0<span class="etc">&nbsp;건</span></a></span>
+	              <span class="count"><a href="${plist}" style="color :#115D8C;">0<span class="etc">&nbsp;건</span></a></span>
 	            </div>
 	          </div>
 	        </div>
@@ -265,23 +313,41 @@
 	        <table>
 	          <tr>
 	            <td style="width: 20%;" class="top bottom">답변 상태</td>
-	            <td style="width: 50%;" class="top bottom">문의 제목</td>
-	            <td style="width: 30%;" class="top bottom">작성일</td>
+	            <td style="width: 30%;" class="top bottom">문의 제목</td>
+	            <td style="width: 30%;" class="top bottom">문의 내용</td>
+	            <td style="width: 20%;" class="top bottom">작성일</td>
 	          </tr>
-	          <tr>
-	            <td>
-	              <div style="border:1px solid black; width: 40%; height:30px; margin: 0 auto;"><span style="line-height:30px;">답변대기</span></div>
-	            </td>
-	            <td>배송 언제오나요?</td>
-	            <td>2020.08.05</td>
+	          <c:forEach var="i" items="${list}">
+	          	<c:if test="${i.inquiryYN eq 'Y'}">
+		            <c:url var="alist" value="selectAnswer.do">
+						<c:param name="boardNo" value="${i.boardNo}"/>
+					</c:url>
+          		</c:if>
+	          	<c:if test="${i.inquiryYN eq 'N'}">
+	          	<tr id="inquiry">
+	          			<td>
+			              <div style="border:1px solid black; width: 40%; height:30px; margin: 0 auto;"><span style="line-height:30px;">답변대기</span></div>
+			            </td>
+	          	</c:if>
+	          		<c:if test="${empty i.inquiryYN}">
+	          		<tr id="inquiry">
+	          			<td>
+			              <div style="border:1px solid black; width: 40%; height:30px; margin: 0 auto;"><span style="line-height:30px;">답변대기</span></div>
+			            </td>
+	          		</c:if>
+		            <c:if test="${i.inquiryYN eq 'Y'}">
+		            <tr style="cursor:pointer;" onclick="getReply(${i.boardNo})" id="inquiry">
+	          			<td>
+			              <div style="border:1px solid black; width: 40%; height:30px; margin: 0 auto;"><span style="line-height:30px;">답변완료</span></div>
+			            </td>
+	          		</c:if>
+		            <td>${i.title}</td>
+		            <td>${i.content}</td>
+	            	<td>${i.writeDate}</td>
 	          </tr>
-	          <tr>
-	            <td>
-	              <div style="border:1px solid black; width: 40%; height:30px; margin: 0 auto;"><span style="line-height:30px;">답변대기</span></div>
-	            </td>
-	            <td>배송 언제오나요?</td>
-	            <td>2020.08.05</td>
+	          <tr id="reply" style="display:none;">
 	          </tr>
+	          </c:forEach>
 	        </table>
 	      </div>
 	      <button class="inquiry_btn">1:1 문의하기</button>
@@ -289,5 +355,55 @@
     </div>
     <br style="clear:both;">
    	<jsp:include page="../common/footer.jsp"/>
+   	
+   	<script>
+   		function getReply(boardNo){
+   			var obj = $("#reply");
+	   		  if( obj.hasClass("show") ){
+	   			obj.hide();
+	   		  	obj.removeClass("show");	   		    
+	   		  }else{
+	   			obj.show();
+	   		    obj.addClass("show");
+	   		  }
+   			$.ajax({
+   				url:"inquiryReply.do",
+   				data:{boardNo:boardNo},
+   				dataType:"json",
+   				success:function(data){
+   					$tableBody = $("#reply");
+					$tableBody.html("");
+					
+					var $rContent;
+					var $rCreateDate;
+
+					$rContent = $("<td colspan='3'>").text(data.inquiryContent);
+					$rCreateDate = $("<td>").text(data.inquiryDate);
+					
+					$tableBody.append($rContent);
+					$tableBody.append($rCreateDate);
+   				},
+				error:function(request, status, errorData){
+                    alert("error code: " + request.status + "\n"
+                          +"message: " + request.responseText
+                          +"error: " + errorData);
+               }
+
+   			})	
+   		}
+   		
+   		$(".plusIcon").on("click",function(){
+   		  var obj = $(this);
+   		  if( obj.hasClass("glyphicon-plus") ){
+   		    obj.hide();
+   		    obj.next().show();            
+   		    obj.parent().parent().next().show();
+   		  }else{
+   		     obj.hide();
+   		     obj.prev().show();
+   		     obj.parent().parent().next().hide();
+   		  }
+   		});
+   	</script>
 </body>
 </html>

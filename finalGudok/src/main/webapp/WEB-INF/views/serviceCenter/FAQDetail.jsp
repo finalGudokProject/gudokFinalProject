@@ -42,11 +42,11 @@
       <div class="col-3">
         <h1 align="center">고객센터</h1>
         <ul class="list" id="list">
-            <li style="margin-bottom: 5%;"><img src="resources/images/Alert.png" style="width:20%; height:20%;margin-bottom:3%"><a id="notice" href="sc_notice.html">공지사항</a></li>
-            <li style="margin-bottom: 5%;"><img src="resources/images/FAQ.png" style="width:20%; height:20%;margin-bottom:3%"><a id="FAQ" style="color:rgb(0, 125, 255);" readonly>FAQ</a></li>
-            <li style="margin-bottom: 5%;"><img src="resources/images/inquiary.png" style="width:20%; height:20%;margin-bottom:3%"><a id="inquiary"  href="sc_inquriary.html">1:1문의</a></li>
-            <li style="margin-bottom: 5%;"><img src="resources/images/proposal.png" style="width:20%; height:20%;margin-bottom:3%"><a id="product_proposal"  href="sc_proposal.html">상품제안</a></li>
-            <li style="margin-bottom: 5%;"><img src="resources/images/benefit.png" style="width:20%; height:20%;margin-bottom:3%"><a id="tier_benefit"  href="sc_benefit.html">등급별 혜택</a></li>
+            <li style="margin-bottom: 5%;"><img src="resources/images/Alert.png" style="width:20%; height:20%;margin-bottom:3%"><a href="noticeList.do">공지사항</a></li>
+            <li style="margin-bottom: 5%;"><img src="resources/images/FAQ.png" style="width:20%; height:20%;margin-bottom:3%"><a style="color:rgb(0, 125, 255);" readonly>FAQ</a></li>
+            <li style="margin-bottom: 5%;"><img src="resources/images/inquiary.png" style="width:20%; height:20%;margin-bottom:3%"><a href="inquriaryList.do">1:1문의</a></li>
+            <li style="margin-bottom: 5%;"><img src="resources/images/proposal.png" style="width:20%; height:20%;margin-bottom:3%"><a href="productProposal.do">상품제안</a></li>
+        	<li style="margin-bottom: 5%;"><img src="resources/images/benefit1.png" style="width:20%; height:20%;margin-bottom:3%"><a href="tierOfBenefit.do">등급별 혜택</a></li>
         </ul>
       </div>
       <div class="col-9">
@@ -55,14 +55,19 @@
             <table style=" margin-top:15px">
                 <thead style="text-align: center;">
                   <tr>
-                    <th style="width:5%; padding:20px;">제목</th><td style="width: 35%;">아이디 어떻게 찾나요?</td>
+                    <th style="width:10%; padding:20px;">제목</th>
+                    <td style="width: 35%;">${board.bTitle }</td>
+                    <th style="width: 10%;">작성일</th>
+                    <td style="width: 10%;">${board.bWrite_date }</td>
+                    <th style="width: 5%;">조회수</th>
+                    <td style="width: 5%;">${board.bRead_num }</td>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                      <td colspan="4" style="height:auto; padding:5%">
+                      <td colspan="6" style="height:auto; padding:5%">
                         <span style="margin:auto">
-                         	 아이디는 이름과 이메일을 아이디 찾기 창에 들어가서 인증하면 알 수 있습니다.
+                        ${board.bContent }
                         </span>
                       </td>  
                   </tr>
@@ -71,12 +76,15 @@
       
 
 
+             <br><br><br>
+            <a href="FAQList.do" type="button" class="btn btn-primary" style="float:right;">목록으로</a>
+            </div>
+            </div>
+            </div>
+            
             <br><br><br>
-            <a href="sc_notice.html" type="button" class="btn btn-primary" style="float:right;">목록으로</a>
-       </div>
-       </div>
-       </div>
-       
-       <br><br><br>
+            <footer class="page-footer font-small indigo">
+				<jsp:include page="../common/footer.jsp" />
+			</footer>
 </body>
 </html>

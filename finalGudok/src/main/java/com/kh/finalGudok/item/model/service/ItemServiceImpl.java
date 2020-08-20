@@ -12,10 +12,15 @@ import com.kh.finalGudok.item.model.vo.Board;
 import com.kh.finalGudok.item.model.vo.Cart;
 import com.kh.finalGudok.item.model.vo.Event;
 import com.kh.finalGudok.item.model.vo.Heart;
+import com.kh.finalGudok.item.model.vo.Image;
 import com.kh.finalGudok.item.model.vo.Item;
 import com.kh.finalGudok.item.model.vo.ItemListView;
 import com.kh.finalGudok.item.model.vo.PageInfo;
 import com.kh.finalGudok.item.model.vo.Review;
+
+import com.kh.finalGudok.item.model.vo.ReviewImage;
+import com.kh.finalGudok.item.model.vo.ReviewView;
+import com.kh.finalGudok.member.model.vo.Member;
 
 @Service("iService")
 public class ItemServiceImpl implements ItemService {
@@ -264,15 +269,169 @@ public class ItemServiceImpl implements ItemService {
 	}
 
 	@Override
+	public ArrayList<ItemListView> selectDLists(PageInfo pi,String sortNo) {
+		return iDao.selectDLists(pi,sortNo);
+	}
+
+	@Override
+	public ArrayList<ItemListView> selectMLists(PageInfo pi, String sortNo) {
+		return iDao.selectMLists(pi, sortNo);
+	}
+
+	@Override
+	public ArrayList<ItemListView> selectBLists(PageInfo pi, String sortNo) {
+		return iDao.selectBLists(pi, sortNo);
+	}
+
+	@Override
+	public ArrayList<ItemListView> selectSLists(PageInfo pi, String sortNo) {
+		return iDao.selectSLists(pi, sortNo);
+	}
+
+	@Override
+	public ArrayList<ItemListView> selectHLists(PageInfo pi, String sortNo) {
+		return iDao.selectHLists(pi, sortNo);
+	}
+
+	@Override
+	public ArrayList<ItemListView> selectDiLists(PageInfo pi, String sortNo) {
+		return iDao.selectDiLists(pi, sortNo);
+	}
+
+	@Override
+	public int insertReviewImage1(Image i) {
+		return iDao.insertReviewImage1(i);
+	}
+
+	@Override
+	public int insertReviewImage2(Image i) {
+		return iDao.insertReviewImage2(i);
+	}
+	
+	@Override
+	public int insertRI(ReviewImage ri) {
+		return iDao.insertRI(ri);
+	}
+
+	@Override
+	public int livingCateCount(String categoryNo) {
+		return iDao.livingCateCount(categoryNo);
+	}
+
+	@Override
+	public ArrayList<ItemListView> livingCateList(PageInfo pi, String categoryNo, String sortNo) {
+		return iDao.livingCateList(pi, categoryNo, sortNo);
+	}
+
+	@Override
+	public ArrayList<Item> selectNewList(PageInfo pi, String sortNo) {
+		return iDao.selectNewList(pi, sortNo);
+	}
+
+	@Override
+	public ArrayList<Item> selectEventList(PageInfo pi, String sortNo) {
+		return iDao.selectEventList(pi, sortNo);
+	}
+
+	@Override
+	public ArrayList<ReviewView> selectReviewDetail(int reviewNo) {
+		return iDao.selectReviewDetail(reviewNo);
+	}
+
+	@Override
+	public ArrayList<Item> selectLivingList(PageInfo pi, String sortNo) {
+		return iDao.selectLivingList(pi, sortNo);
+	}
+
+	@Override
+	public ArrayList<Item> selectList(PageInfo pi, String sortNo) {
+		return iDao.selectList(pi, sortNo);
+	}
+
+	@Override
+	public int reviewUpdate(Review r) {
+		return iDao.reviewUpdate(r);
+	}
+
+	@Override
+	public ArrayList<ReviewView> selectAllReviewImg(int itemNo) {
+		return iDao.selectAllReviewImg(itemNo);
+	}
+
+	@Override
+	public int reviewDelete(int reviewNo) {
+		return iDao.reviewDelete(reviewNo);
+	}
+
+	@Override
+	public Item reviewItemName(int itemNo) {
+		return iDao.reviewItemName(itemNo);
+	}
+
+	@Override
+	public ArrayList<ReviewView> selectDeleteReview(int reviewNo) {
+		return iDao.selectDeleteReview(reviewNo);
+	}
+
+	@Override
+	public int reviewImageDelete(int reviewNo) {
+		return iDao.reviewImageDelete(reviewNo);
+	}
+
+	@Override
+	public int imageDelete(int reviewNo) {
+		return iDao.imageDelete(reviewNo);
+	}
+
+	@Override
+	public int checkImage(int reviewNo) {
+		return iDao.checkImage(reviewNo);
+	}
+
+	@Override
+	public int updateReviewRate0(int itemNo) {
+		return iDao.updateReviewRate0(itemNo);
+	}
+
+
+//	@Override
+//	public int l1Count() {
+//		return iDao.l1Count();
+//	}
+//
+//	@Override
+//	public int l2Count() {
+//		return iDao.l2Count();
+//	}
+//
+//	@Override
+//	public int l3Count() {
+//		return iDao.l3Count();
+//	}
+//
+//	@Override
+//	public ArrayList<ItemListView> l1List(PageInfo pi, String sortNo) {
+//		return iDao.l1List(pi, sortNo);
+//	}
+//
+//	@Override
+//	public ArrayList<ItemListView> l2List(PageInfo pi, String sortNo) {
+//		return iDao.l2List(pi, sortNo);
+//	}
+//
+//	@Override
+//	public ArrayList<ItemListView> l3List(PageInfo pi, String sortNo) {
+//		return iDao.l3List(pi, sortNo);
+//	}
+	
+	@Override
 	public int updateEventStatusN(ArrayList<Event> dEventArr) {
 		return iDao.updateEventStatusN(dEventArr);
-		
 	}
 	
 	@Override
 	public int updateEventStatusY(ArrayList<Event> dEventArr) {
 		return iDao.updateEventStatusY(dEventArr);
-		
 	}
 
 
@@ -299,6 +458,7 @@ public class ItemServiceImpl implements ItemService {
 		
 		return iDao.deleteBannerItem(dEventArr);
 	}
+
 
 	@Override
 	public int updateItemStatusY(ArrayList<BannerItem> iArr) {
@@ -414,5 +574,8 @@ public class ItemServiceImpl implements ItemService {
 	
 	
 	
+
+
+
 
 }

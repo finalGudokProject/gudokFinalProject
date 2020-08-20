@@ -260,7 +260,7 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 			
 			<div class="col-md-6" style="padding:0 2% 0 2%;"><img src="${contextPath }/resources/images/breadLogo.jpg" id="logoImg"></div>
 			<div class="col-md-6" style="margin-bottom:2%;">
-					<div style="margin-top:3%;">카테고리명</div>
+					<div style="margin-top:3%;">${ilv.categoryName }</div>
 					<div class="row">
 					<div class="col-md-8" style="padding:0px 15px;margin:0px;font-size:35px;vertical-align:middle;"><b>${ilv.itemName }</b></div>
 					<div class="col-md-4" style="padding-right:4%;margin:0px;text-align:right;font-size:35px;">
@@ -271,7 +271,9 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 						<span id ="heart" class="liked" title="찜하기"><i class="fa fa-heart" aria-hidden="true"></i> </span>
 					</c:if>
 					</div>
-					<div class="col-md-6" style="padding:0 15px;font-size:20px;">${ilv.itemMemo }</div>
+					<div class="col-md-6" style="padding:0 15px;font-size:20px;">
+						${ilv.itemMemo }
+					</div>
 					<div class="col-md-6" style="padding-right:4%;text-align:right;">
 						<span style="text-align:right;" id="whatSpan" data-toggle="modal" data-target="#intro" title="상품 문의"><img id="whatImg"src="${contextPath }/resources/images/what.png" style="width:35px;height:35px;border:2px solid black;border-radius:5px;display:inline-block;vertical-align:middle;"></span>
 					</div>
@@ -281,14 +283,14 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 				</div>
 				<div class="starRev">
 							<c:choose>
-								<c:when test="${i.itemRate < 1}">
+								<c:when test="${ilv.itemRate < 1}">
 									<span class="starRv">1</span>
 									<span class="starRv">2</span>
 									<span class="starRv">3</span>
 									<span class="starRv">4</span>
 									<span class="starRv">5</span>
 								</c:when>
-								<c:when test="${i.itemRate < 2 }">
+								<c:when test="${ilv.itemRate < 2 }">
 									<span class="starRv on">1</span>
 									<span class="starRv">2</span>
 									<span class="starRv">3</span>
@@ -296,7 +298,7 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 									<span class="starRv">5</span>
 								</c:when>
 								
-								<c:when test="${i.itemRate < 3 }">
+								<c:when test="${ilv.itemRate < 3 }">
 									<span class="starRv on">1</span>
 									<span class="starRv on">2</span>
 									<span class="starRv">3</span>
@@ -304,7 +306,7 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 									<span class="starRv">5</span>
 								</c:when>
 								
-								<c:when test="${i.itemRate < 4 }">
+								<c:when test="${ilv.itemRate < 4 }">
 									<span class="starRv on">1</span>
 									<span class="starRv on">2</span>
 									<span class="starRv on">3</span>
@@ -312,7 +314,7 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 									<span class="starRv">5</span>
 								</c:when>
 								
-								<c:when test="${i.itemRate < 5 }">
+								<c:when test="${ilv.itemRate < 5 }">
 									<span class="starRv on">1</span>
 									<span class="starRv on">2</span>
 									<span class="starRv on">3</span>
@@ -465,44 +467,61 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 			$("#reviewBtn").on("click", function(e){
 				e.preventDefault();
 				/* console.log($("#reviewTxt").val().length); */
-				if($("#reviewTxt").val().length < 10){
-					swal("","10자 이상으로 입력해 주세요.","warning");
-				}else if($("input[name=reviewRadio]:checked").val() == "1" || $("input[name=reviewRadio]:checked").val() == "2"){
-					swal({
-						text : "무분별한 평점 테러는 다른 사람에게 피해를 줄 수 있습니다.\n 다시 작성하시겠습니까?",
-						icon : "warning",
-						buttons : ["예", "아니오"],
-						closeOnEsc: false,
-						dangerMode : true,
-					}).then((result)=>{
-						if(result){
-							swal("상품평","등록 완료되었습니다.","success").then((result)=>{
-								if(result){
-									$("#reviewForm").submit();
-								}
-							});
-						}else{
-							$("#reviewTxt").focus();
-						}
-					})	
-				}else{
-					swal({
-						text : "상품평을 등록하시겠습니까?",
-						buttons : ["예","아니오"],
-						closeOnEsc: false,
-						dangerMode : true,
-					}).then((result)=>{
-						if(result){
+				if(${loginUser.memberId == null}){
+					swal("","로그인한 회원만 사용 가능합니다.","error").then((result)=>{
+						swal({
+							text : "로그인 페이지로 이동하시겠습니까?",
+							buttons : ["예", "아니오"],
+							dangerMode : false,
+							closeOnEsc : false,
+						}).then((login)=>{
+							if(login){
+								
+							}else{
+								swal("","로그인 페이지로");
+							}
+						})
+					});
+				}else if(${loginUser.memberId != null}){
+					if($("#reviewTxt").val().length < 10){
+						swal("","10자 이상으로 입력해 주세요.","warning");
+					}else if($("input[name=reviewRadio]:checked").val() == "1" || $("input[name=reviewRadio]:checked").val() == "2"){
+						swal({
+							text : "무분별한 평점 테러는 다른 사람에게 피해를 줄 수 있습니다.\n 다시 작성하시겠습니까?",
+							icon : "warning",
+							buttons : ["예", "아니오"],
+							closeOnEsc: false,
+							dangerMode : true,
+						}).then((result)=>{
+							if(result){
+								swal("상품평","등록 완료되었습니다.","success").then((result)=>{
+									if(result){
+										$("#reviewForm").submit();
+									}
+								});
+							}else{
+								$("#reviewTxt").focus();
+							}
+						})	
+					}else{
+						swal({
+							text : "상품평을 등록하시겠습니까?",
+							buttons : ["예","아니오"],
+							closeOnEsc: false,
+							dangerMode : true,
+						}).then((result)=>{
+							if(result){
 
-						}else{
-							swal("상품평","등록 완료되었습니다.","success").then((result)=>{
-								if(result){
-									$("#reviewForm").submit();
-								}
-							})
-							
-						}
-					})
+							}else{
+								swal("상품평","등록 완료되었습니다.","success").then((result)=>{
+									if(result){
+										$("#reviewForm").submit();
+									}
+								})
+								
+							}
+						})
+					}
 				}
 			})
 		})
@@ -566,21 +585,13 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 								</c:choose>
 								<div style="display:inline-block;color:gray;">등록일 : ${r.reviewDate }</div>
 							</div>
-							<c:choose>
-								<c:when test="${!empty r.reviewImg1 && !empty r.reviewImg2 }">
-									<div><img src="${contextPath }/resources/iuploadFiles/${r.reviewImg1}" class="reviewImgClass"><img src="${contextPath }/resources/iuploadFiles/${r.reviewImg2}" class="reviewImgClass"></div>
-								</c:when>
-								<c:when test="${!empty r.reviewImg1 && empty r.reviewImg2}">
-									<div><img src="${contextPath }/resources/iuploadFiles/${r.reviewImg1}" class="reviewImgClass"></div>
-								</c:when>
-								<c:when test="${!empty r.reviewImg2 && empty r.reviewImg1}">
-									<div><img src="${contextPath }/resources/iuploadFiles/${r.reviewImg2}" class="reviewImgClass"></div>
-								</c:when>
-								<c:when test="${empty r.reviewImg1 || empty r.reviewImg2 }">
-									<div></div>
-								</c:when>
-								<c:otherwise></c:otherwise>
-							</c:choose>
+							<div>
+								<c:forEach var="i" items="${img }">
+									<c:if test="${i.reviewNo == r.reviewNo && !empty i.imageRename}">
+										<img src="${contextPath }/resources/iuploadFiles/${i.imageRename}" class="reviewImgClass" style="width:100%;height:100%;">
+									</c:if>
+								</c:forEach>
+							</div>
 							<div class="reviewTDiv">
 								<div class="reviewText">${r.reviewContent }</div>
 							</div>
@@ -644,21 +655,13 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 								</c:choose>
 								<div style="display:inline-block;color:gray;">등록일 : ${r.reviewDate }</div>
 							</div>
-							<c:choose>
-								<c:when test="${!empty r.reviewImg1 && !empty r.reviewImg2 }">
-									<div><img src="${contextPath }/resources/iuploadFiles/${r.reviewImg1}" class="reviewImgClass"><img src="${contextPath }/resources/iuploadFiles/${r.reviewImg2}" class="reviewImgClass"></div>
-								</c:when>
-								<c:when test="${!empty r.reviewImg1 && empty r.reviewImg2}">
-									<div><img src="${contextPath }/resources/iuploadFiles/${r.reviewImg1}" class="reviewImgClass"></div>
-								</c:when>
-								<c:when test="${!empty r.reviewImg2 && empty r.reviewImg1}">
-									<div><img src="${contextPath }/resources/iuploadFiles/${r.reviewImg2}" class="reviewImgClass"></div>
-								</c:when>
-								<c:when test="${empty r.reviewImg1 || empty r.reviewImg2 }">
-									<div></div>
-								</c:when>
-								<c:otherwise></c:otherwise>
-							</c:choose>
+							<div>
+								<c:forEach var="i" items="${img }">
+									<c:if test="${i.reviewNo == r.reviewNo && !empty i.imageRename}">
+										<img src="${contextPath }/resources/iuploadFiles/${i.imageRename}" class="reviewImgClass" style="width:100%;height:100%;">
+									</c:if>
+								</c:forEach>
+							</div>
 							<div class="reviewTDiv">
 								<div class="reviewText">${r.reviewContent }</div>
 							</div>
@@ -668,7 +671,12 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 			</div>
 		</div>
 		<!-- 리뷰 끝 -->
+		<c:if test="${review.size() != 0}">
 		<div style="text-align:center;margin-top:3%;"><button type="button" style="font-size:30px;height:auto;" id="allReviewBtn">상품명 모든 리뷰 보러가기</button></div>
+		</c:if>
+		<c:if test="${review.size() == 0}">
+		<div style="text-align:center;margin-top:3%;font-size:40px;">해당 상품의 리뷰가 없습니다.</div>
+		</c:if>
 		
 	</div>
 	<br><br><br><br><br><br>
@@ -705,7 +713,7 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 					var memberId = "${loginUser.memberId}";
 					var email = "${loginUser.email}";
 					$(".modalAnsBtn").on("click", function(){
-					var content = $(this).parent().prev().val();
+						var content = $(this).parent().prev().val();
 						console.log(title + "," +content + "," + itemNo + "," + memberId);
 						if($("#ansText").val() <= 10){
 							swal("","10자 이상 입력해 주십시오.","error");
@@ -727,6 +735,7 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 											  if(data == "success"){
 												  swal("","문의하신 내용은 어디서 확인하실 수 있습니다.","success").then((result)=>{
 														if(result){
+															$("#inquiredText").val("");
 															modal.style.display = "none";
 														}
 												});
@@ -738,8 +747,6 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 							                	+"error: " + errorData);
 							               }
 									  })
-									
-									
 								}
 							})
 						}
@@ -952,68 +959,86 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 		var memberId = "${loginUser.memberId}";
 		var email = "${loginUser.email}";
 		$("#heart").click(function(){
-			if($("#heart").hasClass("liked")){
-				swal({
-					text : "찜목록에서 삭제하시겠습니까?",
-					icon : "warning",
-					buttons : ["예", "아니오"],
-					closeOnEsc: false,
-					dangerMode : true,
-				  }).then((result)=>{
-					  if(result){
-					      $("#heart").html('<i class="fa fa-heart" aria-hidden="true"></i>');
-					      $("#heart").addClass("liked");
-					  }else{
-						  $.ajax({
-							  url : "choiceDel.do",
-							  data : {itemNo:itemNo, memberNo:memberNo, memberId:memberId, email:email},
-							  type : "POST",
-							  success:function(data){
-								  if(data == "success"){
-									  $("#heart").html('<i class="fa fa-heart-o" aria-hidden="true"></i>');
-								      $("#heart").removeClass("liked");
-								      swal("찜하기","찜목록에서 삭제되었습니다.","success");
-								  }
-							  },
-							  error:function(request, status, errorData){
-				                	alert("error code: " + request.status + "\n"
-				                	+"message: " + request.responseText
-				                	+"error: " + errorData);
-				               }
-						  })
-					  }
-				  })
-			}else{
-				swal({
-					text : "찜목록에 추가하시겠습니까?",
-					buttons : ["예", "아니오"],
-					closeOnEsc: false,
-					dangerMode : true,
-				  }).then((result)=>{
-					  if(result){
-						  $("#heart").html('<i class="fa fa-heart-o" aria-hidden="true"></i>');
-					      $("#heart").removeClass("liked");
-					  }else{
-						  $.ajax({
-							  url : "choice.do",
-							  data : {itemNo:itemNo, memberNo:memberNo, memberId:memberId, email:email},
-							  type : "POST",
-							  success:function(data){
-								  if(data == "success"){
-									  $("#heart").html('<i class="fa fa-heart" aria-hidden="true"></i>');
-								      $("#heart").addClass("liked");
-								      swal("찜하기","찜목록에 추가되었습니다.","success");
-								  }
-							  },
-							  error:function(request, status, errorData){
-				                	alert("error code: " + request.status + "\n"
-				                	+"message: " + request.responseText
-				                	+"error: " + errorData);
-				               }
-						  })
-					  }
-				  })
+			if(memberId != ""){
+				if($("#heart").hasClass("liked")){
+					swal({
+						text : "찜목록에서 삭제하시겠습니까?",
+						icon : "warning",
+						buttons : ["예", "아니오"],
+						closeOnEsc: false,
+						dangerMode : true,
+					  }).then((result)=>{
+						  if(result){
+						      $("#heart").html('<i class="fa fa-heart" aria-hidden="true"></i>');
+						      $("#heart").addClass("liked");
+						  }else{
+							  $.ajax({
+								  url : "choiceDel.do",
+								  data : {itemNo:itemNo, memberNo:memberNo, memberId:memberId, email:email},
+								  type : "POST",
+								  success:function(data){
+									  if(data == "success"){
+										  $("#heart").html('<i class="fa fa-heart-o" aria-hidden="true"></i>');
+									      $("#heart").removeClass("liked");
+									      swal("찜하기","찜목록에서 삭제되었습니다.","success");
+									  }
+								  },
+								  error:function(request, status, errorData){
+					                	alert("error code: " + request.status + "\n"
+					                	+"message: " + request.responseText
+					                	+"error: " + errorData);
+					               }
+							  })
+						  }
+					  })
+				}else{
+					swal({
+						text : "찜목록에 추가하시겠습니까?",
+						buttons : ["예", "아니오"],
+						closeOnEsc: false,
+						dangerMode : true,
+					  }).then((result)=>{
+						  if(result){
+							  $("#heart").html('<i class="fa fa-heart-o" aria-hidden="true"></i>');
+						      $("#heart").removeClass("liked");
+						  }else{
+							  $.ajax({
+								  url : "choice.do",
+								  data : {itemNo:itemNo, memberNo:memberNo, memberId:memberId, email:email},
+								  type : "POST",
+								  success:function(data){
+									  if(data == "success"){
+										  $("#heart").html('<i class="fa fa-heart" aria-hidden="true"></i>');
+									      $("#heart").addClass("liked");
+									      swal("찜하기","찜목록에 추가되었습니다.","success");
+									  }
+								  },
+								  error:function(request, status, errorData){
+					                	alert("error code: " + request.status + "\n"
+					                	+"message: " + request.responseText
+					                	+"error: " + errorData);
+					               }
+							  })
+						  }
+					  })
+				}
+			}else if(memberId == ""){
+				swal("","로그인한 회원만 사용 가능합니다.","error").then((result)=>{
+					swal({
+						text : "로그인 페이지로 이동하시겠습니까?",
+						buttons : ["예", "아니오"],
+						dangerMode : false,
+						closeOnEsc : false,
+					}).then((login)=>{
+						if(login){
+							
+						}else{
+							swal("","로그인 페이지로");
+						}
+					})
+				});
 			}
+			
 		    /* if($("#heart").hasClass("liked")){
 		      $("#heart").html('<i class="fa fa-heart-o" aria-hidden="true"></i>');
 		      $("#heart").removeClass("liked");
@@ -1125,7 +1150,24 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 			var btn = document.getElementById("whatSpan");
 			var span = document.getElementsByClassName("close")[0];
 			btn.onclick = function() {
-				modal.style.display = "block";
+				if(${loginUser.memberId == null}){
+					swal("","로그인한 회원만 사용 가능합니다.","error").then((result)=>{
+						swal({
+							text : "로그인 페이지로 이동하시겠습니까?",
+							buttons : ["예", "아니오"],
+							dangerMode : false,
+							closeOnEsc : false,
+						}).then((login)=>{
+							if(login){
+								
+							}else{
+								swal("","로그인 페이지로");
+							}
+						})
+					});
+				}else if(${loginUser.memberId != null}){
+					modal.style.display = "block";
+				}
 			}
 			span.onclick = function() {
 				modal.style.display = "none";

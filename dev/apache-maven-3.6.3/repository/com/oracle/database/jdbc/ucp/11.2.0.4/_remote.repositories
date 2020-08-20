@@ -1,0 +1,13 @@
+<<<<<<< HEAD
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Thu Aug 13 16:51:48 KST 2020
+ucp-11.2.0.4.jar>central=
+ucp-11.2.0.4.pom>central=
+ucp-11.2.0.4-sources.jar>central=
+=======
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Thu Aug 13 14:10:45 KST 2020
+ucp-11.2.0.4.jar>central=
+ucp-11.2.0.4.pom>central=
+ucp-11.2.0.4-sources.jar>central=
+>>>>>>> refs/remotes/origin/dev_Jaemyung

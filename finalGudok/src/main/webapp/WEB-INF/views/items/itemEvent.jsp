@@ -27,6 +27,9 @@
 		margin-right:4rem;
 		line-height:100px;
 	}
+	#cateName span:hover{
+		cursor:pointer;
+	}
 	#cateName img{
 		vertical-align:middle;
 	}
@@ -118,14 +121,8 @@
 	
 	/* .sortDivC :hover{
 		cursor:pointer;
-		background:lightyellow;
+		background:yellow;
 	} */
-	
-	#sortTable td :hover{
-		cursor:pointer;
-		background:lightyellow;
-	}
-	
 	
 	.starR{
 	  background: url('http://miuu227.godohosting.com/images/icon/ico_review.png') no-repeat right 0;
@@ -210,6 +207,25 @@
 		font-size:30px;
 	}
 	
+	.detailDiv :hover{
+		cursor:pointer;
+	}
+	
+	.cardHeader{
+		overflow:hidden;
+	}
+	.cardHeader img{
+		height:100%;
+		width:100%;
+		object-fit:cover;
+		transform:(1.0);
+		transition:transform.5s;
+	}
+	
+	.cardHeader img:hover{
+		transform:scale(1.1);
+		transition:transform.5s;
+	}
 
 </style>
 </head>
@@ -222,24 +238,78 @@
 		<img src="${contextPath }/resources/images/event.png" style="width:70px;height:70px;">
 		<span>이벤트</span>
 		</div>
-			<div style="border-bottom:1px solid lightgray;">
-			<table align="center" style="margin-bottom:1%;" id="sortTable">
+			<div style="border-top:1px solid lightgray;border-bottom:1px solid lightgray;">
+			<table align="center" style="margin-bottom:1%;" class="sortTable">
 				<tr>
-					<td><div class="sortDivC">
+					<td class="sortRank" id="newSort"><input type="hidden" value="" class="catchHidden"><input type="hidden" value="S1" class="catchNew"><div class="sortDivC">
 					<img src="${contextPath }/resources/images/newItem.png" class="sortClass"><span style="display:block;">신상품순</span>
 					</div></td>
-					<td><div class="sortDivC">
+					<td class="sortRank" id="bestSort"><input type="hidden" value="" class="catchHidden"><input type="hidden" value="S2" class="catchBest"><div class="sortDivC">
 					<img src="${contextPath }/resources/images/popul.png" class="sortClass"><span style="display:block;">인기순</span>
 					</div></td>
-					<td><div class="sortDivC">
+					<td class="sortRank" id="highSort"><input type="hidden" value="" class="catchHidden"><input type="hidden" value="S3" class="catchHigh"><div class="sortDivC">
 					<img src="${contextPath }/resources/images/high.png" class="sortClass"><span style="display:block;">높은 가격순</span>
 					</div></td>
-					<td><div class="sortDivC">
+					<td class="sortRank" id="lowSort"><input type="hidden" value="" class="catchHidden"><input type="hidden" value="S4" class="catchLow"><div class="sortDivC">
 					<img src="${contextPath }/resources/images/low.png" class="sortClass"><span style="display:block;">낮은 가격순</span>
 					</div></td>
 				</tr>
 			</table>
 			</div>
+			<script>
+				$(function(){
+					$("#cateName span").on("click", function(){
+						location.href="itemEvent.do";
+					})
+				})
+			</script>
+			
+			<script>
+				$(function(){
+					console.log("${sortNo}");
+					if("${sortNo}" == "S1"){
+						$(".sortTable #newSort .sortDivC span").css({"background":"yellow","font-weight":"bold"});
+					}else if("${sortNo}" == "S2"){
+						$(".sortTable #bestSort .sortDivC span").css({"background":"yellow","font-weight":"bold"});
+					}else if("${sortNo}" == "S3"){
+						$(".sortTable #highSort .sortDivC span").css({"background":"yellow","font-weight":"bold"});
+					}else if("${sortNo}" == "S4"){
+						$(".sortTable #lowSort .sortDivC span").css({"background":"yellow","font-weight":"bold"});
+					}
+				})
+			</script>
+			<script>
+				$(function(){
+					$(".sortTable td").on("mouseenter", function(){
+						$(this).css("cursor","pointer");
+						if($(this).children().find("span").css("font-weight") == 700){
+							$(this).children().find("span").css({"background":"yellow","text-decoration":"underline"});
+						}else{
+							$(this).children().find("span").css({"background":"yellow"});
+						}
+					}).on("mouseleave", function(){
+						if($(this).children().find("span").css("font-weight") == 700){
+							$(this).children().find("span").css({"background":"yellow","text-decoration":"none"});
+						}else{
+							$(this).children().find("span").css({"background":"white"});
+						}
+					})
+				})
+			</script>
+			<script>
+				$(function(){
+					$(".sortRank").on("click", function(){
+						var hidden2 = $(this).find("input:nth-child(2)").val();
+						console.log(hidden2);
+						location.href="itemEvent.do?sortNo=" + hidden2;
+					})
+					$(".detailDiv").on("mouseenter", function(){
+						$(this).css({"box-shadow":"1px 1px 20px lightgray", "transition":"0.3s"});
+					}).on("mouseleave", function(){
+						$(this).css({"border":"1px solid lightgray","box-shadow":"none"});
+					})
+				})
+			</script>
 			
 	</div>
 	
@@ -265,7 +335,7 @@
 		<fmt:formatNumber var="discountPrice" value="${(i.itemPrice - i.itemPrice*(i.itemDiscount/100))}" type="number"/>
 		<fmt:formatNumber var="itemPrice" value="${i.itemPrice}" type="number"/>
 			<div class="col-4" onclick="location.href='${idetail}'">
-				<div class="card">
+				<div class="card detailDiv">
 					<div class="cardHeader">
 						<div class="circle">
 							<div id="ratePercentId" style="position:absolute;"><span>${i.itemDiscount }%</span></div>
@@ -275,7 +345,8 @@
 					</div>
 					<div class="cardBody">
 						<h3 class="card-title"><b>${i.itemName }</b></h3>
-						<h5>${i.itemMemo }</h5>
+						<c:if test="${!empty i.itemMemo }"><h5>${i.itemMemo}</h5></c:if>
+						<c:if test="${empty i.itemMemo }"><h5>${i.itemName}입니다.</h5></c:if>
 						<div class="itemPriceDiv">
 						<c:if test="${i.itemDiscount != 0}">
 							<s style="color:red;">${itemPrice }원</s>→${discountPrice }원
@@ -337,9 +408,14 @@
 							</c:choose>
 						  <div style="display:inline-block;color:gray;">(리뷰수:${i.reviewCount}개)</div>
 						</div>
-						
-						
-						  <div id="rateId">(평점 : ${i.itemRate }점 / 찜한 사람 : ${i.itemChoice }명)</div>
+						<div id="rateId">
+							  <c:if test="${i.itemRate == 0}">
+							  	(평점 : 0점 / 찜한 사람 : ${i.itemChoice }명)
+							  </c:if>
+							  <c:if test="${i.itemRate != 0}">
+							  	(평점 : ${i.itemRate}점 / 찜한 사람 : ${i.itemChoice }명)
+							  </c:if>
+						  </div>
 						</div>
 						<div class="row">
 							<div class="col-4" id="btnBlank"></div>
@@ -354,6 +430,29 @@
 			</div>
 		</c:forEach>
 		</div>
+		<c:forEach var="i" items="${list }" varStatus="vs">
+		<script>
+			$(function(){
+				$("#preview${vs.index}").on("click", function(event){
+					var preview = $(this).attr("id");
+					console.log(preview);
+					var review = $(this).next().val();
+					console.log(review);
+					event.stopPropagation();
+				})
+				$("#preview${vs.index}").on("click",function(){
+					var itemNo = $(this).next().val();
+					location.href="itemReview.do?itemNo="+itemNo;
+				})
+			})
+			
+		
+		</script>
+		</c:forEach>
+		</c:if>
+		
+		<c:if test="${empty list }">
+		
 		</c:if>
 		<c:if test="${!empty list}">
 			<div class="col-12">
@@ -426,17 +525,6 @@
 			$(this).find("li").css("display","none");
 		})
 	})
-	</script>
-	<script>
-		$(function(){
-			$(".cardHeader, .cardBody, #btnBlank, .cardFooter").click(function(){
-				var itemNo = $(this).find("input[type=hidden]").val();
-				console.log(itemNo);
-				location.href="itemDetail.do?itemNo+" + ${i.itemNo} + "&page="+${pi.currentPage};
-			}).mouseenter(function(){
-				$(this).css("cursor","pointer");
-			})
-		})
 	</script>
 	
 <jsp:include page="../common/footer.jsp"/>

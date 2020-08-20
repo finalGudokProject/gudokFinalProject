@@ -18,6 +18,21 @@ Bootstrap CSS
 <title>Menubar</title>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <style>
+/*폰트 적용*/
+body {
+	font-family: 'Jua', sans-serif;
+	color: #495057;
+}
+
+
+h3 {
+	color: black;
+}
+
+section {
+	margin-bottom: 50px;
+}
+
 /*상단 회원가입, 로그인, 고객센터 메뉴(#menu-list) */
 .menu-list {
 	line-height: 3;
@@ -78,6 +93,7 @@ Bootstrap CSS
 	margin-right: 50px;
 }
 
+/* 푸드, 리빙 카테고리 드롭다운 설정*/
 #food-menu, #living-menu {
 	background-color: #f8f9fa;
 	margin-left: 10px;
@@ -101,6 +117,7 @@ Bootstrap CSS
 	margin-left: 50px;
 }
 
+/*버튼 css 설정*/
 .btn {
 	border-color: #ced4da;
 	color: #495057;
@@ -111,23 +128,8 @@ Bootstrap CSS
 	color: black;
 }
 
-/* #searchBtn {
-	border-color: #ced4da;
-	color: #495057;
-} */
-
-/* #searchBtn:hover{
-	border-color: black;
-	color:black;
-} */
 ::placeholder {
 	font-size: small;
-}
-
-/*폰트 적용*/
-body {
-	font-family: 'Jua', sans-serif;
-	color: #495057;
 }
 
 #cardWrap>a {
@@ -137,14 +139,6 @@ body {
 a:hover {
 	text-decoration: none;
 	color: black;
-}
-
-h3 {
-	color: black;
-}
-
-section {
-	margin-bottom: 50px;
 }
 </style>
 <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap"
@@ -156,9 +150,9 @@ section {
 	<div class="userMenu">
 		<c:if test="${empty sessionScope.loginUser }">
 			<ul class="menu-list">
-				<li><a href="signUp.do">회원가입</a></li>
+				<li><a href="moveToSignUp.do">회원가입</a></li>
 				<li><a href="moveToLogin.do">로그인</a></li>
-				<li><a href="#">고객센터</a></li>
+				<li><a href="noticeList.do">고객센터</a></li>
 				<li><a href="#">Who is JH?</a></li>
 				<li><a href="payment.do">결제페이지</a>
 			</ul>
@@ -166,12 +160,12 @@ section {
 		<c:if test="${!empty sessionScope.loginUser }">
 			<ul class="menu-list">
 				<li><c:out value="${loginUser.memberName }님 환영합니다" /></li>
-				<c:url var="elist" value="exchangeList.do">
+				<c:url var="elist" value="pointList.do">
 					<c:param name="memberNo" value="${loginUser.memberNo}"/>
 				</c:url> 
 				<li><a href="${elist}">마이페이지</li>
 				<li><a href="logout.do">로그아웃</a></li>
-				<li><a href="#">고객센터</a></li>
+				<li><a href="noticeList.do">고객센터</a></li>
 				<li><a href="#">Who is JH?</a></li>
 				<li><a href="payment.do">결제페이지</a>
 			</ul>
@@ -273,9 +267,13 @@ section {
 
 	<!-- Optional JavaScript -->
 	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+<!-- 	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
 		integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-		crossorigin="anonymous"></script>
+		crossorigin="anonymous"></script> -->
+	<script
+       src="https://code.jquery.com/jquery-3.4.1.min.js"
+       integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+       crossorigin="anonymous"></script>
 	<script
 		src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
 		integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"

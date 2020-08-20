@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,7 +9,7 @@
 <title>Insert title here</title>
 <!-- Bootstrap CSS -->
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 
 <style>
 	#content {
@@ -170,12 +171,13 @@
     .heart {
       float: left;
       margin-left: 10%;
+      width:80%;
     }
 
     .heart_item {
-      float: left;
+      float:left;
       border: 1px solid #cccc;
-      width: 330px;
+      width: 300px;
       height: 180px;
       margin-top: 3%;
       margin-right: 3%;
@@ -188,7 +190,6 @@
     }
 
     .image {
-      float: left;
       width: 30%;
       height: auto;
       margin-top: 10%;
@@ -199,7 +200,6 @@
     }
 
     .image img {
-      float: left;
       width: 100px;
       height: auto;
     }
@@ -222,8 +222,14 @@
                         style="width: 25%; height: 25%; margin-right: 4%;">구독배송</a>
                 <ul>
                     <li><a href="#">구독 조회</a></li>
-                    <li><a href="#">배송 조회</a></li>
-                    <li><a href="#">교환 내역</a></li>
+                    <c:url var="dlist" value="deliveryList.do">
+						<c:param name="memberNo" value="${loginUser.memberNo}"/>
+					</c:url> 
+                    <li><a href="${dlist}">배송 조회</a></li>
+                    <c:url var="elist" value="exchangeList.do">
+						<c:param name="memberNo" value="${loginUser.memberNo}"/>
+					</c:url> 
+                    <li><a href="${elist}">교환 내역</a></li>
                 </ul>
             </li>
             <li>
@@ -231,23 +237,44 @@
                         style="width: 25%; height: 25%; margin-right: 4%;">나의혜택</a>
                 <ul>
                     <li><a href="#">회원 등급</a></li>
-                    <li><a href="#">적립금 내역</a></li>
+                    <c:url var="plist" value="pointList.do">
+							<c:param name="memberNo" value="${loginUser.memberNo}"/>
+					</c:url> 
+                    <li><a href="${plist}">적립금 내역</a></li>
                 </ul>
             </li>
-            <li><a href="#contact"><img src="resources/images/cart.png"
+            <c:url var="clist" value="cartList.do">
+				<c:param name="memberNo" value="${loginUser.memberNo}"/>
+			</c:url> 
+            <li><a href="${clist}"><img src="resources/images/cart.png"
                         style="width: 25%; height: 25%; margin-right: 4%;">장바구니</a></li>
-            <li><a href="#about"><img src="resources/images/heart.png" style="width: 25%; height: 25%; margin-right: 4%;">찜</a>
+            <c:url var="hlist" value="heartList.do">
+				<c:param name="memberNo" value="${loginUser.memberNo}"/>
+			</c:url> 
+            <li><a href="${hlist}"><img src="resources/images/heart.png" style="width: 25%; height: 25%; margin-right: 4%;">찜</a>
             </li>
-            <li><a href="#about"><img src="resources/images/review.png"
+            <c:url var="rlist" value="reviewList.do">
+				<c:param name="memberNo" value="${loginUser.memberNo}"/>
+			</c:url> 
+            <li><a href="${rlist}"><img src="resources/images/review.png"
                         style="width: 25%; height: 25%; margin-right: 4%;">상품리뷰</a></li>
-            <li><a href="#about"><img src="resources/images/inquiry.png"
+            <c:url var="ilist" value="inquiryList.do">
+				<c:param name="memberNo" value="${loginUser.memberNo}"/>
+			</c:url>
+            <li><a href="${ilist}"><img src="resources/images/inquiry.png"
                         style="width: 25%; height: 25%; margin-right: 4%;">1:1문의</a></li>
             <li>
                 <a href="#about"><img src="resources/images/member_information.png"
                         style="width: 25%; height: 25%; margin-right: 4%;">회원정보</a>
                 <ul>
-                    <li><a href="#">회원정보 확인</a></li>
-                    <li><a href="#">회원탈퇴</a></li>
+                	<c:url var="myInfo" value="myInfo.do">
+						<c:param name="memberNo" value="${loginUser.memberNo}"/>
+					</c:url>
+                    <li><a href="${myInfo}">회원정보 확인</a></li>
+                    <c:url var="withdrawal" value="myWithdrawal.do">
+						<c:param name="memberNo" value="${loginUser.memberNo}"/>
+					</c:url>
+                    <li><a href="${withdrawal}">회원탈퇴</a></li>
                 </ul>
             </li>
         </ul>
@@ -273,82 +300,205 @@
 	          </div>
 	          <div class="cart">
 	            <div class="sub">
-	              <span class="title"><a href="#" style="color: black;">장바구니</a></span>
+		            <c:url var="clist" value="cartList.do">
+						<c:param name="memberNo" value="${loginUser.memberNo}"/>
+					</c:url> 
+	              <span class="title"><a href="${clist}" style="color: black;">장바구니</a></span>
 	              <br><br>
-	              <span class="count"><a href="#" style="color :#115D8C;">0<span class="etc">&nbsp;건</span></a></span>
+	              <span class="count"><a href="${clist}" style="color :#115D8C;">0<span class="etc">&nbsp;건</span></a></span>
 	            </div>
 	          </div>
 	          <div class="point">
 	            <div class="sub">
-	              <span class="title"><a href="#" style="color: black;">적립금</a></span>
+	            	<c:url var="plist" value="pointList.do">
+						<c:param name="memberNo" value="${loginUser.memberNo}"/>
+					</c:url>
+	              <span class="title"><a href="${plist}" style="color: black;">적립금</a></span>
 	              <br><br>
-	              <span class="count"><a href="#" style="color :#115D8C;">0<span class="etc">&nbsp;건</span></a></span>
+	              <span class="count"><a href="${plist}" style="color :#115D8C;">0<span class="etc">&nbsp;건</span></a></span>
 	            </div>
 	          </div>
 	        </div>
 	      </div>
 	      <span class="sub_content" style="font-size: 1.5em;">찜</span>
-	      <button class="delete">선택삭제</button>
-	      <button class="go_cart">장바구니</button>
-	      <button class="selectAll">전체선택</button>
-	      <br><br><br>
-	      <div class="heart">
-	        <div class="heart_item">
-	          <input type="checkbox" class="check">
-	          <div class="image">
-	            <img src="resources/images/milk.jpg">
-	          </div>
-	          <div class="product">
-	            <span>옳은 유기농 우유</span>
-	            <br>
-	            <span>4,950원</span>
-	          </div>
-	        </div>
-	        <div class="heart_item">
-	          <input type="checkbox" class="check">
-	          <div class="image">
-	            <img src="resources/images/milk.jpg">
-	          </div>
-	          <div class="product">
-	            <span>옳은 유기농 우유</span>
-	            <br>
-	            <span>4,950원</span>
-	          </div>
-	        </div>
-	        <div class="heart_item">
-	          <input type="checkbox" class="check">
-	          <div class="image">
-	            <img src="resources/images/milk.jpg">
-	          </div>
-	          <div class="product">
-	            <span>옳은 유기농 우유</span>
-	            <br>
-	            <span>4,950원</span>
-	          </div>
-	        </div>
-	        <div class="heart_item">
-	          <input type="checkbox" class="check">
-	          <div class="image">
-	            <img src="resources/images/milk.jpg">
-	          </div>
-	          <div class="product">
-	            <span>옳은 유기농 우유</span>
-	            <br>
-	            <span>4,950원</span>
-	          </div>
-	        </div>
-	      </div>
+      	<button class="delete" onclick="deleteHeart();">선택삭제</button>
+	    <button class="go_cart">장바구니</button>
+	    <button class="selectAll">전체선택</button>
+	    <br><br><br>
+	    <div class="heart">
+	    	
 	    </div>
+	  </div>
     </div>
     <br style="clear:both;">
     <jsp:include page="../common/footer.jsp"/>
     <script>
-    var clicked = false;
-    $(".selectAll").on("click", function() {
-        $(".check").prop("checked", !clicked);
-        clicked = !clicked;
-        this.innerHTML = clicked ? '전체해제' : '전체선택';
-    });
+	    var clicked = false;
+	    $(".selectAll").on("click", function() {
+	        $(".check").prop("checked", !clicked);
+	        clicked = !clicked;
+	        this.innerHTML = clicked ? '전체해제' : '전체선택';
+	    });
+  </script>
+  <script>
+  	$(function(){
+  		$(".go_cart").click(function(){
+  	  		var confirm_val = confirm("선택하신 상품을 장바구니에 추가하시겠습니까?");
+  	  		
+  	  		if(confirm_val){
+  	  			var checkArr = new Array();
+  	  			var memberNo = $("#memberNo").val();
+  	  			var memberId = $("#memberId").val();
+  	  			var email = $("#email").val();
+	  			
+	  			$("input[class='check']:checked").each(function(){
+	  				checkArr.push($(this).attr("data-itemNum"));
+	  			});
+	  			
+	  			console.log(checkArr);
+	  			
+	  			$.ajax({
+	  				url:"addCart.do",
+	  				type:"post",
+	  				data:{checkArr:checkArr, memberNo:memberNo, memberId:memberId, email:email},
+	  				success:function(data){
+	  					if(data == "success"){ 
+	  						console.log("장바구니 추가 성공");
+	  						cartAfterDelete();
+						}
+	  				},
+  					error:function(request, status, errorData){
+  	                    alert("error code: " + request.status + "\n"
+  	                          +"message: " + request.responseText
+  	                          +"error: " + errorData);
+  					}
+	  			})
+  	  		}
+  	  	});
+  	})
+  	
+  	function cartAfterDelete(){
+  		var checkArr = new Array();
+			
+		$("input[class='check']:checked").each(function(){
+			checkArr.push($(this).attr("data-cartNum"))
+		});
+		
+		$.ajax({
+			url:"heartDelete.do",
+			type:"post",
+			data:{checkArr:checkArr},
+			success:function(data){
+				if(data == "success"){ 
+					getHeartList();
+				}
+			},
+			error:function(request, status, errorData){
+	               alert("error code: " + request.status + "\n"
+	                     +"message: " + request.responseText
+	                     +"error: " + errorData);
+			}
+		});
+  	}
+  </script>
+  <script>
+  	$(function(){
+  		getHeartList();
+  	});
+  	
+  	function deleteHeart(){
+	  		var confirm_val = confirm("정말 삭제하시겠습니까?");
+	  		
+	  		if(confirm_val){
+	  			var checkArr = new Array();
+	  			
+	  			$("input[class='check']:checked").each(function(){
+	  				checkArr.push($(this).attr("data-cartNum"))
+	  			});
+	  			
+	  			$.ajax({
+	  				url:"heartDelete.do",
+	  				type:"post",
+	  				data:{checkArr:checkArr},
+	  				success:function(data){
+	  					if(data == "success"){ 
+	  						getHeartList();
+					}
+	  				},
+					error:function(request, status, errorData){
+	                    alert("error code: " + request.status + "\n"
+	                          +"message: " + request.responseText
+	                          +"error: " + errorData);
+					}
+	  			});
+	  		}
+	  	}
+  	
+  	function getHeartList(){
+		var memberNo = ${loginUser.memberNo};
+		
+		$.ajax({
+			url:"heartList.do",
+			data:{memberNo:memberNo},
+			dataType:"json",
+			success:function(data){
+				console.log(data);
+				
+				$tableBody = $(".heart");
+				$tableBody.html("");
+				
+				var $heart_item;
+				var $checkBox;
+				var $imageDiv;
+				var $img;
+				var $product;
+				var $itemName;
+				var $price;
+				var $won;
+				
+				if(data.length > 0 ){	// 댓글이 하나 이상 존재하면
+					for(var i in data){
+						var heartNo = parseInt(data[i].heartNo);
+						var itemNo = parseInt(data[i].itemNo);
+						$heart_item = $("<div class='heart_item'>");
+						$checkBox = $("<input type='checkbox' class='check' name='heartNo'>").attr('data-cartNum', heartNo).attr('data-itemNum', itemNo);			
+						$imageDiv = $("<div class='image'>");
+						$img = $("<img src='resources/images/milk.jpg'>");
+						$product = $("<div class='product'>");
+						$itemName = $("<span>").text(data[i].itemName);
+						var str = String(data[i].itemPrice);
+						var price = str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+						$price = $("<span class='price'>").text(price);
+						$won = $("<span>").text("원");
+						
+						$heart_item.append($checkBox);
+						$imageDiv.append($img);
+						$heart_item.append($imageDiv);
+						$product.append($itemName);
+						$product.append("<br>");
+						$product.append($price).append();
+						$product.append($won);
+						$heart_item.append($product);
+						
+						$tableBody.append($heart_item);
+					}
+				} else{					// 댓글이 없으면
+					$tr = $("<tr>");
+					$rContent = $("<td colspan='3'>").text("등록 된 댓글이 없습니다.");
+					
+					$tr.append($rContent);
+					$tableBody.append($tr);
+				}
+			},
+			error:function(request, status, errorData){
+                alert("error code: " + request.status + "\n"
+                      +"message: " + request.responseText
+                      +"error: " + errorData);
+           }
+
+		})
+	}
+  	
   </script>
 </body>
 </html>

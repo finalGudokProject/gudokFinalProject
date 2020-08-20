@@ -19,11 +19,11 @@
     }
     table {
     width: 100%;
-    border-top: 1px solid #444444;
+    border-top: 1px solid #CCCCCC !important;
     border-collapse: collapse;
   }
   th, td {
-    border-bottom: 1px solid #444444;
+    border-bottom: 1px solid #CCCCCC !important;
     padding: 10px;
   }
   
@@ -143,7 +143,7 @@
     <div class="content">
       <div class="container box">
 
-            <form action="aNoticeInsert.do" method="post" enctype="multipart/form-data">
+            <form action="noticeInsert.do" method="post" enctype="multipart/form-data">
                 <div style="font-size: 30px;">공지사항</div><br>
                 <hr style="border-color:rgb(0, 125, 255);">
                 <table style="text-align: center; margin-top:15px">
@@ -162,13 +162,13 @@
                             <th style="padding:20px;">이미지</th><td><div class="filebox bs3-primary preview-image">
                             <input class="upload-name" value="파일선택" disabled="disabled" style="width: 200px;">
                             <label for="input_file">업로드</label> 
-                            <input type="file" id="input_file" name="uploadFile" class="upload-hidden"> 
+                            <input type="file" id="input_file" name="uploadNotice" class="upload-hidden"> 
                         </div>
                         </tr>
                     </tbody>
                   </table>
             <br><br>
-            &nbsp;&nbsp;<a href="adminNoticeList.do" type="button" class="btn btn-primary" style="float:right;">목록으로</a>
+            &nbsp;&nbsp;<a href="javascript:history.go(-1)" type="button" class="btn btn-primary" style="float:right;">이전으로</a>
             <input type="submit" value="저장" class="btn btn-primary" style="float:right; margin-right: 10px;">
           </form>
             <br><br><br>
