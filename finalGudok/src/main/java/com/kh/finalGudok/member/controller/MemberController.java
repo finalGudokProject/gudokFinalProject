@@ -456,35 +456,16 @@ public class MemberController {
 		
 		int random = new Random().nextInt(100000) + 10000; // 10000 ~ 99999
         String authCode = String.valueOf(random);
-		
-//		StringBuffer temp = new StringBuffer();
-//		Random rnd = new Random();
-//		for(int i = 0; i < 10; i++) {
-//			int rIndex = rnd.nextInt(3);
-//			switch(rIndex) {
-//			case 0 : 
-//				temp.append((char)((int)(rnd.nextInt(26))+97));
-//				break;
-//			case 1 :
-//				temp.append((char)((int) (rnd.nextInt(26))+65));
-//				break;
-//			case 2 :
-//				temp.append((rnd.nextInt(10)));
-//				break;
-//			}
-//		}
-//		String authCode = temp.toString();
 
         map.put("emailCheckResult", emailCheckResult);
         map.put("authCode", authCode);
-		
-		mailSender.createMimeMessage();
 		
 		MimeMessage msg = mailSender.createMimeMessage();
         
 		try {
         
-        MimeMessageHelper messageHelper = new MimeMessageHelper(msg, true, "UTF-8");
+//        MimeMessageHelper messageHelper = new MimeMessageHelper(msg, true, "UTF-8");
+        MimeMessageHelper messageHelper = new MimeMessageHelper(msg, "UTF-8");
         messageHelper.setSubject("이메일 인증");
         messageHelper.setText("인증번호는" + authCode + "입니다.");
 		msg.setFrom(new InternetAddress(user, "Goose"));
