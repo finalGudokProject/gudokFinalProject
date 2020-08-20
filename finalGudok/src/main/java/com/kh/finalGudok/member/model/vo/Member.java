@@ -3,6 +3,9 @@ package com.kh.finalGudok.member.model.vo;
 import java.io.Serializable;
 import java.sql.Date;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class Member implements Serializable {
 
 	/**
