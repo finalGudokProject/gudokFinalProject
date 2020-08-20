@@ -74,6 +74,12 @@
 		WHERE ITEM_NO=#{itemNo}
 	</update>
 	
+	<update id="updateReviewRate0" parameterType="_int">
+		UPDATE ITEM
+		SET ITEM_RATE=0
+		WHERE ITEM_NO=#{itemNo}
+	</update>
+	
 	<insert id="insertReviewImage1" parameterType="Image">
 		INSERT INTO IMAGE
 		VALUES(SEQ_IMAGE_NO.NEXTVAL

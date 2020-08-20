@@ -327,6 +327,10 @@ public class ItemDao {
 		return sqlSessionTemplate.selectOne("reviewMapper.checkImage", reviewNo);
 	}
 
+	public int updateReviewRate0(int itemNo) {
+		return sqlSessionTemplate.update("reviewMapper.updateReviewRate0", itemNo);
+	}
+
 
 
 //	public int l1Count() {

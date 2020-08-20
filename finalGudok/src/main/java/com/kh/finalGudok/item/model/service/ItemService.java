@@ -135,6 +135,9 @@ public interface ItemService {
 
 	int checkImage(int reviewNo);
 
+	int updateReviewRate0(int itemNo);
+
+
 //	int l1Count();
 //
 //	int l2Count();

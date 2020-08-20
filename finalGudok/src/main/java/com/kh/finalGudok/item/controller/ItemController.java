@@ -412,7 +412,7 @@ public class ItemController {
 		if(result > 0) {
 			ArrayList<Review> review = iService.selectAllReview(itemNo);
 			if(review.size() == 0) {
-				iService.updateReviewRate(itemNo);
+				int count0 = iService.updateReviewRate0(itemNo);
 				mv.setViewName("redirect:itemReview.do?itemNo=" + itemNo);
 			}else {
 				iService.updateReviewRate(itemNo);
