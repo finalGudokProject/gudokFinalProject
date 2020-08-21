@@ -15,16 +15,19 @@ public class Inquiry implements Serializable{
 	private Date iInquiry_date;			// 답변 날짜
 	private String iInquiry_content;	// 답변 내용
 	private String iBoard_type;			// 문의 유형
+	private String iInquiry_name;		// 문의명
 	
 	public Inquiry() {
 	}
 
-	public Inquiry(int iBoard_no, String iInquiry_yn, Date iInquiry_date, String iInquiry_content, String iBoard_type) {
+	public Inquiry(int iBoard_no, String iInquiry_yn, Date iInquiry_date, String iInquiry_content, String iBoard_type,
+			String iInquiry_name) {
 		this.iBoard_no = iBoard_no;
 		this.iInquiry_yn = iInquiry_yn;
 		this.iInquiry_date = iInquiry_date;
 		this.iInquiry_content = iInquiry_content;
 		this.iBoard_type = iBoard_type;
+		this.iInquiry_name = iInquiry_name;
 	}
 
 	public int getiBoard_no() {
@@ -67,6 +70,14 @@ public class Inquiry implements Serializable{
 		this.iBoard_type = iBoard_type;
 	}
 
+	public String getiInquiry_name() {
+		return iInquiry_name;
+	}
+
+	public void setiInquiry_name(String iInquiry_name) {
+		this.iInquiry_name = iInquiry_name;
+	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
@@ -74,8 +85,10 @@ public class Inquiry implements Serializable{
 	@Override
 	public String toString() {
 		return "Inquiry [iBoard_no=" + iBoard_no + ", iInquiry_yn=" + iInquiry_yn + ", iInquiry_date=" + iInquiry_date
-				+ ", iInquiry_content=" + iInquiry_content + ", iBoard_type=" + iBoard_type + "]";
+				+ ", iInquiry_content=" + iInquiry_content + ", iBoard_type=" + iBoard_type + ", iInquiry_name="
+				+ iInquiry_name + "]";
 	}
+
 	
 	
 }

@@ -42,10 +42,10 @@
       <div class="col-3">
         <h1 align="center">고객센터</h1>
         <ul class="list" id="list">
-             <li style="margin-bottom: 5%;"><img src="resources/images/Alert.png" style="width:20%; height:20%;margin-bottom:3%"><a style="color:rgb(0, 125, 255);" readonly>공지사항</a></li>
+            <li style="margin-bottom: 5%;"><img src="resources/images/Alert.png" style="width:20%; height:20%;margin-bottom:3%"><a style="color:rgb(0, 125, 255);" readonly>공지사항</a></li>
             <li style="margin-bottom: 5%;"><img src="resources/images/FAQ.png" style="width:20%; height:20%;margin-bottom:3%"><a href="FAQList.do">FAQ</a></li>
-            <li style="margin-bottom: 5%;"><img src="resources/images/inquiary.png" style="width:20%; height:20%;margin-bottom:3%"><a href="inquriaryList.do">1:1문의</a></li>
-            <li style="margin-bottom: 5%;"><img src="resources/images/proposal.png" style="width:20%; height:20%;margin-bottom:3%"><a href="productProposal.do">상품제안</a></li>
+            <li style="margin-bottom: 5%;"><img src="resources/images/inquiary.png" style="width:20%; height:20%;margin-bottom:3%"><a href="inquiryList.do">1:1문의</a></li>
+            <li style="margin-bottom: 5%;"><img src="resources/images/proposal.png" style="width:20%; height:20%;margin-bottom:3%"><a href="productProposalList.do">상품제안</a></li>
             <li style="margin-bottom: 5%;"><img src="resources/images/benefit1.png" style="width:20%; height:20%;margin-bottom:3%"><a href="tierOfBenefit.do">등급별 혜택</a></li>
         </ul>
       </div>
@@ -74,7 +74,7 @@
                         <br><br>
                         <c:if test="${!empty board.originalFileName }">
                         	<center>
-                           		<img src="${contextPath }/resources/aNoticeUploadFiles/${board.renameFileName }">
+                           		<img style="height:500px;width:500px" src="${contextPath }/resources/aNoticeUploadFiles/${board.renameFileName }">
                         	</center>
                         </c:if>
                       </td>
@@ -83,7 +83,17 @@
               </table>
 
             <br><br><br>
-            <a href="noticeList.do" type="button" class="btn btn-primary" style="float:right;">목록으로</a>
+            <c:url var="inquiryUpdate" value="inquiryUpdate.do">
+						<c:param name="bBoard_no" value="${board.bBoard_no }"/>
+						<c:param name="page" value="${currentPage }"/>
+			</c:url>
+			<c:url var="inquiryDelete" value="inquiryDelete.do">
+						<c:param name="bBoard_no" value="${board.bBoard_no }"/>
+			</c:url>
+            &nbsp;&nbsp;<a href="noticeList.do" type="button" class="btn btn-primary" style="float:right;">목록으로</a>
+            <a href="${inquiryUpdate }" type="button" class="btn btn-primary" style="float:right;margin-right:10px">수정</a>
+            <a href="${inquiryDelete }" type="button" class="btn btn-primary" style="float:right;margin-right:10px">삭제</a>
+            
             </div>
             </div>
             </div>

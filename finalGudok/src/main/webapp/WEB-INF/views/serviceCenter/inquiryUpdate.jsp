@@ -24,11 +24,11 @@
   }
   table {
     width: 100%;
-    border: 1px solid #444444;
+    border: 1px solid #CCCCCC !important;
     border-collapse: collapse;
   }
   th, td {
-    border: 1px solid #444444;
+    border: 1px solid #CCCCCC !important;
   }
         body {margin: 10px;}
 .where {
@@ -129,16 +129,22 @@
       <div class="col-3">
         <h1 align="center">고객센터</h1>
         <ul class="list" id="list">
-            <li style="margin-bottom: 5%;"><img src="resources/images/Alert.png" style="width:20%; height:20%;margin-bottom:3%"><a id="notice" href="sc_notice.html">공지사항</a></li>
-            <li style="margin-bottom: 5%;"><img src="resources/images/FAQ.png" style="width:20%; height:20%;margin-bottom:3%"><a id="FAQ"  href="sc_FAQ.html">FAQ</a></li>
-            <li style="margin-bottom: 5%;"><img src="resources/images/inquiary.png" style="width:20%; height:20%;margin-bottom:3%"><a id="inquiary" style="color:rgb(0, 125, 255);" readonly>1:1문의</a></li>
-            <li style="margin-bottom: 5%;"><img src="resources/images/proposal.png" style="width:20%; height:20%;margin-bottom:3%"><a id="product_proposal"  href="sc_proposal.html">상품제안</a></li>
-            <li style="margin-bottom: 5%;"><img src="resources/images/benefit.png" style="width:20%; height:20%;margin-bottom:3%"><a id="tier_benefit"  href="sc_benefit.html">등급별 혜택</a></li>
+            <li style="margin-bottom: 5%;"><img src="resources/images/Alert.png" style="width:20%; height:20%;margin-bottom:3%"><a href="noticeList.do">공지사항</a></li>
+            <li style="margin-bottom: 5%;"><img src="resources/images/FAQ.png" style="width:20%; height:20%;margin-bottom:3%"><a href="FAQList.do">FAQ</a></li>
+            <li style="margin-bottom: 5%;"><img src="resources/images/inquiary.png" style="width:20%; height:20%;margin-bottom:3%"><a style="color:rgb(0, 125, 255);" readonly>1:1문의</a></li>
+            <li style="margin-bottom: 5%;"><img src="resources/images/proposal.png" style="width:20%; height:20%;margin-bottom:3%"><a href="productProposalList.do">상품제안</a></li>
+            <li style="margin-bottom: 5%;"><img src="resources/images/benefit1.png" style="width:20%; height:20%;margin-bottom:3%"><a href="tierOfBenefit.do">등급별 혜택</a></li>
         </ul>
       </div>
       <div class="col-9">
         
-          <form>
+          <form action="rInquiryUpdate.do" method="post" enctype="multipart/form-data">
+          	<input type="hidden" name="page" value="${currentPage }">
+			<input type="hidden" name="bBoard_no" value="${board.bBoard_no }">
+			<input type="hidden" name="iBoard_no" value="${inquiry.iBoard_no }">
+			<input type="hidden" name="oBoard_no" value="${secret.oBoard_no }">			
+			<input type="hidden" name="renameFileName" value="${board.renameFileName }">
+			<input type="hidden" name="originalFileName" value="${board.originalFileName }">
             <div style="font-size: 30px;">1:1 문의</div>
             <hr style="border-color:rgb(0, 125, 255);">
             <table style="text-align: center; margin-top:15px">
@@ -146,54 +152,118 @@
                     <tr>
                         <th style="width:10%; padding:20px;">문의유형</th>
                         <td style="width: 39%;" colspan="3">
-                            <select name="type" style="float:left; margin-left:35%; height:30px ;width:200px;" id="type">
+                        <c:if test="${inquiry.iBoard_type eq 'OPI' }">
+                            <select name="iBoard_type" style="float:left; margin-left:35%; height:30px ;width:200px;" id="iBoard_type" name="iBoard_type">
                                 <option value="">문의유형을 선택 해주세요</option>
-                                <option value="product_infor">상품정보문의</option>
-                                <option value="exchange">교환문의</option>
-                                <option value="alliance">제휴</option>
-                                <option value="deliever">배송문의</option>
-                                <option value="etc">기타문의</option>
+                                <option value="OPI" selected>상품정보문의</option>
+                                <option value="OEC">교환문의</option>
+                                <option value="OAL">제휴</option>
+                                <option value="ODL">배송문의</option>
+                                <option value="OETC">기타문의</option>
                             </select>
+                        </c:if>
+                        <c:if test="${inquiry.iBoard_type eq 'OEC' }">
+                            <select name="iBoard_type" style="float:left; margin-left:35%; height:30px ;width:200px;" id="iBoard_type" name="iBoard_type">
+                                <option value="">문의유형을 선택 해주세요</option>
+                                <option value="OPI">상품정보문의</option>
+                                <option value="OEC" selected>교환문의</option>
+                                <option value="OAL">제휴</option>
+                                <option value="ODL">배송문의</option>
+                                <option value="OETC">기타문의</option>
+                            </select>
+                        </c:if>
+                        <c:if test="${inquiry.iBoard_type eq 'OAL' }">
+                            <select name="iBoard_type" style="float:left; margin-left:35%; height:30px ;width:200px;" id="iBoard_type" name="iBoard_type">
+                                <option value="">문의유형을 선택 해주세요</option>
+                                <option value="OPI">상품정보문의</option>
+                                <option value="OEC">교환문의</option>
+                                <option value="OAL" selected>제휴</option>
+                                <option value="ODL">배송문의</option>
+                                <option value="OETC">기타문의</option>
+                            </select>
+                        </c:if>
+                        <c:if test="${inquiry.iBoard_type eq 'ODL' }">
+                            <select name="iBoard_type" style="float:left; margin-left:35%; height:30px ;width:200px;" id="iBoard_type" name="iBoard_type">
+                                <option value="">문의유형을 선택 해주세요</option>
+                                <option value="OPI">상품정보문의</option>
+                                <option value="OEC">교환문의</option>
+                                <option value="OAL">제휴</option>
+                                <option value="ODL" selected>배송문의</option>
+                                <option value="OETC">기타문의</option>
+                            </select>
+                        </c:if>
+                        <c:if test="${inquiry.iBoard_type eq 'OETC' }">
+                            <select name="iBoard_type" style="float:left; margin-left:35%; height:30px ;width:200px;" id="iBoard_type" name="iBoard_type">
+                                <option value="">문의유형을 선택 해주세요</option>
+                                <option value="OPI">상품정보문의</option>
+                                <option value="OEC">교환문의</option>
+                                <option value="OAL">제휴</option>
+                                <option value="ODL">배송문의</option>
+                                <option value="OETC" selected>기타문의</option>
+                            </select>
+                        </c:if>
                         </td>
                     </tr>
                     <tr>
                         <th style="width:10%; padding:20px;">제목</th>
                         <td style="width: 39%;" colspan="3">
-                            <textarea class="form-control" rows="1" style="resize: none;  margin-left:10%;width:550px;"></textarea>
+                            <textarea class="form-control" rows="1" style="resize: none;  margin-left:10%;width:550px;" name="bTitle">${board.bTitle }</textarea>
                         </td>
                     </tr>
                     <tr>
                         <th style="width:15%; padding:20px;">비밀글 설정</th>
                         <td style="width: 39%;">
-                            <input type="radio" name="chk_info" id="open" value="open" checked="checked">공개글
+                        	<c:if test="${secret.oSecret eq 'Y' }">
+                            <input type="radio" name="oSecret" id="open" value="N" checked="checked">공개글
                             &nbsp;
-                            <input type="radio" name="chk_info" id="secret" value="secret">비밀글</td>
+                            <input type="radio" name="oSecret" id="close" value="Y">비밀글
+                        	</c:if>
+                        	<c:if test="${secret.oSecret eq 'N' }">
+                            <input type="radio" name="oSecret" id="open" value="N">공개글
+                            &nbsp;
+                            <input type="radio" name="oSecret" id="close" value="Y" checked="checked">비밀글
+                        	</c:if>
+                        	
+                            </td>
                         <th style="width:15%; padding:20px;">비밀번호</th>
-                        <td style="width: 39%;"><input type="password" id="secret"></td>
+                        <td style="width: 39%;"><input type="password" id="oSecret_pwd" name="oSecret_pwd" value="${secret.oSecret_pwd }">
+                        </td>
                     </tr>
                     <tr>
-                        <th style="padding:20px;">내용</th><td colspan="3"><textarea class="form-control" rows="20" style="resize: none;"></textarea></td>
+                        <th style="padding:20px;">내용</th>
+                        <td colspan="3">
+                        <textarea class="form-control" rows="20" style="resize: none;" name="bContent">${board.bContent }</textarea>
+                        <br><br>
+                        <c:if test="${!empty board.originalFileName }">
+                        	<center>
+                           		<img style="height:500px;width:500px"src="${contextPath }/resources/inquiryUploadFiles/${board.renameFileName }">
+                        	</center>
+                        </c:if>
+                        </td>
                     </tr>
                     <tr>
                         <th style="padding:20px;">이미지</th><td colspan="3"><div class="filebox bs3-primary preview-image">
                         <input class="upload-name" value="파일선택" disabled="disabled" style="width: 200px;">
                         <label for="input_file">업로드</label> 
-                        <input type="file" id="input_file" class="upload-hidden"> 
+                        <input type="file" id="input_file" name="uploadInquiry" class="upload-hidden">
                     </div>
                     </tr>
                 </tbody>
               </table>
       
 
+            <br><br>
+             &nbsp;&nbsp;<a href="javascript:history.go(-1)" type="button" class="btn btn-primary" style="float:right;">이전으로</a>
+            <input type="submit" value="작성하기" class="btn btn-primary" style="float:right; margin-right: 10px;">
             </form>
-            <br><br><br>
-            <input type="submit" value="작성하기" class="btn btn-primary" style="float:right;">
             </div>
             </div>
             </div>
         
             <br><br><br>
-            
+            <footer class="page-footer font-small indigo">
+				<jsp:include page="../common/footer.jsp" />
+			</footer>
         <script>
         $(document).ready(function(){
         var fileTarget = $('.filebox .upload-hidden');
@@ -242,6 +312,7 @@
                 }
             });
         });
+        
 
     	</script>
 </body>

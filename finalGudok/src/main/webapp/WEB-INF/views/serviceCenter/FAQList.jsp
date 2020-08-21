@@ -118,15 +118,16 @@
         <ul class="list" id="list">
             <li style="margin-bottom: 5%;"><img src="resources/images/Alert.png" style="width:20%; height:20%;margin-bottom:3%"><a href="noticeList.do">공지사항</a></li>
             <li style="margin-bottom: 5%;"><img src="resources/images/FAQ.png" style="width:20%; height:20%;margin-bottom:3%"><a style="color:rgb(0, 125, 255);" readonly>FAQ</a></li>
-            <li style="margin-bottom: 5%;"><img src="resources/images/inquiary.png" style="width:20%; height:20%;margin-bottom:3%"><a href="inquriaryList.do">1:1문의</a></li>
+            <li style="margin-bottom: 5%;"><img src="resources/images/inquiary.png" style="width:20%; height:20%;margin-bottom:3%"><a href="inquiryList.do">1:1문의</a></li>
             <li style="margin-bottom: 5%;"><img src="resources/images/proposal.png" style="width:20%; height:20%;margin-bottom:3%"><a href="productProposalList.do">상품제안</a></li>
             <li style="margin-bottom: 5%;"><img src="resources/images/benefit1.png" style="width:20%; height:20%;margin-bottom:3%"><a href="tierOfBenefit.do">등급별 혜택</a></li>
         </ul>
       </div>
       <div class="col-9">
-        <div class="input-group" >
+      	  <form id="FAQListSearch" method="post" onsubmit="return validate();">
           <div style="font-size: 30px;">FAQ</div>
-          <select class="custom-select" id="inputGroupSelect04" style="margin-left: 445px;">
+          <div class="input-group">
+          <select class="custom-select" id="inputGroupSelect04" style="margin-left: 500px; width:100px">
             <option selected>모두</option>
             <option value="1">제목</option>
             <option value="2">내용</option>
@@ -136,19 +137,19 @@
           <div class="input-group-append" style="float:right; width: 55px; height: 38px;">
             <button type="button" class="btn btn-primary" >검색</button>
           </div>
-        </div>
+          </div>
          
         
         <table style="text-align: center; margin-top:15px">
-      <thead>
-        <tr>
-          <th style="width:5%">번호</th>
-          <th style="width: 35%;">제목</th>
-          <th style="width: 10%;">작성일</th>
-          <th style="width: 10%;">조회수</th>
-        </tr>
-      </thead>
-      <tbody >
+	      <thead>
+	        <tr>
+	          <th style="width:5%">번호</th>
+	          <th style="width: 35%;">제목</th>
+	          <th style="width: 10%;">작성일</th>
+	          <th style="width: 10%;">조회수</th>
+	        </tr>
+	      </thead>
+     	<tbody >
 	      		<c:choose>
 	      			<c:when test="${fn:length(list)>0 }">
 			        	<c:forEach var="b" items="${list }">
@@ -174,6 +175,7 @@
 				</c:choose>
       		</tbody>
     </table>
+    </form>
     <br><br>
     <!------페이징 처리----->
                 <div class="page-center">
@@ -241,10 +243,11 @@
                 <br><br><br>
      </div>
     </div>
+    </div>
     <footer class="page-footer font-small indigo">
 		<jsp:include page="../common/footer.jsp" />
 	</footer>
-    </div>
+    
     <br><br><br><br><br>
 	
 </body>

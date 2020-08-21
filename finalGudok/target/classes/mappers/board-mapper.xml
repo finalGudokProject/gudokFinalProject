@@ -38,6 +38,19 @@
 		<result property="bItem_no" column="ITEM_NO"/>
 	</resultMap>
 	
+	<resultMap type="Secret" id="secret">
+		<id property="oBoard_no" column="BOARD_NO"/>
+		<result property="oSecret" column="SECRET"/>
+		<result property="oSecret_pwd" column="SECRET_PWD"/>
+	</resultMap>
+	
+	<resultMap type="Inquiry" id="inquiry">
+		<id property="iBoard_no" column="BOARD_NO"/>
+		<result property="iInquiry_yn" column="INQUIRY_YN"/>
+		<result property="iInquiry_date" column="INQUIRY_DATE"/>
+		<result property="iInquiry_content" column="INQUIRY_CONTENT"/>
+		<result property="iBoard_type" column="BOARD_TYPE"/>
+	</resultMap>
 	
 	
 	<!-- List 게시판 리스트 불러오기 -->
@@ -92,7 +105,39 @@
 		WHERE BOARD_CODE = 'P'
         ORDER BY ROWNUM DESC
 	</select>
+	
+	<!-- inquiry -->
+	<select id="getListCountInquiry" resultType="_int">
+		SELECT COUNT(*)
+		FROM BOARD
+		WHERE BOARD_CODE = 'O'
+	</select>
+	
+	<select id="getBoardListInquiry1" resultMap="boardResultSet1">
+		SELECT ROWNUM, B.*
+		FROM (SELECT *
+        FROM BOARD B
+        LEFT JOIN BOARD_IMAGE BI on (B.BOARD_NO = BI.BOARD_NO)
+        LEFT JOIN IMAGE on (B_IMAGE_NO = IMAGE_NO)
+        ORDER BY B.BOARD_NO) B
+		WHERE BOARD_CODE = 'O'
+        ORDER BY ROWNUM DESC
+	</select>
+	
+	<select id="getBoardListInquiry2" resultMap="secret">
+		SELECT O.SECRET
+		FROM BOARD B
+		LEFT JOIN ONE_INQUIRY O ON (B.BOARD_NO = O.BOARD_NO)
+		ORDER BY B.BOARD_NO DESC
+	</select>
 
+	<select id="getBoardListInquiry3" resultMap="inquiry">
+		SELECT O.INQUIRY_YN
+		FROM BOARD B
+		LEFT JOIN INQUIRY O ON (B.BOARD_NO = O.BOARD_NO)
+		ORDER BY B.BOARD_NO DESC
+	</select>
+	
 	<!-- Count 조회수 증가 -->
 	<update id="updateCount" parameterType="int">
 		UPDATE BOARD
@@ -103,6 +148,32 @@
 	
 	<!-- Detail 상세하게 볼 게시물 선택, 불러오기 -->
 
+	<!-- inquiry -->
+	<select id="selectOIDetail1" parameterType="int" resultMap="boardResultSet1">
+		SELECT *
+		FROM BOARD B
+        LEFT JOIN ONE_INQUIRY O ON (B.BOARD_NO = O.BOARD_NO)
+        LEFT JOIN BOARD_IMAGE BI on (B.BOARD_NO = BI.BOARD_NO)
+        LEFT JOIN IMAGE on (B_IMAGE_NO = IMAGE_NO)
+        WHERE B.BOARD_NO = #{b.bBoard_no}
+	</select>
+	
+	<select id="selectOIDetail2" parameterType="int" resultMap="secret">
+	
+		SELECT *
+		FROM BOARD B
+        LEFT JOIN ONE_INQUIRY O ON (B.BOARD_NO = O.BOARD_NO)
+        WHERE O.BOARD_NO = #{b.bBoard_no}
+	</select>
+	
+	<select id="selectOIDetail3" parameterType="int" resultMap="inquiry">
+		SELECT *
+		FROM BOARD B
+        LEFT JOIN INQUIRY I ON (B.BOARD_NO = I.BOARD_NO)
+        LEFT JOIN INQUIRY_TYPE T ON (I.BOARD_TYPE = T.BOARD_TYPE)
+        WHERE I.BOARD_NO = #{b.bBoard_no}
+	</select>
+	
 	<!-- img존재 -->
 	<select id="selectIDetail" parameterType="int" resultMap="boardResultSet1">
 		SELECT *
@@ -169,6 +240,38 @@
 		)
 	</insert>
 	
+	<!-- inquiry -->
+	<insert id="insertInquiry1" parameterType="Board">
+		INSERT INTO BOARD VALUES(
+			SEQ_BNO.NEXTVAL
+			, #{bTitle}
+			, #{bContent}
+			, SYSDATE
+			, DEFAULT
+			, 'O'
+			, 1
+			, 'user'
+			, 'user@naver.com'
+			, DEFAULT
+		)
+	</insert>
+	<insert id="insertInquiry2" parameterType="secret">
+		INSERT INTO ONE_INQUIRY VALUES(
+			SEQ_BNO.CURRVAL
+			, #{oSecret }
+			, #{oSecret_pwd}
+		)
+	</insert>
+	<insert id="insertInquiry3" parameterType="inquiry">
+		INSERT INTO INQUIRY VALUES(
+			SEQ_BNO.CURRVAL
+			, 'N'
+			, NULL
+			, #{iInquiry_content }
+			, #{iBoard_type }
+		)
+	</insert>
+	
 	<!-- image -->
 	<insert id="insertImage" parameterType="Board">
 		INSERT ALL
@@ -199,6 +302,21 @@
 					, CONTENT = #{bContent}
 		WHERE BOARD_NO = #{bBoard_no}
 	</update>
+
+	<!-- inquiry ONE_INQUIRY 수정 -->
+	<update id="updateOneInquiry" parameterType="secret">
+		UPDATE ONE_INQUIRY
+		SET SECRET = #{oSecret}
+					, SECRET_PWD = #{oSecret_pwd}
+		WHERE BOARD_NO = #{oBoard_no}
+	</update>
+
+	<!-- inquiry INQUIRY 수정 -->
+	<update id="updateInquiry" parameterType="inquiry">
+		UPDATE INQUIRY
+		SET BOARD_TYPE = #{iBoard_type}
+		WHERE BOARD_NO = #{iBoard_no}
+	</update>
 	
 	<!-- Delete 게시물 삭제하기 -->
 	
@@ -223,6 +341,18 @@
 	<!-- board -->
 	<delete id="deleteBoard" parameterType="int">
 		DELETE FROM BOARD
+		WHERE BOARD_NO = #{bBoard_no}
+	</delete>
+	
+	<!-- one_inquiry -->
+	<delete id="deleteOneInquiryBoard" parameterType="int">
+		DELETE FROM ONE_INQUIRY
+		WHERE BOARD_NO = #{bBoard_no}
+	</delete>
+
+	<!-- inquiry -->
+	<delete id="deleteInquiryBoard" parameterType="int">
+		DELETE FROM INQUIRY I
 		WHERE BOARD_NO = #{bBoard_no}
 	</delete>
 	

@@ -159,7 +159,7 @@
                             <br><br>
 	                        <c:if test="${!empty board.originalFileName }">
 		                        <center>
-	                          		<img src="${contextPath }/resources/aNoticeUploadFiles/${board.renameFileName }">
+	                          		<img style="height:500px;width:500px" src="${contextPath }/resources/aNoticeUploadFiles/${board.renameFileName }">
 	                        	</center>
                         	</c:if></td>
                         </tr>
