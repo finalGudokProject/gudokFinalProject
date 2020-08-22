@@ -36,4 +36,10 @@ public interface MemberService {
 
 	int emailDupCheck(String email);
 
+	String findId(Member m);
+
+	int checkMember(Member m);
+
+	int changePwd(Member m);
+
 }

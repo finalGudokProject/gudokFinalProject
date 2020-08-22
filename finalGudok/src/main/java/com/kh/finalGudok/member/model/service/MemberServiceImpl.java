@@ -73,6 +73,24 @@ public class MemberServiceImpl implements MemberService {
 		
 		return mDao.emailDupCheck(email);
 	}
+
+	@Override
+	public String findId(Member m) {
+		
+		return mDao.findId(m);
+	}
+
+	@Override
+	public int checkMember(Member m) {
+		
+		return mDao.checkMember(m);
+	}
+
+	@Override
+	public int changePwd(Member m) {
+		
+		return mDao.changePwd(m);
+	}
 	
 	
 }

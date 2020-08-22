@@ -64,4 +64,18 @@ public class MemberDao {
 	public int emailDupCheck(String email) {
 		return sqlSessionTemplate.selectOne("memberMapper.emailDupCheck",email);
 	}
+
+	public String findId(Member m) {
+		return sqlSessionTemplate.selectOne("memberMapper.findId", m);
+	}
+
+	public int checkMember(Member m) {
+
+		return sqlSessionTemplate.selectOne("memberMapper.checkMember",m);
+	}
+
+	public int changePwd(Member m) {
+		
+		return sqlSessionTemplate.update("memberMapper.changePwd",m);
+	}
 }
