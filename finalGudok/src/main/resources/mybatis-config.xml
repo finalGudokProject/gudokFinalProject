@@ -32,11 +32,21 @@
 
 		<typeAlias type="com.kh.finalGudok.member.model.vo.Withdrawal" alias="Withdrawal"/>
 		<typeAlias type="com.kh.finalGudok.member.model.vo.Inquiry" alias="mInquiry"/>
+		
+		
+		
 		<typeAlias type="com.kh.finalGudok.member.model.vo.Heart" alias="mHeart"/>
 		<typeAlias type="com.kh.finalGudok.member.model.vo.DeleteHeart" alias="mDeleteHeart"/>
 		<typeAlias type="com.kh.finalGudok.member.model.vo.Reply" alias="mReply"/>
 		
 		<typeAlias type="com.kh.finalGudok.item.model.vo.BannerItem" alias="BannerItem"/>
+		<typeAlias type="com.kh.finalGudok.member.model.vo.Grade" alias="Grade"/>
+		<typeAlias type="com.kh.finalGudok.member.model.vo.AdminMember" alias="AdminMember"/>
+		<typeAlias type="com.kh.finalGudok.member.model.vo.AdminPayment" alias="AdminPayment"/>
+		<typeAlias type="com.kh.finalGudok.member.model.vo.AdminSecession" alias="AdminSecession"/>
+		
+		
+		
 	</typeAliases>
 	
 	<mappers>

@@ -147,7 +147,7 @@ input, select,textarea{
                 <h3>일반 상품 등록</h3>
                 <br>
                 <button type="button" class="btn" onclick="location.href='iInsertView.do'">일반 상품</button>&nbsp;
-                <button type="button" class="btn">이벤트 상품</button>
+                <button type="button" class="btn" onclick="location.href='iEventInsertView.do'">이벤트 상품</button>
                 <br><br>
                 
           		<form action="iInsert.do" method="post" encType="multipart/form-data" onsubmit="return validate()">

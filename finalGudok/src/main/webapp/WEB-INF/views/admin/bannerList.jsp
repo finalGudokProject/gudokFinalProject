@@ -104,9 +104,7 @@ cursor: pointer;
                          		<tr id="cursor">
 	                                <td><input type="checkbox" class="common" id="eventNo${cnt.index}" name="eventNo" value="${e.eventNo }"></td>
 	                                <td>${e.eventNo }</td>
-	                                <td onclick="bDetail(${e.eventNo })" id="event" style="pointer:cursor;">
-	                               	<a>${e.eventName }</a>
-	                                </td>
+	                                <td onclick="bDetail(${e.eventNo })" id="event" style="pointer:cursor;">${e.eventName }</td>
 	                                <td>${eCountList[cnt.index] }</td>
 	                                <td id="eventStatus">${e.eventStatus }</td>
 	                            </tr>
@@ -194,26 +192,19 @@ cursor: pointer;
         
         <script>
         
-       //게시물 상세보기
+       //게시물 상세보기(ajax적용전)
         
         function bDetail(eventNo){
         	
-        		
         		 var eventNo=eventNo;
         		/*  var page=${pi.currentPage }; */
         		   
-            
-        	
            		location.href="bannerDetail.do?eventNo="+eventNo;
            				/* "&page="+page; */
        
-        	
         }
         
-        	
-        
-        
-        
+       
         
         //검색 
         
@@ -223,9 +214,10 @@ cursor: pointer;
         	var keyword=$("#keyword").val();
         	location.href="searchEventA.do?keyword="+keyword;
         	
-        	
-        	
         }
+        
+        
+     
         
         
         //이벤트 게시
@@ -259,7 +251,6 @@ cursor: pointer;
 			                           +"message: " + request.responseText
 			                           +"error: " + errorData);
 			                  }   
-        				
         			});
         				
         }
@@ -276,7 +267,18 @@ cursor: pointer;
         	 	dataType:"json",
         	 	success:function(data){
         	 		
-        	 
+        	 		//게시물 상세보기(ajax후)
+           	        
+           	       	$(function(){
+           	       		
+           	       		$("tr").on("click",function(){
+           	       			var eventNo=$(this).children().eq(1).text();
+           	        		 var page=${pi.currentPage };   
+           	        		 alert(eventNo);
+           	           		location.href="bannerDetail.do?eventNo="+eventNo+"&page="+page;
+           	       		})
+           	       	})
+           	       	
         	 		$tableBody=$("tbody");
         	 		$tableBody.html("");
         	 		
@@ -293,12 +295,12 @@ cursor: pointer;
         	 					
         	 				
         	 				$tr=$("<tr id='cursor'>");
-        	 				$td=$("<td>");
+        	 				$td=$("<td onclick='event.cancelBubble=true'>");
         	 				$checkBox=$("<input type='checkbox' class='common' name='eventNo'>").val(data.bannerList[i].eventNo);     	 			
-        	 				$eventNo=$("<td>").text(data.bannerList[i].eventNo);
-        	 				$eventName=$("<td onclick='bDetail(data.bannerList[i].eventNo)'>").text(data.bannerList[i].eventName);
-        	 				$eventCnt=$("<td>").text(data.bannerList[i].eventCnt);
-        	 				$eventStatus=$("<td>").text(data.bannerList[i].eventStatus);
+        	 				$eventNo=$("<td onclick='event.cancelBubble=true'>").text(data.bannerList[i].eventNo);
+        	 				$eventName=$("<td>").text(data.bannerList[i].eventName);
+        	 				$eventCnt=$("<td onclick='event.cancelBubble=true'>").text(data.bannerList[i].eventCnt);
+        	 				$eventStatus=$("<td onclick='event.cancelBubble=true'>").text(data.bannerList[i].eventStatus);
         	 				
         	 				
         	 				$td.append($checkBox);
@@ -310,8 +312,6 @@ cursor: pointer;
         	 				$tableBody.append($tr);
         	 				
         	 			}
-        	 			
-        	 		
         	 	},
         	 	error:function(request, status, errorData){
                     alert("error code: " + request.status + "\n"
@@ -357,7 +357,6 @@ cursor: pointer;
     			                           +"error: " + errorData);
     			                  }   
             			});
-            				
             }
             
         
@@ -391,11 +390,7 @@ cursor: pointer;
 		                           +"message: " + request.responseText
 		                           +"error: " + errorData);
 		                  }   
-    				
-    				 
     			});
-        		
-    
         	} 
         	
         	//모두 체크
@@ -407,10 +402,6 @@ cursor: pointer;
     				$(".common").prop('checked', bool);
     			});
     		}); 
-        	
-        	
-        	
-        	
         	
         </script>
         

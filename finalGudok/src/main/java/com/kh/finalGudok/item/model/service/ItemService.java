@@ -189,11 +189,52 @@ public interface ItemService {
 
 	ArrayList<BannerItem> selectBannerItem(int eventNo, PageInfo pi);
 
-	ArrayList<AdminItem> selectItemListA(PageInfo pi);
+	ArrayList<BannerItem> selectItemListA(PageInfo pi);
 
 	int deleteBannerItem(int[] dEventArr);
 
 
+	int updateItemStatusY(ArrayList<BannerItem> iArr);
+
+	int updateItemStatusN(ArrayList<BannerItem> iArr);
+
+	BannerItem selectAdminItem(int itemNo);
+
+	int updateItem(BannerItem i);
+
+	int deleteEventItem(BannerItem i);
+
+	int updateItemImg(BannerItem i);
+
+	int selectImageNo(BannerItem i);
+
+	int getItemCountA();
+
+	BannerItem selectDeleteItem(int i);
+
+	int deleteItemA(int i);
+
+	int deleteImgA(int i);
+
+	int deleteItemImgA(int i);
+
+	int deleteItemEvent(int i);
+
+	ArrayList<BannerItem> selectEventOption();
+
+	ArrayList<BannerItem> selectItems(PageInfo pi);
+
+	int getNonEventItemCnt();
+
+	int updateItemEventStatus(int i);
+
+	int insertEventItem(BannerItem i);
+
+	int deleteEventItemBefore(BannerItem i);
+
 	
+
+
+
 
 }

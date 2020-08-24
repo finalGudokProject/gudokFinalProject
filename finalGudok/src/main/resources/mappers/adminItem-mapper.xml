@@ -116,6 +116,7 @@
 		FROM EVENT_ITEM
 		WHERE EVENT_NO IN(#{i}) 
 	</delete>
+	
 	<delete id="deleteEventImg" parameterType="_int">
 		DELETE 
 		FROM IMAGE
@@ -129,6 +130,7 @@
 		FROM BANNER_IMG
 		WHERE EVENT_NO IN(#{i}) 
 	</delete>
+	
 	<select id="selectDeleteEvent" parameterType="_int" resultMap="eventResultSet">
 		SELECT *
 		FROM EIMAGE
@@ -167,20 +169,124 @@
 		WHERE EVENT_NO=${value}
 	</select>
 	
-	<select id="selectItemListA" resultMap="adminItemResultSet">
+	<select id="selectItemListA" resultMap="bannerItemResultSet">
 		SELECT * 
 		FROM ITEM
+		ORDER BY ITEM_NO DESC
 	</select>
 	
-	<delete id="deleteBannerItem" parameterType="java.util.Arrays">
-		delete
-		from event_item
-		where item_no in
-			<foreach item="i" collection="array" open="(" separator="," close=")">
-				#{i}
+	
+	
+	<update id="updateItemStatusY" parameterType="java.util.ArrayList">
+		UPDATE ITEM
+        SET ITEM_DP_STATUS='Y'
+        WHERE ITEM_NO IN 
+        	<foreach item="i" index="index" collection="list" open="(" separator="," close=")">
+				#{i.itemNo}
 			</foreach>
-		
+	</update>
+	
+	<update id="updateItemStatusN" parameterType="java.util.ArrayList">
+		UPDATE ITEM
+        SET ITEM_DP_STATUS='N'
+        WHERE ITEM_NO IN 
+        	<foreach item="i" index="index" collection="list" open="(" separator="," close=")">
+				#{i.itemNo}
+			</foreach>
+	</update>
+	<select id="selectAdminItem" parameterType="_int" resultMap="bannerItemResultSet">
+		SELECT *
+        FROM AILIST
+        WHERE ITEM_NO IN #{itemNo}
+	</select>
+	<update id="updateItem" parameterType="BannerItem">
+		UPDATE ITEM
+        SET ITEM_NAME=#{itemName},ITEM_PRICE=${itemPrice},ITEM_DP_STATUS=#{itemDpStatus},ITEM_RECOMMEND=#{itemRecommend},ITEM_MEMO=#{itemMemo}
+        WHERE ITEM_NO=${itemNo}
+	</update>
+	
+	<update id="updateItemImg" parameterType="BannerItem">
+		UPDATE IMAGE 
+		SET IMAGE_ORIGINAL_NAME=#{imageOriginalName},IMAGE_RENAME=#{imageRename}
+		WHERE IMAGE_NO=#{itemNo}
+	</update>
+	<select id="selectImageNo" parameterType="BannerItem" resultType="_int">
+		SELECT I_IMAGE_NO
+		FROM ITEM_IMAGE
+		WHERE ITEM_NO=#{itemNo}
+	</select>
+	<delete id="deleteBannerItem" parameterType="BannerItem">
+		DELETE
+		FROM EVENT_ITEM
+		WHERE ITEM_NO=#{itemNo}
 	</delete>
+	<select id="selectItemCountA" resultType="_int">
+		SELECT COUNT(*)
+		FROM ITEM
+	</select>
+	<select id="selectDeleteItem" parameterType="_int" resultMap="bannerItemResultSet">
+		SELECT *
+		FROM AILIST
+		WHERE ITEM_NO=#{i}
+	</select>
+	<delete id="deleteItemImgA" parameterType="_int">
+		DELETE 
+		FROM ITEM_IMAGE
+		WHERE ITEM_NO IN(#{i}) 
+	</delete>
+	<delete id="deleteImgA" parameterType="_int">
+		DELETE 
+		FROM IMAGE
+		WHERE IMAGE_NO IN
+        (SELECT I_IMAGE_NO
+        FROM ITEM_IMAGE
+        WHERE ITEM_NO IN(#{i}))
+	</delete>
+	<delete id="deleteItemA" parameterType="_int">
+		DELETE 
+		FROM ITEM
+		WHERE ITEM_NO IN(#{i}) 
+	</delete>
+	
+	<delete id="deleteItemEvent" parameterType="_int">
+		DELETE 
+		FROM EVENT_ITEM
+		WHERE ITEM_NO IN(#{i}) 
+	</delete>
+	<select id="selectEventOption" resultMap="bannerItemResultSet">
+		SELECT *
+		FROM EVENT
+        ORDER BY EVENT_NO DESC
+	</select>
+	<select id="selectItems" resultMap="bannerItemResultSet">
+		SELECT *
+		FROM AILIST
+		WHERE ITEM_EVENT_STATUS='N'
+		ORDER BY ITEM_NO DESC
+	</select>
+	<select id="selectNonEventItemCnt" resultType="_int">
+		SELECT COUNT(*)
+		FROM AILIST
+		WHERE ITEM_EVENT_STATUS='N'
+	</select>
+	<update id="updateItemEventStatus" parameterType="_int">
+		UPDATE ITEM
+		SET ITEM_EVENT_STATUS='Y'
+		WHERE ITEM_NO=#{i}
+	</update>
+	<insert id="insertEventItem" parameterType="BannerItem">
+		INSERT INTO EVENT_ITEM 
+		VALUES(#{itemNo},#{itemDiscount},#{eventNo})
+	</insert>
+	<delete id="deleteEventItemBefore" parameterType="BannerItem">
+		DELETE
+		FROM EVENT_ITEM
+		WHERE ITEM_NO IN #{itemNo}
+	</delete>
+
+	
+
+	
 	
 	
 </mapper>

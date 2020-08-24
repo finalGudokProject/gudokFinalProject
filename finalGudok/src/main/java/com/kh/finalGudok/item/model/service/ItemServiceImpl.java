@@ -435,14 +435,6 @@ public class ItemServiceImpl implements ItemService {
 	}
 
 
-	
-	/*
-	 * @Override public ArrayList<AdminItem> selectItemListA(PageInfo pi) {
-	 * 
-	 * return iDao.selectItemListA(pi); }
-	 */
-
-
 
 	@Override
 	public int getbannerItemCount(int eventNo) {
@@ -457,9 +449,8 @@ public class ItemServiceImpl implements ItemService {
 	}
 
 	@Override
-	public ArrayList<AdminItem> selectItemListA(PageInfo pi) {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<BannerItem> selectItemListA(PageInfo pi) {
+		return iDao.selectItemListA(pi);
 	}
 
 	@Override
@@ -467,5 +458,124 @@ public class ItemServiceImpl implements ItemService {
 		
 		return iDao.deleteBannerItem(dEventArr);
 	}
+
+
+	@Override
+	public int updateItemStatusY(ArrayList<BannerItem> iArr) {
+
+		return iDao.updateItemStatusY(iArr);
+	}
+
+	@Override
+	public int updateItemStatusN(ArrayList<BannerItem> iArr) {
+
+		return iDao.updateItemStatusN(iArr);
+	}
+
+	@Override
+	public BannerItem selectAdminItem(int itemNo) {
+		
+		return iDao.selectAdminItem(itemNo);
+	}
+
+	@Override
+	public int updateItem(BannerItem i) {
+		
+		return iDao.updateitem(i);
+	}
+
+	@Override
+	public int deleteEventItem(BannerItem i) {
+		
+		return iDao.deleteEventItem(i);
+	}
+
+	@Override
+	public int updateItemImg(BannerItem i) {
+		
+		return iDao.updateItemImg(i);
+	}
+
+	@Override
+	public int selectImageNo(BannerItem i) {
+		return iDao.selectImageNo(i);
+	}
+
+	@Override
+	public int getItemCountA() {
+		
+		return iDao.selectItemCountA();
+	}
+
+	@Override
+	public BannerItem selectDeleteItem(int i) {
+		
+		return iDao.selectDeleteItem(i);
+	}
+
+	@Override
+	public int deleteItemA(int i) {
+		
+		return iDao.deleteItemA(i);
+	}
+
+	@Override
+	public int deleteImgA(int i) {
+		return iDao.deleteImgA(i);
+	}
+
+	@Override
+	public int deleteItemImgA(int i) {
+		return iDao.deleteItemImgA(i);
+	}
+
+	@Override
+	public int deleteItemEvent(int i) {
+
+		return iDao.deleteItemEvent(i);
+	}
+
+	@Override
+	public ArrayList<BannerItem> selectEventOption() {
+		return iDao.selectEventOption();
+	}
+
+	@Override
+	public ArrayList<BannerItem> selectItems(PageInfo pi) {
+		return iDao.selectItems(pi);
+	}
+
+	@Override
+	public int getNonEventItemCnt() {
+		return iDao.selectNonEventItemCnt();
+	}
+
+	@Override
+	public int updateItemEventStatus(int i) {
+		return iDao.updateItemEventStatus(i);
+	}
+
+	@Override
+	public int insertEventItem(BannerItem i) {
+
+		return iDao.insertEventItem(i);
+	}
+
+	@Override
+	public int deleteEventItemBefore(BannerItem i) {
+	
+		return iDao.deleteEventItemBefor(i);
+	}
+
+
+	
+
+	
+	
+	
+	
+
+
+
 
 }
