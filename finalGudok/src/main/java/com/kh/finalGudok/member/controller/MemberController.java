@@ -39,6 +39,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
+
 import com.kh.finalGudok.member.model.vo.Inquiry;
 import com.kh.finalGudok.item.model.vo.Item;
 import com.kh.finalGudok.item.model.vo.PageInfo;
@@ -1196,7 +1197,6 @@ public class MemberController {
 				throw new MemberException("탈퇴 내역 확인 실패!");
 			}
 		}
-
 
 //	@RequestMapping("emailDupCheck.do")
 //	public void emailDupCheck(HttpServletResponse response, @RequestParam("email") String email) throws IOException {

@@ -163,7 +163,7 @@
 		<result property="gradeNo" column="GRADE_NO"/>
 		<result property="total" column="TOTAL"/>
 	</resultMap>
-	
+
 	<select id="selectOne" parameterType="Member" resultMap="memberResultSet">
 		<!-- SELECT *
 		FROM MEMBER
@@ -333,7 +333,7 @@
 	  	SET MEMBER_PWD=#{memberPwd}
 	  	WHERE MEMBER_ID=#{memberId}
 	</update>
-	
+
 	<!-- 아이디 찾기 -->
 	<select id="findId" parameterType="Member" resultType="String">
 		SELECT MEMBER_ID FROM MEMBER WHERE MEMBER_NAME=#{memberName} AND EMAIL=#{email}
@@ -359,7 +359,6 @@
 		FROM MEMBER
 		WHERE MEMBER_STATUS='N'
 	</select>
-	
 	<select id="selectGradeCnt" resultType="int">
 		SELECT COUNT(*)
 		FROM (SELECT * 
@@ -474,6 +473,5 @@
 		SELECT S.*,M.GRADE_NO
 		FROM SECESSION S
 		LEFT JOIN MEMBER M ON(S.MEMBER_NO=M.MEMBER_NO)
-	</select>	
-
+	</select>
  </mapper>

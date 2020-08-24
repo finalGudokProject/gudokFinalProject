@@ -21,6 +21,7 @@ import com.kh.finalGudok.member.model.vo.AdminPayment;
 import com.kh.finalGudok.member.model.vo.AdminSecession;
 import com.kh.finalGudok.member.model.vo.Inquiry;
 
+
 public interface MemberService {
 
 	Member loginMember(Member m);
@@ -73,7 +74,7 @@ public interface MemberService {
 	int deleteCart(HashMap map);
 
 	int updatePassword(Member m);
-	
+
 	ArrayList<Grade> selectGradeList();
 
 	int getMemberCnt();
@@ -117,7 +118,6 @@ public interface MemberService {
 	Integer selectMemberSecessionCnt(AdminSecession s);
 
 	ArrayList<AdminSecession> selectMemberSecession(PageInfo pi);
-
 
 	String findId(Member m);
 
