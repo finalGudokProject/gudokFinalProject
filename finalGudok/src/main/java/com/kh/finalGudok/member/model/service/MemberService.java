@@ -118,6 +118,7 @@ public interface MemberService {
 
 	ArrayList<AdminSecession> selectMemberSecession(PageInfo pi);
 
+
 	String findId(Member m);
 
 	int checkMember(Member m);

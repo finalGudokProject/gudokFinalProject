@@ -1197,6 +1197,7 @@ public class MemberController {
 			}
 		}
 
+
 //	@RequestMapping("emailDupCheck.do")
 //	public void emailDupCheck(HttpServletResponse response, @RequestParam("email") String email) throws IOException {
 //		response.setContentType("application/json;charset=utf-8");

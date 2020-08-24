@@ -196,7 +196,6 @@ public class MemberServiceImpl implements MemberService {
 		return mDao.selectMemberN(pi);
 	}
 
-
 	@Override
 	public Integer selectGradeCnt(int i) {
 		return mDao.selectGradeCnt(i);
@@ -291,6 +290,9 @@ public class MemberServiceImpl implements MemberService {
 	public ArrayList<AdminSecession> selectMemberSecession(PageInfo pi) {
 		return mDao.selectMemberSecession(pi);
 	}
+	
+
+	
 
 	@Override
 	public int changePwd(Member m) {
