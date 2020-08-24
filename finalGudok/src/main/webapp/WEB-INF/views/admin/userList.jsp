@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,6 +13,9 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
     <title>회원 리스트</title>    
+      <!-- google charts -->
+	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    
     <style>
 
 
@@ -37,6 +41,10 @@ input, select,textarea{
     border: 1px solid #CCCCCC;
 }
 
+#cursor{
+cursor: pointer;
+}
+
 </style>
 </head>
 
@@ -48,252 +56,510 @@ input, select,textarea{
                 <h3>회원 리스트</h3>
                 <br>
                 <div>
-                    <div style="width:40%; float:left; height:300px; background-color:lightsteelblue">구글차트</div>
-                    <div style="width:25%; padding:10px; float:left;height:300px;">
-                        <h5>등급별 현재 회원 수</h5>
+                    <div id="userChart" style="width:40%; float:left; height:320px;"></div>
+                    
+                    <div style="width:60%; padding:10px; float:left;height:auto;">
+          
+                        <h5>등급별 정보</h5>
                         
                         <table>
-                            <tr>
-                                <td>1등급</td>
-                                <td id="td3">3명</td>
-                            </tr>
-                            <tr>
-                                <td>2등급</td>
-                                <td id="td3">5명</td>
-                            </tr>
-                            <tr>
-                                <td>3등급</td>
-                                <td id="td3">1명</td>
-                            </tr>
-                            <tr>
-                                <td>4등급</td>
-                                <td id="td3">30명</td>
-                            </tr>
-                            <tr>
-                                <td>5등급</td>
-                                <td id="td3">6명</td>
-                            </tr>
+                        	<thead>
+                        		<tr>
+	                                <th>등급 </th>
+	                                <th>등급명</th>
+	                                <th>회원 수</th>
+	                                <th>최소 구매금액</th>
+	                                <th>적립율</th>
+	                            </tr>
+                        	</thead>
+                        	<tbody id="tbody1">
+                        	
+                        		<c:forEach var="i" items="${gList }" varStatus="cnt">
+		                            <tr>
+		                            <c:choose>
+		                            	<c:when test="${i.gradeNo eq '4'}"><td onclick="event.cancelBubble=true">1등급</td></c:when>
+		                            	<c:when test="${i.gradeNo eq '3'}"><td onclick="event.cancelBubble=true">2등급</td></c:when>
+		                            	<c:when test="${i.gradeNo eq '2'}"><td onclick="event.cancelBubble=true">3등급</td></c:when>
+		                            	<c:when test="${i.gradeNo eq '1'}"><td onclick="event.cancelBubble=true">4등급</td></c:when>
+			                        </c:choose>
+			                        	
 
+			                                <td onclick="event.cancelBubble=true">${i.gradeName }</td>
+			                                <td onclick="event.cancelBubble=true">${i.total }명</td>
+			                                <td onclick="event.cancelBubble=true">${i.gradeMin }원</td>
+			                                <td onclick="event.cancelBubble=true">${i.gradeRate } %</td>
+		                            </tr>
+	                            </c:forEach>
+	                            
+                         	</tbody>
                         </table>
+                       
                     </div>
-                    <div style="width:35%; padding:10px; float:left;height:300px;">
-                        <h5>등급별 최소 구매금액 및 적립율</h5>
-                        
-                        <table>
-                            <tr>
-                                <td style="width:34%">1등급</td>
-                                <td id="td3" style="width:36%">0</td>
-                                <td  style="width:26%">1%</td>
-                            </tr>
-                            <tr>
-                                <td style="width:34%">2등급</td>
-                                <td id="td3" style="width:36%">50,000</td>
-                                <td  style="width:26%">1%</td>
-                            </tr>
-                            <tr>
-                                <td style="width:34%">3등급</td>
-                                <td id="td3" style="width:36%">100,000</td>
-                                <td  style="width:26%">1%</td>
-                            </tr>
-                            <tr>
-                                <td style="width:34%">4등급</td>
-                                <td id="td3" style="width:36%">300,000</td>
-                                <td  style="width:26%">1%</td>
-                            </tr>
-                            <tr>
-                                <td style="width:34%">5등급</td>
-                                <td id="td3" style="width:36%">1,000,000</td>
-                                <td  style="width:26%">1%</td>
-                            </tr>
-                           
+                    <br>
+                
+                
+                
 
-                        </table>
-                    </div>
-                </div>
-
+                <!-- 모달 -->
                 <div style="width:100%; margin-top:10px; margin-bottom:15px; text-align: right;">
                     
-               
-                <!-- 모달 -->
+            		<!-- Button trigger modal -->
+					<button type="button" class="btn btn-primary btn-lg" id="btn" data-toggle="modal" data-target="#myModal">최소 구매금액 변경</button>
+					<button type="button" class="btn btn-primary btn-lg" id="btn" data-toggle="modal" data-target="#myModal2">적립율 변경</button>
+					  <!-- Modal 1-->
+					  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+					    <div class="modal-dialog">
+					      <div class="modal-content">
+					        <div class="modal-header">
+					            <h4 class="modal-title" id="myModalLabel">최소 구매 금액</h4>
+					          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					          
+					        </div>
+					        <div class="modal-body">
+					          <table>
+					            <tr>
+					                <td><input type="hidden" class="gradeM" name="grade" value="4">1등급</td>
+					                <td><input type="number" min="0" class="gradeMin" id="gradeMin1" name="gradeMin1"></td>
+					            </tr>
+					            <tr>
+					               <td><input type="hidden" class="gradeM" name="grade" value="3">2등급</td>
+					                <td><input type="number" min="0" class="gradeMin" id="gradeMin2" name="gradeMin2"></td>
+					            </tr>
+					             <tr>
+					               <td><input type="hidden" class="gradeM" name="grade" value="2">3등급</td>
+					                <td><input type="number" min="0" class="gradeMin" id="gradeMin3" name="gradeMin3"></td>
+					            </tr>
+					            <tr>
+					                <td><input type="hidden" class="gradeM" name="grade" value="1">4등급</td>
+					                <td><input type="number" min="0" class="gradeMin" id="gradeMin4" name="gradeMin4"></td>
+					            </tr>
+					          </table>
+					        </div>
+					        <div class="modal-footer">
+					         <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+					          <button type="button" class="btn btn-primary" id="test" onclick="gradeMinChg()">저장</button>
+					        </div>
+					      </div>
+					    </div>
+					  </div>
+					  
+					  
+					  
+					<!-- Modal 2-->
+					<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+					    <div class="modal-dialog">
+					      <div class="modal-content">
+					        <div class="modal-header">
+					            <h4 class="modal-title" id="myModalLabel">등급별 적립율</h4>
+					          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					          
+					        </div>
+					        <div class="modal-body">
+					          <table>
+					            <tr>
+					                <td><input type="hidden" class="grade" name="grade" value="4">1등급</td>
+					                <td><input type="number" min="0" max="100" class="gradeRate" id="rate1" name="gradeRate"></td>
+					            </tr>
+					             <tr>
+					                <td><input type="hidden" class="grade" name="grade" value="3">2등급</td>
+					                
+					                <td><input type="number" min="0" max="100" class="gradeRate" id="rate2" name="gradeRate"></td>
+					            </tr>
+					             <tr>
+					                <td><input type="hidden" class="grade" name="grade" value="2">3등급</td>
+					                <td><input type="number" min="0" max="100" class="gradeRate" id="rate3" name="gradeRate"></td>
+					            </tr>
+					             <tr>
+					                <td><input type="hidden" class="grade" name="grade" value="1">4등급</td>
+					                <td><input type="number" min="0" max="100" class="gradeRate" id="rate4" name="gradeRate"></td>
+					            </tr>
+					
+					          </table>
+					        </div>
+					        <div class="modal-footer">
+					          <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+					          <button type="button" class="btn btn-primary" onclick="rateChg()">저장</button>
+					        </div>
+					      </div>
+					    </div>
+					  </div>
 
-               
-            <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary btn-lg" id="btn" data-toggle="modal" data-target="#myModal">최소 구매금액 변경</button>
-<button type="button" class="btn btn-primary btn-lg" id="btn" data-toggle="modal" data-target="#myModal2">최소 구매금액 변경</button>
-  <!-- Modal 1-->
-  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-            <h4 class="modal-title" id="myModalLabel">최소 구매 금액</h4>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          
-        </div>
-        <div class="modal-body">
-          <table>
-            <tr>
-                <td>
-                    1등급
-                </td>
-                <td>
-                    <input type="text" name="gradeP1"> 
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    1등급
-                </td>
-                <td>
-                    <input type="text" name="gradeP1"> 
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    1등급
-                </td>
-                <td>
-                    <input type="text" name="gradeP1"> 
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    1등급
-                </td>
-                <td>
-                    <input type="text" name="gradeP1"> 
-                </td>
-            </tr>
-    
-
-          </table>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
-          <button type="button" class="btn btn-primary">저장</button>
-        </div>
-      </div>
-    </div>
-  </div>
-<!-- Modal 2-->
-<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-            <h4 class="modal-title" id="myModalLabel">최소 구매 금액</h4>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          
-        </div>
-        <div class="modal-body">
-          <table>
-            <tr>
-                <td>
-                    적립율
-                </td>
-                <td>
-                    <input type="text" name="gradeP1"> 
-                </td>
-            </tr>
-
-          </table>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
-          <button type="button" class="btn btn-primary">저장</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
-
-
-
-                  <script>
-                      $('#myModal').on('shown.bs.modal', function () {
-                        $('#myInput').focus()
-                        })
-                  </script>
-
-
-            
-
-                <!--모달 끝-->
+                 
                 </div><!--모달 버튼 감싸는 div-->
-
-
+                <!--모달 끝-->
 
                 <div style="margin-top:30px;margin-bottom:15px; float:right;">
                     <input type="text">
-                    <button id="btn">검색</button>
-                    
+                    <input type="button" class="btn" value="검색">
                 </div>
-                <br>
-                <br>
+	                <br>
+	                <br>
             
-        
                     <table>
                         <thead>
                             <tr>
                                 <th id="td1">회원번호</th>
-                                <th>아이디</th>
+                                <th>아이디 (이름)</th>
                                 <th>총 구매금액</th>
                                 <th>등급</th>
                                 <th>가입일자</th>
                              </tr>   
                          </thead>
-                         <tbody>
-                             <tr>
-                                <td>1</td>
-                                <td>user01</td>
-                                <td>15000</td>
-                                <td>1등급</td>
-                                <td>2020-08-01
-                                </td>
-                            </tr>
-                            
-                      
-                            
+                         <tbody id="tbody2">
+                         	<c:forEach var="i" items="${mList }" varStatus="cnt">
+	                             <tr id="cursor">
+	                                <td>${i.memberNo }</td>
+	                                <td>${i.memberId } (${i.memberName })</td>
+	                                <td>2323원</td>
+	                               <%--  <td>${i.totalPay }원</td> <!-- -----여기에 총 결제금액 넣어야함 --> --%>
+		                               <c:choose>
+			                            	<c:when test="${i.gradeNo eq '4'}"><td>1등급</td></c:when>
+			                            	<c:when test="${i.gradeNo eq '3'}"><td>2등급</td></c:when>
+			                            	<c:when test="${i.gradeNo eq '2'}"><td>3등급</td></c:when>
+			                            	<c:when test="${i.gradeNo eq '1'}"><td>4등급</td></c:when>
+				                        </c:choose>
+	                                <td>${i.enrollDate }</td>
+	                            </tr>
+                            </c:forEach>
                          </tbody>
                     </table>
-
-
+                    
+                    
+            <script>
+            //회원 상세 정보보기
+          	$(function(){
+   	       		
+   	       		$("tr").on("click",function(){
+   	       		
+   	       			var type='user';
+   	       			var memberNo=$(this).children().eq(0).text();
+   	        		 var page=${pi.currentPage };   
+   	        		 alert(memberNo);
+   	        		 alert(page);
+   	        		 alert(type);
+   	        		 
+   	           		location.href="mDetail.do?memberNo="+memberNo+"&page="+page+"&type="+type;
+   	       		})
+   	       	})
+                    
+                    
+            </script>
+                    
+                    
 
                     <br>
-
 
                     <!------페이징 처리----->
                 <div class="page-center">
                     <ul class="pagination-t">
-
-                        <!-- disabled: 페이지 비활성화 -->
-                        <li class="page-item-t disabled-t"><a class="page-link-t" href="#"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-chevron-left" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
-                          </svg></a></li>
-
-                        <li class="page-item-t"><a class="page-link-t" href="#">1</a></li>
-
-                        <!-- disabled: 해당 버튼 활성화 -->
-                        <li class="page-item-t active-t" aria-current="page-t">
-                            <a class="page-link-t" href="#">2 <span class="sr-only">(current)</span></a>
-                        </li>
-                        <li class="page-item-t"><a class="page-link-t" href="#">3</a></li>
-                        <li class="page-item-t"><a class="page-link-t" href="#"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-chevron-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
-                          </svg></a></li>
+                    
+                    	<!-- 이전 -->
+                        <c:if test="${pi.currentPage eq 1 }">
+	                        <li class="page-item-t disabled-t"><a class="page-link-t"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-left-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path d="M3.86 8.753l5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/>
+</svg></a></li>
+						</c:if>
+						 <c:if test="${pi.currentPage gt 1 }">
+							<c:url var="blistBack" value="gradeList.do">
+								<c:param name="page" value="${pi.currentPage-1 }"/>
+							</c:url>
+		                        <li class="page-item-t">
+		                        <a class="page-link-t" href="${blistBack }">
+		                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-left-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+	  <path d="M3.86 8.753l5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/>
+	</svg></a></li>
+						</c:if>
+						
+						<!-- 번호들 -->
+						<c:forEach var="p" begin="${pi.startPage }" end="${pi.endPage }">
+							
+							<c:if test="${p eq pi.currentPage }">
+	                       		<li class="page-item-t  active-t"><a class="page-link-t">${p }<span class="sr-only"></span></a></li>
+							</c:if>
+							
+	                        <c:if test="${p ne pi.currentPage }">
+	                        	<c:url var="blistCheck" value="gradeList.do">
+	                        		<c:param name="page" value="${p }"/>
+                        		</c:url>
+		                        <li class="page-item-t"><a class="page-link-t" href="${blistCheck }">${p } <span class="sr-only"></span></a>
+		                        </li>
+		                    </c:if>
+                        </c:forEach>
+                        
+                        
+                        <!-- 이후 -->
+                        <c:if test="${pi.currentPage eq pi.maxPage }">
+	                        <li class="page-item-t disabled-t"><a class="page-link-t">
+	                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-right-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path d="M12.14 8.753l-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
+</svg></a></li>
+						</c:if>
+						 <c:if test="${pi.currentPage lt pi.maxPage }">
+							<c:url var="blistAfter" value="gradeList.do">
+								<c:param name="page" value="${pi.currentPage+1 }"/>
+							</c:url>
+	                        <li class="page-item-t">
+	                        <a class="page-link-t" href="${blistAfter }">
+	                       <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-right-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path d="M12.14 8.753l-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
+</svg></a></li>
+						</c:if>
                     </ul>
 
                 </div>
 
 
-
-
+			</div>
 
             </div><!--내용담은 컨테이너-->
         </div><!--250px띄운 div-->
         
+        
+        
+        
+        
+        
+         <script>
+         
+                      $('#myModal').on('shown.bs.modal', function () {
+                        $('#myInput').focus()
+                        });
+                      
+                      
+                      function gradeMinChg(){
+                    	  
+                    		if($("#gradeMin1").val().trim()==0){
+                    			alert('최소 구매금액을 입력해주세요.');
+                    		}else if($("#gradeMin2").val().trim()==0){
+                    			alert('최소 구매금액을 입력해주세요.');
+                    		}else if($("#gradeMin3").val().trim()==0){
+                    			alert('최소 구매금액을 입력해주세요.');
+                    		}else if($("#gradeMin4").val().trim()==0){
+                    			alert('최소 구매금액을 입력해주세요.');
+                    		
+                    		}else{
+                    			
+                    			var grade=$(".gradeM");
+                    			var gradeMin=$(".gradeMin");
+                    			var sendCnt=0;
+                    			var sendGradeMinArr=Array();
+                    			var sendGradeArr=Array();
+                    			
+               
+                    			
+                    			for(i=0; i<grade.length;i++){
+                        			if(gradeMin[i].value!=null){
+                        				sendGradeMinArr[sendCnt]=gradeMin[i].value;
+                        				sendGradeArr[sendCnt]=grade[i].value;
+                        				
+                        				sendCnt++;
+                        			}
+                        		}
+                    			
+                 
+                    		 		$.ajax({
+                        				url:"gradeMinInfoChang.do",
+                        				type:"post",
+                        				traditional:true,
+                        				data:{"sendGradeMinArr":sendGradeMinArr,"sendGradeArr":sendGradeArr},
+                        				success:function(data){
+                        					
+                        			
+                        					getGradeList();
+                        					alert('정보가 변경되었습니다.');
+                        					$("[data-dismiss=modal]").trigger({ type: "click" });
+                        					
+                        					        					
+                        				},
+                        				error:function(request, status, errorData){
+                		                    alert("error code: " + request.status + "\n"
+                			                           +"message: " + request.responseText
+                			                           +"error: " + errorData);
+                			                  }   
+                        			});
+                    		 		
+                    		}
+                    			
+                      }
+                    	  
+                    	  
+                    	  
+                      
+                        
+                      function rateChg(){
+                    	  
+                    		if($("#rate1").val().trim()==0){
+                    			alert('적립율을 입력해주세요.');
+                    		}else if($("#rate2").val().trim()==0){
+                    			alert('적립율을 입력해주세요.');
+                    		}else if($("#rate3").val().trim()==0){
+                    			alert('적립율을 입력해주세요.');
+                    		}else if($("#rate4").val().trim()==0){
+                    			alert('적립율을 입력해주세요.');
+                    		
+                    		}else{
+                    			
+                    			var grade=$(".grade");
+                    			var gradeRate=$(".gradeRate");
+                    			var sendCnt=0;
+                    			var sendGradeArr=Array();
+                    			var sendRateArr=Array();
+                    			
+               
+                    			
+                    			for(i=0; i<grade.length;i++){
+                        			if(gradeRate[i].value!=null){
+                        				sendRateArr[sendCnt]=gradeRate[i].value;
+                        				sendGradeArr[sendCnt]=grade[i].value;
+                        				
+                        				sendCnt++;
+                        			}
+                        		}
+                    			
+                    		
+                    		 		$.ajax({
+                        				url:"gradeRateInfoChang.do",
+                        				type:"post",
+                        				traditional:true,
+                        				data:{"sendGradeArr":sendGradeArr,"sendRateArr":sendRateArr},
+                        				success:function(data){
+                        					
+                        				
+                        					getGradeList();
+                        					alert('정보가 변경되었습니다.');
+                        					//모달창 닫기
+                        					$("[data-dismiss=modal]").trigger({ type: "click" });
+                        					        					
+                        				},
+                        				error:function(request, status, errorData){
+                		                    alert("error code: " + request.status + "\n"
+                			                           +"message: " + request.responseText
+                			                           +"error: " + errorData);
+                			                  }   
+                        			});
+                    		 		
+                    		}
+                    			
+                      }
+                      
+                      
+                      
+                    //등급 정보변경 후 리스트 가져오기
+                      function getGradeList(){
+                    	
+                    	var page=${pi.currentPage};
+                     	
+                     	 $.ajax({
+                     		 
+                     	 	url:"gListChange.do", 
+                     	 	dataType:"json",
+                     	 	data:{"page":page},
+                     	 	success:function(data){
+                     	 		
+                        	       	
+                     	 		$tableBody=$("#tbody1");
+                     	 		$tableBody.html("");
+                     	 		
+                     	 		var $tr;
+                     	 		var $gradeNo;
+                     	 		var $gradeName;
+                     	 		var $total;
+                     	 		var $gradeMin;
+                     	 		var $gradeRate;
+                     	 		
+                     	 				for(var i in data.list){
+                     	 					
+                     	 				$tr=$("<tr id='cursor'>");
+                     	 				
+                     	 				if(data.list[i].gradeNo==1){
+                     	 					$gradeNo=$("<td>").text('4등급');     	 			
+                     	 				}else if(data.list[i].gradeNo==2){
+                     	 					$gradeNo=$("<td>").text('3등급');    
+                     	 				}else if(data.list[i].gradeNo==3){
+                     	 					$gradeNo=$("<td>").text('2등급');    
+                     	 				}else{
+                     	 					$gradeNo=$("<td>").text('1등급');  
+                     	 				}
+                     	 					
+                     	 				$gradeName=$("<td>").text(data.list[i].gradeName);     	 	
+                     	 				$total=$("<td>").text(data.list[i].total+'명');     	 	
+                     	 				$gradeMin=$("<td>").text(data.list[i].gradeMin+'원');     	 	
+                     	 				$gradeRate=$("<td>").text(data.list[i].gradeRate+'%');     	 	
+                     	 				
+                     	 			
+                     	 				$tr.append($gradeNo);
+                     	 				$tr.append($gradeName);
+                     	 				$tr.append($total);
+                     	 				$tr.append($gradeMin);
+                     	 				$tr.append($gradeRate);
+                     	 				$tableBody.append($tr);
+                     	 				
+                     	 			}
+                     	 	},
+                     	 	error:function(request, status, errorData){
+                                 alert("error code: " + request.status + "\n"
+             	                           +"message: " + request.responseText
+             	                           +"error: " + errorData);
+             	                  }   
+                     	 	
+                     	 })
+                     	 
+                      }
+                        
+                  </script>
+        
+        
+        <script  type="text/javascript">
+
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(drawChart);
+
+   
+      function drawChart() {
+    	  
+    	var one=${gList[0].total};
+    	var two=${gList[1].total};
+    	var three=${gList[2].total};
+    	var four=${gList[3].total};
+    	
+    	  var data = google.visualization.arrayToDataTable([
+    		  
+    
+              ['Task', 'Percentage'],
+              ['1등급', one],
+              ['2등급', two],
+              ['3등급', three],
+              ['4등급', four]
+            ]);
+        
+       
+        // 그래프 옵션 설정
+       
+        var options = {
+          title: '등급별 회원 현황',
+          pieHole: 0.4,
+          chartArea:{left:30,top:50,width:'100%',height:'100%'},
+       	  colors:['#4DB6AC','#9CCC65','#CDDC39','#FFEB3B'],
+       	  fontSize:14
+        };
+
+        // 입력값을 화면에 뿌려줌
+        var chart = new google.visualization.PieChart(document.getElementById('userChart'));
+
+        chart.draw(data, options);
+      }
+    </script>        
+        
+        
+        
+        
+        
        <!-- Optional JavaScript -->
+       
+  
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.js" type="text/javascript"></script>
+    <script integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
   </body>

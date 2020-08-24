@@ -8,17 +8,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.finalGudok.item.model.vo.Item;
+import com.kh.finalGudok.item.model.vo.PageInfo;
 import com.kh.finalGudok.member.model.dao.MemberDao;
-
+import com.kh.finalGudok.member.model.vo.AdminMember;
+import com.kh.finalGudok.member.model.vo.AdminPayment;
+import com.kh.finalGudok.member.model.vo.AdminSecession;
 import com.kh.finalGudok.member.model.vo.Cart;
 import com.kh.finalGudok.member.model.vo.DeleteHeart;
 import com.kh.finalGudok.member.model.vo.Delivery;
 import com.kh.finalGudok.member.model.vo.Exchange;
+import com.kh.finalGudok.member.model.vo.Grade;
 import com.kh.finalGudok.member.model.vo.Heart;
 import com.kh.finalGudok.member.model.vo.Inquiry;
-
 import com.kh.finalGudok.member.model.vo.Member;
-
 import com.kh.finalGudok.member.model.vo.Point;
 import com.kh.finalGudok.member.model.vo.Reply;
 import com.kh.finalGudok.member.model.vo.Review;
@@ -172,6 +174,118 @@ public class MemberServiceImpl implements MemberService {
 		return mDao.updatePassword(m);
 	}
 
+	@Override
+	public ArrayList<Grade> selectGradeList() {
+		return mDao.selectGradeList();
+	}
+
+	@Override
+	public int getMemberCnt() {
+		return mDao.selectMemberCnt();
+	}
+
+	
+	@Override
+	public ArrayList<AdminMember> selectMemberN(PageInfo pi) {
+		return mDao.selectMemberN(pi);
+	}
+
+
+	@Override
+	public Integer selectGradeCnt(int i) {
+		return mDao.selectGradeCnt(i);
+	}
+
+	@Override
+	public int updateGradeRate(ArrayList<Grade> g) {
+		return mDao.updateGradeRate(g);
+	}
+
+	@Override
+	public int updateGradeMin(ArrayList<Grade> g) {
+		return mDao.updateGradeMin(g);
+	}
+
+	@Override
+	public AdminMember selectOneMember(int memberNo) {
+		return mDao.selectOneMember(memberNo);
+	}
+
+	@Override
+	public ArrayList<AdminPayment> selectMemberPay(int memberNo, PageInfo pi) {
+		return mDao.selectMemberPay(memberNo,pi);
+	}
+
+	@Override
+	public int getMemberPayCnt(int memberNo) {
+		return mDao.selectMemberPayCnt(memberNo);
+	}
+
+	@Override
+	public Integer selectTotalPay(int i) {
+		return mDao.selectTotalPay(i);
+	}
+
+	@Override
+	public int updateMemberA(AdminMember m) {
+		return mDao.updateMemberA(m);
+	}
+
+	@Override
+	public int deleteMemberA(Integer memberNo) {
+		return mDao.deleteMemberA(memberNo);
+	}
+
+	@Override
+	public int deleteMemberSecession(Integer memberNo) {
+		return mDao.deleteMemberSecession(memberNo);
+	}
+
+	@Override
+	public int deleteMemberBoard(Integer memberNo) {
+		return mDao.deleteMemberBoard(memberNo);
+	}
+
+	@Override
+	public int deleteMemberHeart(Integer memberNo) {
+		return mDao.deleteMemberHeart(memberNo);
+	}
+
+	@Override
+	public int deleteMemberCart(Integer memberNo) {
+		return mDao.deleteMemberCart(memberNo);
+	}
+	
+	@Override
+	public int deleteMemberReview(Integer memberNo) {
+		return mDao.deleteMemberReview(memberNo);
+	}
+
+	@Override
+	public int deleteMemberPayment(Integer memberNo) {
+		return mDao.deleteMemberPayment(memberNo);
+	}
+
+	@Override
+	public int deleteMemberSubscribe(Integer memberNo) {
+		return mDao.deleteMemberSubscribe(memberNo);
+	}
+
+	@Override
+	public Integer selectSecessionCnt(AdminSecession s){
+		return mDao.selectSecessionCnt(s);
+	}
+
+	@Override
+	public Integer selectMemberSecessionCnt(AdminSecession s) {
+		return mDao.selectMemberSecessionCnt(s);
+	}
+
+	@Override
+	public ArrayList<AdminSecession> selectMemberSecession(PageInfo pi) {
+		return mDao.selectMemberSecession(pi);
+	}
+	
 
 
 }

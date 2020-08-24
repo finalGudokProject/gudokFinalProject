@@ -12,10 +12,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import javax.servlet.http.HttpSession;
-
-import org.apache.ibatis.annotations.Param;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -32,10 +29,9 @@ import com.kh.finalGudok.item.model.vo.AdminItem;
 import com.kh.finalGudok.item.model.vo.BannerItem;
 import com.kh.finalGudok.item.model.vo.Board;
 import com.kh.finalGudok.item.model.vo.Cart;
-
+import com.kh.finalGudok.item.model.vo.Event;
 import com.kh.finalGudok.item.model.vo.Heart;
 import com.kh.finalGudok.item.model.vo.Image;
-import com.kh.finalGudok.item.model.vo.Event;
 import com.kh.finalGudok.item.model.vo.Item;
 import com.kh.finalGudok.item.model.vo.ItemListView;
 import com.kh.finalGudok.item.model.vo.PageInfo;
@@ -985,6 +981,7 @@ public class ItemController {
 			}
 			
 			
+			
 			Event ev=new Event();
 			ev.setEventNo(eventNo);
 			
@@ -1366,13 +1363,13 @@ public class ItemController {
 		
 			
 			String[] strArr=sendArr.split(",");
-			System.out.println("받아온 길이"+strArr.length);
+		
 			int[] iArr=new int[strArr.length];
 			
 			
 			for(int i=0;i<strArr.length;i++) {
 				iArr[i]=Integer.valueOf(strArr[i]);
-				System.out.println("몇번받아왔냐면"+iArr[i]);
+				
 				
 			}
 			

@@ -1,5 +1,7 @@
 package com.kh.finalGudok.member.controller;
 
+import static com.kh.finalGudok.common.pagination2.getPageInfo2;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
@@ -16,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -24,7 +27,6 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
-
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,21 +34,25 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
+import com.kh.finalGudok.board.model.vo.Inquiry;
 import com.kh.finalGudok.item.model.vo.Item;
+import com.kh.finalGudok.item.model.vo.PageInfo;
 import com.kh.finalGudok.member.model.exception.MemberException;
 import com.kh.finalGudok.member.model.service.MemberService;
+import com.kh.finalGudok.member.model.vo.AdminMember;
+import com.kh.finalGudok.member.model.vo.AdminPayment;
+import com.kh.finalGudok.member.model.vo.AdminSecession;
 import com.kh.finalGudok.member.model.vo.Cart;
 import com.kh.finalGudok.member.model.vo.DeleteHeart;
 import com.kh.finalGudok.member.model.vo.Delivery;
 import com.kh.finalGudok.member.model.vo.Exchange;
+import com.kh.finalGudok.member.model.vo.Grade;
 import com.kh.finalGudok.member.model.vo.Heart;
-import com.kh.finalGudok.member.model.vo.Inquiry;
 import com.kh.finalGudok.member.model.vo.Member;
 import com.kh.finalGudok.member.model.vo.Point;
 import com.kh.finalGudok.member.model.vo.Reply;
@@ -168,7 +174,13 @@ public class MemberController {
 
 		if (bcryptPasswordEncoder.matches(m.getMemberPwd(), loginUser.getMemberPwd())) {
 			session.setAttribute("loginUser", loginUser);
+			
+			if(loginUser.getMemberId().equalsIgnoreCase("admin")) {
+				mv.setViewName("admin/main");
+			}else {
 			mv.setViewName("home");
+			}
+			
 		} else {
 			throw new MemberException("로그인 실패");
 		}
@@ -731,7 +743,475 @@ public class MemberController {
 			// 처리될 수 있도록 web.xml에 공용 에러 페이지를 등록하러 가자!
 		}
 	}
-}
+	
+	
+	//관리자 등급 & 회원 리스트 보기
+	@RequestMapping("gradeList.do")
+	public ModelAndView selectGradeList(ModelAndView mv, Integer page) {
+		
+		
+		//현재 등급정보
+		ArrayList<Grade> gList=mService.selectGradeList();
+	
+
+		//등급별 회원 수 주입
+		for(int i=0;i<gList.size();i++) {
+			Integer cnt=mService.selectGradeCnt(gList.get(i).getGradeNo());
+			
+			if(cnt==null) {
+				cnt=0;
+			}
+			
+			gList.get(i).setTotal(cnt);
+			gList.get(i).setGradeRate(gList.get(i).getGradeRate()*100);
+			
+		}
+		
+
+		int currentPage=1;
+		
+		if(page!=null) {
+			currentPage=page;
+		}
+		
+		int listCount=mService.getMemberCnt();
+		
+		PageInfo pi=new PageInfo();
+		
+		int pageLimit=10; //보여질 페이지 총 갯수
+		int boardLimit=5; //게시판 한 페이지에 뿌려질 게시글 수
+		pi=getPageInfo2(currentPage,listCount,pageLimit,boardLimit);
+		
+		//탈퇴하지 않은 회원 리스트 
+		ArrayList<AdminMember> mList=mService.selectMemberN(pi);
+		
+		//회원별 총 구매금액 주입
+//		for(int i=0;i<mList.size();i++) {
+//			Integer cnt=mService.selectTotalPay(mList.get(i).getMemberNo());
+//			
+//			if(cnt==null) {
+//				cnt=0;
+//			}
+//			
+//			mList.get(i).setTotalPay(cnt);
+//		
+//			
+//		}
+	
+		
+
+		if(gList!=null&&mList!=null) {
+			mv.addObject("gList",gList).addObject("mList",mList).addObject("pi",pi).setViewName("admin/userList");
+			return mv;
+		} else {			
+			throw new MemberException("회원 리스트 확인 실패!");
+		}
+	
+	
+	}
+	
+	
+	//등급별 적립율 변경
+	@RequestMapping("gradeRateInfoChang.do")
+	@ResponseBody
+	public String updateGradeRate(String sendGradeArr, String sendRateArr){
+		
+		System.out.println(sendGradeArr);
+		System.out.println(sendRateArr);
+		
+		String[] gArr=sendGradeArr.split(",");
+		String[] rArr=sendRateArr.split(",");
+		
+		ArrayList<Grade> g=new ArrayList<>();
+		int result=0;
+	
+		for(int k=0; k<gArr.length;k++) {
+			
+			Grade grade=new Grade();
+			
+			grade.setGradeNo(Integer.valueOf(gArr[k]));
+			grade.setGradeRate(Double.valueOf(rArr[k])/100);
+			
+			g.add(grade);
+		}
+		
+		
+		result=mService.updateGradeRate(g);
+		System.out.println(result);
+
+
+		System.out.println(result);
+		
+		
+		if(result<0) {
+		return "success";
+		
+		}else {
+			throw new MemberException("적립율 변경 실패!");
+			
+		}
+	}
+	
+	
+	//등급별 최소 금액 변경
+	@RequestMapping("gradeMinInfoChang.do")
+	@ResponseBody
+	public String updateGradeMin(String sendGradeMinArr, String sendGradeArr){
+		
+		System.out.println(sendGradeArr);
+		System.out.println(sendGradeMinArr);
+		
+		String[] gArr=sendGradeArr.split(",");
+		String[] rArr=sendGradeMinArr.split(",");
+		
+	
+		ArrayList<Grade> g=new ArrayList<>();
+		int result=0;
+	
+		for(int k=0; k<gArr.length;k++) {
+			
+			Grade grade=new Grade();
+			
+			grade.setGradeNo(Integer.valueOf(gArr[k]));
+			grade.setGradeMin(Integer.valueOf(rArr[k]));
+			
+			g.add(grade);
+		}
+		
+		
+		result=mService.updateGradeMin(g);
+	
+		if(result<0) {
+		return "success";
+		
+		}else {
+			throw new MemberException("적립율 변경 실패!");
+			
+		}
+	}
+	
+	//ajax 후 리스트 갱신
+	@RequestMapping("gListChange.do")
+	public void updateGradeList(HttpServletResponse response, ModelAndView mv, Integer page) throws IOException {
+		
+			//현재 등급정보
+			ArrayList<Grade> gList=mService.selectGradeList();
+		
+			//등급별 회원 수 주입
+			for(int i=0;i<gList.size();i++) {
+				Integer cnt=mService.selectGradeCnt(gList.get(i).getGradeNo());
+				
+				if(cnt==null) {
+					cnt=0;
+				}
+				
+				gList.get(i).setTotal(cnt);
+				gList.get(i).setGradeRate(gList.get(i).getGradeRate()*100);
+			}
+			
+			
+
+			int currentPage=1;
+			
+			if(page!=null) {
+				currentPage=page;
+			}
+			
+			int listCount=mService.getMemberCnt();
+			
+			PageInfo pi=new PageInfo();
+			
+			int pageLimit=10; //보여질 페이지 총 갯수
+			int boardLimit=5; //게시판 한 페이지에 뿌려질 게시글 수
+			pi=getPageInfo2(currentPage,listCount,pageLimit,boardLimit);
+			
+			//탈퇴하지 않은 회원 리스트 
+			ArrayList<AdminMember> mList=mService.selectMemberN(pi);
+			
+			response.setContentType("application/json;charset=utf-8");
+
+
+			if(gList!=null&&mList!=null) {
+		
+				JSONArray jarr=new JSONArray();
+				
+				for(int i=0;i<gList.size();i++) {
+					JSONObject jList=new JSONObject();
+					
+					jList.put("gradeNo",gList.get(i).getGradeNo());
+					jList.put("gradeName",gList.get(i).getGradeName());
+					jList.put("gradeMin",gList.get(i).getGradeMin());
+					jList.put("total",gList.get(i).getTotal());
+					jList.put("gradeRate",gList.get(i).getGradeRate());
+					
+					jarr.add(jList);
+				}
+				
+				JSONObject sendJson=new JSONObject();
+				sendJson.put("list",jarr);
+				System.out.println(jarr);
+				
+				PrintWriter out=response.getWriter();
+				out.print(sendJson);
+				out.flush();
+				out.close();
+				
+				
+				
+			}else {
+				throw new MemberException("이벤트 전체 조회 실패!");
+			}
+		
+		
+		}
+	
+
+	
+		@RequestMapping("rListChang.do")
+		public void updateRateList(HttpServletResponse response, ModelAndView mv, Integer page) throws IOException {
+			
+			//현재 등급정보
+			ArrayList<Grade> gList=mService.selectGradeList();
+		
+			//등급별 회원 수 주입
+			for(int i=0;i<gList.size();i++) {
+				Integer cnt=mService.selectGradeCnt(gList.get(i).getGradeNo());
+				
+				if(cnt==null) {
+					cnt=0;
+				}
+				
+				gList.get(i).setTotal(cnt);
+				gList.get(i).setGradeRate(gList.get(i).getGradeRate()*100);
+			}
+			
+			
+			int currentPage=1;
+			
+			if(page!=null) {
+				currentPage=page;
+			}
+			
+			int listCount=mService.getMemberCnt();
+			
+			PageInfo pi=new PageInfo();
+			
+			int pageLimit=10; //보여질 페이지 총 갯수
+			int boardLimit=5; //게시판 한 페이지에 뿌려질 게시글 수
+			pi=getPageInfo2(currentPage,listCount,pageLimit,boardLimit);
+			
+			//탈퇴하지 않은 회원 리스트 
+			ArrayList<AdminMember> mList=mService.selectMemberN(pi);
+			
+			response.setContentType("application/json;charset=utf-8");
+
+
+			if(gList!=null&&mList!=null) {
+		
+				JSONArray jarr=new JSONArray();
+				
+				for(int i=0;i<gList.size();i++) {
+					JSONObject jList=new JSONObject();
+					
+					jList.put("gradeNo",gList.get(i).getGradeNo());
+					jList.put("gradeName",gList.get(i).getGradeName());
+					jList.put("gradeMin",gList.get(i).getGradeMin());
+					jList.put("total",gList.get(i).getTotal());
+					jList.put("gradeRate",gList.get(i).getGradeRate());
+					
+					jarr.add(jList);
+				}
+				
+				JSONObject sendJson=new JSONObject();
+				sendJson.put("list",jarr);
+				System.out.println(jarr);
+				
+				PrintWriter out=response.getWriter();
+				out.print(sendJson);
+				out.flush();
+				out.close();
+				
+				
+				
+			}else {
+				throw new MemberException("이벤트 전체 조회 실패!");
+			}
+		
+		
+		}
+		
+		//★ 회원 정보 상세보기
+		@RequestMapping("mDetail.do")
+		public ModelAndView selectOneMember(ModelAndView mv,Integer page,int memberNo,Integer detailPage, String type) {
+			
+			//상세 페이지로 이동하기전, 회원 리스트의 페이지 번호
+			int beforePage=page;
+			
+			
+			
+			//하단 결제 페이지의 페이지 번호
+			int currentPage=1;
+			
+			if(detailPage!=null) {
+				currentPage=detailPage;
+			}
+			
+			int listCount=mService.getMemberPayCnt(memberNo);
+			
+			//상세 페이지 내 결제 페이지의 정보
+			PageInfo pi=new PageInfo();
+			
+			int pageLimit=10; //보여질 페이지 총 갯수
+			int boardLimit=5; //게시판 한 페이지에 뿌려질 게시글 수
+			pi=getPageInfo2(currentPage,listCount,pageLimit,boardLimit);
+			
+		
+			//해당 회원 정보
+			AdminMember m=mService.selectOneMember(memberNo);
+			
+			//회원별 결제리스트
+			ArrayList<AdminPayment> pList=mService.selectMemberPay(memberNo,pi);
+
+			System.out.println("pList는"+pList);
+			
+	
+				if(pList!=null) {
+					mv.addObject("pList",pList).addObject("m",m).addObject("pi",pi).addObject("beforePage",beforePage).addObject("type",type).setViewName("admin/userDetail");
+					return mv;
+				} else {			
+					throw new MemberException("회원 상세 확인 실패!");
+				}
+			
+	
+			
+		}
+		
+		
+	//회원 정보 수정(관리자)
+		@RequestMapping("mUpdateA.do")
+		public ModelAndView updateMemberA(ModelAndView mv,AdminMember m ,Integer beforePage) {
+			
+			System.out.println(m);
+			int result=mService.updateMemberA(m);
+			
+			if(result>0) {
+				mv.addObject("page",beforePage).setViewName("redirect:gradeList.do");
+				return mv;
+			
+			} else {			
+				throw new MemberException("회원 정보 수정 실패!");
+			}
+		}
+		
+	
+		//회원 삭제
+		@RequestMapping("deleteM.do")
+		public ModelAndView deleteMemberA(ModelAndView mv, Integer memberNo ,Integer beforePage) {
+	
+				System.out.println("도차쿠");
+			
+			System.out.println(m);
+			int result=mService.deleteMemberA(memberNo);
+			int result1=mService.deleteMemberSecession(memberNo);
+			int result2=mService.deleteMemberBoard(memberNo);
+			int result3=mService.deleteMemberHeart(memberNo);
+			int result7=mService.deleteMemberCart(memberNo);
+			int result4=mService.deleteMemberReview(memberNo);
+			int result5=mService.deleteMemberPayment(memberNo);
+			int result6=mService.deleteMemberSubscribe(memberNo);
+			
+			System.out.println(result);
+			
+			if(result>0) {
+				mv.addObject("page",beforePage).setViewName("redirect:gradeList.do");
+				return mv;
+			
+			} else {			
+				throw new MemberException("회원 삭제 실패!");
+			}
+			
+		}
+		
+		
+		@RequestMapping("sList.do")
+		public ModelAndView selectSecessionList(ModelAndView mv,Integer page) {
+			
+			//탈퇴 사유별 비율 보여줄 리스트 
+			
+			ArrayList<AdminSecession> sList=new ArrayList<>();
+			
+			for(int i=1; i<6;i++) {
+				AdminSecession s=new AdminSecession();
+				s.setSecessionCategory(i);
+				Integer t=mService.selectSecessionCnt(s);
+				if(t==null) {
+					t=0;
+				}
+				s.setTotal(t);
+				sList.add(s);
+			}
+			
+			System.out.println("sList"+sList);
+			System.out.println("사이즈는"+sList.size());
+			
+			//등급별 탈퇴 인원
+			
+			ArrayList<AdminSecession> mList=new ArrayList<>();
+			
+			for(int i=1; i<5;i++) {
+				AdminSecession s=new AdminSecession();
+				s.setGradeNo(i);
+				System.out.println("확인"+s.getGradeNo());
+				Integer t=mService.selectMemberSecessionCnt(s);
+				if(t==null) {
+					t=0;
+				}
+				s.setTotal(t);
+				mList.add(s);
+			}
+			
+			System.out.println("mList"+mList);
+			
+			//탈퇴 회원들 리스트 
+			
+			int currentPage=1;
+			
+			if(page!=null) {
+				currentPage=page;
+			}
+			
+			int listCount=mService.getMemberCnt();
+			
+			System.out.println("몇명 가져온거야"+listCount);
+			PageInfo pi=new PageInfo();
+			
+			int pageLimit=10; //보여질 페이지 총 갯수
+			int boardLimit=5; //게시판 한 페이지에 뿌려질 게시글 수
+			pi=getPageInfo2(currentPage,listCount,pageLimit,boardLimit);
+			
+			ArrayList<AdminSecession> msList=mService.selectMemberSecession(pi);
+			
+			System.out.println("msList"+msList);
+			
+			if(sList!=null&&mList!=null&&msList!=null) {
+				mv.addObject("sList",sList).addObject("mList",mList).addObject("msList",msList).addObject("pi",pi).setViewName("admin/secessionList");
+				return mv;
+			} else {			
+				throw new MemberException("탈퇴 내역 확인 실패!");
+			}
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+			
+	}
+	
 
 //	@RequestMapping("emailDupCheck.do")
 //	public void emailDupCheck(HttpServletResponse response, @RequestParam("email") String email) throws IOException {
@@ -775,3 +1255,8 @@ public class MemberController {
 //		out.flush();
 //		out.close();
 //	}
+
+
+
+
+

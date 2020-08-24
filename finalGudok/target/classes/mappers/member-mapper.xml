@@ -110,6 +110,61 @@
 		<result property="boardType" column="BOARD_TYPE"/>
 	</resultMap>
 	
+	<resultMap type="Grade" id="gradeResultSet">
+		<id property="gradeNo" column="GRADE_NO"/>
+		<result property="gradeName" column="GRADE_NAME"/>
+		<result property="gradeRate" column="GRADE_RATE"/>
+		<result property="gradeMin" column="GRADE_MIN"/>
+	</resultMap>
+	
+ 	<resultMap type="AdminMember" id="adminMemberResultSet">
+		<id property="memberNo" column="MEMBER_NO"/>
+		<result property="memberId" column="MEMBER_ID"/>
+		<result property="email" column="EMAIL"/>
+		<result property="memberPwd" column="MEMBER_PWD"/>
+		<result property="memberName" column="MEMBER_NAME"/>
+		<result property="address1" column="ADDRESS_1"/>
+		<result property="address2" column="ADDRESS_2"/>
+		<result property="address3" column="ADDRESS_3"/>
+		<result property="gender" column="GENDER"/>
+		<result property="enrollDate" column="ENROLL_DATE"/>
+		<result property="modifyDate" column="MODIFY_DATE"/>
+		<result property="memberStatus" column="MEMBER_STATUS"/>
+		<result property="emailStatus" column="EMAIL_STATUS"/>
+		<result property="point" column="POINT"/>
+		<result property="gradeNo" column="GRADE_NO"/>
+		<result property="totalPay" column="TOTAL_PAY"/>
+		<result property="secessionDate" column="SECESSION_DATE"/>
+		<result property="secessionContent" column="SECESSION_CONTENT"/>
+	</resultMap>
+	<resultMap type="AdminPayment" id="adminPaymentResultSet">
+		<id property="paymentNo" column="PAYMENT_NO"/>
+		<result property="itemNo" column="ITEM_NO"/>
+		<result property="itemName" column="ITEM_NAME"/>
+		<result property="itemPrice" column="ITEM_PRICE"/>
+		<result property="amount" column="AMOUNT"/>
+		<result property="point" column="POINT"/>
+		<result property="subscribeNo" column="SUBSCRIBE_NO"/>
+		<result property="paymentDate" column="PAYMENT_DATE"/>
+		<result property="memberNo" column="MEMBER_NO"/>
+		<result property="memberId" column="MEMBER_ID"/>
+		<result property="email" column="EMAIL"/>
+		<result property="totalPayment" column="TOTAL_PAYMENT"/>
+	</resultMap>
+	<resultMap type="AdminSecession" id="adminSecessionResultSet">
+		<id property="secessionNo" column="SECESSION_NO"/>
+		<result property="memberNo" column="MEMBER_NO"/>
+		<result property="memberId" column="MEMBER_ID"/>
+		<result property="email" column="EMAIL"/>
+		<result property="secessionCategory" column="SECESSION_CATEGORY"/>
+		<result property="secessionContent" column="SECESSION_CONTENT"/>
+		<result property="secessionDate" column="SECESSION_DATE"/>
+		<result property="gradeNo" column="GRADE_NO"/>
+		<result property="total" column="TOTAL"/>
+	</resultMap>
+	
+	
+	
 	<select id="selectOne" parameterType="Member" resultMap="memberResultSet">
 		<!-- SELECT *
 		FROM MEMBER
@@ -276,4 +331,137 @@
 	  	SET MEMBER_PWD=#{memberPwd}
 	  	WHERE MEMBER_ID=#{memberId}
 	</update>
+	
+	<select id="selectGradeList" resultMap="gradeResultSet">
+		SELECT *
+		FROM GRADE
+		ORDER BY GRADE_NO DESC
+	</select>
+	<select id="selectMemberCnt" resultType="_int">
+		SELECT COUNT(*)
+		FROM MEMBER
+		WHERE MEMBER_STATUS='N'
+	</select>
+	<select id="selectGradeCnt" resultType="int">
+		SELECT COUNT(*)
+		FROM (SELECT * 
+           	 FROM MEMBER 
+           	 WHERE MEMBER_STATUS='N')
+		GROUP BY GRADE_NO
+        HAVING GRADE_NO=#{gradeNo}
+	</select>
+	<select id="selectMemberN" resultMap="memberResultSet">
+		SELECT *
+		FROM MEMBER
+		WHERE MEMBER_STATUS='N'
+		ORDER BY MEMBER_NO DESC
+	</select>
+	<update id="updateGradeRate" parameterType="java.util.List">
+		<foreach item="i" index="index" collection="list" open="DECLARE BEGIN" separator=";" close="; END;">
+			UPDATE GRADE
+			SET GRADE_RATE=${i.gradeRate}
+			WHERE GRADE_NO=${i.gradeNo}
+		</foreach>
+	</update>
+	<update id="updateGradeMin" parameterType="java.util.List">
+		<foreach item="i" index="index" collection="list" open="DECLARE BEGIN" separator=";" close="; END;">
+			UPDATE GRADE
+			SET GRADE_MIN=${i.gradeMin}
+			WHERE GRADE_NO=${i.gradeNo}
+		</foreach>
+	</update>
+	<select id="selectOneMember" parameterType="_int" resultMap="adminMemberResultSet">
+		SELECT *
+		FROM MEMBER M
+		LEFT JOIN SECESSION S ON(M.MEMBER_NO=S.MEMBER_NO)
+		WHERE M.MEMBER_NO=#{memberNo}
+	</select>
+	<select id="selectMemberPay" parameterType="_int" resultMap="adminPaymentResultSet">
+		SELECT PAYMENT_DATE, ITEM_NAME, AMOUNT, ((ITEM_PRICE*AMOUNT)-POINT) AS TOTAL_PAYMENT
+		FROM PAYLIST
+		WHERE MEMBER_NO=#{memberNo}
+	</select> 
+	<select id="selectMemberPayCnt" parameterType="_int" resultType="_int">
+		SELECT COUNT(*)
+		FROM PAYLIST
+		WHERE MEMBER_NO=#{memberNo}
+	</select>
+	<!-- -다시 도전 예정 
+	<select id="selectTotalPay" parameterType="_int" resultType="int">
+		SELECT SUM((ITEM_PRICE*AMOUNT)-POINT) AS TOTAL_PAY
+		FROM PAYLIST
+		GROUP BY MEMBER_NO
+		HAVING MEMBER_NO=#{i}
+	</select> -->
+	
+	<update id="updateMemberA" parameterType="AdminMember">
+		UPDATE MEMBER
+		SET EMAIL=#{email}, ADDRESS_1=#{address1}, ADDRESS_2=#{address2}, ADDRESS_3=#{address3},POINT=#{point}
+		WHERE MEMBER_ID=#{memberId}
+	</update>
+	<delete id="deleteMemberA" parameterType="int">
+		DELETE
+		FROM MEMBER
+		WHERE MEMBER_NO=#{memberNo}
+	</delete>
+	<delete id="deleteMemberSecession" parameterType="int">
+		DELETE
+		FROM SECESSION
+		WHERE MEMBER_NO=#{memberNo}
+	</delete> 
+	<delete id="deleteMemberBoard" parameterType="int">
+		DELETE
+		FROM BOARD
+		WHERE MEMBER_NO=#{memberNo}
+	</delete> 
+	<delete id="deleteMemberHeart" parameterType="int">
+		DELETE
+		FROM HEART
+		WHERE MEMBER_NO=#{memberNo}
+	</delete> 
+	<delete id="deleteMemberCart" parameterType="int">
+		DELETE
+		FROM CART
+		WHERE MEMBER_NO=#{memberNo}
+	</delete> 
+	<delete id="deleteMemberReview" parameterType="int">
+		DELETE
+		FROM REVIEW
+		WHERE MEMBER_NO=#{memberNo}
+	</delete> 
+	<delete id="deleteMemberPayment" parameterType="int">
+		DELETE
+		FROM PAYMENT
+		WHERE MEMBER_NO=#{memberNo}
+	</delete> 
+	<delete id="deleteMemberSubscribe" parameterType="int">
+		DELETE
+		FROM SUBSCRIBE
+		WHERE MEMBER_NO=#{memberNo}
+	</delete>
+	<select id="selectSecessionCnt" parameterType="AdminSecession" resultType="int">
+		SELECT COUNT(*) AS TOTAL
+		FROM SECESSION
+		GROUP BY SECESSION_CATEGORY
+		HAVING SECESSION_CATEGORY=#{secessionCategory}
+	</select>
+	<select id="selectMemberSecessionCnt" parameterType="AdminSecession" resultType="int">
+		SELECT COUNT(*) AS TOTAL
+		FROM SECESSION S
+		LEFT JOIN MEMBER M ON(S.MEMBER_NO=M.MEMBER_NO)
+		GROUP BY GRADE_NO
+		HAVING GRADE_NO=#{gradeNo}
+	</select>
+	<select id="selectMemberSecession"  resultMap="adminSecessionResultSet">
+		SELECT S.*,M.GRADE_NO
+		FROM SECESSION S
+		LEFT JOIN MEMBER M ON(S.MEMBER_NO=M.MEMBER_NO)
+	</select>
+	
+	
+	
+	
+	
+	
+	
  </mapper>
