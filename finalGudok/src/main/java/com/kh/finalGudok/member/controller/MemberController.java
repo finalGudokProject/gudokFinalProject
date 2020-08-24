@@ -52,6 +52,7 @@ import com.kh.finalGudok.member.model.vo.Point;
 import com.kh.finalGudok.member.model.vo.Reply;
 import com.kh.finalGudok.member.model.vo.Review;
 import com.kh.finalGudok.member.model.vo.Withdrawal;
+import com.kh.finalGudok.member.model.vo.Tempkey;
 
 @SessionAttributes("loginUser")
 @Controller
@@ -69,7 +70,6 @@ public class MemberController {
 	@Autowired
 	private Member m;
 
-
 	@RequestMapping("moveToLogin.do")
 	public String moveTologin() {
 		return "member/login";
@@ -80,7 +80,7 @@ public class MemberController {
 		return "member/signUp";
 	}
 
-	@RequestMapping("find.do")
+	@RequestMapping("moveToFind.do")
 	public String findId() {
 		return "member/find";
 	}
@@ -195,28 +195,27 @@ public class MemberController {
 	}
 
 
-	@RequestMapping(value="signUp.do", method=RequestMethod.POST)
+	@RequestMapping(value = "signUp.do", method = RequestMethod.POST)
 	@ResponseBody
 	public String signUp(@RequestBody String param) throws ParseException {
 
 		JSONParser parser = new JSONParser();
-		JSONObject jobj = (JSONObject)parser.parse(param);
-		
-		String id = (String)jobj.get("id");
-		String pwd = (String)jobj.get("pwd");
-		String name = (String)jobj.get("name");
-		String email = (String)jobj.get("email");
-		String address1 = (String)jobj.get("address1");
-		String address2 = (String)jobj.get("address2");
-		String address3 = (String)jobj.get("address3");
-		String gender = (String)jobj.get("gender");
+		JSONObject jobj = (JSONObject) parser.parse(param);
 
-		
+		String id = (String) jobj.get("id");
+		String pwd = (String) jobj.get("pwd");
+		String name = (String) jobj.get("name");
+		String email = (String) jobj.get("email");
+		String address1 = (String) jobj.get("address1");
+		String address2 = (String) jobj.get("address2");
+		String address3 = (String) jobj.get("address3");
+		String gender = (String) jobj.get("gender");
+
 		// web.xml에 한글 깨짐 방지를 위해 필터 등록
 		// bCrypt로 암호화 처리 -> 관련 라이브러리 추가, xml만들어서 bean 설정
 		// @Autowired 선언
 		String encPwd = bcryptPasswordEncoder.encode(pwd);
-		
+
 		// Member객체에 담기
 		m.setMemberId(id);
 		m.setMemberPwd(encPwd);
@@ -226,9 +225,9 @@ public class MemberController {
 		m.setAddress2(address2);
 		m.setAddress3(address3);
 		m.setGender(gender);
-		
-		System.out.println(m);
-		
+
+//		System.out.println(m);
+
 		int result = mService.insertMember(m);
 
 		if (result > 0) {
@@ -253,17 +252,16 @@ public class MemberController {
 //		
 //		return mv;
 //	}
-	
+
 	@RequestMapping("dupId.do")
-	public void idDuplicateCheck(HttpServletResponse response, String memberId) throws IOException{
-		boolean idCheckResult = mService.checkIdDup(memberId) == 0? true : false;
-		
+	public void idDuplicateCheck(HttpServletResponse response, String memberId) throws IOException {
+		boolean idCheckResult = mService.checkIdDup(memberId) == 0 ? true : false;
+
 		PrintWriter out = response.getWriter();
 		out.print(idCheckResult);
 		out.flush();
 		out.close();
 	}
-	
 	
 //	마이페이지
 	
@@ -477,41 +475,41 @@ public class MemberController {
 
 	@RequestMapping("emailDupCheck.do")
 	public ModelAndView emailDupCheck(ModelAndView mv, String email) {
-		
-		boolean emailCheckResult = mService.emailDupCheck(email) == 0? true : false;
+
+		boolean emailCheckResult = mService.emailDupCheck(email) == 0 ? true : false;
 //		System.out.println(emailCheckResult);
 		String user = "p.jaemyung91@gmai.com";
-				
-		Map map = new HashMap();
-		
-		int random = new Random().nextInt(100000) + 10000; // 10000 ~ 99999
-        String authCode = String.valueOf(random);
 
-        map.put("emailCheckResult", emailCheckResult);
-        
-        if(emailCheckResult == true) {
-		MimeMessage msg = mailSender.createMimeMessage();
-        
-		try {
-        
-//        MimeMessageHelper messageHelper = new MimeMessageHelper(msg, true, "UTF-8");
-        MimeMessageHelper messageHelper = new MimeMessageHelper(msg, "UTF-8");
-        messageHelper.setSubject("이메일 인증");
-        messageHelper.setText("인증번호는" + authCode + "입니다.");
-		msg.setFrom(new InternetAddress(user, "Goose"));
-        messageHelper.setTo(email);
-        msg.setRecipients(MimeMessage.RecipientType.TO , InternetAddress.parse(email));
-        } catch (UnsupportedEncodingException e) {
-        	e.printStackTrace();
-        } catch (MessagingException e) {
-        	e.printStackTrace();
-        }
-		
-        mailSender.send(msg);
-        map.put("authCode", authCode);
-        }
-		
-        mv.addAllObjects(map);
+		Map map = new HashMap();
+
+		int random = new Random().nextInt(100000) + 10000; // 10000 ~ 99999
+		String authCode = String.valueOf(random);
+
+		map.put("emailCheckResult", emailCheckResult);
+
+		if (emailCheckResult == true) {
+			MimeMessage msg = mailSender.createMimeMessage();
+
+			try {
+
+//      MimeMessageHelper messageHelper = new MimeMessageHelper(msg, true, "UTF-8");
+				MimeMessageHelper messageHelper = new MimeMessageHelper(msg, "UTF-8");
+				messageHelper.setSubject("이메일 인증");
+				messageHelper.setText("인증번호는" + authCode + "입니다.");
+				msg.setFrom(new InternetAddress(user, "Goose"));
+				messageHelper.setTo(email);
+				msg.setRecipients(MimeMessage.RecipientType.TO, InternetAddress.parse(email));
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			} catch (MessagingException e) {
+				e.printStackTrace();
+			}
+
+			mailSender.send(msg);
+			map.put("authCode", authCode);
+		}
+
+		mv.addAllObjects(map);
 		mv.setViewName("jsonView");
 		return mv;
 	}
@@ -690,7 +688,6 @@ public class MemberController {
 	// 비밀번호 변경
 	@RequestMapping("modifyPassword.do")
 	public String modifyPassword(Member m, Model model, @RequestParam(value="changeMemberPwd") String changeMemberPwd) {
-		
 		Member loginUser = mService.loginMember(m);
 		
 		System.out.println(m);
@@ -731,7 +728,6 @@ public class MemberController {
 			// 처리될 수 있도록 web.xml에 공용 에러 페이지를 등록하러 가자!
 		}
 	}
-}
 
 //	@RequestMapping("emailDupCheck.do")
 //	public void emailDupCheck(HttpServletResponse response, @RequestParam("email") String email) throws IOException {
@@ -775,3 +771,93 @@ public class MemberController {
 //		out.flush();
 //		out.close();
 //	}
+
+	@RequestMapping(value = "findId.do", method = RequestMethod.POST)
+	public ModelAndView findId(ModelAndView mv, String name, String email) {
+
+//		System.out.println(name);
+//		System.out.println(email);
+
+		m.setEmail(email);
+		m.setMemberName(name);
+
+		Map map = new HashMap();
+		String id = mService.findId(m);
+//		System.out.println(id);
+
+		map.put("id", id);
+		mv.addAllObjects(map);
+		mv.setViewName("jsonView");
+		return mv;
+
+	}
+
+//	@RequestMapping(value="find.do", method=RequestMethod.POST)
+//	@ResponseBody
+//	public void findMember(@RequestBody String param) throws ParseException {
+//		
+//		JSONParser parser = new JSONParser();
+//		JSONObject jobj = (JSONObject)parser.parse(param);
+////		(JSONObject)parser.parse(param);
+//		
+//		String name = (String)jobj.get("name");
+//		String email = (String)jobj.get("email");
+////		m.setMemberName(name);
+////		m.setEmail(email);
+//		System.out.println(name);
+//		System.out.println(email);
+//		
+////		String id = mService.findId(m);
+//		
+////		System.out.println(id);
+//	}
+
+	@RequestMapping(value = "findPwd.do", method = RequestMethod.POST)
+	public ModelAndView findPwd(ModelAndView mv, String name, String email, String id) {
+
+		Map map = new HashMap();
+
+		// Tempkey 클래스 사용해서 난수생성(영어, 숫자, 특수문자 조합)
+		String authCode = new Tempkey().generateKey(10); // 인증키 생성
+		System.out.println("authCode : " + authCode);
+
+		m.setMemberId(id);
+		m.setEmail(email);
+		m.setMemberName(name);
+		int result = mService.checkMember(m);
+		if (result > 0) { // 사용자가 입력한 값과 일치하는 회원이 존재하면 메일 발송
+
+			String user = "p.jaemyung91@gmai.com";
+			MimeMessage msg = mailSender.createMimeMessage();
+
+			try {
+
+//		      	MimeMessageHelper messageHelper = new MimeMessageHelper(msg, true, "UTF-8");
+				MimeMessageHelper messageHelper = new MimeMessageHelper(msg, "UTF-8");
+				messageHelper.setSubject("임시 비밀번호 발급");
+				messageHelper.setText("임시 비밀번호는" + authCode + "입니다.");
+				msg.setFrom(new InternetAddress(user, "Goose"));
+				messageHelper.setTo(email);
+				msg.setRecipients(MimeMessage.RecipientType.TO, InternetAddress.parse(email));
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			} catch (MessagingException e) {
+				e.printStackTrace();
+			}
+
+			mailSender.send(msg);
+			String encPwd = bcryptPasswordEncoder.encode(authCode);
+
+			m.setMemberPwd(encPwd);
+			int result2 = mService.changePwd(m);
+
+			if (result2 > 0) { // 업데이트 성공 시
+				map.put("msg", "success");
+				mv.addAllObjects(map);
+				mv.setViewName("jsonView");
+			}
+
+		}
+		return mv;
+	}
+}

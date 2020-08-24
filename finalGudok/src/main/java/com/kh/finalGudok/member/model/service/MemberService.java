@@ -43,7 +43,6 @@ public interface MemberService {
 
 	int emailDupCheck(String email);
 
-
 	int updateSubscribe(int subscribeNo);
 
 	Review selectReview(Integer reviewNo);
@@ -72,5 +71,10 @@ public interface MemberService {
 
 	int updatePassword(Member m);
 
-}
+	String findId(Member m);
 
+	int checkMember(Member m);
+
+	int changePwd(Member m);
+
+}

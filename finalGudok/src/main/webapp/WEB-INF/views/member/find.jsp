@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 
@@ -16,7 +17,6 @@
 	crossorigin="anonymous">
 
 <title>계정찾기</title>
-<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <style>
 /*폰트 적용*/
 body {
@@ -160,43 +160,81 @@ td {
 			$("#findPwd").attr("style", "color:black !important");
 		});
 
-		/* function findId() {
-			if ($("#name").val() == "") {
-				alert("이름1");
-			} else if ($("#email1").val() == "") {
-				alert("이메일");
-			} else {
-				alert("발송");
-				$("#name1").val("");
-				$("#email1").val("");
-			}
-		}
-		 */
-
+		// 아이디, 이름, 이메일 정규표현식
+		var regId = /^[a-zA-z0-9]{4,15}$/;
+		var regName = /^[가-힣]{2,6}$/;
+		var regEmail = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+		
+		// 사용자가 입력한 아이디, 이름, 이메일
+		
+		
+		
 		function findId() {
-			if ($("#inputIdTable").find("#name").val() == "") {
+			var inputName = $("#inputIdTable").find("#name").val();
+			var inputEmail = $("#inputIdTable").find("#email").val();
+			
+			if (inputName == "" || !regName.test(inputName)) {
 				alert("이름");
-			} else if ($("#inputIdTable").find("#email").val() == "") {
+			} else if (inputEmail == "" || !regEmail.test(inputEmail)) {
 				alert("이메일");
 			} else {
-				alert("발송");
-				$("#inputIdTable").find("#name").val("");
-				$("#inputIdTable").find("#email").val("");
+				
+				$.ajax({
+					url : "findId.do",
+					type:"post",
+					data:{email:inputEmail, name:inputName},
+					/* data:JSON.stringify(obj), */
+					/* contentType:"application/json;charset=utf-8", */
+					success : function(data){
+						if(data.id != null){
+							alert("고객님의 아이디는" + data.id + "입니다.");
+						}else{
+							alert("존재하지 않는 회원입니다. 회원가입을 진행해주세요.")
+						}
+					},
+					error : function(request, status, errorData) {
+						alert("error code: " + request.status + "\n"
+								+ "message: " + request.responseText
+								+ "error: " + errorData);
+					}
+				})
+				
 			}
 		}
 
 		function findPwd() {
-			if ($("#inputPwdTable").find("#id").val() == "") {
+			var inputId = $("#inputPwdTable").find("#id").val();
+			var inputName = $("#inputPwdTable").find("#name").val();
+			var inputEmail = $("#inputPwdTable").find("#email").val();
+			
+			if (inputId == "" || !regId.test(inputId)) {
 				alert("아이디");
-			} else if ($("#inputPwdTable").find("#name").val() == "") {
+			} else if (inputName == "" || !regName.test(inputName)) {
 				alert("이름")
-			} else if ($("#inputPwdTable").find("#email").val() == "") {
+			} else if (inputEmail == "" || !regEmail.test(inputEmail)) {
 				alert("이메일");
 			} else {
-				alert("발송");
-				$("#inputPwdTable").find("#id").val("");
-				$("#inputPwdTable").find("#name").val("");
-				$("#inputPwdTable").find("#email").val("");
+				
+				$.ajax({
+					url : "findPwd.do",
+					type:"post",
+					data:{id:inputId, email:inputEmail, name:inputName},
+					/* data:JSON.stringify(obj), */
+					/* contentType:"application/json;charset=utf-8", */
+					success : function(data){
+						if(data.msg == "success"){
+							alert("회원님의 메일로 임시비밀번호를 발송하였습니다.");
+						}else{
+							alert("존재하지 않는 회원입니다. 정보를 다시 확인해주세요.");
+						}
+						
+					},
+					error : function(request, status, errorData) {
+						alert("error code: " + request.status + "\n"
+								+ "message: " + request.responseText
+								+ "error: " + errorData);
+					}
+				})
 			}
 		}
 	</script>
@@ -217,6 +255,7 @@ td {
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
 		integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
 		crossorigin="anonymous"></script>
+	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 </body>
 
 </html>

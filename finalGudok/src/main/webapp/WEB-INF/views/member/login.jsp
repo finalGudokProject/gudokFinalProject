@@ -99,9 +99,9 @@ body {
              				 </label> -->
 						</form>
 						<div id="find">
-							<a href="find.do">계정찾기</a>
+							<a href="moveToFind.do">계정찾기</a>
 							<div class="vl"></div>
-							<a href="signUp.do">회원가입</a>
+							<a href="moveToSignUp.do">회원가입</a>
 						</div>
 					</div>
 				</div>

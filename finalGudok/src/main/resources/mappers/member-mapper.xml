@@ -110,6 +110,7 @@
 		<result property="boardType" column="BOARD_TYPE"/>
 	</resultMap>
 	
+	<!-- 로그인 -->
 	<select id="selectOne" parameterType="Member" resultMap="memberResultSet">
 		<!-- SELECT *
 		FROM MEMBER
@@ -130,7 +131,7 @@
 		WHERE MEMBER_NO=#{memberNo}
 		AND MEMBER_STATUS='N'
 	</select>
-	
+
 	<select id="pointList" parameterType="int" resultMap="pointResultSet">
 		SELECT P.*, S.SUBSRIBE_DATE, I.ITEM_NAME
 		FROM POINT P
@@ -254,19 +255,22 @@
 		WHERE BOARD_NO=#{boardNo}
 	</select>
 
+	<!-- 아이디 중복확인 -->
 	<select id="idCheck" parameterType="String" resultType="_int">
 		SELECT COUNT(*) FROM MEMBER WHERE MEMBER_ID = #{memberId}
 	</select>
 	
+	<!-- 회원가입 -->
 	<insert id="insertMember" parameterType="Member">
 		INSERT INTO MEMBER VALUES(SEQ_MEMBER_NO.NEXTVAL, #{memberId}, #{email}, #{memberPwd}, #{memberName}, 
 									#{address1}, #{address2}, #{address3}, #{gender}, SYSDATE, SYSDATE, DEFAULT, DEFAULT, DEFAULT, DEFAULT)
 	</insert>
 	
+	<!-- 이메일 중복확인 -->
 	<select id="emailDupCheck" parameterType="String" resultType="_int">
 		SELECT COUNT(*) FROM MEMBER WHERE EMAIL=#{email}
 	</select>
-	
+
 	<select id="deleteCart" parameterType="hashMap">
 		DELETE FROM CART WHERE MEMBER_NO=#{memberNo} AND CART_NO=#{cartNo}
 	</select>
@@ -276,4 +280,20 @@
 	  	SET MEMBER_PWD=#{memberPwd}
 	  	WHERE MEMBER_ID=#{memberId}
 	</update>
- </mapper>
+
+	<!-- 아이디 찾기 -->
+	<select id="findId" parameterType="Member" resultType="String">
+		SELECT MEMBER_ID FROM MEMBER WHERE MEMBER_NAME=#{memberName} AND EMAIL=#{email}
+	</select>
+	
+	<!-- 비밀번호 찾기 전 회원 존재여부 확인 -->
+	<select id="checkMember" parameterType="Member" resultType="_int">
+		SELECT COUNT(*) FROM MEMBER WHERE MEMBER_ID=#{memberId} AND MEMBER_NAME=#{memberName} AND EMAIL=#{email}
+	</select>
+	
+	<!-- 비밀번호 찾기 -->
+	<update id="changePwd" parameterType="Member">
+		UPDATE MEMBER SET MEMBER_PWD=#{memberPwd} WHERE MEMBER_ID=#{memberId} AND MEMBER_NAME=#{memberName} AND EMAIL=#{email}
+	</update>
+</mapper>
+
