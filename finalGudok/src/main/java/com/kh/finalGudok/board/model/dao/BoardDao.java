@@ -8,11 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.finalGudok.board.model.vo.Board;
+import com.kh.finalGudok.board.model.vo.Inquiry;
 import com.kh.finalGudok.board.model.vo.bPageInfo;
+import com.kh.finalGudok.board.model.vo.secret;
 
 @Repository("bDao")
 public class BoardDao {
 
+	// Notice
 	@Autowired
 	SqlSessionTemplate sqlSessionTemplate;
 	
@@ -52,6 +55,32 @@ public class BoardDao {
 			
 			return (ArrayList)sqlSessionTemplate.selectList("boardMapper.getBoardListProductProposal", null, rowBounds);
 		}
+	
+	// inquiry
+		public int getListCountInquiry() {
+			return sqlSessionTemplate.selectOne("boardMapper.getListCountInquiry");
+		}
+
+		public ArrayList<Board> selectListInquiry1(bPageInfo pi) {
+			int offset = (pi.getCurrentPage() - 1)*pi.getBoardLimit();
+			RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+			
+			return (ArrayList)sqlSessionTemplate.selectList("boardMapper.getBoardListInquiry1", null, rowBounds);
+		}
+		
+		public ArrayList<secret> selectListInquiry2(bPageInfo pi) {
+			int offset = (pi.getCurrentPage() - 1)*pi.getBoardLimit();
+			RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+			
+			return (ArrayList)sqlSessionTemplate.selectList("boardMapper.getBoardListInquiry2", null, rowBounds);
+		}
+		
+		public ArrayList<Inquiry> selectListInquiry3(bPageInfo pi) {
+			int offset = (pi.getCurrentPage() - 1)*pi.getBoardLimit();
+			RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+			
+			return (ArrayList)sqlSessionTemplate.selectList("boardMapper.getBoardListInquiry3", null, rowBounds);
+		}
 		
 		
 	// Count
@@ -76,6 +105,18 @@ public class BoardDao {
 		return sqlSessionTemplate.insert("boardMapper.insertProductProposal", b);
 	}
 	
+	public int insertInquiry1(Board b) {
+		return sqlSessionTemplate.insert("boardMapper.insertInquiry1", b);
+	}
+	
+	public int insertInquiry2(secret s) {
+		return sqlSessionTemplate.insert("boardMapper.insertInquiry2", s);
+	}
+	
+	public int insertInquiry3(Inquiry i) {
+		return sqlSessionTemplate.insert("boardMapper.insertInquiry3", i);
+	}
+	
 	
 	// Detail 세부내용
 	public Board selectDetail(int bBoard_no) {
@@ -84,6 +125,18 @@ public class BoardDao {
 
 	public Board selectIDetail(int bBoard_no) {
 		return sqlSessionTemplate.selectOne("boardMapper.selectIDetail", bBoard_no);
+	}
+	
+	public Board selectOIDetail1(int bBoard_no) {
+		return sqlSessionTemplate.selectOne("boardMapper.selectOIDetail1", bBoard_no);
+	}
+
+	public secret selectOIDetail2(int bBoard_no) {
+		return sqlSessionTemplate.selectOne("boardMapper.selectOIDetail2", bBoard_no);
+	}
+	
+	public Inquiry selectOIDetail3(int bBoard_no) {
+		return sqlSessionTemplate.selectOne("boardMapper.selectOIDetail3", bBoard_no);
 	}
 
 	// Update 수정
@@ -94,6 +147,14 @@ public class BoardDao {
 
 	public int updateBoard(Board b) {
 		return sqlSessionTemplate.update("boardMapper.updateBoard", b);
+	}
+	
+	public int updateOneInquiry(secret s) {
+		return sqlSessionTemplate.update("boardMapper.updateOneInquiry", s);
+	}
+
+	public int updateInquiry(Inquiry i) {
+		return sqlSessionTemplate.update("boardMapper.updateInquiry", i);
 	}
 
 	// Delete 삭제
@@ -108,7 +169,16 @@ public class BoardDao {
 	public int deleteBoard(Integer bBoard_no) {
 		return sqlSessionTemplate.delete("boardMapper.deleteBoard",bBoard_no);
 	}
-	
+
+	public int deleteOneInquiryBoard(Integer bBoard_no) {
+		return sqlSessionTemplate.delete("boardMapper.deleteOneInquiryBoard",bBoard_no);
+	}
+
+	public int deleteInquiryBoard(Integer bBoard_no) {
+		return sqlSessionTemplate.delete("boardMapper.deleteInquiryBoard",bBoard_no);
+	}
+
+
 
 
 }

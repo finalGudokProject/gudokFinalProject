@@ -44,7 +44,7 @@
         <ul class="list" id="list">
 			<li style="margin-bottom: 5%;"><img src="resources/images/Alert.png" style="width:20%; height:20%;margin-bottom:3%"><a href="noticeList.do">공지사항</a></li>
             <li style="margin-bottom: 5%;"><img src="resources/images/FAQ.png" style="width:20%; height:20%;margin-bottom:3%"><a href="FAQList.do">FAQ</a></li>
-            <li style="margin-bottom: 5%;"><img src="resources/images/inquiary.png" style="width:20%; height:20%;margin-bottom:3%"><a href="inquriaryList.do">1:1문의</a></li>
+            <li style="margin-bottom: 5%;"><img src="resources/images/inquiary.png" style="width:20%; height:20%;margin-bottom:3%"><a href="inquiryList.do">1:1문의</a></li>
             <li style="margin-bottom: 5%;"><img src="resources/images/proposal.png" style="width:20%; height:20%;margin-bottom:3%"><a style="color:rgb(0, 125, 255);" readonly">상품제안</a></li>
             <li style="margin-bottom: 5%;"><img src="resources/images/benefit1.png" style="width:20%; height:20%;margin-bottom:3%"><a href="tierOfBenefit.do">등급별 혜택</a></li>        
         </ul>
@@ -74,7 +74,7 @@
                         <br><br>
                         <c:if test="${!empty board.originalFileName }">
                         	<center>
-                           		<img src="${contextPath }/resources/proposalUploadFiles/${board.renameFileName }">
+                           		<img style="height:500px;width:500px" src="${contextPath }/resources/proposalUploadFiles/${board.renameFileName }">
                         	</center>
                         </c:if>
                       </td>

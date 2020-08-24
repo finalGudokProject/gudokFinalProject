@@ -19,7 +19,9 @@ import org.springframework.web.servlet.ModelAndView;
 import com.kh.finalGudok.board.model.exception.BoardException;
 import com.kh.finalGudok.board.model.service.BoardService;
 import com.kh.finalGudok.board.model.vo.Board;
+import com.kh.finalGudok.board.model.vo.Inquiry;
 import com.kh.finalGudok.board.model.vo.bPageInfo;
+import com.kh.finalGudok.board.model.vo.secret;
 
 @Controller
 public class BoardController {
@@ -350,7 +352,79 @@ public class BoardController {
 	
 	//-------------------------------------------------------------------
 	
+	// adminProductProposal 
+	//List
+	@RequestMapping("adminProductProposalList.do")
+	public ModelAndView adminProductProposalList(ModelAndView mv, 
+			@RequestParam(value="page", required=false) Integer page) {	// 기본 자료형으로 받을 수 없기 때문에 Integer를 쓴다
+		// 페이징 관련 처리부터 하자
+		int currentPage = 1;
+		if(page != null) {
+			currentPage = page;
+		}
 		
+		int listCount = bService.getListCountProductProposal();
+		
+		bPageInfo pi = getPageInfo(currentPage, listCount);
+		
+
+		ArrayList<Board> list = bService.selectListProductProposal(pi);
+
+		if(list != null) {
+			mv.addObject("list",list);
+			mv.addObject("pi",pi);
+			mv.setViewName("admin/adminProductProposalList");
+		}else {
+			throw new BoardException("게시글 전체 조회 실패!");
+		}
+		
+		return mv;
+	}
+		
+	// Detail
+	@RequestMapping("adminProductProposalDetail.do")
+	public ModelAndView adminProductProposalDetail(ModelAndView mv, int bBoard_no, @RequestParam("page") Integer page) {
+		int currentPage = page;
+		
+		int result = bService.addReadCount(bBoard_no); // 조회수가 증가 되어야만 게시물 상세보기가 가능하다
+		
+		if (result > 0) {
+			Board board = bService.selectIDetail (bBoard_no);
+			if(board != null) {
+				mv.addObject("board", board).addObject("currentPage",currentPage).setViewName("admin/adminProductProposalDetail");
+			}else {
+				throw new BoardException("게시글 조회 실패");
+			}			
+		}else {
+			throw new BoardException("게시글 조회수 증가 실패!");
+		}		
+		return mv;
+	}
+	
+	// Delete
+			
+			@RequestMapping("aProposalDelete.do")
+			public String aPoposalDelete(Integer bBoard_no, HttpServletRequest request) {
+				System.out.println(bBoard_no);
+				Board b = bService.selectIDetail(bBoard_no);
+				System.out.println(b);
+				if(b.getOriginalFileName() != null) {
+					PdeleteFile(b.getRenameFileName(), request);
+				}
+				
+				// 게시글 삭제하기
+				int result1 = bService.deleteImage(bBoard_no);
+				int result2 = bService.deleteBoardImage(bBoard_no);
+				int result3 = bService.deleteBoard(bBoard_no);
+				
+				if(result1 > 0 && result2 > 0 && result3 > 0) {
+					return "redirect:adminProductProposalList.do";
+				}else {
+					throw new BoardException("게시물 삭제 실패!");
+				}
+			}
+	
+	
 	//-----------------------------------------------
 	// serviceCenter
 	
@@ -670,4 +744,246 @@ public class BoardController {
 				return mv;
 			
 		}
+		
+		// Inquiry List
+		@RequestMapping("inquiryList")
+		public ModelAndView inquirylList(ModelAndView mv, 
+				@RequestParam(value="page", required=false) Integer page) {	// 기본 자료형으로 받을 수 없기 때문에 Integer를 쓴다
+			// 페이징 관련 처리부터 하자
+			int currentPage = 1;
+			if(page != null) {
+				currentPage = page;
+			}
+			
+			int listCount = bService.getListCountInquiry();
+			
+			bPageInfo pi = getPageInfo(currentPage, listCount);
+			
+
+			ArrayList<Board> list1 = bService.selectListInquiry1(pi);
+			// 비공개, 공개, 답변상태를 표기하기 위한 ArrayList
+			ArrayList<secret> list2 = bService.selectListInquiry2(pi);
+			ArrayList<Inquiry> list3 = bService.selectListInquiry3(pi);
+			System.out.println("list1 : " + list1);
+			System.out.println("list2 : " + list2);
+			System.out.println("list3 : " + list3);
+			
+			if(list1 != null && list2 != null && list3 != null) {
+				mv.addObject("list1",list1);
+				mv.addObject("list2",list2);
+				mv.addObject("list3",list3);
+				mv.addObject("pi",pi);
+				mv.setViewName("serviceCenter/inquiryList");
+			}else {
+				throw new BoardException("게시글 전체 조회 실패!");
+			}
+			
+			return mv;
+		}
+		
+		// Inquiry Detail
+		@RequestMapping("inquiryDetail")
+		public ModelAndView inquiryDetail(ModelAndView mv, int bBoard_no, @RequestParam("page") Integer page) {
+			int currentPage = page;
+			
+			int result = bService.addReadCount(bBoard_no); // 조회수가 증가 되어야만 게시물 상세보기가 가능하다
+			
+			if (result > 0) {
+				Board board = bService.selectOIDetail1(bBoard_no);
+				System.out.println("detail: " + board);
+				secret secret = bService.selectOIDetail2(bBoard_no);
+				System.out.println("detail: " +secret);
+				Inquiry inquiry = bService.selectOIDetail3(bBoard_no);
+				System.out.println("detail: " +inquiry);
+				if(board != null && secret != null && inquiry != null) {
+					mv.addObject("board", board).addObject("secret", secret).addObject("inquiry", inquiry).addObject("currentPage",currentPage).setViewName("serviceCenter/inquiryDetail");
+				}else {
+					throw new BoardException("게시글 조회 실패");
+				}			
+			}else {
+				throw new BoardException("게시글 조회수 증가 실패!");
+			}		
+			return mv;
+		}
+		// Inquiry Insert
+		@RequestMapping("inquiryInsert.do")
+		public String inquiryInsert(){
+			return "serviceCenter/inquiryInsert";
+		}
+		
+		@RequestMapping("oInquiryInsert.do")
+		public String inquiryInsert(HttpServletRequest request, Board b, secret s, Inquiry i, 
+				@RequestParam("oSecret") String oSecret,
+				@RequestParam(value="uploadInquiry", required=false) MultipartFile file) { 	
+			// NoticeController에 있는 saveFile 메소드 가져오고 buploadFiles폴더로 수정하자
+			// 그리고 이번엔 날짜를 활용한 rename을 적용해 보자
+			
+			if(!file.getOriginalFilename().equals("")) {
+				
+				String renameFileName=iSaveFile(file,request);
+			      String root=request.getSession().getServletContext().getRealPath("resources");
+			      String savePath=root+"\\inquiryUploadFiles";
+			      
+			      b.setOriginalFileName(file.getOriginalFilename());
+			      b.setRenameFileName(renameFileName);
+			      b.setImagePath(savePath);
+
+			}
+			
+			if(oSecret.equals("N")) {
+				s.setoSecret("N");
+			}else {
+				s.setoSecret("Y");
+			}
+			
+			int result1 = bService.insertInquiry1(b);
+			int result2 = bService.insertInquiry2(s);
+			int result3 = bService.insertInquiry3(i);
+			int result4 = bService.insertImage(b);
+			
+			if((result1>0 && result2>0 && result3>0 && result4>0) || (result1>0 && result2>0 && result3>0 && result4<0)) {
+				return "redirect:inquiryList.do";
+			}else {
+				throw new BoardException("게시글 등록 실패!");
+			}
+		}
+		
+		// 파일이 저장 될 경로를 설정하는 메소드
+				private String iSaveFile(MultipartFile file, HttpServletRequest request) {
+					
+					String root = request.getSession().getServletContext().getRealPath("resources");
+					// request.getSession().getServletContext() -> webapp경로
+					// getRealPath -> File: 빼고나오는 경로
+					
+					String savePath = root + "\\inquiryUploadFiles";
+					// 폴더가 없으면 만들면 되고 폴더가 없으면 이렇게 파일 이름을 써서 만든다
+					
+					File folder = new File(savePath);
+					
+					if(!folder.exists()) {	// webapp아래에 있는 resources 폴더 아래에
+											// nuloadFiles가 없어서 File객체를 찾을 수 없다면
+						folder.mkdirs();	// 폴더를 만들어라
+						
+					}
+					
+					// 공지글은 파일명 중복 제거는 신경쓰지 않고 했지만
+					// 게시판에서는 파일명을 날짜(업로드 시간)로 rename 해보자
+					
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+					String originFileName = file.getOriginalFilename();
+					String renameFileName = sdf.format(new java.sql.Date(System.currentTimeMillis()))
+							+ "." + originFileName.substring(originFileName.lastIndexOf(".")+1);
+					
+					
+					String filePath = folder + "\\" + renameFileName;
+					// 실제 저장 될 파일의 경로 + rename파일명	
+					
+					try {
+						file.transferTo(new File(filePath));
+						// 이 상태로는 파일 업로드가 되지 않는다.
+						// 왜냐면 파일 제한크기에 대한 설정을 주지 않았기 때문이다.
+						// root-context.xml에 업로드 제한 파일 크기를 지정해 주자.
+						
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					
+					
+					return renameFileName;
+				}
+		
+		// Inquiry Update
+				@RequestMapping("inquiryUpdate.do")
+				public ModelAndView inquiryUpdate(ModelAndView mv, Integer bBoard_no,
+													@RequestParam("page") Integer page) {
+					Board board = bService.selectOIDetail1(bBoard_no);
+					secret secret = bService.selectOIDetail2(bBoard_no);
+					Inquiry inquiry = bService.selectOIDetail3(bBoard_no);
+					System.out.println(board);
+					System.out.println(secret);
+					System.out.println(inquiry);
+					mv.addObject("board", board).addObject("secret", secret).addObject("inquiry", inquiry).addObject("currentPage", page).setViewName("serviceCenter/inquiryUpdate");
+
+					return mv;
+				}
+				
+				@RequestMapping(value="rInquiryUpdate.do", method=RequestMethod.POST)
+				public ModelAndView inquiryUpdate(ModelAndView mv, Board b, secret s, Inquiry i,
+														@RequestParam("oSecret") String oSecret,
+														HttpServletRequest request,
+														@RequestParam("page") Integer page,
+														@RequestParam(value="uploadInquiry", required=false)
+														MultipartFile file) {
+
+						if(!file.getOriginalFilename().equals("")) {	// 원래 파일명이 존재하면
+							if(b.getRenameFileName() != null) {			// 바뀐이름이 존재하면
+							deleteFile(b.getRenameFileName(), request);	// 바뀐이름 삭제
+							}
+							String renameFileName = iSaveFile(file, request);
+						
+						
+						b.setOriginalFileName(file.getOriginalFilename());
+						b.setRenameFileName(renameFileName);
+						} 
+						
+						String root=request.getSession().getServletContext().getRealPath("resources");
+						String savePath=root+"\\inquiryUploadFiles";
+						b.setImagePath(savePath);
+						
+						System.out.println(oSecret);
+						
+						if(oSecret.equals("N")) {
+							s.setoSecret("Y");
+						}else {
+							s.setoSecret("N");
+						}
+						
+						int result1 = bService.updateImage(b);
+						int result2 = bService.updateBoard(b);
+						int result3 = bService.updateOneInquiry(s);
+						int result4 = bService.updateInquiry(i);
+						
+						if(result1>0 || result2>0 || result3>0 || result4>0) { 
+						mv.addObject("page",page).setViewName("redirect:inquiryList.do");
+						}else {
+						throw new BoardException("게시글 수정 실패!!");
+						}
+						
+						return mv;
+					
+				}
+		// Inquiry Delete
+				private void iDeleteFile(String fileName, HttpServletRequest request) {
+					String root = request.getSession().getServletContext().getRealPath("resources");
+					String savePath = root + "\\inquiryUploadFiles";
+					
+					File f = new File(savePath + "\\" + fileName);
+					if(f.exists()) {
+						f.delete();
+					}
+				}
+				
+				@RequestMapping("inquiryDelete.do")
+				public String inquiryDelete(Integer bBoard_no, HttpServletRequest request) {
+					System.out.println(bBoard_no);
+					Board b = bService.selectIDetail(bBoard_no);
+					System.out.println(b);
+					if(b.getOriginalFileName() != null) {
+						iDeleteFile(b.getRenameFileName(), request);
+					}
+					
+					// 게시글 삭제하기
+					int result1 = bService.deleteImage(bBoard_no);
+					int result2 = bService.deleteBoardImage(bBoard_no);
+					int result3 = bService.deleteBoard(bBoard_no);
+					int result4 = bService.deleteOneInquiryBoard(bBoard_no);
+					int result5 = bService.deleteInquiryBoard(bBoard_no);
+					
+					if(result1 > 0 && result2 > 0 && result3 > 0 && result4 > 0 && result5 > 0) {
+						return "redirect:inquiryList.do";
+					}else {
+						throw new BoardException("게시물 삭제 실패!");
+					}
+				}
+		
 }

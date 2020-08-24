@@ -121,7 +121,7 @@
         <ul class="list" id="list">
 			<li style="margin-bottom: 5%;"><img src="resources/images/Alert.png" style="width:20%; height:20%;margin-bottom:3%"><a href="noticeList.do">공지사항</a></li>
             <li style="margin-bottom: 5%;"><img src="resources/images/FAQ.png" style="width:20%; height:20%;margin-bottom:3%"><a href="FAQList.do">FAQ</a></li>
-            <li style="margin-bottom: 5%;"><img src="resources/images/inquiary.png" style="width:20%; height:20%;margin-bottom:3%"><a href="inquriaryList.do">1:1문의</a></li>
+            <li style="margin-bottom: 5%;"><img src="resources/images/inquiary.png" style="width:20%; height:20%;margin-bottom:3%"><a href="inquiryList.do">1:1문의</a></li>
             <li style="margin-bottom: 5%;"><img src="resources/images/proposal.png" style="width:20%; height:20%;margin-bottom:3%"><a style="color:rgb(0, 125, 255);" readonly">상품제안</a></li>
             <li style="margin-bottom: 5%;"><img src="resources/images/benefit1.png" style="width:20%; height:20%;margin-bottom:3%"><a href="tierOfBenefit.do">등급별 혜택</a></li>        
         </ul>
@@ -129,9 +129,9 @@
       <div class="col-9">
       <form action="productProposalList.do" method="post" enctype="multipart/form-data">
         
-        <div class="input-group" >
           <div style="font-size: 30px;">상품제안</div>
-          <select class="custom-select" id="inputGroupSelect04" style="margin-left: 400px;">
+        <div class="input-group" >
+          <select class="custom-select" id="inputGroupSelect04" style="margin-left: 500px; width:100px">
             <option selected>모두</option>
             <option value="1">제목</option>
             <option value="2">내용</option>
@@ -148,7 +148,8 @@
       <thead>
         <tr>
           <th style="width:5%">번호</th>
-          <th style="width: 35%;">제목</th>
+          <th style="width: 20%;">제목</th>
+          <th style="width: 10%;">작성자</th>          
           <th style="width: 10%;">작성일</th>
           <th style="width: 10%;">조회수</th>
         </tr>
@@ -166,13 +167,14 @@
 									</c:url>
 									<a href="${ProductProposalDetail }">${b.bTitle }</a>
 								</td>
+								<td align="center">${b.bMember_id}</td>
 								<td align="center">${b.bWrite_date }</td>
 								<td align="center">${b.bRead_num }</td>
 							</tr>
 						</c:forEach>
 					</c:when>
 					<c:otherwise>
-						<td colspan="4">조회된 결과가 없습니다.</td>
+						<td colspan="5">조회된 결과가 없습니다.</td>
 					</c:otherwise>
 				</c:choose>
 	      </tbody>

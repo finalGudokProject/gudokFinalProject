@@ -2,7 +2,7 @@ package com.kh.finalGudok.board.model.vo;
 
 import java.io.Serializable;
 
-public class OneOnOneInquiryBoard implements Serializable {
+public class secret implements Serializable {
 
 	/**
 	 * 
@@ -11,15 +11,15 @@ public class OneOnOneInquiryBoard implements Serializable {
 	
 	private int oBoard_no;			// 비공개 게시물 번호
 	private String oSecret;			// 공개 여부
-	private String oSercret_pwd;	// 비밀번호
+	private String oSecret_pwd;	    // 비밀번호
 	
-	public OneOnOneInquiryBoard() {
+	public secret() {
 	}
 
-	public OneOnOneInquiryBoard(int oBoard_no, String oSecret, String oSercret_pwd) {
+	public secret(int oBoard_no, String oSecret, String oSecret_pwd) {
 		this.oBoard_no = oBoard_no;
 		this.oSecret = oSecret;
-		this.oSercret_pwd = oSercret_pwd;
+		this.oSecret_pwd = oSecret_pwd;
 	}
 
 	public int getoBoard_no() {
@@ -38,12 +38,12 @@ public class OneOnOneInquiryBoard implements Serializable {
 		this.oSecret = oSecret;
 	}
 
-	public String getoSercret_pwd() {
-		return oSercret_pwd;
+	public String getoSecret_pwd() {
+		return oSecret_pwd;
 	}
 
-	public void setoSercret_pwd(String oSercret_pwd) {
-		this.oSercret_pwd = oSercret_pwd;
+	public void setoSecret_pwd(String oSecret_pwd) {
+		this.oSecret_pwd = oSecret_pwd;
 	}
 
 	public static long getSerialversionuid() {
@@ -52,9 +52,8 @@ public class OneOnOneInquiryBoard implements Serializable {
 
 	@Override
 	public String toString() {
-		return "OneOnOneInquiryBoard [oBoard_no=" + oBoard_no + ", oSecret=" + oSecret + ", oSercret_pwd="
-				+ oSercret_pwd + "]";
+		return "secret [oBoard_no=" + oBoard_no + ", oSecret=" + oSecret + ", oSecret_pwd=" + oSecret_pwd + "]";
 	}
-	
+
 	
 }
