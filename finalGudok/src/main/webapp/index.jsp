@@ -8,6 +8,7 @@
 <link rel="shortcut icon" href="/favicon.ico" sizes="16x16" type="image/x-icon"/>
 <title>Insert title here</title>
 </head>
+<!--  -->
 <body>
 	<jsp:forward page="home.do"></jsp:forward>
 </body>
