@@ -122,7 +122,7 @@
               <table style="margin-top:15px">
                 <tr>
                   <th style="width:15%; padding:20px;text-align: center;" colsapn="1">답변</th>
-                  <td colspan="3" style="height:auto; padding:5%">${inquiry.iInquiry_content }</td>
+                  <td colspan="3" style="height:auto; padding:5%; text-align:left !important">${inquiry.iInquiry_content }</td>
                 </tr>
               </table>
       
@@ -136,7 +136,7 @@
 						<c:param name="bBoard_no" value="${board.bBoard_no }"/>
 			</c:url>
 			
-            <a href="inquiryList.do" type="button" class="btn btn-primary" style="float:right;">목록으로</a>
+            <a href="sinquiryList.do" type="button" class="btn btn-primary" style="float:right;">목록으로</a>
             <a href="${inquiryUpdateView }" type="button" class="btn btn-primary" style="float:right;margin-right:10px">수정</a>
             <a href="${inquiryDelete }" type="button" class="btn btn-primary" style="float:right;margin-right:10px">삭제</a>
             </div>

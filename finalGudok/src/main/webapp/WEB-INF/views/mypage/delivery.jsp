@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
 <style>
 	#content {
@@ -40,6 +40,13 @@
     }
 
     .myPage_Menu li a {
+        display: block;
+        color: #000;
+        padding: 8px 16px;
+        text-decoration: none;
+    }
+    
+    .myPage_Menu li span {
         display: block;
         color: #000;
         padding: 8px 16px;
@@ -314,10 +321,13 @@
 	<div id="content">
         <ul class="myPage_Menu">
             <li>
-                <a href="#home"><img src="resources/images/delivery.png"
-                        style="width: 25%; height: 25%; margin-right: 4%;">구독배송</a>
+                <span><img src="resources/images/delivery.png"
+                        style="width: 25%; height: 25%; margin-right: 4%;">구독배송</span>
                 <ul>
-                    <li><a href="#">구독 조회</a></li>
+                	<c:url var="slist" value="subscribeView.do">
+						<c:param name="memberNo" value="${loginUser.memberNo}"/>
+					</c:url>
+                    <li><a href="${slist}">구독 조회</a></li>
                     <c:url var="dlist" value="deliveryList.do">
 						<c:param name="memberNo" value="${loginUser.memberNo}"/>
 					</c:url> 
@@ -329,22 +339,23 @@
                 </ul>
             </li>
             <li>
-                <a href="#news"><img src="resources/images/my_benefit.png"
-                        style="width: 25%; height: 25%; margin-right: 4%;">나의혜택</a>
+                <span><img src="resources/images/my_benefit.png"
+                        style="width: 25%; height: 25%; margin-right: 4%;">나의혜택</span>
                 <ul>
-                    <li><a href="#">회원 등급</a></li>
+                    <c:url var="grade" value="gradeView.do"></c:url> 
+                    <li><a href="${grade}">회원 등급</a></li>
                     <c:url var="plist" value="pointList.do">
 							<c:param name="memberNo" value="${loginUser.memberNo}"/>
 					</c:url> 
                     <li><a href="${plist}">적립금 내역</a></li>
                 </ul>
             </li>
-            <c:url var="clist" value="cartList.do">
+            <c:url var="clist" value="cartView.do">
 				<c:param name="memberNo" value="${loginUser.memberNo}"/>
 			</c:url> 
             <li><a href="${clist}"><img src="resources/images/cart.png"
                         style="width: 25%; height: 25%; margin-right: 4%;">장바구니</a></li>
-            <c:url var="hlist" value="heartList.do">
+            <c:url var="hlist" value="heartView.do">
 				<c:param name="memberNo" value="${loginUser.memberNo}"/>
 			</c:url> 
             <li><a href="${hlist}"><img src="resources/images/heart.png" style="width: 25%; height: 25%; margin-right: 4%;">찜</a>
@@ -382,7 +393,18 @@
 	            <div class="sub">
 	              <span class="name">${loginUser.memberName } <span class="etc">&nbsp;님</span></span>
 	              <br>
-	              <span class="grade">알 <span class="etc">&nbsp;등급</span></span>
+	              <c:if test="${loginUser.gradeNo eq 1}">
+	              	<span class="grade">알 <span class="etc">&nbsp;등급</span></span>
+	              </c:if>
+	              <c:if test="${loginUser.gradeNo eq 2}">
+	              	<span class="grade">아기거위 <span class="etc">&nbsp;등급</span></span>
+	              </c:if>
+	              <c:if test="${loginUser.gradeNo eq 3}">
+	              	<span class="grade">어른거위 <span class="etc">&nbsp;등급</span></span>
+	              </c:if>
+	              <c:if test="${loginUser.gradeNo eq 4}">
+	              	<span class="grade">황금거위 <span class="etc">&nbsp;등급</span></span>
+	              </c:if>
 	              <br>
 	              <span><a href="#" style="color: black; font-size: 0.8em;">등급 혜택보기</a></span>
 	            </div>
@@ -391,7 +413,7 @@
 	            <div class="sub">
 	              <span class="title"><a href="#" style="color: black;">구독</a></span>
 	              <br><br>
-	              <span class="count"><a href="#" style="color :#115D8C;">0<span class="etc">&nbsp;건</span></a></span>
+	              <span class="count"><a href="#" style="color :#115D8C;">${subscribeCount}<span class="etc">&nbsp;건</span></a></span>
 	            </div>
 	          </div>
 	          <div class="cart">
@@ -401,7 +423,7 @@
 					</c:url> 
 	              <span class="title"><a href="${clist}" style="color: black;">장바구니</a></span>
 	              <br><br>
-	              <span class="count"><a href="${clist}" style="color :#115D8C;">0<span class="etc">&nbsp;건</span></a></span>
+	              <span class="count"><a href="${clist}" style="color :#115D8C;">${cartCount}<span class="etc">&nbsp;건</span></a></span>
 	            </div>
 	          </div>
 	          <div class="point">
@@ -411,7 +433,7 @@
 					</c:url>
 	              <span class="title"><a href="${plist}" style="color: black;">적립금</a></span>
 	              <br><br>
-	              <span class="count"><a href="${plist}" style="color :#115D8C;">0<span class="etc">&nbsp;건</span></a></span>
+	              <span class="count"><a href="${plist}" style="color :#115D8C;">${pointCount}<span class="etc">&nbsp;건</span></a></span>
 	            </div>
 	          </div>
 	        </div>
@@ -503,7 +525,6 @@
     		$("#subscribeNo").val(subscribeNo);
     		$("#itemName").val(itemName);
     		$("#exchangeContent").attr("disabled", "disabled");
-			
     	}
     	
     	$(function(){

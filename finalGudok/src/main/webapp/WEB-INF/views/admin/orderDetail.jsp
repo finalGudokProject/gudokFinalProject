@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
   <head>
@@ -46,19 +47,36 @@ input, select,textarea{
     <jsp:include page="../common/adminMenubar.jsp"/>
         <div class="content">
             <div class="container box">
-                <h3>주문 상품 상세</h3>
+                <h3>구독 상품 상세보기</h3>
                 <br>
-
-                    <table style="background-color:lightgray">
+                <br><br>
+					<form>
+		                    <input type="hidden" id="page" name="page" value="${page }">
+		                    <input type="hidden" id="type" name="type" value="${type }">
+		                    <input type="hidden" id="subscribeNo" name="subscribeNo" value="${sc.subscribeNo }">
+					</form>
+                    <table style="background-color:#CFD8DC;">
                         <tr>
-                            <td style="width:20%">주문 취소 여부</td>
-                            <td style="width:20%"><input type="radio" name="orderCancel">&nbsp;O&nbsp;&nbsp;
-                                <input type="radio" name="orderCancel">&nbsp;X
+                            <td style="width:25%">구독 취소 여부</td>
+                            <td style="width:25%">
+                            	<c:if test="${sc.subscribeStatus eq 'Y' }">
+	                            	<b>※ 구독 취소</b>
+	                            </c:if>
+	                            <c:if test="${sc.subscribeStatus eq 'N' }">
+	                            	<b>※ 해당 없음</b>
+	                            </c:if>
                             </td>
                             <td style="width:25%">배송 상태</td>
-                            <td style="width:35%"><input type="radio" name="deliveryStatus">&nbsp;배송대기&nbsp;&nbsp;
-                                <input type="radio" name="deliveryStatus">&nbsp;배송중&nbsp;&nbsp;
-                                <input type="radio" name="deliveryStatus">&nbsp;배송완료&nbsp;&nbsp;
+                            <td style="width:25%">
+                            	<c:if test="${sc.deliveryStatus eq 'N' }">
+	                            	<b>※ 배송 대기</b>
+	                            </c:if>
+	                            <c:if test="${sc.deliveryStatus eq 'D' }">
+	                            	<b>※ 배송중</b>
+	                            </c:if>
+	                            <c:if test="${sc.deliveryStatus eq 'Y' }">
+	                            	<b>※ 배송 완료</b>
+	                            </c:if>
                             </td>
                         </tr>
                     </table>
@@ -66,33 +84,57 @@ input, select,textarea{
                     <!--주문 상품 리스트-->
                     <table>
                         <tr>
-                            <td>주문 번호</td>
-                            <td><input type="text" name="orderNum" value="" readonly></td>
+                            <td>구독 번호</td>
+                            <td><input type="text" name="subscribeNo" value="${sc.subscribeNo }" readonly></td>
                             <td>주문 일자</td>
-                            <td><input type="text" name="orderDate"></td>
+                            <td><input type="text" name="paymentDate" value="${p.paymentDate }" readonly></td>
                         </tr>
                         <tr>
                             <td>상품명</td>
-                            <td colspan="3"><input type="text" name="item_name" value="" readonly style="width:87%"></td>
+                            <td colspan="3"><input type="text" name="itemName" value="${sc.itemName }" readonly style="width:87%"></td>
                            
                         </tr>
             
                         <tr>
                             <td>주문 수량</td>
-                            <td><input type="text" name="item_num"></td>
+                            <td><input type="text" name="amount" readonly value="${sc.amount }"></td>
                             <td>가격</td>
-                            <td><input type="text" name="purchase" readonly></td>
+                            <td><input type="text" name="purchase" readonly value="${sc.itemPrice }"></td>
                         </tr>
-                        <tr>
-                            <td>배송 주소</td>
-                            <td colspan="3"><input type="text" name="item_name" value="" readonly style="width:87%"></td>
-                           
-                        </tr>
+                         <tr>
+	                       <td rowspan="3" style="width:15%">주소</td>
+							<td colspan="3"><label style="float:left; width:180px;">우편번호</label>
+								<input type="text" name="address1" class="postcodify_postcode5" value="${sc.address1 }" id="address1" style="float:left;">
+			
+							</td>
+						</tr>
+						<tr>
+							<td colspan="3"><label style="float:left; width:180px;">도로명 주소</label>
+							<input type="text" name="address2" class="postcodify_address" value="${sc.address2 }" id="address2"style="float:left;width:70%;"></td>
+				
+						</tr>
+						<tr>
+							<td colspan="3"><label style="float:left;  width:180px;">상세 주소</label>
+							<input type="text" name="address3" class="postcodify_extra_info" value="${sc.address3 }" id="address3"style="float:left;width:70%;">
+							
+							
+						</tr>
                         <tr>
                             <td>구독 시작 날짜</td>
-                            <td><input type="text" name="enroll" readonly></td>
+                            <td><input type="text" name="subscribeDate" readonly value="${sc.subscribeDate }"></td>
                             <td>구독 주기</td>
-                            <td><input type="text" name="out" readonly></td>
+                            <c:if test="${sc.cycleNo eq 1 }">
+                            	<td><input type="text" name="out" readonly value="1주"></td>
+                            </c:if>
+                            <c:if test="${sc.cycleNo eq 2 }">
+                            	<td><input type="text" name="out" readonly value="2주"></td>
+                            </c:if>
+                              <c:if test="${sc.cycleNo eq 3 }">
+                            	<td><input type="text" name="out" readonly value="3주"></td>
+                            </c:if>
+                              <c:if test="${sc.cycleNo eq 4 }">
+                            	<td><input type="text" name="out" readonly value="4주"></td>
+                            </c:if>
                         </tr>
                        
                     </table>
@@ -106,29 +148,63 @@ input, select,textarea{
 
                     <!--결제 금액 계산-->
                     <div style="width:100%; text-align:right;">
-                        <div id="count">총 금액 : <input type="text" readonly></div>
-                        <div id="count">할인 금액 : <input type="text" readonly></div>
+                        <div id="count">총 금액 : <input type="text" readonly value="${total }"></div>
+                        <div id="count">- 할인 금액  (포인트 사용) : <input type="text" readonly value="${p.point }"></div>
                         <div id="count">배송비 : <input type="text" readonly></div>
                     </div>
                     <div style="width:400px; float:right;"><b><hr></b></div><br>
                     <div style="width:100%; text-align:right;">
                        <br>
-                        <div>총 결제 금액 : <input type="text" readonly></div>
+                       
+                        <div>총 결제 금액 : <input type="text" readonly  value="${p.totalPayment }"></div>
                     </div>
 
                     <br>
 
-                    
+                   <br>
+                   <br>
+                    <br>
                    <br>
 
                    <div style="text-align:center">
-                   <button id="btn">이전으로</button>
+                   <input type="button" class="btn" value="목록으로" onclick="goList()">
+                   <input type="button" class="btn" value="구독취소" onclick="updateS()">
                 </div>
 
 
 
             </div><!--내용담은 컨테이너-->
         </div><!--250px띄운 div-->
+        
+        
+        <script>
+        	
+        	function goList(){
+        		
+        		var type=$("#type").val();
+        	  	var page=${page }
+        	  	alert(type);
+        	  	
+        	  	if(type=="order"){
+           			location.href="oList.do?page="+page; 
+        	  	}else{
+        	  		location.href="exchangList.do?page="+page; 
+        	  	}
+        		 
+        	}
+        	
+        	
+        	function updateS(){
+        		var page=${page }
+        	 	var subscribeNo=${sc.subscribeNo}
+        	 	alert(subscribeNo);
+        	 	location.href="updateSubscribe.do?page="+page+"&subscribeNo="+subscribeNo; 
+        		
+        	}
+        
+        
+        
+        </script>
         
        <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

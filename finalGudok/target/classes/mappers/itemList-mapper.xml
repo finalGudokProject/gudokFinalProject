@@ -10,8 +10,11 @@
 		<result property="itemName" column="ITEM_NAME"/>
 		<result property="itemMemo" column="ITEM_MEMO"/>
 		<result property="itemPath" column="ITEM_PATH"/>
-		<result property="itemOriginalName" column="ITEM_ORIGINAL_NAME"/>
+		<result property="itemOriginal" column="ITEM_ORIGINAL"/>
 		<result property="itemRename" column="ITEM_RENAME"/>
+		<result property="imagePath" column="IMAGE_PATH"/>
+		<result property="imageOriginalName" column="IMAGE_ORIGINAL_NAME"/>
+		<result property="imageRename" column="IMAGE_RENAME"/>
 		<result property="itemPrice" column="ITEM_PRICE"/>
 		<result property="itemDiscount" column="ITEM_DISCOUNT"/>
 		<result property="itemRate" column="ITEM_RATE"/>
@@ -92,6 +95,15 @@
 		WHERE ITEM_DP_STATUS='Y' AND ITEM_EVENT_STATUS='Y'
 	</select>
 	
+	<select id="getItemBestList" resultMap="itemListResultSet">
+		<![CDATA[
+		SELECT *
+		FROM ITEM_LIST_VIEW ILV
+		LEFT JOIN ITEM I ON(ILV.ITEM_NO = I.ITEM_NO)
+		WHERE ITEM_DP_STATUS='Y' AND ITEM_CM_SALES>=30 AND I.ITEM_RATE>=4 AND ROWNUM <=12
+        ORDER BY I.ITEM_RATE DESC
+		]]>
+	</select>
 	
 	<select id="dListCount" resultType="_int">
 		SELECT COUNT(*)
@@ -394,6 +406,29 @@
 		FROM ITEM_LIST_VIEW ILV
 		LEFT JOIN ITEM I ON(ILV.ITEM_NO = I.ITEM_NO)
 		WHERE ITEM_DP_STATUS='Y' AND I.CATEGORY_NO LIKE 'F%'
+		<choose>
+			<when test="sortNo=='S1'">
+				ORDER BY I.ITEM_DATE DESC
+			</when>
+			<when test="sortNo=='S2'">
+				ORDER BY I.ITEM_RATE DESC
+			</when>
+			<when test="sortNo=='S3'">
+				ORDER BY I.ITEM_PRICE DESC
+			</when>
+			<otherwise>
+				ORDER BY I.ITEM_PRICE ASC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="selectSortBestList" parameterType="map" resultMap="itemListResultSet">
+		<![CDATA[
+		SELECT *
+		FROM ITEM_LIST_VIEW ILV
+		LEFT JOIN ITEM I ON(ILV.ITEM_NO = I.ITEM_NO)
+		WHERE ITEM_DP_STATUS='Y' AND ITEM_CM_SALES >= 30
+		]]>
 		<choose>
 			<when test="sortNo=='S1'">
 				ORDER BY I.ITEM_DATE DESC

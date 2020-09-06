@@ -147,7 +147,6 @@
                         <th style="width:10%; padding:20px;">문의유형</th>
                         <td style="width: 39%;" colspan="3">
                             <select name="iBoard_type" style="float:left; margin-left:35%; height:30px ;width:200px;" id="iBoard_type" name="iBoard_type">
-                                <option value="">문의유형을 선택 해주세요</option>
                                 <option value="OPI">상품정보문의</option>
                                 <option value="OEC">교환문의</option>
                                 <option value="OAL">제휴</option>

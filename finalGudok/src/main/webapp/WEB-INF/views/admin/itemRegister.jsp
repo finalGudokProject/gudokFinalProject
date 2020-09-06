@@ -46,6 +46,10 @@ input, select,textarea{
 
 
 /*파일첨부 이미지*/
+
+.filebox{
+float:left;
+}
 .where {
   display: block;
   margin: 25px 15px;
@@ -83,7 +87,7 @@ input, select,textarea{
 }
 
 /* named upload */
-.filebox .upload-name {
+.filebox .upload-name2 {
     display: inline-block;
     padding: .5em .75em;
     font-size: inherit;
@@ -100,29 +104,31 @@ input, select,textarea{
 }
 
 /* imaged preview */
-.filebox .upload-display {
+.filebox .upload-display2{
     margin-bottom: 5px;
 }
 
 @media(min-width: 768px) {
-    .filebox .upload-display {
+    .filebox .upload-display2 {
         display: inline-block;
-        margin-right: 5px;
-        margin-bottom: 0;
+        margin-bottom: 10px;
+       
     }
 }
 
-.filebox .upload-thumb-wrap {
+.filebox .upload-thumb-wrap2{
     display: inline-block;
-    width: 350px;
+    width: 100%;
+    height:350px;
     padding: 2px;
     vertical-align: middle;
     border: 1px solid #ddd;
     border-radius: 5px;
     background-color: #fff;
+    overflow-y:scroll;
 }
 
-.filebox .upload-display img {
+.filebox .upload-display2 img {
     display: block;
     max-width: 100%;
     width: 100% \9;
@@ -135,7 +141,52 @@ input, select,textarea{
     border-color: #2e6da4;
 }
 
+/* named upload */
+.filebox .upload-name1 {
+    display: inline-block;
+    padding: .5em .75em;
+    font-size: inherit;
+    font-family: inherit;
+    line-height: normal;
+    vertical-align: middle;
+    background-color: #f5f5f5;
+  border: 1px solid #ebebeb;
+  border-bottom-color: #e2e2e2;
+  border-radius: .25em;
+  -webkit-appearance: none; /* 네이티브 외형 감추기 */
+  -moz-appearance: none;
+  appearance: none;
+}
 
+/* imaged preview */
+.filebox .upload-display1 {
+    margin-bottom: 5px;
+}
+
+@media(min-width: 768px) {
+    .filebox .upload-display1 {
+        display: inline-block;
+        margin-right: 5px;
+        margin-bottom: 0;
+    }
+}
+
+.filebox .upload-thumb-wrap1 {
+    display: inline-block;
+    width: 350px;
+    padding: 2px;
+    vertical-align: middle;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #fff;
+}
+
+.filebox .upload-display1 img {
+    display: block;
+    max-width: 100%;
+    width: 100% \9;
+    height: auto;
+}
 
 </style>
 </head>
@@ -166,9 +217,9 @@ input, select,textarea{
                                     <option value="F4">간편식</option>
                                     <option value="F5">건강식품</option>
                                     <option value="F6">다이어트식단</option>
-                                    <option value="L1">홈데코</option>
-                                    <option value="L2">바디케어</option>
-                                    <option value="L3">생활용품</option>
+                                    <option value="L1">생활용품</option>
+		                    		<option value="L2">바디케어</option>
+		                    		<option value="L3">홈데코</option>
                                 </select>
                                 <input type="text" name="itemName" id="itemName" style="width:100%; margin:3px;">
                         </td>
@@ -200,68 +251,170 @@ input, select,textarea{
                         </td>
 
                     </tr>
+                    <tr>
+						<td id="td1">상품 이미지</td>
+                        <td colspan="3">
+                            <div class="filebox preview-image1"> 
+                                <input class="upload-name1" value="파일선택" disabled="disabled" > 
+                                <label for="input-file1">업로드</label> 
+                                <input type="file" id="input-file1" class="upload-hidden1" name="uploadFile1" accept="image/*" title="이미지 파일만 업로드 가능"> 
+                         	</div>
+                        </td>
+                    	
+                    
+                    </tr>
 
                     <tr>
-                        <td id="td1">제품 상세 이미지</td>
+                        <td id="td1">상품 상세 설명</td>
                         <td colspan="3">
-                            <div class="filebox preview-image"> 
-                                <input class="upload-name" value="파일선택" disabled="disabled" > 
-                                <label for="input-file">업로드</label> 
-                                <input type="file" id="input-file" class="upload-hidden" name="uploadFile" accept="image/*" title="이미지 파일만 업로드 가능"> 
+                            <div class="filebox preview-image2"> 
+                                <input class="upload-name2" value="파일선택" disabled="disabled" > 
+                                <label for="input-file2">업로드</label> 
+                                <input type="file" id="input-file2" class="upload-hidden2" name="uploadFile2" accept="image/*" title="이미지 파일만 업로드 가능"> 
                          	</div>
                         </td>
                     </tr>
                 </table>
-                
-                <br>
-                <br>
-                
+             
             <div style="text-align: center;">
            		<button type="submit" class="btn">저장하기</button>&nbsp;
                 <button type="reset" class="btn">취소</button>
             </div>
             </form>
-            
             </div><!--내용담은 컨테이너-->
         </div><!--250px띄운 div-->
-        
-        
     
   
         <script>
+         // 파일 업로드 관련
+        $(function(){
+       var fileTarget = $('.filebox .upload-hidden1');
+
+        fileTarget.on('change', function(){
+            if(window.FileReader){
+                // 파일명 추출
+                var filename = $(this)[0].files[0].name;
+            }else{
+                // Old IE 파일명 추출
+                var filename = $(this).val().split('/').pop().split('\\').pop();
+            };
+
+            $(this).siblings('.upload-name1').val(filename);
+        });
+
+       		 //preview image 
+        var imgTarget = $('.preview-image1 .upload-hidden1');
+
+        imgTarget.on('change', function(){
+            var parent = $(this).parent();
+            parent.children('.upload-display1').remove();
+
+            if(window.FileReader){
+                //image 파일만
+                if (!$(this)[0].files[0].type.match(/image\//)) return;
+                
+                var reader = new FileReader();
+                reader.onload = function(e){
+                    var src = e.target.result;
+                    parent.prepend('<div class="upload-display1"><div class="upload-thumb-wrap1"><img src="'+src+'" class="upload-thumb1"></div></div>');
+                }
+                reader.readAsDataURL($(this)[0].files[0]);
+            }
+
+            else {
+                $(this)[0].select();
+                $(this)[0].blur();
+                var imgSrc = document.selection.createRange().text;
+                parent.prepend('<div class="upload-display1"><div class="upload-thumb-wrap1"><img class="upload-thumb1"></div></div>');
+
+                var img = $(this).siblings('.upload-display1').find('img');
+                img[0].style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(enable='true',sizingMethod='scale',src=\""+imgSrc+"\")";        
+            }
+        });
+    }); 
+        
+        
+     // 파일 업로드 관련
+        $(function(){
+       var fileTarget = $('.filebox .upload-hidden2');
+
+        fileTarget.on('change', function(){
+            if(window.FileReader){
+                // 파일명 추출
+                var filename = $(this)[0].files[0].name;
+            } 
+            
+            else {
+                // Old IE 파일명 추출
+                var filename = $(this).val().split('/').pop().split('\\').pop();
+            };
+
+            $(this).siblings('.upload-name2').val(filename);
+        });
+
+       		 //preview image 
+        var imgTarget = $('.preview-image2 .upload-hidden2');
+
+        imgTarget.on('change', function(){
+            var parent = $(this).parent();
+            parent.children('.upload-display2').remove();
+
+            if(window.FileReader){
+                //image 파일만
+                if (!$(this)[0].files[0].type.match(/image\//)) return;
+                
+                var reader = new FileReader();
+                reader.onload = function(e){
+                    var src = e.target.result;
+                    parent.prepend('<div class="upload-display2"><div class="upload-thumb-wrap2"><img src="'+src+'" class="upload-thumb2"></div></div>');
+                }
+                reader.readAsDataURL($(this)[0].files[0]);
+            }
+
+            else {
+                $(this)[0].select();
+                $(this)[0].blur();
+                var imgSrc = document.selection.createRange().text;
+                parent.prepend('<div class="upload-display2"><div class="upload-thumb-wrap2"><img class="upload-thumb2"></div></div>');
+
+                var img = $(this).siblings('.upload-display2').find('img');
+                img[0].style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(enable='true',sizingMethod='scale',src=\""+imgSrc+"\")";        
+            }
+        });
+    });
+        
         
         //상품 등록시 필요정보 공백 제한
         function validate(){
         	
-        
+        	confirm("상품을 등록하시겠습니까?");
     	if($("#category").val().trim().length==1){
 	    		alert('카테고리를 선택해주세요.');
-	    		$("#category").focus();
-    		
+	    		$("#category").focus();    		
     		return false;
     		
     	}else if($("#itemName").val().trim().length==0){
     			alert('상품명을 입력하세요.')
-    		
     		return false;
     		
     	}else if($("#itemPrice").val().trim().length==0){
     			alert('가격을 입력하세요.')
-    		
     		return false;
     		
     	}else if($("#itemRecommend").val().trim().length==0){
     			alert('추천 유형을 선택하세요.')
-    		
     		return false;
     			
-    	}else if(!$("#input-file").val()){
+    	}else if(!$("#input-file1").val()){
 			alert('상품 이미지를 선택하세요.')
-		
-		return false;
+			return false;
+			
+    	}else if(!$("#input-file2").val()){
+			alert('상품 이미지를 선택하세요.')
+			return false;
 		
     	}else{
-    		alert('상품이 등록되었습니다.');
+    		
     		return true;
     	}
     	
@@ -289,57 +442,6 @@ input, select,textarea{
        
          
     
-    
-        // 파일 업로드 관련
-        $(function(){
-       var fileTarget = $('.filebox .upload-hidden');
-
-        fileTarget.on('change', function(){
-            if(window.FileReader){
-                // 파일명 추출
-                var filename = $(this)[0].files[0].name;
-            } 
-            
-            else {
-                // Old IE 파일명 추출
-                var filename = $(this).val().split('/').pop().split('\\').pop();
-            };
-
-            $(this).siblings('.upload-name').val(filename);
-        });
-
-       		 //preview image 
-        var imgTarget = $('.preview-image .upload-hidden');
-
-        imgTarget.on('change', function(){
-            var parent = $(this).parent();
-            parent.children('.upload-display').remove();
-
-            if(window.FileReader){
-                //image 파일만
-                if (!$(this)[0].files[0].type.match(/image\//)) return;
-                
-                var reader = new FileReader();
-                reader.onload = function(e){
-                    var src = e.target.result;
-                    parent.prepend('<div class="upload-display"><div class="upload-thumb-wrap"><img src="'+src+'" class="upload-thumb"></div></div>');
-                }
-                reader.readAsDataURL($(this)[0].files[0]);
-            }
-
-            else {
-                $(this)[0].select();
-                $(this)[0].blur();
-                var imgSrc = document.selection.createRange().text;
-                parent.prepend('<div class="upload-display"><div class="upload-thumb-wrap"><img class="upload-thumb"></div></div>');
-
-                var img = $(this).siblings('.upload-display').find('img');
-                img[0].style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(enable='true',sizingMethod='scale',src=\""+imgSrc+"\")";        
-            }
-        });
-    });
-        
-        
             </script>
      
         

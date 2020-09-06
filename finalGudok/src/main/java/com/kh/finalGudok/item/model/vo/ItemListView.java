@@ -15,6 +15,9 @@ public class ItemListView implements Serializable{
 	private Date itemDate;
 	private String itemName;
 	private String itemMemo;
+	private String itemPath;
+	private String itemOriginal;
+	private String itemRename;
 	private String imagePath;
 	private String imageOriginalName;
 	private String imageRename;
@@ -31,8 +34,9 @@ public class ItemListView implements Serializable{
 	}
 
 	public ItemListView(int itemNo, String categoryName, String categoryNo, Date itemDate, String itemName,
-			String itemMemo, String imagePath, String imageOriginalName, String imageRename, int itemPrice,
-			int itemDiscount, Double itemRate, int reviewCount, int itemChoice, int heartNo, String sortName) {
+			String itemMemo, String itemPath, String itemOriginal, String itemRename, String imagePath,
+			String imageOriginalName, String imageRename, int itemPrice, int itemDiscount, Double itemRate,
+			int reviewCount, int itemChoice, int heartNo, String sortName) {
 		super();
 		this.itemNo = itemNo;
 		this.categoryName = categoryName;
@@ -40,6 +44,9 @@ public class ItemListView implements Serializable{
 		this.itemDate = itemDate;
 		this.itemName = itemName;
 		this.itemMemo = itemMemo;
+		this.itemPath = itemPath;
+		this.itemOriginal = itemOriginal;
+		this.itemRename = itemRename;
 		this.imagePath = imagePath;
 		this.imageOriginalName = imageOriginalName;
 		this.imageRename = imageRename;
@@ -98,6 +105,30 @@ public class ItemListView implements Serializable{
 
 	public void setItemMemo(String itemMemo) {
 		this.itemMemo = itemMemo;
+	}
+
+	public String getItemPath() {
+		return itemPath;
+	}
+
+	public void setItemPath(String itemPath) {
+		this.itemPath = itemPath;
+	}
+
+	public String getItemOriginal() {
+		return itemOriginal;
+	}
+
+	public void setItemOriginal(String itemOriginal) {
+		this.itemOriginal = itemOriginal;
+	}
+
+	public String getItemRename() {
+		return itemRename;
+	}
+
+	public void setItemRename(String itemRename) {
+		this.itemRename = itemRename;
 	}
 
 	public String getImagePath() {
@@ -187,7 +218,8 @@ public class ItemListView implements Serializable{
 	@Override
 	public String toString() {
 		return "ItemListView [itemNo=" + itemNo + ", categoryName=" + categoryName + ", categoryNo=" + categoryNo
-				+ ", itemDate=" + itemDate + ", itemName=" + itemName + ", itemMemo=" + itemMemo + ", imagePath="
+				+ ", itemDate=" + itemDate + ", itemName=" + itemName + ", itemMemo=" + itemMemo + ", itemPath="
+				+ itemPath + ", itemOriginal=" + itemOriginal + ", itemRename=" + itemRename + ", imagePath="
 				+ imagePath + ", imageOriginalName=" + imageOriginalName + ", imageRename=" + imageRename
 				+ ", itemPrice=" + itemPrice + ", itemDiscount=" + itemDiscount + ", itemRate=" + itemRate
 				+ ", reviewCount=" + reviewCount + ", itemChoice=" + itemChoice + ", heartNo=" + heartNo + ", sortName="

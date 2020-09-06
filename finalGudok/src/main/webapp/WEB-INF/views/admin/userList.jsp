@@ -41,9 +41,14 @@ input, select,textarea{
     border: 1px solid #CCCCCC;
 }
 
-#cursor{
-cursor: pointer;
-}
+.table{
+     padding: 0.75rem;
+       margin:auto;
+        word-wrap:break-word;
+        word-break:break-all;
+        table-layout:fixed;
+         
+    }
 
 </style>
 </head>
@@ -63,13 +68,14 @@ cursor: pointer;
                         <h5>등급별 정보</h5>
                         
                         <table>
+                     
                         	<thead>
                         		<tr>
-	                                <th>등급 </th>
-	                                <th>등급명</th>
-	                                <th>회원 수</th>
-	                                <th>최소 구매금액</th>
-	                                <th>적립율</th>
+	                                <th onclick="event.cancelBubble=true">등급 </th>
+	                                <th onclick="event.cancelBubble=true">등급명</th>
+	                                <th onclick="event.cancelBubble=true">회원 수</th>
+	                                <th onclick="event.cancelBubble=true">최소 구매금액</th>
+	                                <th onclick="event.cancelBubble=true">적립율</th>
 	                            </tr>
                         	</thead>
                         	<tbody id="tbody1">
@@ -118,20 +124,28 @@ cursor: pointer;
 					        <div class="modal-body">
 					          <table>
 					            <tr>
-					                <td><input type="hidden" class="gradeM" name="grade" value="4">1등급</td>
-					                <td><input type="number" min="0" class="gradeMin" id="gradeMin1" name="gradeMin1"></td>
+					                <td onclick="event.cancelBubble=true">
+					                <input type="hidden" class="gradeM" name="grade" value="4">1등급</td>
+					                <td onclick="event.cancelBubble=true">
+					                <input type="number" min="0" class="gradeMin" id="gradeMin1" name="gradeMin1"></td>
 					            </tr>
 					            <tr>
-					               <td><input type="hidden" class="gradeM" name="grade" value="3">2등급</td>
-					                <td><input type="number" min="0" class="gradeMin" id="gradeMin2" name="gradeMin2"></td>
+					               <td onclick="event.cancelBubble=true">
+					               <input type="hidden" class="gradeM" name="grade" value="3">2등급</td>
+					                <td onclick="event.cancelBubble=true">
+					                <input type="number" min="0" class="gradeMin" id="gradeMin2" name="gradeMin2"></td>
 					            </tr>
 					             <tr>
-					               <td><input type="hidden" class="gradeM" name="grade" value="2">3등급</td>
-					                <td><input type="number" min="0" class="gradeMin" id="gradeMin3" name="gradeMin3"></td>
+					               <td onclick="event.cancelBubble=true">
+					               <input type="hidden" class="gradeM" name="grade" value="2">3등급</td>
+					                <td onclick="event.cancelBubble=true">
+					                <input type="number" min="0" class="gradeMin" id="gradeMin3" name="gradeMin3"></td>
 					            </tr>
 					            <tr>
-					                <td><input type="hidden" class="gradeM" name="grade" value="1">4등급</td>
-					                <td><input type="number" min="0" class="gradeMin" id="gradeMin4" name="gradeMin4"></td>
+					                <td onclick="event.cancelBubble=true">
+					                <input type="hidden" class="gradeM" name="grade" value="1">4등급</td>
+					                <td onclick="event.cancelBubble=true">
+					                <input type="number" min="0" class="gradeMin" id="gradeMin4" name="gradeMin4"></td>
 					            </tr>
 					          </table>
 					        </div>
@@ -157,21 +171,29 @@ cursor: pointer;
 					        <div class="modal-body">
 					          <table>
 					            <tr>
-					                <td><input type="hidden" class="grade" name="grade" value="4">1등급</td>
-					                <td><input type="number" min="0" max="100" class="gradeRate" id="rate1" name="gradeRate"></td>
+					                <td onclick="event.cancelBubble=true">
+					                <input type="hidden" class="grade" name="grade" value="4">1등급</td>
+					                <td onclick="event.cancelBubble=true">
+					                <input type="number" min="0" max="100" class="gradeRate" id="rate1" name="gradeRate"></td>
 					            </tr>
 					             <tr>
-					                <td><input type="hidden" class="grade" name="grade" value="3">2등급</td>
+					                <td onclick="event.cancelBubble=true">
+					                <input type="hidden" class="grade" name="grade" value="3">2등급</td>
 					                
-					                <td><input type="number" min="0" max="100" class="gradeRate" id="rate2" name="gradeRate"></td>
+					                <td onclick="event.cancelBubble=true">
+					                <input type="number" min="0" max="100" class="gradeRate" id="rate2" name="gradeRate"></td>
 					            </tr>
 					             <tr>
-					                <td><input type="hidden" class="grade" name="grade" value="2">3등급</td>
-					                <td><input type="number" min="0" max="100" class="gradeRate" id="rate3" name="gradeRate"></td>
+					                <td onclick="event.cancelBubble=true">
+					                <input type="hidden" class="grade" name="grade" value="2">3등급</td>
+					                <td onclick="event.cancelBubble=true">
+					                <input type="number" min="0" max="100" class="gradeRate" id="rate3" name="gradeRate"></td>
 					            </tr>
 					             <tr>
-					                <td><input type="hidden" class="grade" name="grade" value="1">4등급</td>
-					                <td><input type="number" min="0" max="100" class="gradeRate" id="rate4" name="gradeRate"></td>
+					                <td onclick="event.cancelBubble=true">
+					                <input type="hidden" class="grade" name="grade" value="1">4등급</td>
+					                <td onclick="event.cancelBubble=true">
+					                <input type="number" min="0" max="100" class="gradeRate" id="rate4" name="gradeRate"></td>
 					            </tr>
 					
 					          </table>
@@ -188,44 +210,77 @@ cursor: pointer;
                 </div><!--모달 버튼 감싸는 div-->
                 <!--모달 끝-->
 
-                <div style="margin-top:30px;margin-bottom:15px; float:right;">
-                    <input type="text">
-                    <input type="button" class="btn" value="검색">
+                <div style="margin-top:30px;margin-bottom:10px; float:left;">
+                	 <select id="categoryNo" name="CategoryNo" style="width:150px">
+		                    <option value="" selected>전체</option>
+		                    <option value="memberNo">회원번호</option>
+		                    <option value="memberId">아이디</option>
+		                    <option value="memberName">이름</option>
+	                 </select>
+                    <input type="text" id="word" name="word" value="" style="width:200px;">
+                    <input type="button" class="btn" value="검색" onclick="search()">
                 </div>
-	                <br>
-	                <br>
-            
-                    <table>
+	              
+                    <table class="table">
                         <thead>
                             <tr>
-                                <th id="td1">회원번호</th>
-                                <th>아이디 (이름)</th>
-                                <th>총 구매금액</th>
-                                <th>등급</th>
-                                <th>가입일자</th>
+                                <th onclick="event.cancelBubble=true">회원번호</th>
+                                <th onclick="event.cancelBubble=true">아이디 (이름)</th>
+                                <th onclick="event.cancelBubble=true">총 구매금액</th>
+                                <th onclick="event.cancelBubble=true">등급</th>
+                                <th onclick="event.cancelBubble=true">가입일자</th>
                              </tr>   
                          </thead>
                          <tbody id="tbody2">
+                         	<c:if test="${mList ne null }">
                          	<c:forEach var="i" items="${mList }" varStatus="cnt">
-	                             <tr id="cursor">
-	                                <td>${i.memberNo }</td>
-	                                <td>${i.memberId } (${i.memberName })</td>
-	                                <td>2323원</td>
-	                               <%--  <td>${i.totalPay }원</td> <!-- -----여기에 총 결제금액 넣어야함 --> --%>
+	                             <tr>
+	                                <td onclick="event.cancelBubble=true">${i.memberNo }</td>
+	                                <td id="cursor">${i.memberId } (${i.memberName })</td>
+	                              	<td onclick="event.cancelBubble=true">${i.totalPay }원</td>
 		                               <c:choose>
-			                            	<c:when test="${i.gradeNo eq '4'}"><td>1등급</td></c:when>
-			                            	<c:when test="${i.gradeNo eq '3'}"><td>2등급</td></c:when>
-			                            	<c:when test="${i.gradeNo eq '2'}"><td>3등급</td></c:when>
-			                            	<c:when test="${i.gradeNo eq '1'}"><td>4등급</td></c:when>
+			                            	<c:when test="${i.gradeNo eq '4'}"><td onclick="event.cancelBubble=true">1등급</td></c:when>
+			                            	<c:when test="${i.gradeNo eq '3'}"><td onclick="event.cancelBubble=true">2등급</td></c:when>
+			                            	<c:when test="${i.gradeNo eq '2'}"><td onclick="event.cancelBubble=true">3등급</td></c:when>
+			                            	<c:when test="${i.gradeNo eq '1'}"><td onclick="event.cancelBubble=true">4등급</td></c:when>
 				                        </c:choose>
-	                                <td>${i.enrollDate }</td>
+	                                <td onclick="event.cancelBubble=true">${i.enrollDate }</td>
 	                            </tr>
                             </c:forEach>
+                            </c:if>
+                            <c:if test="${mList eq null }">
+                            	<tr>
+                            	<td colspan="5">해당 회원이 없습니다.</td>
+                            	</tr>
+                            </c:if>
                          </tbody>
                     </table>
                     
                     
             <script>
+            
+            //검색
+            function search(){
+            	var categoryNo=$("#categoryNo").val();
+            	var word=$("#word").val();
+            	
+            	 if(categoryNo=="memberNo"){
+            		 if(word.replace(/[0-9]/g, "").length > 0) {
+            		        alert("숫자만 입력해 주십시오.");
+            		     $("#word").val("");
+            		     $("#word").focus();
+            		     return;
+            	 	}
+            	 }
+            	
+            	alert(categoryNo)
+            	alert(word)
+            	location.href="gradeList.do?categoryNo="+categoryNo+"&word="+word;
+            	
+            }
+            
+            
+            
             //회원 상세 정보보기
           	$(function(){
    	       		
@@ -262,6 +317,8 @@ cursor: pointer;
 						 <c:if test="${pi.currentPage gt 1 }">
 							<c:url var="blistBack" value="gradeList.do">
 								<c:param name="page" value="${pi.currentPage-1 }"/>
+								<c:param name="categoryNo" value="${categoryNo }"/>
+								<c:param name="word" value="${word }"/>
 							</c:url>
 		                        <li class="page-item-t">
 		                        <a class="page-link-t" href="${blistBack }">
@@ -280,6 +337,8 @@ cursor: pointer;
 	                        <c:if test="${p ne pi.currentPage }">
 	                        	<c:url var="blistCheck" value="gradeList.do">
 	                        		<c:param name="page" value="${p }"/>
+	                        		<c:param name="categoryNo" value="${categoryNo }"/>
+									<c:param name="word" value="${word }"/>
                         		</c:url>
 		                        <li class="page-item-t"><a class="page-link-t" href="${blistCheck }">${p } <span class="sr-only"></span></a>
 		                        </li>
@@ -297,6 +356,8 @@ cursor: pointer;
 						 <c:if test="${pi.currentPage lt pi.maxPage }">
 							<c:url var="blistAfter" value="gradeList.do">
 								<c:param name="page" value="${pi.currentPage+1 }"/>
+								<c:param name="categoryNo" value="${categoryNo }"/>
+								<c:param name="word" value="${word }"/>
 							</c:url>
 	                        <li class="page-item-t">
 	                        <a class="page-link-t" href="${blistAfter }">

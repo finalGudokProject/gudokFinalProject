@@ -9,7 +9,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
 <style>
 	#content {
@@ -231,10 +231,13 @@
 	<div id="content">
         <ul class="myPage_Menu">
             <li>
-                <a href="#home"><img src="resources/images/delivery.png"
-                        style="width: 25%; height: 25%; margin-right: 4%;">구독배송</a>
+                <span><img src="resources/images/delivery.png"
+                        style="width: 25%; height: 25%; margin-right: 4%;">구독배송</span>
                 <ul>
-                    <li><a href="#">구독 조회</a></li>
+                	<c:url var="slist" value="subscribeView.do">
+						<c:param name="memberNo" value="${loginUser.memberNo}"/>
+					</c:url>
+                    <li><a href="${slist}">구독 조회</a></li>
                     <c:url var="dlist" value="deliveryList.do">
 						<c:param name="memberNo" value="${loginUser.memberNo}"/>
 					</c:url> 
@@ -246,22 +249,23 @@
                 </ul>
             </li>
             <li>
-                <a href="#news"><img src="resources/images/my_benefit.png"
-                        style="width: 25%; height: 25%; margin-right: 4%;">나의혜택</a>
+                <span><img src="resources/images/my_benefit.png"
+                        style="width: 25%; height: 25%; margin-right: 4%;">나의혜택</span>
                 <ul>
-                    <li><a href="#">회원 등급</a></li>
+                    <c:url var="grade" value="gradeView.do"></c:url> 
+                    <li><a href="${grade}">회원 등급</a></li>
                     <c:url var="plist" value="pointList.do">
 							<c:param name="memberNo" value="${loginUser.memberNo}"/>
 					</c:url> 
                     <li><a href="${plist}">적립금 내역</a></li>
                 </ul>
             </li>
-            <c:url var="clist" value="cartList.do">
+            <c:url var="clist" value="cartView.do">
 				<c:param name="memberNo" value="${loginUser.memberNo}"/>
 			</c:url> 
             <li><a href="${clist}"><img src="resources/images/cart.png"
                         style="width: 25%; height: 25%; margin-right: 4%;">장바구니</a></li>
-            <c:url var="hlist" value="heartList.do">
+            <c:url var="hlist" value="heartView.do">
 				<c:param name="memberNo" value="${loginUser.memberNo}"/>
 			</c:url> 
             <li><a href="${hlist}"><img src="resources/images/heart.png" style="width: 25%; height: 25%; margin-right: 4%;">찜</a>
@@ -299,7 +303,18 @@
 	            <div class="sub">
 	              <span class="name">${loginUser.memberName } <span class="etc">&nbsp;님</span></span>
 	              <br>
-	              <span class="grade">알 <span class="etc">&nbsp;등급</span></span>
+	              <c:if test="${loginUser.gradeNo eq 1}">
+	              	<span class="grade">알 <span class="etc">&nbsp;등급</span></span>
+	              </c:if>
+	              <c:if test="${loginUser.gradeNo eq 2}">
+	              	<span class="grade">아기거위 <span class="etc">&nbsp;등급</span></span>
+	              </c:if>
+	              <c:if test="${loginUser.gradeNo eq 3}">
+	              	<span class="grade">어른거위 <span class="etc">&nbsp;등급</span></span>
+	              </c:if>
+	              <c:if test="${loginUser.gradeNo eq 4}">
+	              	<span class="grade">황금거위 <span class="etc">&nbsp;등급</span></span>
+	              </c:if>
 	              <br>
 	              <span><a href="#" style="color: black; font-size: 0.8em;">등급 혜택보기</a></span>
 	            </div>
@@ -308,7 +323,7 @@
 	            <div class="sub">
 	              <span class="title"><a href="#" style="color: black;">구독</a></span>
 	              <br><br>
-	              <span class="count"><a href="#" style="color :#115D8C;">0<span class="etc">&nbsp;건</span></a></span>
+	              <span class="count"><a href="#" style="color :#115D8C;">${subscribeCount}<span class="etc">&nbsp;건</span></a></span>
 	            </div>
 	          </div>
 	          <div class="cart">
@@ -318,7 +333,7 @@
 					</c:url> 
 	              <span class="title"><a href="${clist}" style="color: black;">장바구니</a></span>
 	              <br><br>
-	              <span class="count"><a href="${clist}" style="color :#115D8C;">0<span class="etc">&nbsp;건</span></a></span>
+	              <span class="count"><a href="${clist}" style="color :#115D8C;">${cartCount}<span class="etc">&nbsp;건</span></a></span>
 	            </div>
 	          </div>
 	          <div class="point">
@@ -328,7 +343,7 @@
 					</c:url>
 	              <span class="title"><a href="${plist}" style="color: black;">적립금</a></span>
 	              <br><br>
-	              <span class="count"><a href="${plist}" style="color :#115D8C;">0<span class="etc">&nbsp;건</span></a></span>
+	              <span class="count"><a href="${plist}" style="color :#115D8C;">${pointCount}<span class="etc">&nbsp;건</span></a></span>
 	            </div>
 	          </div>
 	        </div>
@@ -348,70 +363,6 @@
 	        <tbody class="tbody">
 	        
 	        </tbody>
-	        
-	        <%-- <c:forEach var="c" items="${list}">
-		        <tr class="cartList">
-		          <td class="bottom">
-		          	<input type="checkbox" name="check" style="margin: auto 0;" class="check" value="${c.itemPrice * c.cartCount}" data-cartnum="${ }">
-		          </td>
-		          <td style="width: 15%;" class="bottom">
-		            <div class="image">
-		              <img src="resources/images/milk.jpg">
-		            </div>
-		          </td>
-		          <td class="bottom"><span style="float:left; margin-left: 1%;">옳은 유기농 우유</span></td>
-		          <c:if test="${c.cartSubs eq '1주'}">
-		          	<td class="bottom">
-			          	<select style="width:60%; height:30px;">
-			          		<option selected>1주</option>
-			          		<option>2주</option>
-			          		<option>3주</option>
-			          		<option>4주</option>
-			          	</select>
-		          	</td> 
-		          </c:if>
-		          <c:if test="${c.cartSubs eq '2주'}">
-		          	<td class="bottom">
-			          	<select style="width:60%; height:30px;">
-			          		<option>1주</option>
-			          		<option selected>2주</option>
-			          		<option>3주</option>
-			          		<option>4주</option>
-			          	</select>
-		          	</td> 
-		          </c:if>
-		          <c:if test="${c.cartSubs eq '3주'}">
-		          	<td class="bottom">
-			          	<select style="width:60%; height:30px;">
-			          		<option>1주</option>
-			          		<option>2주</option>
-			          		<option selected>3주</option>
-			          		<option>4주</option>
-			          	</select>
-		          	</td> 
-		          </c:if>
-		          <c:if test="${c.cartSubs eq '4주'}">
-		          	<td class="bottom">
-		          	<select style="width:60%; height:30px;">
-		          		<option>1주</option>
-		          		<option>2주</option>
-		          		<option>3주</option>
-		          		<option selected>4주</option>
-		          	</select>
-		          </td> 
-		          </c:if>
-		          <td class="bottom">
-		            <img class="minus" src="resources/images/my_minus.png" style="width: 10%; height: auto;">
-		            <span class="amount" style="display: inline-block; width: 40px;">${c.cartCount }</span>
-		            <img class="plus" src="resources/images/my_plus.png" style="width: 10%; height: auto;">
-		          </td>
-		          <c:set var="price" value="${c.itemPrice * c.cartCount}"/>
-		          <td class="bottom tprice">
-		          	<span class="price"><fmt:formatNumber value="${price}" pattern="#,###"/></span>
-		          	<span>원</span>
-		          </td>
-		        </tr>
-	        </c:forEach> --%>
 	      </table>
 	
 	      <div class="delete">
@@ -583,12 +534,6 @@
 							
 							$tableBody.append($tr);
 						}
-					} else{					// 댓글이 없으면
-						$tr = $("<tr>");
-						$rContent = $("<td colspan='3'>").text("등록 된 댓글이 없습니다.");
-						
-						$tr.append($rContent);
-						$tableBody.append($tr);
 					}
 				},
 				error:function(request, status, errorData){

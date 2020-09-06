@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    
+    
 <!DOCTYPE html>
 <html>
   <head>
@@ -47,16 +50,36 @@ input, select,textarea{
                 <br>
             
                 <br><br>
-               
+                
+                <div style="float:left;">
+                		
+					<input type="button" class="btn" value="목록" onclick="goList()">
+			      <input type="hidden" id="beforePage" name="page" value="${beforePage }">
+			      <input type="hidden" id="startDay" name="startDay" value="${startDay }">
+			      <input type="hidden" id="startD" name="startD" value="${startD }">
+			      <input type="hidden" id="lastDay" name="lastDay" value="${lastDay }">
+			      <input type="hidden" id="type" name="type" value="${type }">
+			      <input type="hidden" id="type2" name="type2" value="${type2 }">
+			      <input type="hidden" id="categoryNo" name="categoryNo" value="${categoryNo }">
+			       <c:out value="${startDay}"/>
+			      <c:out value="${lastDay}"/>
+			      <c:out value="${startD}"/>
+			      <c:out value="${type }"/>
+			      <c:out value="${categoryNo }"/>
+		
+			   
+					
+                </div>
                 <div style="float:right;">
-                    <select name="product" style="width:200px">
-                        <option value="total">선택</option>
-                        <option value="food">상품번호</option>
-                        <option value="living">상품명</option>
-                        <option value="living">구매자</option>
+                    <select id="category" name="category" style="width:200px">
+                        <option value="" selected>전체</option>
+                        <option value="subscribeNo">구독번호</option>
+                        <option value="itemNo">상품번호</option>
+                        <option value="itemName">상품명</option>
+                        <option value="memberId">구매자</option>
                     </select>
-                    <input type="text">
-                    <button id="btn">검색</button>
+                    <input type="text" id="word" name="word" value="">
+                    <input type="button" class="btn" value="검색" onclick="search()">
                 </div>
             
                 <br>
@@ -64,34 +87,26 @@ input, select,textarea{
                     <table>
                         <thead>
                             <tr>
-                                <th id="td1">결제일자</th>
+                                <th>결제일자</th>
+                                <th>구독 번호</th>
                                 <th>상품 번호</th>
                                 <th>상품명</th>
-                                <th>수량</th>
                                 <th>구매자</th>
-                                <th>가격</th>
+                                <th>총 결제금액</th>
                              </tr>   
                          </thead>
                          <tbody>
-                             <tr>
-                                <td>2020-08-01</td>
-                                <td>1245</td>
-                                <td>꽃다발(S)사이즈 정기배송</td>
-                                <td>1</td>
-                                <td>user01</td>
-                                <td>50,000</td>
-                               
-                            </tr>
-                            <tr>
-                                <td>2020-08-02</td>
-                                <td>1279</td>
-                                <td>꽃다발(M)사이즈 정기배송</td>
-                                <td>2</td>
-                                <td>user02</td>
-                                <td>90,000</td>
-                                
-                            </tr>
-                            
+                        	 <c:forEach var="i" items="${pList }" varStatus="cnt">
+	                             <tr>
+	                                <td>${i.paymentDate }</td>
+	                                <td>${i.subscribeNo }</td>
+	                                <td>${i.itemNo }</td>
+	                                <td>${i.itemName }</td>
+	                                <td>${i.memberId }</td>
+	                                <td>${i.totalPayment }</td>
+	                            </tr>
+                            </c:forEach>
+                          
                          </tbody>
                     </table>
                
@@ -100,25 +115,79 @@ input, select,textarea{
                     <br>
 
 
-                    <!------페이징 처리----->
+                     <!------페이징 처리----->
                 <div class="page-center">
                     <ul class="pagination-t">
-
-                        <!-- disabled: 페이지 비활성화 -->
-                        <li class="page-item-t disabled-t"><a class="page-link-t" href="#"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-chevron-left" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
-                          </svg></a></li>
-
-                        <li class="page-item-t"><a class="page-link-t" href="#">1</a></li>
-
-                        <!-- disabled: 해당 버튼 활성화 -->
-                        <li class="page-item-t active-t" aria-current="page-t">
-                            <a class="page-link-t" href="#">2 <span class="sr-only">(current)</span></a>
-                        </li>
-                        <li class="page-item-t"><a class="page-link-t" href="#">3</a></li>
-                        <li class="page-item-t"><a class="page-link-t" href="#"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-chevron-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
-                          </svg></a></li>
+                    
+                    	<!-- 이전 -->
+                        <c:if test="${pi.currentPage eq 1 }">
+	                        <li class="page-item-t disabled-t"><a class="page-link-t"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-left-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path d="M3.86 8.753l5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/>
+</svg></a></li>
+						</c:if>
+						 <c:if test="${pi.currentPage gt 1 }">
+							<c:url var="blistBack" value="sDetail.do">
+								<c:param name="page" value="${pi.currentPage+1 }"/>
+								<c:param name="type" value="${type }"/>
+								<c:param name="type2" value="${type2 }"/>
+								<c:param name="startDay" value="${startDay }"/>
+								<c:param name="lastDay" value="${lastDay }"/>
+								<c:param name="beforePage" value="${beforePage }"/>
+								<c:param name="startD" value="${startD }"/>
+							</c:url>
+		                        <li class="page-item-t">
+		                        <a class="page-link-t" href="${blistBack }">
+		                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-left-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+	  <path d="M3.86 8.753l5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/>
+	</svg></a></li>
+						</c:if>
+						
+						<!-- 번호들 -->
+						<c:forEach var="p" begin="${pi.startPage }" end="${pi.endPage }">
+							
+							<c:if test="${p eq pi.currentPage }">
+	                       		<li class="page-item-t  active-t"><a class="page-link-t">${p }<span class="sr-only"></span></a></li>
+							</c:if>
+							
+	                        <c:if test="${p ne pi.currentPage }">
+	                        	<c:url var="blistCheck" value="sDetail.do">
+	                        		<c:param name="page" value="${pi.currentPage+1 }"/>
+									<c:param name="type" value="${type }"/>
+									<c:param name="type2" value="${type2 }"/>
+									<c:param name="startDay" value="${startDay }"/>
+									<c:param name="lastDay" value="${lastDay }"/>
+									<c:param name="beforePage" value="${beforePage }"/>
+									<c:param name="startD" value="${startD }"/>
+                        		</c:url>
+		                        <li class="page-item-t"><a class="page-link-t" href="${blistCheck }">${p } <span class="sr-only"></span></a>
+		                        </li>
+		                    </c:if>
+                        </c:forEach>
+                        
+                        
+                        <!-- 이후 -->
+                        <c:if test="${pi.currentPage eq pi.maxPage }">
+	                        <li class="page-item-t disabled-t"><a class="page-link-t">
+	                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-right-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path d="M12.14 8.753l-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
+</svg></a></li>
+						</c:if>
+						 <c:if test="${pi.currentPage lt pi.maxPage }">
+							<c:url var="blistAfter" value="sDetail.do">
+								<c:param name="page" value="${pi.currentPage+1 }"/>
+								<c:param name="type" value="${type }"/>
+								<c:param name="type2" value="${type2 }"/>
+								<c:param name="startDay" value="${startDay }"/>
+								<c:param name="lastDay" value="${lastDay }"/>
+								<c:param name="beforePage" value="${beforePage }"/>
+								<c:param name="startD" value="${startD }"/>
+							</c:url>
+	                        <li class="page-item-t">
+	                        <a class="page-link-t" href="${blistAfter }">
+	                       <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-right-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path d="M12.14 8.753l-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
+</svg></a></li>
+						</c:if>
                     </ul>
 
                 </div>
@@ -126,10 +195,70 @@ input, select,textarea{
 
 
 
-            </div>
+
             </div><!--내용담은 컨테이너-->
         </div><!--250px띄운 div-->
-        
+
+
+	<script>
+	
+	function search(){
+		
+		
+	
+		var type=$("#type").val();
+       	var type2=$("#type2").val();
+       	var startD=$("#startD").val();
+       	var startDay=$("#startDay").val();
+       	var lastDay=$("#lastDay").val();
+        var beforePage=$("#beforePage").val(); 
+	   	var category=$("#category").val();
+	   	var word=$("#word").val();
+	   	
+	   	if($("#categoryNo").val()!=null){
+	   		
+	  	 	var categoryNo=$("#categoryNo").val();
+	   	}
+	   	
+	   	 
+	   	 if(category=="subscribeNo"||category=="itemNo"){
+	   		 if(word.replace(/[0-9]/g, "").length > 0) {
+	   		        alert("숫자만 입력해 주십시오.");
+	   		      $("#word").val("");
+	   		     $("#word").focus();
+	   		     return;
+	   	 	}
+	   	 }
+	   	 
+	
+           		location.href="sDetail.do?startD="+startD+"&beforePage="+beforePage+"&type2="+type2+"&type="+type+"&startDay="+startDay+"&lastDay="+lastDay+"&category="+category+"&word="+word+"&categoryNo="+categoryNo;
+		
+		
+	}
+	
+	function goList(){
+		
+			var page=$("#beforePage").val(); 
+			var startD=$("#startD").val();
+			var lastD=$("#lastD").val();
+			var type=$("#type").val();
+			var type2=$("#type2").val();
+			
+		if(type2=="date"){
+			
+			location.href="sDateList.do?page="+page+"&startD="+startD+"&lastD="+lastD+"&type="+type;
+		}else{
+			location.href="sCategoryList.do?page="+page+"&startD="+startD+"&lastD="+lastD+"&type="+type;
+			
+		}
+		
+	}
+		
+	
+	
+	</script>
+
+         
        <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

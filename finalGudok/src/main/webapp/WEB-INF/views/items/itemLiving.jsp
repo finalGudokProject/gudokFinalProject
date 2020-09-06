@@ -13,6 +13,10 @@
 	<!-- sweetalert끝 -->
 <title>Insert title here</title>
 <style>
+	body {
+	font-family: 'Jua', sans-serif;
+	color: #495057;
+	}
 	
 	ul{
 		list-style: none;
@@ -224,8 +228,16 @@
 	.cardHeader{
 		overflow:hidden;
 	}
-	.cardHeader img{
+	.cardHeader .saleImg{
 		height:100%;
+		width:100%;
+		object-fit:cover;
+		transform:(1.0);
+		transition:transform.5s;
+	}
+	
+	.cardHeader .mainImg{
+		height:22rem;
 		width:100%;
 		object-fit:cover;
 		transform:(1.0);
@@ -254,6 +266,8 @@
 				<input type="hidden" id="categoryL0" value="">
 			</c:if>
 		</span>
+		
+		
 		
 		</div>
 		
@@ -360,18 +374,19 @@
 			
 	</div>
 	
-	<div class="row" id="itemsRowDiv">
+	
 	
 		<c:if test="${empty list }">
-		<div class="col-2"></div>
-			<div class="col-8" id="emptyDiv" style="margin-top:2%;border:1px solid lightgray;">
+		<div class="row" id="itemsRowDiv" style="width:63rem;">
+			<div class="col-md-12" id="emptyDiv" style="margin-top:2%;border:1px solid lightgray;">
 				<div style="text-align:center;width:100%;"><img src="${contextPath }/resources/images/empty.png" style="width:30%;"></div>
 				<div style="text-align:center;width:100%;font-size:40px;">해당 카테고리의 상품이 존재하지 않습니다.</div>
 			</div>
-		<div class="col-2"></div>	
+		</div>
 		</c:if>
 		
-		<c:if test="${!empty list}">
+		<c:if test="${!empty list && list.size() == 1 || list.size() == 2}">
+		<div class="row" id="itemsRowDiv">
 		<c:forEach var="i" items="${list }" varStatus="vs">
 		<c:url var="idetail" value="idetail.do">
 			<c:param name="itemNo" value="${i.itemNo }"/>
@@ -381,21 +396,21 @@
 		<fmt:formatNumber var="discountPrice" value="${(i.itemPrice - i.itemPrice*(i.itemDiscount/100))}" type="number"/>
 		<fmt:formatNumber var="itemPrice" value="${i.itemPrice}" type="number"/>
 		<input type="hidden" value="${i.categoryNo}" id="hiddenCategory">
-			<div class="col-4" onclick="location.href='${idetail}'" class="detailDiv">
+			<div class="col-4" onclick="location.href='${idetail}'" style="width:63rem;">
 				<div class="card detailDiv">
 					<c:if test="${i.itemDiscount != 0}" >
 					<div class="cardHeader">
 						<div class="circle">
 							<div id="ratePercentId" style="position:absolute;"><span>${i.itemDiscount }%</span></div>
-							<img src="resources/images/sale.png">
+							<img src="resources/images/sale.png" class="saleImg">
 						</div>
-						<img src="resources/images/breadLogo.jpg" class="card-img-top" alt="..." style="position:relative;">
+						<img src="${contextPath}/resources/uploadFiles/${i.itemRename}" class="card-img-top mainImg" alt="..." style="position:relative;">
 					</div>
 					</c:if>
 					
 					<c:if test="${i.itemDiscount == 0}">
 					<div class="cardHeader">
-					<img src="resources/images/kimchi.png" class="card-img-top" alt="...">
+					<img src="${contextPath}/resources/uploadFiles/${i.itemRename}" class="card-img-top mainImg" alt="...">
 					</div>
 					</c:if>
 					<div class="cardBody">
@@ -487,8 +502,128 @@
 				</div>
 			</div>
 		</c:forEach>
-		</c:if>
 		</div>
+		</c:if>
+		
+		<c:if test="${!empty list && list.size() >= 3}">
+		<div class="row" id="itemsRowDiv">
+		<c:forEach var="i" items="${list }" varStatus="vs">
+		<c:url var="idetail" value="idetail.do">
+			<c:param name="itemNo" value="${i.itemNo }"/>
+			<c:param name="page" value="${pi.currentPage }"/>
+			<c:param name="memberNo" value="${loginUser.memberNo }"/>
+		</c:url>
+		<fmt:formatNumber var="discountPrice" value="${(i.itemPrice - i.itemPrice*(i.itemDiscount/100))}" type="number"/>
+		<fmt:formatNumber var="itemPrice" value="${i.itemPrice}" type="number"/>
+		<input type="hidden" value="${i.categoryNo}" id="hiddenCategory">
+			<div class="col-4" onclick="location.href='${idetail}'" class="detailDiv">
+				<div class="card detailDiv">
+					<c:if test="${i.itemDiscount != 0}" >
+					<div class="cardHeader">
+						<div class="circle">
+							<div id="ratePercentId" style="position:absolute;"><span>${i.itemDiscount }%</span></div>
+							<img src="resources/images/sale.png" class="saleImg">
+						</div>
+						<img src="${contextPath}/resources/uploadFiles/${i.itemRename}" class="card-img-top mainImg" alt="..." style="position:relative;">
+					</div>
+					</c:if>
+					
+					<c:if test="${i.itemDiscount == 0}">
+					<div class="cardHeader">
+					<img src="${contextPath}/resources/uploadFiles/${i.itemRename}" class="card-img-top mainImg" alt="...">
+					</div>
+					</c:if>
+					<div class="cardBody">
+						<h3 class="card-title"><b>${i.itemName }</b></h3>
+						<c:if test="${!empty i.itemMemo }"><h5>${i.itemMemo}</h5></c:if>
+						<c:if test="${empty i.itemMemo }"><h5>${i.itemName}입니다.</h5></c:if>
+						<div class="itemPriceDiv">
+						<c:if test="${i.itemDiscount != 0}">
+							<s style="color:red;">${itemPrice }원</s>→${discountPrice }원
+						</c:if>
+						<c:if test="${i.itemDiscount == 0}">
+							${itemPrice }원
+						</c:if>
+						</div>
+						
+						
+						
+						<div class="starRev">
+							<c:choose>
+								<c:when test="${i.itemRate == 0}">
+									<span class="starR">1</span>
+									<span class="starR">2</span>
+									<span class="starR">3</span>
+									<span class="starR">4</span>
+									<span class="starR">5</span>
+								</c:when>
+								<c:when test="${i.itemRate < 2 }">
+									<span class="starR on">1</span>
+									<span class="starR">2</span>
+									<span class="starR">3</span>
+									<span class="starR">4</span>
+									<span class="starR">5</span>
+								</c:when>
+								
+								<c:when test="${i.itemRate < 3 }">
+									<span class="starR on">1</span>
+									<span class="starR on">2</span>
+									<span class="starR">3</span>
+									<span class="starR">4</span>
+									<span class="starR">5</span>
+								</c:when>
+								
+								<c:when test="${i.itemRate < 4 }">
+									<span class="starR on">1</span>
+									<span class="starR on">2</span>
+									<span class="starR on">3</span>
+									<span class="starR">4</span>
+									<span class="starR">5</span>
+								</c:when>
+								
+								<c:when test="${i.itemRate < 5 }">
+									<span class="starR on">1</span>
+									<span class="starR on">2</span>
+									<span class="starR on">3</span>
+									<span class="starR on">4</span>
+									<span class="starR">5</span>
+								</c:when>
+								<c:otherwise>
+									<span class="starR on">1</span>
+									<span class="starR on">2</span>
+									<span class="starR on">3</span>
+									<span class="starR on">4</span>
+									<span class="starR on">5</span>
+								</c:otherwise>
+							</c:choose>
+						  <div style="display:inline-block;color:gray;">(리뷰수:${i.reviewCount}개)</div>
+						</div>
+						
+						
+						  <div id="rateId">
+							  <c:if test="${i.itemRate == 0}">
+							  	(평점 : 0점 / 찜한 사람 : ${i.itemChoice }명)
+							  </c:if>
+							  <c:if test="${i.itemRate != 0}">
+							  	(평점 : ${i.itemRate}점 / 찜한 사람 : ${i.itemChoice }명)
+							  </c:if>
+						  </div>
+						  
+						</div>
+						<div class="row">
+							<div class="col-4" id="btnBlank"></div>
+							<div class="col-4" style="padding:0px;">
+								<button class="btn btn-primary" style="width:100%;height:100%;" id="preview${vs.index}">상품평보기</button>
+								<input type="hidden" value="${i.itemNo }">
+							</div>
+							<div class="col-4" id="btnBlank"></div>
+						</div>
+						<div class="cardFooter"></div>
+				</div>
+			</div>
+		</c:forEach>
+		</div>
+		</c:if>
 		<script>
 				$(function(){
 					$(".sortTable td").on("mouseenter", function(){
@@ -534,7 +669,7 @@
 			
 			<nav aria-label="Page navigation example">
 				<ul class="pagination justify-content-center">
-				<c:if test = "${pi.currentPage == 1}">
+				<c:if test = "${pi.currentPage  == 1}">
 					<li class="page-item disabled">
 				      <a class="page-link" href="#" tabindex="-1">이전</a>
 				    </li>
@@ -612,5 +747,6 @@
 			})
 		})
 	</script> -->
+<jsp:include page="../common/footer.jsp"/>
 </body>
 </html>

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+         <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
  <head>
@@ -10,6 +11,9 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+     <!-- google charts -->
+	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+	
     <title>주문 리스트</title>    
     <style>
 
@@ -36,6 +40,12 @@ input, select,textarea{
     border: 1px solid #CCCCCC;
 }
 
+#cursor{
+cursor: pointer;
+}
+
+
+
 </style>
 
 
@@ -44,25 +54,101 @@ input, select,textarea{
     <jsp:include page="../common/adminMenubar.jsp"/>
         <div class="content">
             <div class="container box">
-                <h3>주문 상품 리스트</h3>
+                <h3>구독 상품 리스트</h3>
                 <br>
             
                 <br><br>
                
                 <div style="width:100%">
                     <div style="float:left;">
-                    <select name="product" style="width:200px">
-                        <option value="total">전체 상품</option>
-                        <option value="food">배송준비중</option>
-                        <option value="living">배송중</option>
-                        <option value="living">배송완료</option>
-                    </select>&nbsp;
-                    <button id="btn">검색</button>
+                      
+                    <c:if test="${empty category }">
+                    <select id="category" name="category" style="width:200px">
+                        <option value="" selected>전체</option>
+                        <option value="N">배송대기</option>
+                        <option value="D">배송중</option>
+                        <option value="Y">배송완료</option>
+                    </select>
+                    </c:if>
+                     <c:if test="${category eq 'N' }">
+                    <select id="category" name="category" style="width:200px">
+                        <option value="">전체</option>
+                        <option value="N" selected>배송대기</option>
+                        <option value="D">배송중</option>
+                        <option value="Y">배송완료</option>
+                    </select>
+                    </c:if>
+                    <c:if test="${category eq 'D' }">
+                    <select id="category" name="category" style="width:200px">
+                        <option value="">전체</option>
+                        <option value="N">배송대기</option>
+                        <option value="D" selected>배송중</option>
+                        <option value="Y">배송완료</option>
+                    </select>
+                    </c:if>
+                    <c:if test="${category eq 'Y' }">
+                    <select id="category" name="category" style="width:200px">
+                        <option value="">전체</option>
+                        <option value="N">배송대기</option>
+                        <option value="D">배송중</option>
+                        <option value="Y" selected>배송완료</option>
+                    </select>
+                    </c:if>
+                    
+                    <c:choose>
+               		<c:when test="${type eq 'subscribeNo' }">
+		                 <select id="type" name="type" style="width:100px">
+		                    <option value="">전체</option>
+		                    <option value="subscribeNo" selected>구독번호</option>
+		                    <option value="itemName">상품명</option>
+		                    <option value="memberId">구매자</option>
+		                </select>
+		            </c:when>
+		            <c:when test="${type eq 'itemName' }">
+		                 <select id="type" name="type" style="width:100px">
+		                    <option value="">전체</option>
+		                    <option value="subscribeNo">구독번호</option>
+		                    <option value="itemName" selected>상품명</option>
+		                    <option value="memberId">구매자</option>
+		                </select>
+		            </c:when>
+		            <c:when test="${type eq 'memberId' }">
+		                 <select id="type" name="type" style="width:100px">
+		                    <option value="">전체</option>
+		                    <option value="subscribeNo">구독번호</option>
+		                    <option value="itemName">상품명</option>
+		                    <option value="memberId" selected>구매자</option>
+		                </select>
+		            </c:when>
+		             <c:otherwise>
+		                 <select id="type" name="type" style="width:100px">
+		                    <option value="" selected>전체</option>
+		                    <option value="subscribeNo">구독번호</option>
+		                    <option value="itemName">상품명</option>
+		                    <option value="memberId">구매자</option>
+		                </select>
+		            </c:otherwise>
+                </c:choose>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                   <input type="text" id="word" name="word" value="${word }">
+                   <input type="button" class="btn" value="검색" onclick="search()">
                     </div>  
                     <div style="float:right">
-                        <button id="btn1">대기</button>&nbsp;
-                        <button id="btn1">배송</button>&nbsp;
-                        <button id="btn1">완료</button>
+                        <input type="button" class="btn" value="대기" onclick="updateDelivery('N')">
+                        <input type="button" class="btn" value="배송" onclick="updateDelivery('D')">
+                        <input type="button" class="btn" value="완료" onclick="updateDelivery('Y')">
                     </div>
                 </div>
            
@@ -73,48 +159,45 @@ input, select,textarea{
                     <table>
                         <thead>
                             <tr>
-                                <th><input type="checkbox"></th>
-                                <th id="td1">주문 일자</th>
-                                <th>상품 번호</th>
+                                <th><input type="checkbox" id="checkAll"></th>
+                                <th>주문 일자</th>
+                                <th>구독 번호</th>
                                 <th>상품명</th>
                                 <th>수량</th>
                                 <th>구매자</th>
                                 <th>배송상태</th>
-                                
                              </tr>   
                          </thead>
                          <tbody>
-                             <tr>
-                                <td><input type="checkbox"></td>
-                                <td>2020-08-01</td>
-                                <td>1245</td>
-                                <td>꽃다발(S)사이즈 정기배송</td>
-                                <td>1</td>
-                                <td>user01</td>
-                                <td>배송준비중</td>
-                                
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox"></td>
-                                <td>2020-08-02</td>
-                                <td>1279</td>
-                                <td>꽃다발(M)사이즈 정기배송</td>
-                                <td>2</td>
-                                <td>user02</td>
-                                <td>배송중</td>
-                                
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox"></td>
-                                <td>2020-08-06</td>
-                                <td>1845</td>
-                                <td>꽃다발(L)사이즈 정기배송</td>
-                                <td>1</td>
-                                <td>user03</td>
-                                <td>배송준비중</td>
-                               
-                            </tr>
-                           
+                            <c:if test="${!empty oList }">
+	                         	<c:forEach var="e" items="${oList }" varStatus="cnt">
+		                             <tr>
+		                                <td onclick="event.cancelBubble=true"><input type="checkbox" class="common" id="subscribeNo${cnt.index}" name="subscribeNo" value="${e.subscribeNo }"></td>
+		                                <td onclick="event.cancelBubble=true">${e.subscribeDate }</td>
+		                                <td id="cursor">${e.subscribeNo }</td>
+		                                <td onclick="event.cancelBubble=true">${e.itemName }</td>
+		                                <td onclick="event.cancelBubble=true">${e.amount }</td>
+		                                <td onclick="event.cancelBubble=true">${e.memberId }</td>
+		                                	<c:choose>
+				                                <c:when test="${e.deliveryStatus eq 'N' }">
+				                                	<td onclick="event.cancelBubble=true">배송 대기</td>
+				                                </c:when>
+				                                <c:when test="${e.deliveryStatus eq 'D' }">
+				                                	<td onclick="event.cancelBubble=true">배송 중</td>
+				                                </c:when>
+				                                <c:when test="${e.deliveryStatus eq 'Y' }">
+				                                	<td onclick="event.cancelBubble=true">배송 완료</td>
+				                                </c:when>
+				                            </c:choose>
+                           			 </tr>
+                           		</c:forEach>
+                           	</c:if>
+                           	 <c:if test="${empty oList }">
+		                             <tr>
+		                                <td colspan="7">등록된 주문이 없습니다.</td>
+                           			 </tr>
+                           	</c:if>
+                           	
                          </tbody>
                     </table>
 
@@ -123,25 +206,70 @@ input, select,textarea{
                     <br>
 
 
-                    <!------페이징 처리----->
+                      <!------페이징 처리----->
                 <div class="page-center">
                     <ul class="pagination-t">
-
-                        <!-- disabled: 페이지 비활성화 -->
-                        <li class="page-item-t disabled-t"><a class="page-link-t" href="#"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-chevron-left" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
-                          </svg></a></li>
-
-                        <li class="page-item-t"><a class="page-link-t" href="#">1</a></li>
-
-                        <!-- disabled: 해당 버튼 활성화 -->
-                        <li class="page-item-t active-t" aria-current="page-t">
-                            <a class="page-link-t" href="#">2 <span class="sr-only">(current)</span></a>
-                        </li>
-                        <li class="page-item-t"><a class="page-link-t" href="#">3</a></li>
-                        <li class="page-item-t"><a class="page-link-t" href="#"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-chevron-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
-                          </svg></a></li>
+                    
+                    	<!-- 이전 -->
+                        <c:if test="${pi.currentPage eq 1 }">
+	                        <li class="page-item-t disabled-t"><a class="page-link-t"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-left-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path d="M3.86 8.753l5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/>
+</svg></a></li>
+						</c:if>
+						 <c:if test="${pi.currentPage gt 1 }">
+							<c:url var="blistBack" value="oList.do">
+								<c:param name="page" value="${pi.currentPage-1 }"/>
+									<c:param name="category" value="${category }"/>
+									<c:param name="word" value="${word }"/>
+										<c:param name="type" value="${type }"/>
+							</c:url>
+		                        <li class="page-item-t">
+		                        <a class="page-link-t" href="${blistBack }">
+		                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-left-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+	  <path d="M3.86 8.753l5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/>
+	</svg></a></li>
+						</c:if>
+						
+						<!-- 번호들 -->
+						<c:forEach var="p" begin="${pi.startPage }" end="${pi.endPage }">
+							
+							<c:if test="${p eq pi.currentPage }">
+	                       		<li class="page-item-t  active-t"><a class="page-link-t">${p }<span class="sr-only"></span></a></li>
+							</c:if>
+							
+	                        <c:if test="${p ne pi.currentPage }">
+	                        	<c:url var="blistCheck" value="oList.do">
+	                        		<c:param name="page" value="${p }"/>
+	                        		<c:param name="category" value="${category }"/>
+									<c:param name="word" value="${word }"/>
+										<c:param name="type" value="${type }"/>
+                        		</c:url>
+		                        <li class="page-item-t"><a class="page-link-t" href="${blistCheck }">${p } <span class="sr-only"></span></a>
+		                        </li>
+		                    </c:if>
+                        </c:forEach>
+                        
+                        
+                        <!-- 이후 -->
+                        <c:if test="${pi.currentPage eq pi.maxPage }">
+	                        <li class="page-item-t disabled-t"><a class="page-link-t">
+	                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-right-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path d="M12.14 8.753l-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
+</svg></a></li>
+						</c:if>
+						 <c:if test="${pi.currentPage lt pi.maxPage }">
+							<c:url var="blistAfter" value="oList.do">
+								<c:param name="page" value="${pi.currentPage+1 }"/>
+								<c:param name="category" value="${category }"/>
+								<c:param name="word" value="${word }"/>
+								<c:param name="type" value="${type }"/>
+							</c:url>
+	                        <li class="page-item-t">
+	                        <a class="page-link-t" href="${blistAfter }">
+	                       <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-right-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path d="M12.14 8.753l-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
+</svg></a></li>
+						</c:if>
                     </ul>
 
                 </div>
@@ -152,10 +280,184 @@ input, select,textarea{
 
             </div><!--내용담은 컨테이너-->
         </div><!--250px띄운 div-->
+       <input type="hidden" id="category" name="category" value="${category }">
+       <input type="hidden" id="type" name="type" value="${type }">
+       <input type="hidden" id="word" name="word" value="${word }">
+       
+       <script>
+       //검색
+       function search(){
+    	   
+    	   var category=$("#category").val();
+    	   var word=$("#word").val();
+    	   var type=$("#type").val();
+    	   
+    	   location.href="oList.do?category="+category+"&word="+word+"&type="+type;
+    	   
+    	   
+       }
+       
+       
+       
+       
+       
+     //배송 상태 변경
+   	function updateDelivery(status){
+   		
+   		var sendArr=Array();
+   		var sendCnt=0;
+   		var chkbox=$(".common");
+   		var deliveryStatus=status;
+   		
+   		
+   		
+   		for(i=0; i<chkbox.length;i++){
+   			if(chkbox[i].checked==true){
+   				sendArr[sendCnt]=chkbox[i].value;
+   				sendCnt++;
+   			}
+   		}
+   		
+   		if(sendCnt==0){
+   			alert("상품을 선택해주세요.")
+   			return;
+   		}
+   		
+   	
+   		$.ajax({
+   				url:"updateDelivery.do",
+   				type:"post",
+   				traditional:true,
+   				data:{"sendArr":sendArr,"deliveryStatus":deliveryStatus},
+   				success:function(data){
+   					
+   					alert('도오오착');
+   					getList();
+   					        					
+   				},
+   				error:function(request, status, errorData){
+	                    alert("error code: " + request.status + "\n"
+		                           +"message: " + request.responseText
+		                           +"error: " + errorData);
+		                  }   
+   			});
+   				
+   }
+   
+   
+     
+  	//게시물 상세보기(ajax후)
+      
+     	$(function(){
+     		
+     		$("tr").on("click",function(){
+     			var subscribeNo=$(this).children().eq(0).find(".common").val();
+     			var type="order";
+      			 var page=${pi.currentPage };   
+      				 alert(subscribeNo);
+      				 alert(page);
+      				 
+         		location.href="oDetail.do?subscribeNo="+subscribeNo+"&page="+page+"&type="+type;
+     		})
+     	})
+     	
+     	
+	//상태 변경 후 리스트 가져오기
+    function getList(){
+   	 var page=${pi.currentPage};
+   	 var category=$("#category").val();
+   	 var type=$("#type").val();
+   	 var word=$("#word").val();
+   	 
+   	 
+   	 $.ajax({
+   		 
+   	 	url:"oListChange.do", 
+   	 	data:{"page":page,"category":category,"type":type,"word":word},
+   	 	dataType:"json",
+   	 	success:function(data){
+   	 		
+   	 		
+      	       	
+   	 		$tableBody=$("tbody");
+   	 		$tableBody.html("");
+   	 		
+   	 		var $tr;
+   	 		var $itemNo;
+   	 		var $itemName;
+   	 		var $amount;
+   	 		var $subscribeDate;
+   	 		var $deliveryStatus;
+   	 		var $memberId;
+   	 		var $checkBox;
+   	 		var $th;
+   	 		
+   	 				if(data.list!=null){
+   	 	
+   	 			 	for(var i in data.list){
+   	 					
+   	 				
+   	 				$tr=$("<tr id='cursor'>");
+   	 				$td=$("<td onclick='event.cancelBubble=true'>");
+   	 				$checkBox=$("<input type='checkbox' class='common' name='subscribeNo'>").val(data.list[i].subscribeNo);     	 			
+   	 				$subscribeDate=$("<td onclick='event.cancelBubble=true'>").text(data.list[i].subscribeDate);     	 			
+   	 				$itemNo=$("<td>").text(data.list[i].subscribeNo);
+   	 				$itemName=$("<td onclick='event.cancelBubble=true'>").text(data.list[i].itemName);
+   	 				$amount=$("<td onclick='event.cancelBubble=true'>").text(data.list[i].amount);
+   	 				$memberId=$("<td onclick='event.cancelBubble=true'>").text(data.list[i].memberId);
+   	 				$deliveryStatus=$("<td onclick='event.cancelBubble=true'>").text(data.list[i].deliveryStatus);
+   	 				
+   	 				
+   	 				$td.append($checkBox);
+   	 				$tr.append($td);
+   	 				$tr.append($subscribeDate);
+   	 				$tr.append($itemNo);
+   	 				$tr.append($itemName);
+   	 				$tr.append($amount);
+   	 				$tr.append($memberId);
+   	 				$tr.append($deliveryStatus); 
+   	 				$tableBody.append($tr);
+   	 			 	}
+   	 			 
+   	 			 	}else{
+   	 				$tr=$("<tr>");
+   	 				$td=$("<td colspan='7' onclick='event.cancelBubble=true'>").text("해당 조건의 구독 내역이 없습니다.");
+   	 				$tr.append($td);
+   	 				$tableBody.append($tr);
+   	 				
+   	 			} 
+   	 	},
+   	 	error:function(request, status, errorData){
+               alert("error code: " + request.status + "\n"
+                          +"message: " + request.responseText
+                          +"error: " + errorData);
+                 }   
+   	 	
+   	 })
+   	 
+    }
+   			
+       
+       
+       
+       
+       
+       
+       
+   	//모두 체크
+
+	 	$(function(){
+	
+			$("#checkAll").click(function(){
+				var bool = $(this).prop("checked");
+				$(".common").prop('checked', bool);
+			});
+		}); 
+       </script>
         
        <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
   </body>

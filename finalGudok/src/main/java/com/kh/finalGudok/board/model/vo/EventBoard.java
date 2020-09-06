@@ -20,6 +20,12 @@ public class EventBoard implements Serializable {
 		this.eE_status = eE_status;
 	}
 
+	
+	public EventBoard(int eBoard_no) {
+		super();
+		this.eBoard_no = eBoard_no;
+	}
+
 	public int geteBoard_no() {
 		return eBoard_no;
 	}

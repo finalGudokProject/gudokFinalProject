@@ -17,7 +17,19 @@
 		<result property="itemMemo" column="ITEM_MEMO"/>
 		<result property="itemEventStatus" column="ITEM_EVENT_STATUS"/>
 		<result property="sortNo" column="SORT_NO"/>
+		<result property="imageOriginalName" column="IMAGE_ORIGINAL_NAME"/>
+		<result property="imageRename" column="IMAGE_RENAME"/>
+		<result property="imagePath" column="IMAGE_PATH"/>
+		
 	</resultMap>
+	
+	<select id="getBestCount" resultType="_int">
+		<![CDATA[
+		SELECT COUNT(*)
+		FROM ITEM
+		WHERE ITEM_CM_SALES>=30
+		]]>
+	</select>
 	
 	<update id="getDetailCount" parameterType="_int">
 		UPDATE ITEM
@@ -32,12 +44,29 @@
 		    , #{content}
 		    , SYSDATE
 		    , DEFAULT
-		    , 'B1'
+		    , 'O'
 		    , #{memberNo}
 		    , #{memberId}
 		    , #{email}
 		    , #{itemNo}
 		    )
+	</insert>
+	
+	<insert id="insertOneInquiry" parameterType="_int">
+		INSERT INTO ONE_INQUIRY
+		VALUES((SELECT MAX(BOARD_NO)
+		        FROM BOARD)
+		        , 'Y'
+		        , DEFAULT)
+	</insert>
+	<insert id="insertInquiry" parameterType="_int">
+		INSERT INTO INQUIRY
+		VALUES((SELECT MAX(BOARD_NO)
+		        FROM BOARD)
+		        , DEFAULT
+		        , DEFAULT
+		        , DEFAULT
+		        , 'OPI')
 	</insert>
 	
 	<update id="updatePChoice" parameterType="_int">
@@ -57,5 +86,6 @@
 		FROM ITEM
 		WHERE ITEM_NO=#{itemNo}
 	</select>
+	
 	
 </mapper>

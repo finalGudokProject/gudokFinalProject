@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
  <head>
@@ -14,25 +15,64 @@
     <style>
 
 
-#td1{
-    width:15%;
-    vertical-align: middle;
+.btn1{
+	background:#F5F5F5;
+	color:black;
+	border-radius:5px;
+	padding:2px 5px;
+	transition:0.2s;
+  	position:relative;
+  	border:1px solid #E0E0E0 !important; 
+	font-size:12px;
+
 }
-#td2{
-    width:35%;
-    vertical-align: middle;
-}
-#td3{
-    width:15%;
-    vertical-align: middle;
-}
-#td4{
-    width:35%;
-    vertical-align: middle;
+.btn1:hover{
+  background:rgba(69,75,77,0.2);
+  color:black;
+/*   border:1px solid #BDBDBD; */
 }
 
+.btn1:hover:before,#btn:hover:after{
+  width:100%;
+  transition:0.2s;
+}
+
+
+
+.btn2{
+	background-color:rgba(69,75,77,0.2);
+	color:black;
+	border-radius:px;
+	padding:3px 15px;
+	transition:0.2s;
+  	position:relative;
+  	border:1px solid #B0BEC5; 
+	font-size:14px;
+	font-weight: bold;
+	
+
+}
+.btn2:hover{
+  background:rgba(69,75,77,0.2);
+  color:black;
+  border:1px solid #BDBDBD;
+}
+
+.btn2:hover:before,#btn:hover:after{
+  width:100%;
+  transition:0.2s;
+}
+
+
 input, select,textarea{
-    border: 1px solid #CCCCCC;
+    border: 1px solid #dee2e6;
+}
+
+
+.total{
+
+	text-align:center;
+	border: 1px solid #dee2e6;
 }
 
 
@@ -46,45 +86,87 @@ input, select,textarea{
             <div class="container box">
                 <h3>기간별 매출 통계</h3>
                 <br>
-                <button id="btn">기간별</button>&nbsp;
-                <button id="btn">카테고리별</button>
-                <br><br>
+              
+                <input type="button" class="btn" value="기간별" onclick="location.href='sDateList.do?type='+'N'">
+                <input type="button" class="btn" value="카테고리별" onclick="location.href='sCategoryList.do?type='+'N'">
+                <input type="hidden" id="type" name="type" value="${type }">
+                 <input type="hidden" id="startD" name="startD" value="${startDay }">
+			     <input type="hidden" id="lastD" name="lastD" value="${lastDay }">
+                <br><br><br>
 
                 <div style="width:100%; text-align:right;">
-                <button id="btn">일별</button>&nbsp;
-                <button id="btn">주간</button>&nbsp;
-                <button id="btn">월별</button>
-                </div>
-
-                <br>
-
+                <table>
+                	<tr>
+                		<th rowspan="2" style="width:25%; border: 1px solid #CCCCCC;background-color:rgba(69,75,77,0.2);padding:0.25rem !important;vertical-align:middle;">기간 선택</th>
+                		<td style="text-align:left; padding:0.3rem !important; border: 1px solid #CCCCCC;" onclick="event.cancelBubble=true">
+                			&nbsp;
+                			<input type="radio" id="type" name="type" value="Y"> 연도별&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                			<input type="radio" id="type" name="type" value="M"> 월별&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                			<input type="radio" id="type" name="type" value="D"> 일별&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                		</td>
+                		
+                	</tr>
+                		
+                	<tr>
+                		<th  style="text-align:left ;padding:0.3rem !important; border: 1px solid #CCCCCC;" onclick="event.cancelBubble=true">
+			                &nbsp;&nbsp;<input type="date" id="date1" name="date1" value="">~ <input type="date" id="date2" name="date3" value="">&nbsp;&nbsp;
+			               <input type="button" class="btn1" value="오늘" onclick="goList('T');">
+			               <input type="button" class="btn1" value="일주일" onclick="goList('W');">
+			               <input type="button" class="btn1" value="한달" onclick="goList('O');">
+			               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		               		<input type="button" class="btn2" value="검색" onclick="checkDate();">
+		               </th>
+                	</tr>
+                	
+                </table>
+                <table>
+                <tr>
+                		<td class="total" style="width:40%"onclick="event.cancelBubble=true">검색 기간 </td>
+                		<td class="total"onclick="event.cancelBubble=true">총 결제 건 수</td>
+                		<td class="total"onclick="event.cancelBubble=true">총 결제 금액</td>
+                	</tr>
+                	<tr>
+                		<td class="total"onclick="event.cancelBubble=true">${startDay } ~ ${lastDay }</td>
+                		<td class="total"onclick="event.cancelBubble=true">${sumTotalC } 건</td>
+                		<td class="total"onclick="event.cancelBubble=true">${sumTotalP } 원</td>
+                	</tr>
+                </table>
                
-        
+               
+                </div>
                     <table>
                         <thead>
                             <tr>
-                                <th id="td1">날짜</th>
-                                <th>결제건 수</th>
-                                <th>매출</th>
+                                <th onclick="event.cancelBubble=true">날짜</th>
+                                <th onclick="event.cancelBubble=true">결제건 수</th>
+                                <th onclick="event.cancelBubble=true">매출액</th>
                              </tr>   
                          </thead>
                          <tbody>
-                             <tr>
-                                <td>2020-08-06</td>
-                                <td>101</td>
-                                <td>100,000,000</td>
-                            </tr>
-                            <tr>
-                                <td>2020-08-05</td>
-                                <td>20</td>
-                                <td>5,000,000</td>
-                            </tr>
-                            <tr>
-                                <td>2020-08-03</td>
-                                <td>122</td>
-                                <td>120,000,000</td>
-                            </tr>
-                           
+                         	<c:if test="${!empty pList }">
+                             <c:forEach var="i" items="${pList }" varStatus="cnt">
+	                             <tr>
+	                             	<c:choose>
+		                             	<c:when test="${type eq 'Y' }">
+			                                <td>${i.itemName }</td>	                             	
+		                             	</c:when>
+		                             	<c:when test="${type eq 'M' }">
+			                                <td>${i.itemName }</td>	                             	
+		                             	</c:when>
+		                             	<c:otherwise>
+		                                	<td>${i.paymentDate }</td>
+		                                </c:otherwise>
+	                                </c:choose>
+	                                <td>${i.totalCount } 건</td>
+	                                <td>${i.totalPayment } 원</td>
+	                            </tr>
+                            </c:forEach>
+                            </c:if>
+                            <c:if test="${empty pList }">
+                            	<tr>
+	                                <td colspan="3">결제 내역이 없습니다.</td>
+	                            </tr>
+                            </c:if>
                          </tbody>
                     </table>
 
@@ -93,25 +175,70 @@ input, select,textarea{
                     <br>
 
 
-                    <!------페이징 처리----->
+                     <!------페이징 처리----->
                 <div class="page-center">
                     <ul class="pagination-t">
-
-                        <!-- disabled: 페이지 비활성화 -->
-                        <li class="page-item-t disabled-t"><a class="page-link-t" href="#"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-chevron-left" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
-                          </svg></a></li>
-
-                        <li class="page-item-t"><a class="page-link-t" href="#">1</a></li>
-
-                        <!-- disabled: 해당 버튼 활성화 -->
-                        <li class="page-item-t active-t" aria-current="page-t">
-                            <a class="page-link-t" href="#">2 <span class="sr-only">(current)</span></a>
-                        </li>
-                        <li class="page-item-t"><a class="page-link-t" href="#">3</a></li>
-                        <li class="page-item-t"><a class="page-link-t" href="#"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-chevron-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
-                          </svg></a></li>
+                    
+                    	<!-- 이전 -->
+                        <c:if test="${pi.currentPage eq 1 }">
+	                        <li class="page-item-t disabled-t"><a class="page-link-t"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-left-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path d="M3.86 8.753l5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/>
+</svg></a></li>
+						</c:if>
+						 <c:if test="${pi.currentPage gt 1 }">
+							<c:url var="blistBack" value="sDateList.do">
+								<c:param name="page" value="${pi.currentPage-1 }"/>
+								<c:param name="type" value="${type }"/>
+								<c:param name="startD" value="${startDay }"/>
+								<c:param name="lastD" value="${lastDay }"/>
+							</c:url>
+		                        <li class="page-item-t">
+		                        <a class="page-link-t" href="${blistBack }">
+		                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-left-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+	  <path d="M3.86 8.753l5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/>
+	</svg></a></li>
+						</c:if>
+						
+						<!-- 번호들 -->
+						<c:forEach var="p" begin="${pi.startPage }" end="${pi.endPage }">
+							
+							<c:if test="${p eq pi.currentPage }">
+	                       		<li class="page-item-t  active-t"><a class="page-link-t">${p }<span class="sr-only"></span></a></li>
+							</c:if>
+							
+	                        <c:if test="${p ne pi.currentPage }">
+	                        	<c:url var="blistCheck" value="sDateList.do">
+	                        		<c:param name="page" value="${p }"/>
+	                        		<c:param name="type" value="${type }"/>
+	                        		<c:param name="startD" value="${startDay }"/>
+									<c:param name="lastD" value="${lastDay }"/>	
+                        		</c:url>
+		                        <li class="page-item-t"><a class="page-link-t" href="${blistCheck }">${p } <span class="sr-only"></span></a>
+		                        </li>
+		                    </c:if>
+                        </c:forEach>
+                        
+                        
+                        <!-- 이후 -->
+                        <c:if test="${pi.currentPage eq pi.maxPage }">
+	                        <li class="page-item-t disabled-t"><a class="page-link-t">
+	                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-right-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path d="M12.14 8.753l-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
+</svg></a></li>
+						</c:if>
+						 <c:if test="${pi.currentPage lt pi.maxPage }">
+							<c:url var="blistAfter" value="sDateList.do">
+								<c:param name="page" value="${pi.currentPage+1 }"/>
+								<c:param name="type" value="${type }"/>
+								<c:param name="startD" value="${startDay }"/>
+								<c:param name="lastD" value="${lastDay }"/>
+							</c:url>
+	                        <li class="page-item-t">
+	                        <a class="page-link-t" href="${blistAfter }">
+	                       <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-right-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path d="M12.14 8.753l-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
+</svg></a></li>
+						</c:if>
                     </ul>
 
                 </div>
@@ -122,6 +249,65 @@ input, select,textarea{
 
             </div><!--내용담은 컨테이너-->
         </div><!--250px띄운 div-->
+       
+       <script>
+       //매출 상세보기 
+ 
+          	$(function(){
+   	       		
+   	       		$("tr").on("click",function(){
+   	       			var type=$("#type").val();
+   	       			var type2='date';
+   	       			var startD=$(this).children().eq(0).text();
+   	       			var startDay=$("#startD").val();
+   	       			var lastDay=$("#lastD").val();
+   	        		 var beforePage=${pi.currentPage };   
+   	        	
+   	        		 
+   	           		location.href="sDetail.do?startD="+startD+"&beforePage="+beforePage+"&type2="+type2+"&type="+type+"&startDay="+startDay+"&lastDay="+lastDay;
+   	       		})
+   	       	})
+                    
+       
+       
+       
+       
+       
+       
+       
+       function goList(type){
+    	   var type=type;
+    	   var page=${pi.currentPage}
+    	   location.href="sDateList.do?type="+type+"&page="+page;
+       }
+       
+       function checkDate(){
+    	  var type=$("input[name=type]:checked").val();
+    	  var page=${pi.currentPage};
+    	  
+    	  if($("#date1").val()<$("#date2").val()){
+	    	  var startD=$("#date1").val();
+	    	  var lastD=$("#date2").val();
+    	  }else{
+    		  var startD=$("#date2").val();
+	    	  var lastD=$("#date1").val();
+    	  }
+    	 
+
+     	  if(!$("input[name=type]:checked").val()){
+    		  alert('기간 유형을 선택해주세요.');
+    	  }else if(!$("#date1").val()){
+    		  alert('검색 시작 날짜를 지정해주세요.');
+    	  }else if(!$("#date2").val()){
+    		  alert('검색 마지막 날짜를 지정해주세요.');
+    	  }else{
+    		  location.href="sDateList.do?type="+type+"&startD="+startD+"&lastD="+lastD+"&page="+page;
+    	  }
+    	   
+    	   
+       }
+       
+       </script>
         
        <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

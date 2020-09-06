@@ -109,7 +109,7 @@ input, select,textarea{
                             <td>적립금</td>
                             <td><input type="number" min="0" id="point" name="point" value="${m.point }"></td>
                             <td>총 구매 금액</td>
-                            <td><input type="text" name="purchase" readonly></td>
+                            <td><input type="text" name="purchase" readonly value="${totalPayment }원"></td>
                         </tr>
                         <tr>
                             <td>가입일</td>
@@ -185,7 +185,88 @@ input, select,textarea{
 
 <!-- Postcodify를 로딩하자 -->
 			 	<script src="//d1p7wdleee1q2z.cloudfront.net/post/search.min.js"></script>
-			 	<script>
+	
+
+                    <br>
+
+
+				<c:if test="${pi.listCount ne 0 }">
+
+                   <!------페이징 처리----->
+                <div class="page-center">
+                    <ul class="pagination-t">
+                    
+                    	<!-- 이전 -->
+                        <c:if test="${pi.currentPage eq 1 }">
+	                        <li class="page-item-t disabled-t"><a class="page-link-t"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-left-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path d="M3.86 8.753l5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/>
+</svg></a></li>
+						</c:if>
+						 <c:if test="${pi.currentPage gt 1 }">
+							<c:url var="blistBack" value="mDetail.do">
+								<c:param name="detailPage" value="${pi.currentPage-1 }"/>
+								<c:param name="page" value="${beforePage }"/>
+								<c:param name="memberNo" value="${memberNo }"/>
+								<c:param name="type" value="${type }"/>
+							</c:url>
+		                        <li class="page-item-t">
+		                        <a class="page-link-t" href="${blistBack }">
+		                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-left-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+	  <path d="M3.86 8.753l5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/>
+	</svg></a></li>
+						</c:if>
+						
+						<!-- 번호들 -->
+						<c:forEach var="p" begin="${pi.startPage }" end="${pi.endPage }">
+							
+							<c:if test="${p eq pi.currentPage }">
+	                       		<li class="page-item-t  active-t"><a class="page-link-t">${p }<span class="sr-only"></span></a></li>
+							</c:if>
+							
+	                        <c:if test="${p ne pi.currentPage }">
+	                        	<c:url var="blistCheck" value="mDetail.do">
+	                        		<c:param name="detailPage" value="${p }"/>
+	                        		<c:param name="page" value="${beforePage }"/>
+									<c:param name="memberNo" value="${memberNo }"/>
+									<c:param name="type" value="${type }"/>
+                        		</c:url>
+		                        <li class="page-item-t"><a class="page-link-t" href="${blistCheck }">${p } <span class="sr-only"></span></a>
+		                        </li>
+		                    </c:if>
+                        </c:forEach>
+                        
+                        
+                        <!-- 이후 -->
+                        <c:if test="${pi.currentPage eq pi.maxPage }">
+	                        <li class="page-item-t disabled-t"><a class="page-link-t">
+	                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-right-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path d="M12.14 8.753l-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
+</svg></a></li>
+						</c:if>
+						 <c:if test="${pi.currentPage lt pi.maxPage }">
+							<c:url var="blistAfter" value="mDetail.do">
+								<c:param name="detailPage" value="${pi.currentPage+1 }"/>
+								<c:param name="page" value="${beforePage }"/>
+								<c:param name="memberNo" value="${memberNo }"/>
+								<c:param name="type" value="${type }"/>
+							</c:url>
+	                        <li class="page-item-t">
+	                        <a class="page-link-t" href="${blistAfter }">
+	                       <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-right-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path d="M12.14 8.753l-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
+</svg></a></li>
+						</c:if>
+                    </ul>
+
+                </div>
+
+		</c:if>
+
+
+
+            </div><!--내용담은 컨테이너-->
+        </div><!--250px띄운 div-->
+        		 	<script>
 			 		//정보 수정
 			        function validate(){
 			        
@@ -233,7 +314,7 @@ input, select,textarea{
 			 		})
 			 		
 			 		
-			 		/* function goList(){
+			 			 function goList(){
 			 			 var type=${type};
 	   	        		 var page=${beforePage };   
 	   	        		 alert(type);
@@ -243,7 +324,7 @@ input, select,textarea{
 	   	        		 }else{
 	   	        		location.href="sList.do?page="+page;	 
 	   	        		 }
-			 		} */
+			 		} 
 			 		
 			 		
 			 		function deleteM(){
@@ -257,79 +338,6 @@ input, select,textarea{
 			 		
 			 		
 			 	</script>
-
-                    <br>
-
-
-                   <!------페이징 처리----->
-                <div class="page-center">
-                    <ul class="pagination-t">
-                    
-                    	<!-- 이전 -->
-                        <c:if test="${pi.currentPage eq 1 }">
-	                        <li class="page-item-t disabled-t"><a class="page-link-t"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-left-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-  <path d="M3.86 8.753l5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/>
-</svg></a></li>
-						</c:if>
-						 <c:if test="${pi.currentPage gt 1 }">
-							<c:url var="blistBack" value="mDetail.do">
-								<c:param name="detailPage" value="${pi.currentPage-1 }"/>
-								<c:param name="page" value="${beforePage }"/>
-							</c:url>
-		                        <li class="page-item-t">
-		                        <a class="page-link-t" href="${blistBack }">
-		                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-left-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-	  <path d="M3.86 8.753l5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/>
-	</svg></a></li>
-						</c:if>
-						
-						<!-- 번호들 -->
-						<c:forEach var="p" begin="${pi.startPage }" end="${pi.endPage }">
-							
-							<c:if test="${p eq pi.currentPage }">
-	                       		<li class="page-item-t  active-t"><a class="page-link-t">${p }<span class="sr-only"></span></a></li>
-							</c:if>
-							
-	                        <c:if test="${p ne pi.currentPage }">
-	                        	<c:url var="blistCheck" value="mDetail.do">
-	                        		<c:param name="detailPage" value="${p }"/>
-	                        		<c:param name="page" value="${beforePage }"/>
-                        		</c:url>
-		                        <li class="page-item-t"><a class="page-link-t" href="${blistCheck }">${p } <span class="sr-only"></span></a>
-		                        </li>
-		                    </c:if>
-                        </c:forEach>
-                        
-                        
-                        <!-- 이후 -->
-                        <c:if test="${pi.currentPage eq pi.maxPage }">
-	                        <li class="page-item-t disabled-t"><a class="page-link-t">
-	                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-right-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-  <path d="M12.14 8.753l-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
-</svg></a></li>
-						</c:if>
-						 <c:if test="${pi.currentPage lt pi.maxPage }">
-							<c:url var="blistAfter" value="mDetail.do">
-								<c:param name="detailPage" value="${pi.currentPage+1 }"/>
-								<c:param name="page" value="${beforePage }"/>
-							</c:url>
-	                        <li class="page-item-t">
-	                        <a class="page-link-t" href="${blistAfter }">
-	                       <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-right-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-  <path d="M12.14 8.753l-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
-</svg></a></li>
-						</c:if>
-                    </ul>
-
-                </div>
-
-
-
-
-
-            </div><!--내용담은 컨테이너-->
-        </div><!--250px띄운 div-->
-        
        <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

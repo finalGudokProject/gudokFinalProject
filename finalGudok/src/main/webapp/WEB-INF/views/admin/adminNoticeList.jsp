@@ -9,6 +9,7 @@
 <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+	<script src="https://code.jquery.com/jquery-3.4.1.js" type="text/javascript"></script>
 <title></title>
 <style>
           body{
@@ -68,27 +69,26 @@
       <div class="container box">
 
         <div style="font-size: 30px;">공지사항</div>
-        
-        <form action="adminNoticeList.do" method="post" enctype="multipart/form-data">
-            <div class="input-group" >
-              <select class="custom-select" id="searchType" name="searchType" style="margin-left: 600px; width:50px" >
-                <option value="all">모두</option>
+        <div class="input-group" >
+        <form action="searchNoticeList.do" method="post" enctype="multipart/form-data">
+              <select class="custom-select" id="searchType" name="searchType" style="margin-left:614px; width:150px">
                 <option value="title">제목</option>
-                <option value="content">내용</option>            
-                <option value="titleContent">제목+내용</option>
+                <option value="content">내용</option>          
+                <option value="titleContent">제목+내용</option>        
               </select>
-              <input type="text" class="form-control" id="keyword" name="keyword" value="" style="float:right; width:150px;height: 38px;" placeholder="검색어를 입력하세요">
-              <div class="input-group-append" style="float:right; width: 75px; height: 38px;">                
-                <input type="submit" value="검색" id="searchBtn" name="searchBtn" class="btn btn-primary" style="height:38px">
+              <div class="input-group-append" style="float:right; width: 75px; height: 38px;">    
+              <input type="text" class="form-control" id="keyword" name="keyword" value="" style="float:right; width:450px;height: 38px;" placeholder="검색어를 입력하세요">
+                <input type="submit" value="검색" id="searchBtn" name="searchBtn" class="btn btn-primary" style="float:right; height:38px; margin-right: 10px;">    
               </div>
-            </div>
+          	 </form>
+        </div>
             <br>
 
             
           <table style="text-align: center; margin-top:15px">
         <thead>
           <tr>
-            <th><input type="checkbox">
+            <th><input type="checkbox" id="checkAll">
             </th><th style="width:10%">번호</th>
             <th style="width:55%">제목</th>
             <th style="width:20%">작성일</th>
@@ -100,7 +100,7 @@
 		      			<c:when test="${fn:length(list)>0 }">
 					        <c:forEach var="b" items="${list }">
 					          <tr>
-					          		<td><input type="checkbox">
+					          		<td><input type="checkbox" class="common" id="noticeNo${cnt.index}" name="noticeNo" value="${b.bBoard_no }"></td>
 					          		<td align="center">${b.rownum }</td>
 									<td align="center">
 										<c:url var="adminNoticeDetail" value="adminNoticeDetail.do">
@@ -122,8 +122,8 @@
       </table>
             <br><br>
             &nbsp;&nbsp;<a href="adminNoticeInsert.do" type="button" class="btn btn-primary" style="float:right;">글쓰기</a> 
-            <input type="submit" value="삭제" class="btn btn-primary" style="float:right; margin-right: 10px;">
-    </form>
+            <input type="button" value="삭제" style="float:right; margin-right: 10px;"" class="btn btn-primary" onclick="nDelete()">
+  
             <br><br><br>
                   
                   
@@ -131,8 +131,6 @@
                   
       			<!------페이징 처리----->
                 <div class="page-center">
-                    <c:choose>
-	      			<c:when test="${fn:length(list)>0 }">
                     <ul class="pagination-t">
                        <!-- 이전 -->
                         <c:if test="${pi.currentPage eq 1 }">
@@ -186,16 +184,125 @@
 							</svg></a></li>
                   		</c:if>
                     </ul>
-					</c:when>
-					<c:otherwise>
-
-					</c:otherwise>
-				</c:choose>
                 </div>
 
     </div><!--하얀박스 있는부분 끝-->
   </div><!--회색바탕 div-->
- 
+  
+	 <script>
+	 
+	  
+		  // 선택 삭제
+		  
+			  function nDelete(){
+				 			var sendArr = Array();
+		     				var sendCnt = 0;
+		     				var chkbox=$(".common");
+			        		
+		     				for(i=0; i<chkbox.length;i++){
+		               			if(chkbox[i].checked == true){
+		               				sendArr[sendCnt] = chkbox[i].value;
+		               				sendCnt++;
+		               			}
+		               		}
+			        		
+			        		$.ajax({
+			    				url:"noticeDeleteCheck.do",
+			    				type:"post",
+			    				traditional:true,
+			    				data:{"sendArr":sendArr},
+			    				success:function(data){
+			    					alert("선택한 이벤트들을 삭제합니다");
+			    					getNoticeList();
+			    				},
+			    				error:function(request, status, errorData){
+				                    alert("error code: " + request.status + "\n"
+					                           +"message: " + request.responseText
+					                           +"error: " + errorData);
+					                  }   
+			    			});
+			        	} 
+	  
+		// 삭제 후 리스트 가져오기
+	      function getNoticeList(){
+	     	 var page=${pi.currentPage};
+	     	 
+	     	 $.ajax({
+	     		 
+	     	 	url:"noticeListChange.do", 
+	     	 	data:{"page":page},
+	     	 	dataType:"json",
+	     	 	success:function(data){
+	     	 		
+	     	 		//게시물 상세보기(ajax후)
+	        	        
+	        	       	$(function(){
+	        	       		
+	        	       		$("tr").on("click",function(){
+	        	       			var bBoard_no=$(this).children().eq(1).text();
+	        	        		var page=${pi.currentPage };  
+	        	           		location.href="adminNoticeDetail.do?bBoard_no="+bBoard_no+"&page="+page;
+	        	       		})
+	        	       	})
+	        	       	
+	     	 		$tableBody=$("tbody");
+	     	 		$tableBody.html("");
+	     	 		
+	     	 		var $tr;
+	     	 		var $bBoard_no;
+	     	 		var $rownum;
+	     	 		var $bTitle;
+	     	 		var $bWrite_date;
+	     	 		var $bRead_num;
+	     	 		var $th;
+	     	 		
+	     	 				
+	     	 				for(var i in data.adminNoticeList){
+	     	 					
+	     	 				$tr=$("<tr id='cursor'>");
+	     	 				$td=$("<td onclick='event.cancelBubble=true'>");
+	     	 				$checkBox=$("<input type='checkbox' class='common' name='noticeNo'>").val(data.adminNoticeList[i].bBoard_no);     	 			
+	     	 				$bBoard_no=$("<td onclick='event.cancelBubble=true'>").text(data.adminNoticeList[i].bBoard_no).hide();
+	     	 				$rownum=$("<td onclick='event.cancelBubble=true'>").text(data.adminNoticeList[i].rownum);
+	     	 				$bTitle=$("<td>").text(data.adminNoticeList[i].bTitle);
+	     	 				$bWrite_date=$("<td onclick='event.cancelBubble=true'>").text(data.adminNoticeList[i].bWrite_date);
+	     	 				$bRead_num=$("<td onclick='event.cancelBubble=true'>").text(data.adminNoticeList[i].bRead_num);
+
+	     	 				
+	     	 				$td.append($checkBox);
+	     	 				$tr.append($td);
+	     	 				$tr.append($bBoard_no);
+	     	 				$tr.append($rownum);
+	     	 				$tr.append($bTitle);
+	     	 				$tr.append($bWrite_date);
+	     	 				$tr.append($bRead_num);
+	     	 				$tableBody.append($tr);
+	     	 				
+	     	 			}
+	     	 	},
+	     	 	error:function(request, status, errorData){
+	                 alert("error code: " + request.status + "\n"
+		                           +"message: " + request.responseText
+		                           +"error: " + errorData);
+		                  }   
+	     	 	
+	     	 })
+	     	 
+	      }
+	  
+	  
+	  // 모두 체크
+	  
+		  $(function(){
+				
+		    			$("#checkAll").click(function(){
+		    				var bool = $(this).prop("checked");
+		    				$(".common").prop('checked', bool);
+		    				
+		    			});
+		    		}); 
+	  
+	  </script>
 
    
 
@@ -204,7 +311,7 @@
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
   </body>

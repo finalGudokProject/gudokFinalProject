@@ -150,7 +150,7 @@
             <table style="text-align: center; margin-top:15px">
                 <tbody >
                     <tr>
-                        <th style="width:10%; padding:20px;">문의유형</th>
+                        <th style="width:10%; padding:20px;">문의유형 </th>
                         <td style="width: 39%;" colspan="3">
                         <c:if test="${inquiry.iBoard_type eq 'OPI' }">
                             <select name="iBoard_type" style="float:left; margin-left:35%; height:30px ;width:200px;" id="iBoard_type" name="iBoard_type">
@@ -214,14 +214,14 @@
                         <th style="width:15%; padding:20px;">비밀글 설정</th>
                         <td style="width: 39%;">
                         	<c:if test="${secret.oSecret eq 'Y' }">
-                            <input type="radio" name="oSecret" id="open" value="N" checked="checked">공개글
+                            <input type="radio" name="oSecret" id="open" value="Y" checked="checked">공개글
                             &nbsp;
-                            <input type="radio" name="oSecret" id="close" value="Y">비밀글
+                            <input type="radio" name="oSecret" id="close" value="N">비밀글
                         	</c:if>
                         	<c:if test="${secret.oSecret eq 'N' }">
-                            <input type="radio" name="oSecret" id="open" value="N">공개글
+                            <input type="radio" name="oSecret" id="open" value="Y">공개글
                             &nbsp;
-                            <input type="radio" name="oSecret" id="close" value="Y" checked="checked">비밀글
+                            <input type="radio" name="oSecret" id="close" value="N" checked="checked">비밀글
                         	</c:if>
                         	
                             </td>
@@ -254,7 +254,7 @@
 
             <br><br>
              &nbsp;&nbsp;<a href="javascript:history.go(-1)" type="button" class="btn btn-primary" style="float:right;">이전으로</a>
-            <input type="submit" value="작성하기" class="btn btn-primary" style="float:right; margin-right: 10px;">
+            <input type="submit" value="수정하기" class="btn btn-primary" style="float:right; margin-right: 10px;">
             </form>
             </div>
             </div>

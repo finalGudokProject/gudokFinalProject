@@ -20,6 +20,7 @@ import com.kh.finalGudok.item.model.vo.Review;
 
 import com.kh.finalGudok.item.model.vo.ReviewImage;
 import com.kh.finalGudok.item.model.vo.ReviewView;
+import com.kh.finalGudok.item.model.vo.SearchItem;
 import com.kh.finalGudok.member.model.vo.Member;
 
 @Service("iService")
@@ -567,15 +568,89 @@ public class ItemServiceImpl implements ItemService {
 		return iDao.deleteEventItemBefor(i);
 	}
 
+	@Override
+	public int getEventCount(String word) {
+		return iDao.getEventCount(word);
+	}
 
-	
+	@Override
+	public ArrayList<BannerItem> selectEventListA(String word, PageInfo pi) {
+		return iDao.selectEventListA(word,pi);
+	}
 
-	
-	
-	
-	
+	@Override
+	public Integer selectEventListCount(int i) {
+		return iDao.selectEventListCount(i);
+	}
 
+	@Override
+	public ArrayList<BannerItem> selectRecommendList() {
+		return iDao.selectRecommendList();
+	}
 
+	@Override
+	public ArrayList<BannerItem> selectItemListA(SearchItem s, PageInfo pi) {
+		return iDao.selectItemListA(s,pi);
+	}
 
+	@Override
+	public int getItemCountA(SearchItem s) {
+		return iDao.selectItemCountA(s);
+	}
+
+	@Override
+	public ArrayList<BannerItem> selectItemImg(int itemNo) {
+		return iDao.selectItemImg(itemNo);
+	}
+
+	@Override
+	public ArrayList<BannerItem> selectItems(String itemCategory, PageInfo pi) {
+		return iDao.selectItems(itemCategory,pi);
+	}
+
+	@Override
+	public int getNonEventItemCnt(String itemCategory) {
+		return iDao.selectNonEventItemCnt(itemCategory);
+	}
+
+	@Override
+	public Integer selectItemDiscount(int eventNo) {
+		return iDao.selectItemDiscount(eventNo);
+	}
+
+	@Override
+	public int selectRecommendCnt() {
+		return iDao.selectRecommendCnt();
+	}
+
+	@Override
+	public int updateItemRecommend(String[] strArr) {
+		return iDao.updateItemRecommend(strArr);
+	}
+
+	@Override
+	public int getBestCount() {
+		return iDao.getBestCount();
+	}
+
+	@Override
+	public ArrayList<Item> selectBestList(PageInfo pi) {
+		return iDao.selectBestList(pi);
+	}
+
+	@Override
+	public ArrayList<Item> selectBestList(PageInfo pi, String sortNo) {
+		return iDao.selectBestList(pi, sortNo);
+	}
+
+	@Override
+	public int insertOneInquiry() {
+		return iDao.insertOneInquiry();
+	}
+
+	@Override
+	public int insertInquiry() {
+		return iDao.insertInquiry();
+	}
 
 }

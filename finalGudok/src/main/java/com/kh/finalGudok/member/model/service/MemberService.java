@@ -15,12 +15,18 @@ import com.kh.finalGudok.member.model.vo.Member;
 import com.kh.finalGudok.member.model.vo.Point;
 import com.kh.finalGudok.member.model.vo.Reply;
 import com.kh.finalGudok.member.model.vo.Review;
+import com.kh.finalGudok.member.model.vo.Search;
+import com.kh.finalGudok.member.model.vo.Subscribe;
 import com.kh.finalGudok.member.model.vo.Withdrawal;
+import com.kh.finalGudok.member.model.vo.AdminBoard;
+import com.kh.finalGudok.item.model.vo.BannerItem;
+import com.kh.finalGudok.member.model.vo.AdminExchange;
 import com.kh.finalGudok.member.model.vo.AdminMember;
 import com.kh.finalGudok.member.model.vo.AdminPayment;
 import com.kh.finalGudok.member.model.vo.AdminSecession;
+import com.kh.finalGudok.member.model.vo.AdminSubscribe;
+import com.kh.finalGudok.member.model.vo.Cancle;
 import com.kh.finalGudok.member.model.vo.Inquiry;
-
 
 public interface MemberService {
 
@@ -62,7 +68,7 @@ public interface MemberService {
 	ArrayList<Inquiry> selectInquiryList(Integer memberNo);
 
 	ArrayList<Heart> selectHeartList(Integer memberNo);
-	
+
 	int deleteHeart(DeleteHeart dh);
 
 	Item selectItem(int itemNo);
@@ -124,5 +130,97 @@ public interface MemberService {
 	int checkMember(Member m);
 
 	int changePwd(Member m);
+
+	ArrayList<Subscribe> selectSubscribeList(Integer memberNo);
+
+	int cycleChange(Subscribe subscribe);
+
+	int insertCancle(Cancle c);
+
+	int updateSubscribeStatus(int subscribeNo);
+
+	int subscribeCount(int memberNo);
+
+	int cartCount(int memberNo);
+
+	int pointCount(int memberNo);
+
+	int getMemberCnt(Search s);
+
+	ArrayList<AdminMember> selectMemberN(Search s, PageInfo pi);
+
+	ArrayList<AdminSecession> selectMemberSecession(Search s, PageInfo pi);
+
+	int getMemberCntY(Search s);
+
+	int getOrderCnt(Search s);
+
+	ArrayList<AdminSubscribe> selectOrderList(Search s, PageInfo pi);
+
+	int updateDelivery(ArrayList<AdminSubscribe> dArr);
+
+	AdminSubscribe selectOrder(Integer subscribeNo);
+
+	int selectItemTotalP(Integer subscribeNo);
+
+	AdminPayment selectPayment(Integer subscribeNo);
+
+	int selectTotalPayment(Integer subscribeNo);
+
+	Integer selectExchangeChart(Search search);
+
+	int updateSubscribeA(Integer subscribeNo);
+
+	ArrayList<AdminExchange> selectExchange(Search s, PageInfo pi);
+
+	int getExchangeCnt(Search s);
+
+	int updateExchange(ArrayList<com.kh.finalGudok.member.model.vo.AdminExchange> dArr);
+
+	ArrayList<String> selectDateList(Search s);
+
+	int getSalesCnt(Search s);
+
+	ArrayList<AdminPayment> selectPaymentList(ArrayList<String> pArr, PageInfo pi);
+
+	ArrayList<AdminPayment> selectPaymentList(ArrayList<String> pArr);
+
+	ArrayList<String> selectYearList(Search s);
+
+	int getSalesYearCnt(ArrayList<String> pArr);
+
+	ArrayList<AdminPayment> selectPaymentYearsList(ArrayList<String> pArr, PageInfo pi);
+
+	ArrayList<AdminPayment> selectPaymentYearsList(ArrayList<String> pArr);
+
+	ArrayList<String> selectMonthList(Search s);
+
+	int getSalesMonthsCnt(ArrayList<String> pArr);
+
+	ArrayList<AdminPayment> selectPaymentMonthsList(ArrayList<String> pArr, PageInfo pi);
+
+	ArrayList<AdminPayment> selectPaymentMonthsList(ArrayList<String> pArr);
+
+	AdminPayment selectPaymentCategoryList(Search search);
+
+	int getSalesDetailCnt(Search s);
+
+	ArrayList<AdminPayment> selectPaymentDetail(Search s, PageInfo pi);
+
+	int selectTodayMember(String string);
+
+	int selectTodayVisitor(String string);
+
+	AdminPayment selectPaymentMainList(String string);
+
+	ArrayList<AdminExchange> selectExchangeMain();
+
+	ArrayList<AdminSubscribe> selectDeliveryMain();
+
+	ArrayList<AdminBoard> selectBoardMain();
+
+	ArrayList<AdminBoard> selectNoticeMain();
+
+	ArrayList<BannerItem> selectEventMain();
 
 }

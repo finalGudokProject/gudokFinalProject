@@ -10,6 +10,20 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
+<link href='<%=request.getContextPath()%>/resources/css/main.css' rel='stylesheet' />
+<script src='<%=request.getContextPath()%>/resources/js/main.js'></script>
+<script src='<%=request.getContextPath()%>/resources/js/moment.js'></script>
+<script src='<%=request.getContextPath()%>/resources/js/ko.js'></script>
+
+<!-- rrule lib -->
+<script src='https://cdn.jsdelivr.net/npm/rrule@2.6.4/dist/es5/rrule.min.js'></script>
+
+<!-- fullcalendar bundle -->
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.2.0/main.min.js'></script>
+
+<!-- the rrule-to-fullcalendar connector. must go AFTER the rrule lib -->
+<script src='https://cdn.jsdelivr.net/npm/@fullcalendar/rrule@5.2.0/main.global.min.js'></script>
+
 <style>
 	#content {
         font-size: 1em;
@@ -46,9 +60,15 @@
         padding: 8px 16px;
         text-decoration: none;
     }
+    
+     .myPage_Menu li span {
+        display: block;
+        color: #000;
+        padding: 8px 16px;
+        text-decoration: none;
+    }
 
     .myPage_Menu li a.active {
-        /* background-color: #4CAF50; */
         color: #000;
     }
 
@@ -314,6 +334,13 @@
       padding: 1% 10%;
       text-align: center;
     }
+    
+    #calendar{
+    	width:1000px;
+    	margin:0 auto;
+    	margin-top:50px;
+    }
+    
 </style>
 </head>
 <body>
@@ -322,10 +349,13 @@
 	<div id="content">
         <ul class="myPage_Menu">
             <li>
-                <a href="#home"><img src="resources/images/delivery.png"
-                        style="width: 25%; height: 25%; margin-right: 4%;">구독배송</a>
+                <span><img src="resources/images/delivery.png"
+                        style="width: 25%; height: 25%; margin-right: 4%;">구독배송</span>
                 <ul>
-                    <li><a href="#">구독 조회</a></li>
+                	<c:url var="slist" value="subscribeView.do">
+						<c:param name="memberNo" value="${loginUser.memberNo}"/>
+					</c:url> 
+                    <li><a href="${slist}">구독 조회</a></li>
                     <c:url var="dlist" value="deliveryList.do">
 						<c:param name="memberNo" value="${loginUser.memberNo}"/>
 					</c:url> 
@@ -337,22 +367,23 @@
                 </ul>
             </li>
             <li>
-                <a href="#news"><img src="resources/images/my_benefit.png"
-                        style="width: 25%; height: 25%; margin-right: 4%;">나의혜택</a>
+                <span><img src="resources/images/my_benefit.png"
+                        style="width: 25%; height: 25%; margin-right: 4%;">나의혜택</span>
                 <ul>
-                    <li><a href="#">회원 등급</a></li>
+                	<c:url var="grade" value="gradeView.do"></c:url> 
+                    <li><a href="${grade}">회원 등급</a></li>
                     <c:url var="plist" value="pointList.do">
 							<c:param name="memberNo" value="${loginUser.memberNo}"/>
 					</c:url> 
                     <li><a href="${plist}">적립금 내역</a></li>
                 </ul>
             </li>
-            <c:url var="clist" value="cartList.do">
+            <c:url var="clist" value="cartView.do">
 				<c:param name="memberNo" value="${loginUser.memberNo}"/>
 			</c:url> 
             <li><a href="${clist}"><img src="resources/images/cart.png"
                         style="width: 25%; height: 25%; margin-right: 4%;">장바구니</a></li>
-            <c:url var="hlist" value="heartList.do">
+            <c:url var="hlist" value="heartView.do">
 				<c:param name="memberNo" value="${loginUser.memberNo}"/>
 			</c:url> 
             <li><a href="${hlist}"><img src="resources/images/heart.png" style="width: 25%; height: 25%; margin-right: 4%;">찜</a>
@@ -390,7 +421,18 @@
 	            <div class="sub">
 	              <span class="name">${loginUser.memberName } <span class="etc">&nbsp;님</span></span>
 	              <br>
-	              <span class="grade">알 <span class="etc">&nbsp;등급</span></span>
+	              <c:if test="${loginUser.gradeNo eq 1}">
+	              	<span class="grade">알 <span class="etc">&nbsp;등급</span></span>
+	              </c:if>
+	              <c:if test="${loginUser.gradeNo eq 2}">
+	              	<span class="grade">아기거위 <span class="etc">&nbsp;등급</span></span>
+	              </c:if>
+	              <c:if test="${loginUser.gradeNo eq 3}">
+	              	<span class="grade">어른거위 <span class="etc">&nbsp;등급</span></span>
+	              </c:if>
+	              <c:if test="${loginUser.gradeNo eq 4}">
+	              	<span class="grade">황금거위 <span class="etc">&nbsp;등급</span></span>
+	              </c:if>
 	              <br>
 	              <span><a href="#" style="color: black; font-size: 0.8em;">등급 혜택보기</a></span>
 	            </div>
@@ -399,7 +441,7 @@
 	            <div class="sub">
 	              <span class="title"><a href="#" style="color: black;">구독</a></span>
 	              <br><br>
-	              <span class="count"><a href="#" style="color :#115D8C;">0<span class="etc">&nbsp;건</span></a></span>
+	              <span class="count"><a href="#" style="color :#115D8C;">${subscribeCount}<span class="etc">&nbsp;건</span></a></span>
 	            </div>
 	          </div>
 	          <div class="cart">
@@ -409,7 +451,7 @@
 					</c:url> 
 	              <span class="title"><a href="${clist}" style="color: black;">장바구니</a></span>
 	              <br><br>
-	              <span class="count"><a href="${clist}" style="color :#115D8C;">0<span class="etc">&nbsp;건</span></a></span>
+	              <span class="count"><a href="${clist}" style="color :#115D8C;">${cartCount}<span class="etc">&nbsp;건</span></a></span>
 	            </div>
 	          </div>
 	          <div class="point">
@@ -419,103 +461,296 @@
 					</c:url>
 	              <span class="title"><a href="${plist}" style="color: black;">적립금</a></span>
 	              <br><br>
-	              <span class="count"><a href="${plist}" style="color :#115D8C;">0<span class="etc">&nbsp;건</span></a></span>
+	              <span class="count"><a href="${plist}" style="color :#115D8C;">${pointCount}<span class="etc">&nbsp;건</span></a></span>
 	            </div>
 	          </div>
 	        </div>
 	      </div>
+	      
+	      <div id="calendar" class="royal-navy"></div>
+
+		<script>
+		
+			var myEvents=[];
+
+			$(function(){
+				myEvents = subscribeList();
+			});
+		     
+			 document.addEventListener('DOMContentLoaded', function() {
+				 
+			    var calendarEl = document.getElementById('calendar');
+
+			    var calendar = new FullCalendar.Calendar(calendarEl, {
+			      	initialDate: '2020-09-12',
+			      	locale: 'ko',
+			      	editable: true,
+			      	selectable: true,
+			      	businessHours: true,
+			      	dayMaxEvents: true,
+			      	displayEventTime: false,
+			      	events:subscribeList()
+			    });
+
+			    calendar.render();
+			  });
+			 
+			 
+			function subscribeList(){
+				var memberNo = ${loginUser.memberNo};
+				$.ajax({
+					url:"subscribeList.do",
+					async: false,
+					data:{memberNo:memberNo},
+					dataType:"json",
+					success:function(data){
+						console.log("DB에서 불러온 리스트");
+						console.log(data);
+						
+						$tableBody = $(".subscribeTable .tbody");
+						$tableBody.html("");
+						
+						var $tr;
+						var $td;
+						var $date;
+						var $itemName;
+						var $change;
+						var $cancle;
+						
+						if(data.length > 0 ){
+							for(var i in data){
+								var colorCode = "#" + Math.round(Math.random() * 0xffffff).toString(16);
+								
+								if(data[i].cycleNo == 1) {
+									myEvents.push(
+										  {
+										    title:data[i].itemName,
+										    start:data[i].subscribeDate,
+										    color:colorCode,
+										    rrule: {
+									              freq: 'weekly',
+									              dtstart:data[i].subscribeDate,
+									              interval: 1
+									            }
+										   }
+									)
+								}
+								else if(data[i].cycleNo == 2) {
+									myEvents.push(
+										  {
+										    title:data[i].itemName,
+										    start:data[i].subscribeDate,
+										    color:colorCode,
+										    rrule: {
+									              freq: 'weekly',
+									              dtstart:data[i].subscribeDate,
+									              interval: 2
+									            }
+										   }
+									)
+								}
+								else if(data[i].cycleNo == 3) {
+									myEvents.push(
+										  {
+										    title:data[i].itemName,
+										    start:data[i].subscribeDate,
+										    color:colorCode,
+										    rrule: {
+									              freq: 'weekly',
+									              dtstart:data[i].subscribeDate,
+									              interval: 3
+									            }
+										   }
+									)
+								}
+								else{
+									myEvents.push(
+										  {
+										    title:data[i].itemName,
+										    start:data[i].subscribeDate,
+										    
+										    rrule: {
+									              freq: 'weekly',
+									              dtstart:data[i].subscribeDate,
+									              interval: 4
+									            }
+										   }
+									)
+								}
+								
+		   
+					            $tr = $("<tr class='cartList'>");
+					            $tr=$("<tr>");
+					            $changeTd=$("<td>");
+					            $cancleTd=$("<td>");
+					            $data=$("<td>").text(data[i].subscribeDate);
+					            $itemName=$("<td>").text(data[i].itemName);
+					            $change=$("<a href='#cycle_form' id='cycle_pop' onclick='changeCycle(" + data[i].subscribeNo+","+ data[i].memberNo+"," +'"'+data[i].itemName+'"'+","+data[i].cycleNo+")'>").text("구독주기변경");
+					            $cancle=$("<a href='#cancle_form' id='cancle_pop' onclick='cancleClick(" + data[i].subscribeNo+","+ data[i].memberNo+")'>").text("구독취소");
+					            
+					            
+					            $tr.append($data);
+					            $tr.append($itemName);
+					            $changeTd.append($change);
+					            $tr.append($changeTd);
+					            $cancleTd.append($cancle);
+					            $tr.append($cancleTd);
+					           
+					            $tableBody.append($tr);
+							}
+						}
+						
+						console.log("ajax2");
+						console.log(myEvents);
+						
+					},
+					error:function(request, status, errorData){
+		                alert("error code: " + request.status + "\n"
+		                      +"message: " + request.responseText
+		                      +"error: " + errorData);
+		           }
+				});
+				return myEvents
+			}
+		</script>
+
 	      <div class="subscribe_list" style="width:80%;">
-	        <table>
-	          <tr>
-	            <td style="width: 10%;" class="top bottom">날짜</td>
-	            <td style="width: 45%;" class="top bottom">상품정보</td>
-	            <td style="width: 30%;" class="top bottom">구독주기변경</td>
-	            <td style="width: 25%;" class="top bottom">구독취소</td>
-	          </tr>
-	          <tr>
-	            <td>2020.08.05</td>
-	            <td>로스터스 초이스 싱글 오리진 원두</td>
-	            <td><a href="#cycle_form" id="cycle_pop">구독주기변경</a></td>
-	            <td><a href="#cancle_form" id="cancle_pop">구독취소</a></td>
-	          </tr>
-	          <tr>
-	            <td>2020.08.05</td>
-	            <td>로스터스 초이스 싱글 오리진 원두</td>
-	            <td><a href="#cycle_form" id="cycle_pop">구독주기변경</a></td>
-	            <td><a href="#cancle_form" id="cancle_pop">구독취소</a></td>
-	          </tr>
+	        <table class="subscribeTable">
+	        	<thead>
+		          <tr>
+		            <td style="width: 10%;" class="top bottom">날짜</td>
+		            <td style="width: 45%;" class="top bottom">상품정보</td>
+		            <td style="width: 30%;" class="top bottom">구독주기변경</td>
+		            <td style="width: 25%;" class="top bottom">구독취소</td>
+		          </tr>
+	          	</thead>
+	          	<tbody class="tbody">
+	          		
+	          	</tbody>
 	
 	        </table>
 	      </div>
-	
+		  
 	      <!-- popup form #1 -->
 	      <a href="#x" class="overlay" id="cycle_form"></a>
 	      <div class="popup">
 	        <h4>구독주기 변경</h4>
-	        <div>
-	          <table>
-	            <tr>
-	              <td style="width: 100px;"><b>구독번호</b></td>
-	              <td><span>200731123456</span></td>
-	            </tr>
-	            <tr>
-	                <td style="width: 100px;"><b>제품명</b></td>
-	                <td><span>무가당 드링킹 요거트</span></td>
-	              </tr>
-	              <tr>
-	                <td style="width: 100px;"><b>구독주기</b></td>
-	                <td><span>2주</span></td>
-	              </tr>
-	            <tr>
-	                <td style="width: 180px;">변경 할 구독주기</td>
-	                <td>
-	                    <select style="width: 100px; height:30px">
-	                      <option>1주</option>
-	                      <option>2주</option>
-	                      <option>3주</option>
-	                      <option>4주</option>
-	                    </select>
-	                  </td>
-	            </tr>
-	          </table>
-	        </div>
-	        <div style="text-align: center;">
-	          <button>변경</button>
-	        </div>
+	        <form action="cycleChange.do" method="post">
+	        	<input type="hidden" id="subscribeNo" name="subscribeNo">
+	        	<input type="hidden" id="memberNo" name="memberNo">
+		        <div>
+		          <table>
+		            <tr>
+		              <td style="width: 100px;"><b>구독번호</b></td>
+		              <td><span id="subscribeNo2"></span></td>
+		            </tr>
+		            <tr>
+		                <td style="width: 100px;"><b>제품명</b></td>
+		                <td><span id="itemName"></span></td>
+	                </tr>
+	                <tr>
+		                <td style="width: 100px;"><b>구독주기</b></td>
+		                <td><span id="cycle"></span></td>
+		            </tr>
+		            <tr>
+		                <td style="width: 180px;">변경 할 구독주기</td>
+		                <td>
+		                    <select style="width: 100px; height:30px" id="cycleNo" name="cycleNo">
+		                      <option value="1">1주</option>
+		                      <option value="2">2주</option>
+		                      <option value="3">3주</option>
+		                      <option value="4">4주</option>
+		                    </select>
+		                  </td>
+		            </tr>
+		          </table>
+		        </div>
+		        <div style="text-align: center;">
+		          <button>변경</button>
+		        </div>
+	        </form>
 	        <a class="close" href="#close"></a>
 	      </div>
 	
 	      <a href="#x" class="overlay" id="cancle_form"></a>
 	      <div class="popup">
 	        <h4>구독취소</h4>
-	        <div>
-	          <table>
-	            <tr>
-	              <td style="width: 100px;" class="top bottom">취소 사유</td>
-	              <td class="top bottom">
-	                <select style="width: 200px; height: 30px;">
-	                  <option>상품 불필요</option>
-	                  <option>가격이 비쌈</option>
-	                  <option>기타</option>
-	                </select>
-	              </td>
-	            </tr>
-	            <tr>
-	              <td colspan="2">
-	                <br>
-	                <textarea cols="50" rows="5"></textarea>
-	              </td>
-	            </tr>
-	          </table>
-	        </div>
-	        <div style="text-align: center;">
-	          <button>구독취소</button>
-	        </div>
+	        <form action="subscribeCancle.do" method="post">
+	        	<input type="hidden" id="subscribeNo3" name="subscribeNo">
+	        	<input type="hidden" id="memberNo3" name="memberNo">
+		        <div>
+		          <table>
+		          	<tr class="top">
+		          		<td style="width: 100px; height:30px;"><b>구독번호</b></td>
+		                <td><span id="subscribeNo4"></span></td>
+		          	</tr>
+		            <tr class="top bottom">
+		              <td style="width: 100px;" >취소 사유</td>
+		              <td>
+		                <select style="width: 200px; height: 30px;" id="cancleCategory" name="cancleCategory">
+		                  <option value="1">상품 불필요</option>
+		                  <option value="2">가격이 비쌈</option>
+		                  <option value="3">기타</option>
+		                </select>
+		              </td>
+		            </tr>
+		            <tr>
+		              <td colspan="2">
+		                <br>
+		                <textarea id="cancleContent" name="cancleContent" cols="50" rows="5"></textarea>
+		              </td>
+		            </tr>
+		          </table>
+		        </div>
+		        <div style="text-align: center;">
+		          <button id="subscribeCancle">구독취소</button>
+		        </div>
+	        </form>
 	        <a class="close" href="#close"></a>
 	      </div>
 	    </div>
     </div>
     <br style="clear:both;">
     <jsp:include page="../common/footer.jsp"/>
+    <script>
+	    function changeCycle(subscribeNo, memberNo, itemName, cycleNo){
+			$("#subscribeNo").val(subscribeNo);
+			$("#memberNo").val(memberNo);
+			
+			$("#subscribeNo2").text(subscribeNo);
+			$("#itemName").text(itemName);
+			
+			if(cycleNo == 1){
+				$("#cycle").text("1주");
+			} else if(cycleNo == 2){
+				$("#cycle").text("2주");
+			} else if(cycleNo == 3){
+				$("#cycle").text("3주");
+			} else{
+				$("#cycle").text("4주");
+			}
+		}
+	    
+	    function cancleClick(subscribeNo, memberNo){
+	    	$("#subscribeNo3").val(subscribeNo);
+			$("#memberNo3").val(memberNo);
+			
+			$("#subscribeNo4").text(subscribeNo);
+	    }
+	    
+	    $(function(){
+    		$("#cancleCategory").on('change',function(){
+    			var select = $("#cancleCategory option:selected").val()
+    			
+        		if(select == 1){
+        			$("#cancleContent").attr("disabled", "disabled");
+        		} else if(select == 2){
+        			$("#cancleContent").attr("disabled", "disabled");
+        		} else if(select == 3){
+        			$("#cancleContent").attr("disabled", false);
+        		}
+    		})
+    	})
+    </script>
 </body>
 </html>

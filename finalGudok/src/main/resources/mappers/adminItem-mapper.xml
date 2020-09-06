@@ -58,7 +58,7 @@
 	
 	<insert id="insertItem" parameterType="AdminItem">
 		INSERT INTO ITEM VALUES(
-		SEQ_IID.NEXTVAL,#{itemName},#{itemPrice},DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,SYSDATE,#{itemRecommend},#{categoryNo},#{itemMemo},DEFAULT)
+		SEQ_IID.NEXTVAL,#{itemName},#{itemPrice},DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,SYSDATE,#{itemRecommend},#{categoryNo},#{itemMemo},DEFAULT,DEFAULT,#{imageOriginalName},#{imageRename},#{imagePath})
 		
 	</insert>
 	
@@ -84,25 +84,42 @@
 		FROM DUAL
 	</insert>
 	
-	<select id="selectEventCount" resultType="_int">
+	<select id="selectEventCount" parameterType="string" resultType="_int">
 		SELECT COUNT(*)
 		FROM EVENT
+		<where>
+			<if test="value!=null">
+			<![CDATA[
+				EVENT_NAME LIKE '%${value}%'
+				OR EVENT_NO LIKE '%${value}%'
+			]]>
+			</if>
+		</where>
 	</select>
 	
 	<select id="selectEventList" resultMap="bannerItemResultSet">
 		SELECT EVENT_NO,EVENT_NAME,EVENT_STATUS, COUNT(*)
 		FROM EVENTLIST
 		WHERE EVENT_NO IS NOT NULL
+			<trim prefix="AND">
+				<if test="value!=null">
+				<![CDATA[
+					EVENT_NAME LIKE '%${value}%'
+					OR EVENT_NO LIKE '%${value}%'
+				]]>
+				</if>
+			</trim>
 		GROUP BY EVENT_NO, EVENT_NAME,EVENT_STATUS
         ORDER BY EVENT_NO DESC
 	</select>
 	
-	<select id="selectEventListCount" resultType="_int">
-		SELECT COUNT(*)-1
-		FROM EVENTLIST
-		WHERE EVENT_NO IS NOT NULL
-		GROUP BY EVENT_NO, EVENT_NAME,EVENT_STATUS
-		ORDER BY EVENT_NO DESC
+	<select id="selectEventListCount" parameterType="java.util.List" resultType="int">
+		SELECT COUNT(*)
+        FROM ITEM I
+        LEFT JOIN EVENT_ITEM E ON(I.ITEM_NO=E.ITEM_NO)
+        LEFT JOIN EVENT V ON(E.EVENT_NO=V.EVENT_NO)
+        GROUP BY E.EVENT_NO
+        HAVING E.EVENT_NO=#{value}
 	</select>
 
 	<delete id="deleteEvent" parameterType="_int">
@@ -169,10 +186,47 @@
 		WHERE EVENT_NO=${value}
 	</select>
 	
-	<select id="selectItemListA" resultMap="bannerItemResultSet">
+	<select id="selectItemListA" parameterType="object" resultMap="bannerItemResultSet">
 		SELECT * 
-		FROM ITEM
-		ORDER BY ITEM_NO DESC
+		FROM ITEM I
+        LEFT JOIN EVENT_ITEM E ON(I.ITEM_NO=E.ITEM_NO)
+		<choose>
+			<when test="itemName==itemNo">
+					 <where>
+			        	<if test="categoryNo!=null">
+				        	I.CATEGORY_NO=#{categoryNo} 
+				        </if>
+				        <if test="itemName!=null">
+				         <![CDATA[
+				        	AND I.ITEM_NAME LIKE '%${itemName}%'
+			        	]]>
+				        </if>
+				        <if test="itemNo!=null">
+				          <![CDATA[
+				        	OR I.ITEM_NO LIKE '%${itemNo}%'
+				        ]]>
+				        </if>
+			        </where>
+			</when>
+			<otherwise>
+					 <where>
+			        	<if test="categoryNo!=null">
+				        	I.CATEGORY_NO=#{categoryNo} 
+				        </if>
+				        <if test="itemName!=null">
+				         <![CDATA[
+				        	AND I.ITEM_NAME LIKE '%${itemName}%'
+			        	]]>
+				        </if>
+				        <if test="itemNo!=null">
+				          <![CDATA[
+				        	AND I.ITEM_NO LIKE '%${itemNo}%'
+				        ]]>
+				        </if>
+			        </where>
+			 </otherwise>
+        </choose>
+        ORDER BY I.ITEM_NO DESC
 	</select>
 	
 	
@@ -195,9 +249,11 @@
 			</foreach>
 	</update>
 	<select id="selectAdminItem" parameterType="_int" resultMap="bannerItemResultSet">
-		SELECT *
-        FROM AILIST
-        WHERE ITEM_NO IN #{itemNo}
+		SELECT I.*,V.*,E.item_discount
+        FROM item I
+        LEFT JOIN event_item E ON(I.item_no=E.item_no)
+        LEFT JOIN event V ON(E.event_no=V.event_no)
+        WHERE I.item_no IN #{itemNo}
 	</select>
 	<update id="updateItem" parameterType="BannerItem">
 		UPDATE ITEM
@@ -210,7 +266,7 @@
 		SET IMAGE_ORIGINAL_NAME=#{imageOriginalName},IMAGE_RENAME=#{imageRename}
 		WHERE IMAGE_NO=#{itemNo}
 	</update>
-	<select id="selectImageNo" parameterType="BannerItem" resultType="_int">
+	<select id="selectImageNo" parameterType="BannerItem" resultType="int">
 		SELECT I_IMAGE_NO
 		FROM ITEM_IMAGE
 		WHERE ITEM_NO=#{itemNo}
@@ -220,9 +276,24 @@
 		FROM EVENT_ITEM
 		WHERE ITEM_NO=#{itemNo}
 	</delete>
-	<select id="selectItemCountA" resultType="_int">
+	<select id="selectItemCountA" parameterType="object" resultType="_int">
 		SELECT COUNT(*)
 		FROM ITEM
+        <where>
+        	<if test="categoryNo!=null">
+	        	CATEGORY_NO=#{categoryNo} 
+	        </if>
+	        <if test="itemName!=null">
+	         <![CDATA[
+	        	AND ITEM_NAME LIKE '%${itemName}%'
+        	]]>
+	        </if>
+	        <if test="itemNo!=null">
+	          <![CDATA[
+	        	AND ITEM_NO LIKE '%${itemNo}%'
+	        ]]>
+	        </if>
+        </where>
 	</select>
 	<select id="selectDeleteItem" parameterType="_int" resultMap="bannerItemResultSet">
 		SELECT *
@@ -258,16 +329,24 @@
 		FROM EVENT
         ORDER BY EVENT_NO DESC
 	</select>
-	<select id="selectItems" resultMap="bannerItemResultSet">
+	<select id="selectItems" parameterType="string" resultMap="bannerItemResultSet">
 		SELECT *
-		FROM AILIST
+		FROM ITEM
 		WHERE ITEM_EVENT_STATUS='N'
+		 <trim prefix="AND">
+			<if test="value!=null">
+			CATEGORY_NO=#{value}
+			</if>
+		</trim> 
 		ORDER BY ITEM_NO DESC
 	</select>
-	<select id="selectNonEventItemCnt" resultType="_int">
+	<select id="selectNonEventItemCnt" parameterType="string" resultType="_int">
 		SELECT COUNT(*)
-		FROM AILIST
+		FROM ITEM
 		WHERE ITEM_EVENT_STATUS='N'
+		<if test="value!=null">
+		AND CATEGORY_NO=#{value}
+		</if>
 	</select>
 	<update id="updateItemEventStatus" parameterType="_int">
 		UPDATE ITEM
@@ -283,9 +362,53 @@
 		FROM EVENT_ITEM
 		WHERE ITEM_NO IN #{itemNo}
 	</delete>
+	<select id="selectItemDiscount" parameterType="_int" resultType="int">
+		SELECT MIN(ITEM_DISCOUNT)
+		FROM EVENT E
+        LEFT JOIN EVENT_ITEM I ON (E.EVENT_NO=I.EVENT_NO)
+		GROUP BY E.EVENT_NO
+        HAVING E.EVENT_NO=#{value}
+	</select>
+	<select id="selectItemImg" parameterType="_int" resultMap="bannerItemResultSet">
+		SELECT *
+        FROM IMAGE M
+        LEFT JOIN ITEM_IMAGE I ON(I.I_IMAGE_NO=M.IMAGE_NO)
+        WHERE ITEM_NO=#{value}
+	</select>
+	<select id="selectEventMain" resultMap="bannerItemResultSet">
+		SELECT *
+            FROM(SELECT EVENT_NO,EVENT_NAME,COUNT(*) AS ITEM_COUNT
+               FROM(SELECT I.ITEM_NO,I.ITEM_DISCOUNT,I.EVENT_NO,E.EVENT_NAME,E.EVENT_STATUS
+                   FROM EVENT_ITEM I
+                   LEFT JOIN EVENT E ON(E.EVENT_NO=I.EVENT_NO) 
+                   WHERE E.EVENT_STATUS='Y' )
+               GROUP BY EVENT_NAME, EVENT_NO     
+               ORDER BY EVENT_NO DESC )
+               <![CDATA[
+            WHERE ROWNUM<5
+	]]>
+	</select>
+	<select id="selectRecommendCnt" resultType="_int">
+		SELECT COUNT(*)
+		FROM ITEM
+		WHERE ITEM_EVENT_STATUS='R'
+	</select>
+	<update id="updateItemRecommend" parameterType="java.util.List">
+		UPDATE ITEM
+		SET ITEM_EVENT_STATUS='R'
+		WHERE ITEM_NO IN 
+			<foreach item="e" index="index" collection="array" open="(" separator="," close=")">
+				#{e}
+			</foreach>
+	
+	</update>
+	<select id="selectRecommendList" resultMap="bannerItemResultSet">
+		select *
+		from item
+		where item_event_status='R'
+	</select>
 
 	
-
 	
 	
 	

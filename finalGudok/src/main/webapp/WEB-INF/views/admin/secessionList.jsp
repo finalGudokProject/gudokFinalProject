@@ -40,14 +40,28 @@
 
 
 
+
 input, select,textarea{
     border: 1px solid #CCCCCC;
 }
 
-#cursor{
-cursor: pointer;
-}
+  .table{
+     padding: 0.75rem;
+       margin:auto;
+        word-wrap:break-word;
+        word-break:break-all;
+        table-layout:fixed;
+         
+    }
 
+
+ td{
+ 	padding: 0.75rem;
+     text-overflow: ellipsis;
+     overflow:hidden;
+	white-space:nowrap;
+    }
+   
 
 </style>
 
@@ -66,11 +80,11 @@ cursor: pointer;
                        
                         <table style="width:47%; float:left;">
                         	<thead>
-                        	<tr><th style="border-top:none !important;font-size:18px;text-align:left;">항목별</th>
+                        	<tr><th onclick="event.cancelBubble=true" style="border-top:none !important;font-size:18px;text-align:left;">항목별</th>
                         	</tr>
                         		<tr>
-	                                <th>사유 </th>
-	                                <th  style="background-color:#CFD8DC">회원 수</th>
+	                                <th onclick="event.cancelBubble=true">사유 </th>
+	                                <th onclick="event.cancelBubble=true" style="background-color:#CFD8DC">회원 수</th>
 	                            </tr>
                         	</thead>
                         	<tbody id="tbody1">
@@ -101,11 +115,11 @@ cursor: pointer;
                          
                           <table style="width:47%;float:left;margin-left:16px;">
                         	<thead>
-                        	<tr><th style="border-top:none !important;font-size:18px;text-align:left;">등급별</th>
+                        	<tr><th onclick="event.cancelBubble=true" style="border-top:none !important;font-size:18px;text-align:left;">등급별</th>
                         	</tr>
                         		<tr>
-	                                <th style="width:65%">등급 </th>
-	                                <th  style="width:35%;background-color:#CFD8DC">회원 수</th>
+	                                <th onclick="event.cancelBubble=true" style="width:65%">등급 </th>
+	                                <th onclick="event.cancelBubble=true"  style="width:35%;background-color:#CFD8DC">회원 수</th>
 	                            </tr>
                         	</thead>
                         	<tbody id="tbody2">
@@ -133,49 +147,63 @@ cursor: pointer;
                 <br>   <br><br>
                 <br>   <br><br>
                 <br>   <br><br>
-                <br>   <br><br>
-                <br>  <br>  
+                <br>   <br><br><br>
+           
                     
                     <div style="margin-top:50px; margin-bottom:15px; float:right; width:100%; text-align:right">
-                        <div style="float:right;">
-	                            <select name="out" style="width:300px;">
-	                                <option value="quality">품질 문제</option>
-	                                <option value="delivery">배송 문제</option>
-	                                <option value="service">서비스</option>
-	                                <option value="etc">기타</option>
+                        <div style="float:left;">
+	                            <select id="categoryNo" name="categoryNo" style="width:110px;">
+	                                <option value="" selected>전체</option>
+	                                <option value="1">서비스 문제</option>
+	                                <option value="2">가격 문제</option>
+	                                <option value="3">상품 문제</option>
+	                                <option value="4">개인정보 문제</option>
+	                                <option value="5">기타</option>
 	                            </select>
-                            <input type="button" class="btn" value="검색">
+	                            <select id="type" name="type" style="width:100px;">
+	                                <option value="" selected>전체</option>
+	                                <option value="memberNo">회원번호</option>
+	                                <option value="memberId">아이디</option>
+	                                <option value="memberName">회원명</option>
+	                                <option value="content">탈퇴 사유</option>
+	                            </select>
+	                            <input type="text" id="word" name="word" value="" style="width:150px;">
+                            <input type="button" class="btn" value="검색" onclick="search()">
                         </div> 
                     </div>
                 <br>
                 <br>
                 
-                    <table>
+                    <table class="table">
                         <thead>
                             <tr>
                                 <th onclick="event.cancelBubble=true">회원번호</th>
-                                <th onclick="event.cancelBubble=true">아이디</th>
-                                <th onclick="event.cancelBubble=true">등급</th>
+                                <th onclick="event.cancelBubble=true">아이디 (이름)</th>
                                 <th onclick="event.cancelBubble=true">탈퇴사유</th>
+                                <th onclick="event.cancelBubble=true">등급</th>
                                 <th onclick="event.cancelBubble=true">탈퇴일자</th>
                             </tr>   
                          </thead>
                          <tbody>
-                         
+                         	<c:if test="${!empty msList }">
                          	<c:forEach var="i" items="${msList }">
-	                             <tr id="cursor">
-	                                <td>${i.memberNo }</td>
-	                                <td>${i.memberId }</td>
+	                             <tr>
+	                                <td onclick="event.cancelBubble=true">${i.memberNo }</td>
+	                                <td id="cursor" class="cursor">${i.memberId } (${i.memberName })</td>
+	                                <td class="secession" data-toggle="modal" data-target="#myModal">${i.secessionContent }</td>
 	                                 <c:choose>
 		                            	<c:when test="${i.gradeNo eq '4'}"><td>1등급</td></c:when>
 		                            	<c:when test="${i.gradeNo eq '3'}"><td>2등급</td></c:when>
 		                            	<c:when test="${i.gradeNo eq '2'}"><td>3등급</td></c:when>
 		                            	<c:when test="${i.gradeNo eq '1'}"><td>4등급</td></c:when>
 			                        </c:choose>
-	                                <td>${i.secessionContent }</td>
-	                                <td>${i.secessionDate }</td>
+	                                <td onclick="event.cancelBubble=true">${i.secessionDate }</td>
 	                            </tr>
                             </c:forEach>
+                            </c:if>
+                            <c:if test="${empty msList}">
+                            	<td colspan="5">해당 회원이 없습니다.</td>
+                            </c:if>
                          </tbody>
                     </table>
 
@@ -183,7 +211,7 @@ cursor: pointer;
 
                     <br>
 
-
+				<c:if test="${!empty msList }">
                    <!------페이징 처리----->
                 <div class="page-center">
                     <ul class="pagination-t">
@@ -242,24 +270,90 @@ cursor: pointer;
                     </ul>
 
                 </div>
-
-
-
-
+                </c:if>
 
             </div><!--내용담은 컨테이너-->
         </div><!--250px띄운 div-->
         
+         <div id="myModal" class="modal" tabindex="-1">
+			  <div class="modal-dialog">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h5 class="modal-title">탈퇴 사유</h5>
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			          <span aria-hidden="true">&times;</span>
+			        </button>
+			      </div>
+			      <div class="modal-body">
+			      	<div>
+			        <p id="secessionContent" style="word-break:break-all;"></p>
+			        </div>
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+			      </div>
+			    </div>
+			  </div>
+			</div>
         
-        
-     <script  type="text/javascript">
+       
+     <script>
+     //검색
      
+     function search(){
+   
+    	 var categoryNo=$("#categoryNo").val();
+    	 var type=$("#type").val();
+    	 var word=$("#word").val();
+    	
+    	 alert(categoryNo)
+    	 alert(type)
+    	 alert(word)
+    	 
+    	 if(type=="memberNo"){
+    		 if(word.replace(/[0-9]/g, "").length > 0) {
+    		        alert("숫자만 입력해 주십시오.");
+    		     $("#word").focus();
+    		     return;
+    	 	}
+    	 }
+    	 
+			
+			 location.href="sList.do?categoryNo="+categoryNo+"&type="+type+"&word="+word;
+    	
+    	
+    	 
+    	 
+    	 
+    	 
+    	 
+     }
+     
+     
+     
+     
+  	//탈퇴 사유 상세보기(modal)
+   $(function(){
+	  
+	  $("td[class=secession]").on("click",function(){
+	  
+	  	var content=$(this).text();
+	   	$("#secessionContent").text(content);
+	  	
+	 
+	  	
+	  	$('#myModal').on('shown.bs.modal', function () {
+	  	  $('#myInput').trigger('focus')
+	  	})
+		 
+	  })
+ }) 
      //회원 상세 정보보기
    	$(function(){
        		
-       		$("tr").on("click",function(){
+       		$("td[class=cursor]").on("click",function(){
        			var type='secession';
-       			var memberNo=$(this).children().eq(0).text();
+       			var memberNo=$(this).parent().children().eq(0).text();
         		 var page=${pi.currentPage };   
         		
         		 location.href="mDetail.do?memberNo="+memberNo+"&page="+page+"&type="+type;
@@ -297,7 +391,7 @@ cursor: pointer;
         var options = {
           title: '탈퇴 사유 현황',
           pieHole: 0.4,
-          chartArea:{left:30,right:15,top:80,width:'100%',height:'100%'},
+          chartArea:{left:30,right:15,top:50,width:'100%',height:'100%'},
        	  colors:['#FFE0B2','#E57373','#D32F2F','#FF8A65','#795548'],
        	  fontSize:14
         };

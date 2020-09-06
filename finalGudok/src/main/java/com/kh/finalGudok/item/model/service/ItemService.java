@@ -17,6 +17,7 @@ import com.kh.finalGudok.item.model.vo.PageInfo;
 import com.kh.finalGudok.item.model.vo.Review;
 import com.kh.finalGudok.item.model.vo.ReviewImage;
 import com.kh.finalGudok.item.model.vo.ReviewView;
+import com.kh.finalGudok.item.model.vo.SearchItem;
 import com.kh.finalGudok.member.model.vo.Member;
 
 public interface ItemService {
@@ -30,7 +31,6 @@ public interface ItemService {
 	ItemListView selectItem(int itemNo);
 
 	ArrayList<Review> selectReview(int itemNo);
-
 
 	int insertItem(AdminItem i);
 
@@ -232,9 +232,37 @@ public interface ItemService {
 
 	int deleteEventItemBefore(BannerItem i);
 
-	
+	int getEventCount(String word);
 
+	ArrayList<BannerItem> selectEventListA(String word, PageInfo pi);
 
+	Integer selectEventListCount(int eventNo);
 
+	ArrayList<BannerItem> selectRecommendList();
 
+	ArrayList<BannerItem> selectItemListA(SearchItem s, PageInfo pi);
+
+	int getItemCountA(SearchItem s);
+
+	ArrayList<BannerItem> selectItemImg(int itemNo);
+
+	ArrayList<BannerItem> selectItems(String itemCategory, PageInfo pi);
+
+	int getNonEventItemCnt(String itemCategory);
+
+	Integer selectItemDiscount(int eventNo);
+
+	int selectRecommendCnt();
+
+	int updateItemRecommend(String[] strArr);
+
+	int getBestCount();
+
+	ArrayList<Item> selectBestList(PageInfo pi);
+
+	ArrayList<Item> selectBestList(PageInfo pi, String sortNo);
+
+	int insertOneInquiry();
+
+	int insertInquiry();
 }

@@ -9,6 +9,7 @@
 <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+	<script src="https://code.jquery.com/jquery-3.4.1.js" type="text/javascript"></script>
 <title></title>
 <style>
           body{
@@ -68,27 +69,29 @@
 
         <div style="font-size: 30px;">상품제안</div>
         
-            <form action="adminProductProposalList.do" method="post" enctype="multipart/form-data">
             <div class="input-group" >
-              <select class="custom-select" id="searchType" style="margin-left: 600px; width:50px" >
-                <option selected>모두</option>
-                <option value="1">제목</option>
-                <option value="2">내용</option>
-                <option value="3">제목+내용</option>
+        	<form action="searchProposalList.do" method="post" enctype="multipart/form-data">
+              <select class="custom-select" id="searchType" name="searchType" style="margin-left:614px; width:150px">
+                <option value="All">모두</option>
+                <option value="title">제목</option>
+                <option value="content">내용</option>          
+                <option value="user">작성자</option>        
               </select>
-              <input type="text" class="form-control" style="float:right; width:100px;height: 38px;">
-              <div class="input-group-append" style="float:right; width: 75px; height: 38px;">
-                <button type="button" class="btn btn-primary" >검색</button>
+              <div class="input-group-append" style="float:right; width: 75px; height: 38px;">    
+              <input type="text" class="form-control" id="keyword" name="keyword" value="" style="float:right; width:450px;height: 38px;" placeholder="검색어를 입력하세요">
+                <input type="submit" value="검색" id="searchBtn" name="searchBtn" class="btn btn-primary" style="float:right; height:38px; margin-right: 10px;">    
               </div>
+          	 </form>
             </div>
             <br>
 
           <table style="text-align: center; margin-top:15px">
         <thead>
           <tr>
-            <th><input type="checkbox"></th>
+            <th><input type="checkbox" id="checkAll"></th>
             <th style="width:10%">번호</th>
             <th style="width:45%">제목</th>
+            <th style="width:10%">작성자</th>
             <th style="width:20%">작성일</th>
             <th style="width:10%">조회수</th>
           </tr>
@@ -98,7 +101,7 @@
 	      			<c:when test="${fn:length(list)>0 }">
 			        	<c:forEach var="b" items="${list }">
 							<tr>
-								<td><input type="checkbox">
+								<td><input type="checkbox" class="common" id="proposalNo${cnt.index}" name="proposalNo" value="${b.bBoard_no }"></td>
 								<td align="center">${b.rownum }</td>
 								<td align="center">
 									<c:url var="adminProductProposalDetail" value="adminProductProposalDetail.do">
@@ -107,27 +110,25 @@
 									</c:url>
 									<a href="${adminProductProposalDetail }">${b.bTitle }</a>
 								</td>
+								<td align="center">${b.bMember_id }</td>
 								<td align="center">${b.bWrite_date }</td>
 								<td align="center">${b.bRead_num }</td>
 							</tr>
 						</c:forEach>
 					</c:when>
 					<c:otherwise>
-						<td colspan="4">조회된 결과가 없습니다.</td>
+						<td colspan="6">조회된 결과가 없습니다.</td>
 					</c:otherwise>
 				</c:choose>
 	      </tbody>
       </table>
             <br><br>
-            <input type="submit" value="삭제" class="btn btn-primary" style="float:right; margin-right: 10px;">
-    </form>
+            <input type="button" value="삭제" style="float:right; margin-right: 10px;"" class="btn btn-primary" onclick="pDelete()">
             <br><br><br>
             
 
                     <!------페이징 처리----->
                 <div class="page-center">
-                    <c:choose>
-	      			<c:when test="${fn:length(list)>0 }">
                     <ul class="pagination-t">
                        <!-- 이전 -->
                         <c:if test="${pi.currentPage eq 1 }">
@@ -136,7 +137,7 @@
 						   </svg></a></li>
                   		</c:if>
                    		<c:if test="${pi.currentPage gt 1 }">
-                     		<c:url var="blistBack" value="adminFAQList.do">
+                     		<c:url var="blistBack" value="adminProductProposalList.do">
                         		<c:param name="page" value="${pi.currentPage-1 }"/>
                      		</c:url>
                             <li class="page-item-t">
@@ -154,7 +155,7 @@
                      </c:if>
                      
                            <c:if test="${p ne pi.currentPage }">
-                              <c:url var="blistCheck" value="adminFAQList.do">
+                              <c:url var="blistCheck" value="adminProductProposalList.do">
                                  <c:param name="page" value="${p }"/>
                               </c:url>
                               <li class="page-item-t"><a class="page-link-t" href="${blistCheck }">${p } <span class="sr-only"></span></a>
@@ -171,7 +172,7 @@
 						   </svg></a></li>
                   		</c:if>
                    		<c:if test="${pi.currentPage lt pi.maxPage }">
-                     		<c:url var="blistAfter" value="adminFAQList.do">
+                     		<c:url var="blistAfter" value="adminProductProposalList.do">
                         		<c:param name="page" value="${pi.currentPage+1 }"/>
                      		</c:url>
                             <li class="page-item-t">
@@ -181,16 +182,128 @@
 							</svg></a></li>
                   		</c:if>
                     </ul>
-					</c:when>
-					<c:otherwise>
-
-					</c:otherwise>
-				</c:choose>
                 </div>
                 
     </div><!--하얀박스 있는부분 끝-->
   </div><!--회색바탕 div-->
   
+  <script>
+	 
+	  
+		  // 선택 삭제
+		  
+			  function pDelete(){
+				 			var sendArr = Array();
+		     				var sendCnt = 0;
+		     				var chkbox=$(".common");
+			        		
+		     				for(i=0; i<chkbox.length;i++){
+		               			if(chkbox[i].checked == true){
+		               				sendArr[sendCnt] = chkbox[i].value;
+		               				sendCnt++;
+		               			}
+		               		}
+			        		
+			        		$.ajax({
+			    				url:"proposalDeleteCheck.do",
+			    				type:"post",
+			    				traditional:true,
+			    				data:{"sendArr":sendArr},
+			    				success:function(data){
+			    					alert("선택한 이벤트들을 삭제합니다");
+			    					getFAQList();
+			    				},
+			    				error:function(request, status, errorData){
+				                    alert("error code: " + request.status + "\n"
+					                           +"message: " + request.responseText
+					                           +"error: " + errorData);
+					                  }   
+			    			});
+			        	} 
+	  
+		// 삭제 후 리스트 가져오기
+	      function getFAQList(){
+	     	 var page=${pi.currentPage};
+	     	 
+	     	 $.ajax({
+	     		 
+	     	 	url:"proposalListChange.do", 
+	     	 	data:{"page":page},
+	     	 	dataType:"json",
+	     	 	success:function(data){
+	     	 		
+	     	 		//게시물 상세보기(ajax후)
+	        	        
+	        	       	$(function(){
+	        	       		
+	        	       		$("tr").on("click",function(){
+	        	       			var bBoard_no=$(this).children().eq(1).text();
+	        	        		var page=${pi.currentPage };  
+	        	           		location.href="adminProductProposalDetail.do?bBoard_no="+bBoard_no+"&page="+page;
+	        	       		})
+	        	       	})
+	        	       	
+	     	 		$tableBody=$("tbody");
+	     	 		$tableBody.html("");
+	     	 		
+	     	 		var $tr;
+	     	 		var $bBoard_no;
+	     	 		var $rownum;
+	     	 		var $bTitle;
+	     	 		var $bMember_id;
+	     	 		var $bWrite_date;
+	     	 		var $bRead_num;
+	     	 		var $th;
+	     	 		
+	     	 				
+	     	 				for(var i in data.adminProductProposalList){
+	     	 					
+	     	 				$tr=$("<tr id='cursor'>");
+	     	 				$td=$("<td onclick='event.cancelBubble=true'>");
+	     	 				$checkBox=$("<input type='checkbox' class='common' name='proposalNo'>").val(data.adminProductProposalList[i].bBoard_no);     	 			
+	     	 				$bBoard_no=$("<td onclick='event.cancelBubble=true'>").text(data.adminProductProposalList[i].bBoard_no).hide();
+	     	 				$rownum=$("<td onclick='event.cancelBubble=true'>").text(data.adminProductProposalList[i].rownum);
+	     	 				$bTitle=$("<td>").text(data.adminProductProposalList[i].bTitle);
+	     	 				$bMember_id=$("<td onclick='event.cancelBubble=true'>").text(data.adminProductProposalList[i].bMember_id);
+	     	 				$bWrite_date=$("<td onclick='event.cancelBubble=true'>").text(data.adminProductProposalList[i].bWrite_date);
+	     	 				$bRead_num=$("<td onclick='event.cancelBubble=true'>").text(data.adminProductProposalList[i].bRead_num);
+
+	     	 				
+	     	 				$td.append($checkBox);
+	     	 				$tr.append($td);
+	     	 				$tr.append($bBoard_no);
+	     	 				$tr.append($rownum);
+	     	 				$tr.append($bTitle);
+	     	 				$tr.append($bMember_id);
+	     	 				$tr.append($bWrite_date);
+	     	 				$tr.append($bRead_num);
+	     	 				$tableBody.append($tr);
+	     	 				
+	     	 			}
+	     	 	},
+	     	 	error:function(request, status, errorData){
+	                 alert("error code: " + request.status + "\n"
+		                           +"message: " + request.responseText
+		                           +"error: " + errorData);
+		                  }   
+	     	 	
+	     	 })
+	     	 
+	      }
+	  
+	  
+	  // 모두 체크
+	  
+		  $(function(){
+				
+		    			$("#checkAll").click(function(){
+		    				var bool = $(this).prop("checked");
+		    				$(".common").prop('checked', bool);
+		    				
+		    			});
+		    		}); 
+	  
+	  </script>
 
    
 
@@ -199,7 +312,7 @@
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
   </body>

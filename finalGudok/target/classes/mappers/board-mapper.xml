@@ -51,6 +51,11 @@
 		<result property="iInquiry_content" column="INQUIRY_CONTENT"/>
 		<result property="iBoard_type" column="BOARD_TYPE"/>
 	</resultMap>
+
+	<resultMap type="EventBoard" id="eventBoard">
+		<id property="eBoard_no" column="BOARD_NO"/>
+		<result property="eE_status" column="E_STATUS"/>
+	</resultMap>
 	
 	
 	<!-- List 게시판 리스트 불러오기 -->
@@ -128,6 +133,7 @@
 		SELECT O.SECRET
 		FROM BOARD B
 		LEFT JOIN ONE_INQUIRY O ON (B.BOARD_NO = O.BOARD_NO)
+		WHERE BOARD_CODE = 'O'
 		ORDER BY B.BOARD_NO DESC
 	</select>
 
@@ -135,8 +141,43 @@
 		SELECT O.INQUIRY_YN
 		FROM BOARD B
 		LEFT JOIN INQUIRY O ON (B.BOARD_NO = O.BOARD_NO)
+		WHERE BOARD_CODE = 'O'
 		ORDER BY B.BOARD_NO DESC
 	</select>
+	
+	<select id="selectInquiryPwd" resultType="String">
+		SELECT O.SECRET_PWD
+		FROM BOARD B
+		LEFT JOIN ONE_INQUIRY O ON (B.BOARD_NO = O.BOARD_NO)
+		WHERE B.BOARD_NO = #{board.bBoard_no}
+	</select>
+	
+	<!-- Event -->
+	<select id="getListCountEvent" resultType="_int">
+		SELECT COUNT(*)
+		FROM BOARD
+		WHERE BOARD_CODE = 'E'
+	</select>
+	
+	<select id="getBoardListEvent1" resultMap="boardResultSet1">
+		SELECT ROWNUM, B.*
+		FROM (SELECT *
+        FROM BOARD B
+        LEFT JOIN BOARD_IMAGE BI on (B.BOARD_NO = BI.BOARD_NO)
+        LEFT JOIN IMAGE on (B_IMAGE_NO = IMAGE_NO)
+        ORDER BY B.BOARD_NO) B
+		WHERE BOARD_CODE = 'E'
+        ORDER BY ROWNUM DESC
+	</select>
+	
+	<select id="getBoardListEvent2" resultMap="eventBoard">
+		SELECT E.E_STATUS
+		FROM BOARD B
+		LEFT JOIN EVENT_BOARD E ON (B.BOARD_NO = E.BOARD_NO)
+		WHERE BOARD_CODE = 'E'
+		ORDER BY B.BOARD_NO DESC
+	</select>
+	
 	
 	<!-- Count 조회수 증가 -->
 	<update id="updateCount" parameterType="int">
@@ -144,6 +185,464 @@
 		SET READ_NUM = READ_NUM + 1
 		WHERE BOARD_NO = #{b.bBoard_no}
 	</update>
+	
+	<!-- 검색 기능 -->
+	<!-- 검색 리스트 부르기 -->
+	<!-- notice -->
+	<select id="selectSearchListNotice" resultMap="boardResultSet1">
+		SELECT ROWNUM, B.*
+		FROM (SELECT *
+        FROM BOARD B
+        LEFT JOIN BOARD_IMAGE BI on (B.BOARD_NO = BI.BOARD_NO)
+        LEFT JOIN IMAGE on (B_IMAGE_NO = IMAGE_NO)
+        LEFT JOIN EVENT_BOARD E ON (B.BOARD_NO = E.BOARD_NO)
+        ORDER BY B.BOARD_NO) B
+        <where>
+			<if test="searchType=='title'">
+				B.BOARD_CODE= 'N'
+				AND B.TITLE LIKE '%${keyword}%'
+			</if>
+			
+			<if test="searchType=='content'">
+				B.BOARD_CODE= 'N'
+				AND B.CONTENT LIKE '%${keyword}%'
+			</if>
+			
+			<if test="searchType=='titleContent'">
+				B.BOARD_CODE= 'N'
+				AND (B.TITLE LIKE '%${keyword}%'
+				OR B.CONTENT LIKE '%${keyword}%')
+			</if>
+		</where>
+        ORDER BY ROWNUM DESC
+	</select>
+	
+	<!-- FAQ -->
+	<select id="selectSearchListFAQ" resultMap="boardResultSet1">
+		SELECT ROWNUM, B.*
+		FROM (SELECT *
+        FROM BOARD B
+        LEFT JOIN BOARD_IMAGE BI on (B.BOARD_NO = BI.BOARD_NO)
+        LEFT JOIN IMAGE on (B_IMAGE_NO = IMAGE_NO)
+        LEFT JOIN EVENT_BOARD E ON (B.BOARD_NO = E.BOARD_NO)
+        ORDER BY B.BOARD_NO) B
+        <where>
+			<if test="searchType=='title'">
+				B.BOARD_CODE= 'F'
+				AND B.TITLE LIKE '%${keyword}%'
+			</if>
+			
+			<if test="searchType=='content'">
+				B.BOARD_CODE= 'F'
+				AND B.CONTENT LIKE '%${keyword}%'
+			</if>
+			
+			<if test="searchType=='titleContent'">
+				B.BOARD_CODE= 'F'
+				AND (B.TITLE LIKE '%${keyword}%'
+				OR B.CONTENT LIKE '%${keyword}%')
+			</if>
+		</where>
+        ORDER BY ROWNUM DESC
+	</select>
+	
+	
+	<!-- productProposal -->
+	<select id="selectSearchListProductProposal" resultMap="boardResultSet1">
+		SELECT ROWNUM, B.*
+		FROM (SELECT *
+        FROM BOARD B
+        LEFT JOIN BOARD_IMAGE BI on (B.BOARD_NO = BI.BOARD_NO)
+        LEFT JOIN IMAGE on (B_IMAGE_NO = IMAGE_NO)
+        LEFT JOIN EVENT_BOARD E ON (B.BOARD_NO = E.BOARD_NO)
+        ORDER BY B.BOARD_NO) B
+        <where>
+			<if test="searchType=='All'">
+				B.BOARD_CODE= 'P'
+				AND (B.TITLE LIKE '%${keyword}%'
+				OR B.CONTENT LIKE '%${keyword}%'
+				OR B.MEMBER_ID LIKE '%${keyword}%')
+			</if>
+        
+			<if test="searchType=='title'">
+				B.BOARD_CODE= 'P'
+				AND B.TITLE LIKE '%${keyword}%'
+			</if>
+			
+			<if test="searchType=='content'">
+				B.BOARD_CODE= 'P'
+				AND B.CONTENT LIKE '%${keyword}%'
+			</if>
+
+			<if test="searchType=='user'">
+				B.BOARD_CODE= 'P'
+				AND B.MEMBER_ID LIKE '%${keyword}%'
+			</if>
+		</where>
+        ORDER BY ROWNUM DESC
+	</select>
+	
+	
+	
+	<!-- event -->
+	<select id="getListCountEventSearch" resultType="_int">
+		SELECT COUNT(*)
+		FROM BOARD
+		WHERE BOARD_CODE = 'E'
+	</select>
+	
+	
+	<select id="selectSearchListEvent1" resultMap="boardResultSet1">
+		SELECT ROWNUM, B.*
+		FROM (SELECT *
+        FROM BOARD B
+        LEFT JOIN BOARD_IMAGE BI on (B.BOARD_NO = BI.BOARD_NO)
+        LEFT JOIN IMAGE on (B_IMAGE_NO = IMAGE_NO)
+        LEFT JOIN EVENT_BOARD E ON (B.BOARD_NO = E.BOARD_NO)
+        ORDER BY B.BOARD_NO) B
+        <where>
+			<if test="searchType=='title' and post_yn.equals('All')">
+				B.BOARD_CODE= 'E'
+				AND B.TITLE LIKE '%${keyword}%'
+			</if>
+			
+			<if test="searchType=='content' and post_yn.equals('All')">
+				B.BOARD_CODE= 'E'
+				AND B.CONTENT LIKE '%${keyword}%'
+			</if>
+			
+			<if test="searchType=='titleContent' and post_yn.equals('All')">
+				B.BOARD_CODE= 'E'
+				AND (B.TITLE LIKE '%${keyword}%'
+				OR B.CONTENT LIKE '%${keyword}%')
+			</if>
+			<if test="searchType=='title' and post_yn.equals('Yes')">
+				B.BOARD_CODE= 'E'
+				AND B.TITLE LIKE '%${keyword}%'
+				AND E_STATUS = 'Y'
+			</if>
+			<if test="searchType=='title' and post_yn.equals('No')">
+				B.BOARD_CODE= 'E'
+				AND B.TITLE LIKE '%${keyword}%'
+				AND E_STATUS = 'N'
+			</if>
+			<if test="searchType=='content' and post_yn.equals('Yes')">
+				B.BOARD_CODE= 'E' 
+				AND B.CONTENT LIKE '%${keyword}%'
+				AND E_STATUS = 'Y'
+			</if>
+			<if test="searchType=='content' and post_yn.equals('No')">
+				B.BOARD_CODE= 'E' 
+				AND B.CONTENT LIKE '%${keyword}%'
+				AND E_STATUS = 'N'
+			</if>
+			<if test="searchType=='titleContent' and post_yn.equals('Yes')">
+				B.BOARD_CODE= 'E'
+				AND (B.TITLE LIKE '%${keyword}%'
+				OR B.CONTENT LIKE '%${keyword}%')
+				AND E_STATUS = 'Y'
+			</if>
+			<if test="searchType=='titleContent' and post_yn.equals('No')">
+				B.BOARD_CODE= 'E'
+				AND (B.TITLE LIKE '%${keyword}%'
+				OR B.CONTENT LIKE '%${keyword}%')
+				AND E_STATUS = 'N'
+			</if>
+		</where>
+        ORDER BY ROWNUM DESC
+	</select>
+	
+	<select id="selectSearchListEvent2" resultMap="eventBoard">
+		SELECT E.E_STATUS
+		FROM BOARD B
+		LEFT JOIN EVENT_BOARD E ON (B.BOARD_NO = E.BOARD_NO)
+		<where>
+			<if test="searchType=='title' and post_yn.equals('All')">
+				B.BOARD_CODE= 'E'
+				AND B.TITLE LIKE '%${keyword}%'
+			</if>
+			
+			<if test="searchType=='content' and post_yn.equals('All')">
+				B.BOARD_CODE= 'E'
+				AND B.CONTENT LIKE '%${keyword}%'
+			</if>
+			
+			<if test="searchType=='titleContent' and post_yn.equals('All')">
+				B.BOARD_CODE= 'E'
+				AND (B.TITLE LIKE '%${keyword}%'
+				OR B.CONTENT LIKE '%${keyword}%')
+			</if>
+			<if test="searchType=='title' and post_yn.equals('Yes')">
+				B.BOARD_CODE= 'E'
+				AND B.TITLE LIKE '%${keyword}%'
+				AND E.E_STATUS = 'Y'
+			</if>
+			<if test="searchType=='title' and post_yn.equals('No')">
+				B.BOARD_CODE= 'E'
+				AND B.TITLE LIKE '%${keyword}%'
+				AND E.E_STATUS = 'N'
+			</if>
+			<if test="searchType=='content' and post_yn.equals('Yes')">
+				B.BOARD_CODE= 'E' 
+				AND B.CONTENT LIKE '%${keyword}%'
+				AND E.E_STATUS = 'Y'
+			</if>
+			<if test="searchType=='content' and post_yn.equals('No')">
+				B.BOARD_CODE= 'E' 
+				AND B.CONTENT LIKE '%${keyword}%'
+				AND E.E_STATUS = 'N'
+			</if>
+			<if test="searchType=='titleContent' and post_yn.equals('Yes')">
+				B.BOARD_CODE= 'E'
+				AND (B.TITLE LIKE '%${keyword}%'
+				OR B.CONTENT LIKE '%${keyword}%')
+				AND E.E_STATUS = 'Y'
+			</if>
+			<if test="searchType=='titleContent' and post_yn.equals('No')">
+				B.BOARD_CODE= 'E'
+				AND (B.TITLE LIKE '%${keyword}%'
+				OR B.CONTENT LIKE '%${keyword}%')
+				AND E.E_STATUS = 'N'
+			</if>
+		</where>
+		ORDER BY B.BOARD_NO DESC
+	</select>
+
+
+	<!-- inquiry -->
+	<select id="selectSearchListInquiry1" resultMap="boardResultSet1">
+		SELECT ROWNUM, B.*
+		FROM (SELECT *
+        FROM BOARD B
+        LEFT JOIN BOARD_IMAGE BI on (B.BOARD_NO = BI.BOARD_NO)
+        LEFT JOIN IMAGE on (B_IMAGE_NO = IMAGE_NO)
+        LEFT JOIN ONE_INQUIRY O ON (B.BOARD_NO = O.BOARD_NO)
+        LEFT JOIN INQUIRY I ON (B.BOARD_NO = I.BOARD_NO)
+        ORDER BY B.BOARD_NO) B
+        <where>
+			<if test="searchType=='title' and inquiry_yn.equals('All')">
+				B.BOARD_CODE= 'O'
+				AND B.TITLE LIKE '%${keyword}%'
+			</if>
+			
+			<if test="searchType=='content' and inquiry_yn.equals('All')">
+				B.BOARD_CODE= 'O'
+				AND B.CONTENT LIKE '%${keyword}%'
+			</if>
+
+			<if test="searchType=='user' and inquiry_yn.equals('All')">
+				B.BOARD_CODE= 'O'
+				AND B.MEMBER_ID LIKE '%${keyword}%'
+			</if>
+			
+			<if test="searchType=='All' and inquiry_yn.equals('All')">
+				B.BOARD_CODE= 'O'
+				AND (B.TITLE LIKE '%${keyword}%'
+				OR B.CONTENT LIKE '%${keyword}%'
+				OR B.MEMBER_ID LIKE '%${keyword}%')
+			</if>
+			<if test="searchType=='title' and inquiry_yn.equals('Yes')">
+				B.BOARD_CODE= 'O'
+				AND B.TITLE LIKE '%${keyword}%'
+				AND INQUIRY_YN = 'Y'
+			</if>
+			<if test="searchType=='title' and inquiry_yn.equals('No')">
+				B.BOARD_CODE= 'O'
+				AND B.TITLE LIKE '%${keyword}%'
+				AND INQUIRY_YN = 'N'
+			</if>
+			<if test="searchType=='content' and inquiry_yn.equals('Yes')">
+				B.BOARD_CODE= 'O' 
+				AND B.CONTENT LIKE '%${keyword}%'
+				AND INQUIRY_YN = 'Y'
+			</if>
+			<if test="searchType=='content' and inquiry_yn.equals('No')">
+				B.BOARD_CODE= 'O' 
+				AND B.CONTENT LIKE '%${keyword}%'
+				AND INQUIRY_YN = 'N'
+			</if>
+			<if test="searchType=='user' and inquiry_yn.equals('Yes')">
+				B.BOARD_CODE= 'O'
+				AND B.MEMBER_ID LIKE '%${keyword}%'
+				AND INQUIRY_YN = 'Y'
+			</if>
+			<if test="searchType=='user' and inquiry_yn.equals('No')">
+				B.BOARD_CODE= 'O'
+				AND B.MEMBER_ID LIKE '%${keyword}%'
+				AND INQUIRY_YN = 'N'
+			</if>
+			<if test="searchType=='All' and inquiry_yn.equals('Yes')">
+				B.BOARD_CODE= 'O'
+				AND (B.TITLE LIKE '%${keyword}%'
+				OR B.CONTENT LIKE '%${keyword}%'
+				OR B.MEMBER_ID LIKE '%${keyword}%')
+				AND INQUIRY_YN = 'Y'
+			</if>
+			<if test="searchType=='All' and inquiry_yn.equals('No')">
+				B.BOARD_CODE= 'O'
+				AND (B.TITLE LIKE '%${keyword}%'
+				OR B.CONTENT LIKE '%${keyword}%'
+				OR B.MEMBER_ID LIKE '%${keyword}%')
+				AND INQUIRY_YN = 'N'
+			</if>
+		</where>
+        ORDER BY ROWNUM DESC
+	</select>
+	
+	<select id="selectSearchListInquiry2" resultMap="secret">
+		SELECT O.SECRET
+		FROM BOARD B
+		LEFT JOIN ONE_INQUIRY O ON (B.BOARD_NO = O.BOARD_NO)
+        LEFT JOIN INQUIRY I ON (B.BOARD_NO = I.BOARD_NO)
+       <where>
+			<if test="searchType=='title' and inquiry_yn.equals('All')">
+				B.BOARD_CODE= 'O'
+				AND B.TITLE LIKE '%${keyword}%'
+			</if>
+			
+			<if test="searchType=='content' and inquiry_yn.equals('All')">
+				B.BOARD_CODE= 'O'
+				AND B.CONTENT LIKE '%${keyword}%'
+			</if>
+
+			<if test="searchType=='user' and inquiry_yn.equals('All')">
+				B.BOARD_CODE= 'O'
+				AND B.MEMBER_ID LIKE '%${keyword}%'
+			</if>
+			
+			<if test="searchType=='All' and inquiry_yn.equals('All')">
+				B.BOARD_CODE= 'O'
+				AND (B.TITLE LIKE '%${keyword}%'
+				OR B.CONTENT LIKE '%${keyword}%'
+				OR B.MEMBER_ID LIKE '%${keyword}%')
+			</if>
+			<if test="searchType=='title' and inquiry_yn.equals('Yes')">
+				B.BOARD_CODE= 'O'
+				AND B.TITLE LIKE '%${keyword}%'
+				AND INQUIRY_YN = 'Y'
+			</if>
+			<if test="searchType=='title' and inquiry_yn.equals('No')">
+				B.BOARD_CODE= 'O'
+				AND B.TITLE LIKE '%${keyword}%'
+				AND INQUIRY_YN = 'N'
+			</if>
+			<if test="searchType=='content' and inquiry_yn.equals('Yes')">
+				B.BOARD_CODE= 'O' 
+				AND B.CONTENT LIKE '%${keyword}%'
+				AND INQUIRY_YN = 'Y'
+			</if>
+			<if test="searchType=='content' and inquiry_yn.equals('No')">
+				B.BOARD_CODE= 'O' 
+				AND B.CONTENT LIKE '%${keyword}%'
+				AND INQUIRY_YN = 'N'
+			</if>
+			<if test="searchType=='user' and inquiry_yn.equals('Yes')">
+				B.BOARD_CODE= 'O'
+				AND B.MEMBER_ID LIKE '%${keyword}%'
+				AND INQUIRY_YN = 'Y'
+			</if>
+			<if test="searchType=='user' and inquiry_yn.equals('No')">
+				B.BOARD_CODE= 'O'
+				AND B.MEMBER_ID LIKE '%${keyword}%'
+				AND INQUIRY_YN = 'N'
+			</if>
+			<if test="searchType=='All' and inquiry_yn.equals('Yes')">
+				B.BOARD_CODE= 'O'
+				AND (B.TITLE LIKE '%${keyword}%'
+				OR B.CONTENT LIKE '%${keyword}%'
+				OR B.MEMBER_ID LIKE '%${keyword}%')
+				AND INQUIRY_YN = 'Y'
+			</if>
+			<if test="searchType=='All' and inquiry_yn.equals('No')">
+				B.BOARD_CODE= 'O'
+				AND (B.TITLE LIKE '%${keyword}%'
+				OR B.CONTENT LIKE '%${keyword}%'
+				OR B.MEMBER_ID LIKE '%${keyword}%')
+				AND INQUIRY_YN = 'N'
+			</if>
+		</where>
+        ORDER BY B.BOARD_NO DESC
+	</select>
+	
+	<select id="selectSearchListInquiry3" resultMap="inquiry">
+		SELECT I.INQUIRY_YN
+		FROM BOARD B
+		 LEFT JOIN ONE_INQUIRY O ON (B.BOARD_NO = O.BOARD_NO)
+        LEFT JOIN INQUIRY I ON (B.BOARD_NO = I.BOARD_NO)
+        <where>
+			<if test="searchType=='title' and inquiry_yn.equals('All')">
+				B.BOARD_CODE= 'O'
+				AND B.TITLE LIKE '%${keyword}%'
+			</if>
+			
+			<if test="searchType=='content' and inquiry_yn.equals('All')">
+				B.BOARD_CODE= 'O'
+				AND B.CONTENT LIKE '%${keyword}%'
+			</if>
+
+			<if test="searchType=='user' and inquiry_yn.equals('All')">
+				B.BOARD_CODE= 'O'
+				AND B.MEMBER_ID LIKE '%${keyword}%'
+			</if>
+			
+			<if test="searchType=='All' and inquiry_yn.equals('All')">
+				B.BOARD_CODE= 'O'
+				AND (B.TITLE LIKE '%${keyword}%'
+				OR B.CONTENT LIKE '%${keyword}%'
+				OR B.MEMBER_ID LIKE '%${keyword}%')
+			</if>
+			<if test="searchType=='title' and inquiry_yn.equals('Yes')">
+				B.BOARD_CODE= 'O'
+				AND B.TITLE LIKE '%${keyword}%'
+				AND INQUIRY_YN = 'Y'
+			</if>
+			<if test="searchType=='title' and inquiry_yn.equals('No')">
+				B.BOARD_CODE= 'O'
+				AND B.TITLE LIKE '%${keyword}%'
+				AND INQUIRY_YN = 'N'
+			</if>
+			<if test="searchType=='content' and inquiry_yn.equals('Yes')">
+				B.BOARD_CODE= 'O' 
+				AND B.CONTENT LIKE '%${keyword}%'
+				AND INQUIRY_YN = 'Y'
+			</if>
+			<if test="searchType=='content' and inquiry_yn.equals('No')">
+				B.BOARD_CODE= 'O' 
+				AND B.CONTENT LIKE '%${keyword}%'
+				AND INQUIRY_YN = 'N'
+			</if>
+			<if test="searchType=='user' and inquiry_yn.equals('Yes')">
+				B.BOARD_CODE= 'O'
+				AND B.MEMBER_ID LIKE '%${keyword}%'
+				AND INQUIRY_YN = 'Y'
+			</if>
+			<if test="searchType=='user' and inquiry_yn.equals('No')">
+				B.BOARD_CODE= 'O'
+				AND B.MEMBER_ID LIKE '%${keyword}%'
+				AND INQUIRY_YN = 'N'
+			</if>
+			<if test="searchType=='All' and inquiry_yn.equals('Yes')">
+				B.BOARD_CODE= 'O'
+				AND (B.TITLE LIKE '%${keyword}%'
+				OR B.CONTENT LIKE '%${keyword}%'
+				OR B.MEMBER_ID LIKE '%${keyword}%')
+				AND INQUIRY_YN = 'Y'
+			</if>
+			<if test="searchType=='All' and inquiry_yn.equals('No')">
+				B.BOARD_CODE= 'O'
+				AND (B.TITLE LIKE '%${keyword}%'
+				OR B.CONTENT LIKE '%${keyword}%'
+				OR B.MEMBER_ID LIKE '%${keyword}%')
+				AND INQUIRY_YN = 'N'
+			</if>
+		</where>
+        ORDER BY B.BOARD_NO DESC
+	</select>
+	
+	
+
+
+
 	
 	
 	<!-- Detail 상세하게 볼 게시물 선택, 불러오기 -->
@@ -172,6 +671,13 @@
         LEFT JOIN INQUIRY I ON (B.BOARD_NO = I.BOARD_NO)
         LEFT JOIN INQUIRY_TYPE T ON (I.BOARD_TYPE = T.BOARD_TYPE)
         WHERE I.BOARD_NO = #{b.bBoard_no}
+	</select>
+
+	<select id="selectEDetail" parameterType="int" resultMap="eventBoard">
+		SELECT *
+		FROM BOARD B
+        LEFT JOIN EVENT_BOARD E ON (B.BOARD_NO = E.BOARD_NO)
+        WHERE E.BOARD_NO = #{b.bBoard_no}
 	</select>
 	
 	<!-- img존재 -->
@@ -255,6 +761,7 @@
 			, DEFAULT
 		)
 	</insert>
+	
 	<insert id="insertInquiry2" parameterType="secret">
 		INSERT INTO ONE_INQUIRY VALUES(
 			SEQ_BNO.CURRVAL
@@ -262,6 +769,7 @@
 			, #{oSecret_pwd}
 		)
 	</insert>
+	
 	<insert id="insertInquiry3" parameterType="inquiry">
 		INSERT INTO INQUIRY VALUES(
 			SEQ_BNO.CURRVAL
@@ -269,6 +777,29 @@
 			, NULL
 			, #{iInquiry_content }
 			, #{iBoard_type }
+		)
+	</insert>
+	
+	<!-- Event -->
+	<insert id="insertEvent1" parameterType="Board">
+		INSERT INTO BOARD VALUES(
+			SEQ_BNO.NEXTVAL
+			, #{bTitle}
+			, #{bContent}
+			, SYSDATE
+			, DEFAULT
+			, 'E'
+			, 1
+			, 'admin'
+			, 'admin@naver.com'
+			, DEFAULT
+		)
+	</insert>
+	
+	<insert id="insertEvent2" parameterType="eventBoard">
+		INSERT INTO EVENT_BOARD VALUES(
+			SEQ_BNO.CURRVAL
+			, 'Y'
 		)
 	</insert>
 	
@@ -317,8 +848,54 @@
 		SET BOARD_TYPE = #{iBoard_type}
 		WHERE BOARD_NO = #{iBoard_no}
 	</update>
+
+	<!-- inquiry 답변 등록(수정) -->
+	<update id="updateInquiryAnswer1" parameterType="inquiry">
+		UPDATE INQUIRY
+		SET INQUIRY_YN = 'Y'
+			,INQUIRY_DATE = SYSDATE
+			,INQUIRY_CONTENT = #{iInquiry_content }
+		WHERE BOARD_NO = #{iBoard_no}
+	</update>
+	
+	<!-- event 게시판 게시 -->
+	<update id="updateEventStatusY" parameterType="java.util.ArrayList">
+		UPDATE EVENT_BOARD
+		SET E_STATUS='Y'
+		WHERE BOARD_NO IN
+	
+			<foreach item="e" index="index" collection="list" open="(" separator="," close=")">
+				#{e.eBoard_no}
+			</foreach>
+	
+	</update>
+	
+	<!-- event 게시판 중지 -->
+	<update id="updateEventStatusN" parameterType="java.util.ArrayList">
+		UPDATE EVENT_BOARD
+		SET E_STATUS='N'
+		WHERE BOARD_NO IN
+	
+			<foreach item="e" index="index" collection="list" open="(" separator="," close=")">
+				#{e.eBoard_no}
+			</foreach>
+	
+		</update>
 	
 	<!-- Delete 게시물 삭제하기 -->
+	
+	<!-- event 게시판 선택 삭제 -->
+	<select id="selectDeleteBoard" parameterType="_int" resultMap="boardResultSet1">
+		SELECT *
+		FROM BOARD
+		WHERE BOARD_NO IN(#{bBoard_no}) 
+	</select>
+	
+	<!-- Event -->
+	<delete id="deleteEventBoard" parameterType="int">
+		DELETE FROM EVENT_BOARD 
+		WHERE BOARD_NO = #{b.bBoard_no}
+	</delete>
 	
 	<!-- image -->
 	<delete id="deleteImage" parameterType="int">
@@ -352,8 +929,10 @@
 
 	<!-- inquiry -->
 	<delete id="deleteInquiryBoard" parameterType="int">
-		DELETE FROM INQUIRY I
+		DELETE FROM INQUIRY 
 		WHERE BOARD_NO = #{bBoard_no}
 	</delete>
+
+	
 	
 </mapper>

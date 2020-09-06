@@ -45,6 +45,13 @@
         padding: 8px 16px;
         text-decoration: none;
     }
+    
+    .myPage_Menu li span {
+        display: block;
+        color: #000;
+        padding: 8px 16px;
+        text-decoration: none;
+    }
 
     .myPage_Menu li a.active {
         /* background-color: #4CAF50; */
@@ -239,10 +246,13 @@
 	<div id="content">
         <ul class="myPage_Menu">
             <li>
-                <a href="#home"><img src="resources/images/delivery.png"
-                        style="width: 25%; height: 25%; margin-right: 4%;">구독배송</a>
+                <span><img src="resources/images/delivery.png"
+                        style="width: 25%; height: 25%; margin-right: 4%;">구독배송</span>
                 <ul>
-                    <li><a href="#">구독 조회</a></li>
+                	<c:url var="slist" value="subscribeView.do">
+						<c:param name="memberNo" value="${loginUser.memberNo}"/>
+					</c:url> 
+                    <li><a href="${slist}">구독 조회</a></li>
                     <c:url var="dlist" value="deliveryList.do">
 						<c:param name="memberNo" value="${loginUser.memberNo}"/>
 					</c:url> 
@@ -254,22 +264,23 @@
                 </ul>
             </li>
             <li>
-                <a href="#news"><img src="resources/images/my_benefit.png"
-                        style="width: 25%; height: 25%; margin-right: 4%;">나의혜택</a>
+                <span><img src="resources/images/my_benefit.png"
+                        style="width: 25%; height: 25%; margin-right: 4%;">나의혜택</span>
                 <ul>
-                    <li><a href="#">회원 등급</a></li>
+                    <c:url var="grade" value="gradeView.do"></c:url> 
+                    <li><a href="${grade}">회원 등급</a></li>
                     <c:url var="plist" value="pointList.do">
 							<c:param name="memberNo" value="${loginUser.memberNo}"/>
 					</c:url> 
                     <li><a href="${plist}">적립금 내역</a></li>
                 </ul>
             </li>
-            <c:url var="clist" value="cartList.do">
+            <c:url var="clist" value="cartView.do">
 				<c:param name="memberNo" value="${loginUser.memberNo}"/>
 			</c:url> 
             <li><a href="${clist}"><img src="resources/images/cart.png"
                         style="width: 25%; height: 25%; margin-right: 4%;">장바구니</a></li>
-            <c:url var="hlist" value="heartList.do">
+            <c:url var="hlist" value="heartView.do">
 				<c:param name="memberNo" value="${loginUser.memberNo}"/>
 			</c:url> 
             <li><a href="${hlist}"><img src="resources/images/heart.png" style="width: 25%; height: 25%; margin-right: 4%;">찜</a>
@@ -299,6 +310,7 @@
                 </ul>
             </li>
         </ul>
+        
         <div class="content_sub">
             <span class="sub_content" style="font-size: 1.5em;">회원정보 수정</span>
             <br><br>

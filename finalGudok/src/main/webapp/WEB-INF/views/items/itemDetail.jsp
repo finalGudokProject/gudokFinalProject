@@ -110,7 +110,7 @@ div #mainImg{
 div #logoImg{
 	display:block;
 	width: 100%;
-	height: 100%;
+	height: 39rem;
 	border:1px solid lightgray;
 }
 
@@ -258,7 +258,7 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 	<div class="container" style="margin-top:3%;">
 		<div class="row">
 			
-			<div class="col-md-6" style="padding:0 2% 0 2%;"><img src="${contextPath }/resources/images/breadLogo.jpg" id="logoImg"></div>
+			<div class="col-md-6" style="padding:0 2% 0 2%;"><img src="${contextPath }/resources/uploadFiles/${ilv.itemRename}" id="logoImg"></div>
 			<div class="col-md-6" style="margin-bottom:2%;">
 					<div style="margin-top:3%;">${ilv.categoryName }</div>
 					<div class="row">
@@ -272,7 +272,12 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 					</c:if>
 					</div>
 					<div class="col-md-6" style="padding:0 15px;font-size:20px;">
+					<c:if test="${empty ilv.itemMemo }">
+						${ilv.itemName }입니다.
+					</c:if>
+					<c:if test="${!empty ilv.itemMemo }">
 						${ilv.itemMemo }
+					</c:if>
 					</div>
 					<div class="col-md-6" style="padding-right:4%;text-align:right;">
 						<span style="text-align:right;" id="whatSpan" data-toggle="modal" data-target="#intro" title="상품 문의"><img id="whatImg"src="${contextPath }/resources/images/what.png" style="width:35px;height:35px;border:2px solid black;border-radius:5px;display:inline-block;vertical-align:middle;"></span>
@@ -371,7 +376,7 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 		
 			<!-- 상세 이미지 -->
 			<div class="col-md-12" style="padding:3%;margin:3% 0 3% 0; width:100%;height:auto;">
-				<img src="${contextPath }/resources/images/bread.png" id="mainImg">
+				<img src="${contextPath }/resources/uploadFiles/${ilv.imageRename}" id="mainImg">
 			</div>
 			<!-- 상세 이미지 끝 -->
 			
@@ -478,7 +483,7 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 							if(login){
 								
 							}else{
-								swal("","로그인 페이지로");
+								location.href="moveToLogin.do";
 							}
 						})
 					});
@@ -826,7 +831,7 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 							break;
 					}
 					
-					/* console.log(text) */
+					console.log(text);
 					$("#cycleText").val(text);
 				})
 			})
@@ -843,6 +848,8 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 				var email = "${loginUser.email}";
 				var itemName = "${ilv.itemName}";
 				var itemPrice = "${ilv.itemPrice}";
+				var cartCount = $(".amountT").val();
+				var cartSubs = $("#cycleText").val();
 				$("#paymentBtn").click(function(){
 					var cycle = $("#cycleText").val();
 					var amount = $(".amountT").val();
@@ -850,19 +857,35 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 					if(cycle == ""){
 						swal("","구독 주기를 선택해 주세요.","error");
 					}else{
-						swal({
-							text : amount + "개의 상품을 " + cycle + "주일 동안 구독하시겠습니까?",
-							icon : "warning",
-							buttons : ["예", "아니오"],
-							closeOnEsc: false,
-							dangerMode : true,
-						}).then((result)=>{
-							if(result){
-								
-							}else{
-								swal("","결제 페이지로","info");
-							}
-						})
+						if(${loginUser.memberNo == null}){
+							swal({
+								text : "로그인해야 사용 가능한 기능입니다. 로그인 하시겠습니까?",
+								icon : "error",
+								buttons : ["예", "아니오"],
+								closeOnEsc : false,
+								dangerMode : true,
+							}).then((loginCheck)=>{
+								if(loginCheck){
+									
+								}else{
+									location.href="moveToLogin.do";
+								}
+							})
+						}else{
+							swal({
+								text : amount + "개의 상품을 " + cycle + "주일 동안 구독하시겠습니까?",
+								icon : "warning",
+								buttons : ["예", "아니오"],
+								closeOnEsc: false,
+								dangerMode : true,
+							}).then((result)=>{
+								if(result){
+									
+								}else{
+									location.href="moveToPayment.do?itemName=itemName&cartCount=cartCount&itemPrice=itemPrice&cartSubs=cartSubs";
+								}
+							})
+						}
 					}
 				})
 				$("#basketBtn").click(function(){
@@ -883,7 +906,7 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 								if(loginCheck){
 									
 								}else{
-									swal("","로그인 폼으로","info");
+									location.href="moveToLogin.do";
 								}
 							})
 						}else{
@@ -1033,7 +1056,7 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 						if(login){
 							
 						}else{
-							swal("","로그인 페이지로");
+							location.href="moveToLogin.do";
 						}
 					})
 				});
@@ -1161,7 +1184,7 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 							if(login){
 								
 							}else{
-								swal("","로그인 페이지로");
+								location.href="moveToLogin.do";
 							}
 						})
 					});

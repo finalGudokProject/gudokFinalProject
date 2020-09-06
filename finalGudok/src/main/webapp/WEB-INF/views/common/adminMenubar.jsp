@@ -23,6 +23,7 @@
     <style>
 body{
     font-family: 'Noto Sans KR', sans-serif;
+    background-color:#F5F5F5;
     /* font-family: 'Jua', sans-serif;     */
 }
 
@@ -30,6 +31,10 @@ img{
     max-width: 100%; 
     height: auto;
     padding:0 !important;
+    
+}
+img:hover{
+cursor: pointer;
 }
 
 .container-fluid {
@@ -96,6 +101,12 @@ div {
     font-color:red;
 }
 
+
+
+
+
+
+
 .bd-content {
     -ms-flex-order: 1;
     order: 1; /*div순서*/
@@ -103,7 +114,32 @@ div {
   
 }
 
+::-webkit-scrollbar {
+/* display:none; */
+width: 7px; 
+height: 7px; 
+}
+::-webkit-scrollbar-button:start:decrement, ::-webkit-scrollbar-button:end:increment {
+display: block; 
+height: 10px; 
 
+}
+::-webkit-scrollbar-track {
+/* background: #efefef;  */
+background: transparent;
+-webkit-border-radius: 10px; 
+border-radius:10px; 
+/* -webkit-box-shadow: inset 0 0 4px rgba(0,0,0,.2) */
+}
+::-webkit-scrollbar-thumb {
+height: 50px; 
+width: 50px; 
+ background-color:rgba(69,75,77,0.2); 
+/* background-color:#b1bfc5; */
+-webkit-border-radius: 8px; 
+border-radius: 8px; 
+-webkit-box-shadow: inset 0 0 4px rgba(0,0,0,.1)
+}
 
 
 .bd-links {
@@ -398,6 +434,13 @@ label > span {
         
         #cursor{
 		cursor: pointer;
+		
+		}
+		 #cursor:hover{
+		cursor: pointer;
+		
+		text-decoration: underline;
+		
 		}
     </style>
   </head>
@@ -411,7 +454,7 @@ label > span {
     <div class="container-fluid" style="background-color: red;" >
         <div class="row">
             <div class="col-md-3 bd-sidebar">
-                <img src="resources/images/logo2.png" style="padding:0;">
+                <img src="resources/images/logo2.png" style="padding:0;" onclick="location.href='aMain.do'">
                 
                 <h2 style="text-align: center; font-size: 18px; margin-top:35px;"><b>관리자</b>님, 환영합니다.</h2>
                 <br>
@@ -483,9 +526,12 @@ label > span {
                                         <path fill-rule="evenodd" d="M0 14.5a.5.5 0 0 1 .5-.5h15a.5.5 0 0 1 0 1H.5a.5.5 0 0 1-.5-.5z"/>
                                       </svg>&nbsp;&nbsp;매출 관리&nbsp;&nbsp;</b></label>
                                   <ul class="group-list sd_ul">
-                                    <li><a href="#">주문 / 배송 내역</a></li>
-                                    <li><a href="#">교환 요청 내역</a></li>
-                                    <li><a href="#">매출 통계 내역</a></li>
+                                    <li><a href="oList.do">구독 / 배송 내역</a></li>
+                                    <li><a href="exchangList.do">교환 요청 내역</a></li>
+                                    <c:url var="goSalesList" value="sDateList.do">
+                                    	<c:param name="type" value="N"/>
+                                    </c:url>
+                                    	<li><a href="${goSalesList }">매출 통계 내역</a></li>
                                     
                                   </ul>
                                 </li>
@@ -509,9 +555,9 @@ label > span {
                                   <ul class="group-list sd_ul">
                                     <li><a href="adminNoticeList.do">공지사항</a></li>
                                     <li><a href="adminFAQList.do">FAQ</a></li>
+                                    <li><a href="adminInquiryList.do">1:1 문의</a></li>
                                     <li><a href="adminProductProposalList.do">상품제안</a></li>
-                                    <li><a href="#">1:1 문의</a></li>
-                                    <li><a href="#">이벤트</a></li>
+                                    <li><a href="adminEventList.do">이벤트</a></li>
                                   </ul>
                                 </li>
                             </ul>

@@ -175,14 +175,12 @@
 			</table>
 			</c:if>
 			<c:if test="${empty list }">
-				<c:if test="${empty list }">
-					<div class="col-2"></div>
-						<div class="col-8" id="emptyDiv" style="margin-top:2%;border:1px solid lightgray;">
-							<div style="text-align:center;width:100%;"><img src="${contextPath }/resources/images/empty.png" style="width:30%;"></div>
-							<div style="text-align:center;width:100%;font-size:40px;">장바구니에 추가한 상품이 없습니다.</div>
-						</div>
-					<div class="col-2"></div>	
-				</c:if>
+				<div class="col-2"></div>
+					<div class="col-8" id="emptyDiv" style="margin-top:2%;border:1px solid lightgray;">
+						<div style="text-align:center;width:100%;"><img src="${contextPath }/resources/images/empty.png" style="width:30%;"></div>
+						<div style="text-align:center;width:100%;font-size:40px;">장바구니에 추가한 상품이 없습니다.</div>
+					</div>
+				<div class="col-2"></div>	
 			</c:if>
 		</div>
 	</div>	<!-- 컨테이너 끝 -->
@@ -240,12 +238,12 @@
 					sum -= Number($(this).val());
 					$("#frontCount").text(check);
 					if(check != 0){
-						$("#delBtn").val("상품을 선택해 주세요.");
+						$("#delBtn").val(check + "개 상품 삭제하기");
 						$("#paymentBtn").val(addComma(sum)+"원 결제하기");
 						$("#totalPriceTd").text("총 주문 금액 : " + addComma(sum)+"원");
 					}else{
 						$("#paymentBtn").val("상품을 선택해 주세요.");
-						$("#delBtn").val(check + "개 상품 삭제하기");
+						$("#delBtn").val("장바구니 삭제하기");
 						$("#totalPriceTd").text("결제하실 상품을 선택해 주세요.");
 					}
 					console.log(sum);
@@ -379,11 +377,12 @@
 			$(function(){
 				$("#paymentBtn").on("click", function(){
 					var check = $("input:checkbox[class='chk']:checked").length;
+					var pay = $("#paymentBtn").val().slice(0,-5);
 					if(check == 0){
 						swal("","결제하실 상품을 선택해 주세요.","error");
 					}else{
 						swal({
-							text : check + "개의 상품 " + "얼마를 결제하시겠습니까?",
+							text : check + "개의 상품 " + pay + "을 결제하시겠습니까?",
 							icon : "warning",
 							buttons : ["예", "아니오"],
 							closeOnEsc : false,

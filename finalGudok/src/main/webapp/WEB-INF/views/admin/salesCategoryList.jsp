@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
  <head>
@@ -14,27 +15,66 @@
     <style>
 
 
+.btn1{
+	background:#F5F5F5;
+	color:black;
+	border-radius:5px;
+	padding:2px 5px;
+	transition:0.2s;
+  	position:relative;
+  	border:1px solid #E0E0E0 !important; 
+	font-size:12px;
 
-#td1{
-    width:15%;
-    vertical-align: middle;
 }
-#td2{
-    width:35%;
-    vertical-align: middle;
+.btn1:hover{
+  background:rgba(69,75,77,0.2);
+  color:black;
+/*   border:1px solid #BDBDBD; */
 }
-#td3{
-    width:15%;
-    vertical-align: middle;
+
+.btn1:hover:before,#btn:hover:after{
+  width:100%;
+  transition:0.2s;
 }
-#td4{
-    width:35%;
-    vertical-align: middle;
+
+
+
+.btn2{
+	background-color:rgba(69,75,77,0.2);
+	color:black;
+	border-radius:px;
+	padding:3px 15px;
+	transition:0.2s;
+  	position:relative;
+  	border:1px solid #B0BEC5; 
+	font-size:14px;
+	font-weight: bold;
+	
+
 }
+.btn2:hover{
+  background:rgba(69,75,77,0.2);
+  color:black;
+  border:1px solid #BDBDBD;
+}
+
+.btn2:hover:before,#btn:hover:after{
+  width:100%;
+  transition:0.2s;
+}
+
 
 input, select,textarea{
-    border: 1px solid #CCCCCC;
+    border: 1px solid #dee2e6;
 }
+
+
+.total{
+
+	text-align:center;
+	border: 1px solid #dee2e6;
+}
+
 
 </style>
 
@@ -44,57 +84,82 @@ input, select,textarea{
     <jsp:include page="../common/adminMenubar.jsp"/>
         <div class="content">
             <div class="container box">
-                <h3>기간별 매출 통계</h3>
+                <h3>카테고리별 매출 통계</h3>
                 <br>
-                <button id="btn">기간별</button>&nbsp;
-                <button id="btn">카테고리별</button>
-                <br><br>
+                <input type="button" class="btn" value="기간별" onclick="location.href='sDateList.do?type='+'N'">
+                <input type="button" class="btn" value="카테고리별" onclick="location.href='sCategoryList.do?type='+'N'">
+			      <input type="hidden" id="startDay" name="startDay" value="${startDay }">
+			      <input type="hidden" id="lastDay" name="lastDay" value="${lastDay }">
+			      <input type="hidden" id="type" name="type" value="${type }">
+			      <c:out value="${startDay}"/>
+			      <c:out value="${lastDay}"/>
+			      <c:out value="${startD}"/>
+			      <c:out value="${type }"/>
+			
+                
+                <br><br><br>
 
                 <div style="width:100%; text-align:right;">
-                <button id="btn">일별</button>&nbsp;
-                <button id="btn">주간</button>&nbsp;
-                <button id="btn">월별</button>
-                </div>
-
-                <br>
-
+                <table>
+                	<tr>
+                		<th style="width:25%; border: 1px solid #CCCCCC;background-color:rgba(69,75,77,0.2);padding:0.25rem !important;vertical-align:middle;"onclick="event.cancelBubble=true">기간 선택</th>
+                		<th  style="text-align:left ;padding:0.3rem !important; border: 1px solid #CCCCCC;"onclick="event.cancelBubble=true">
+			                &nbsp;&nbsp;<input type="date" id="date1" name="date1" value="">~ <input type="date" id="date2" name="date3" value="">&nbsp;&nbsp;
+			               <input type="button" class="btn1" value="오늘" onclick="goList('T');">
+			               <input type="button" class="btn1" value="일주일" onclick="goList('W');">
+			               <input type="button" class="btn1" value="한달" onclick="goList('O');">
+			               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		               		<input type="button" class="btn2" value="검색" onclick="checkDate('D');">
+		               </th>
+                	</tr>
+                	
+                </table>
+                <table>
+                <tr>
+                		<td class="total" style="width:40%"onclick="event.cancelBubble=true">검색 기간 </td>
+                		<td class="total"onclick="event.cancelBubble=true">총 결제 건 수</td>
+                		<td class="total"onclick="event.cancelBubble=true">총 결제 금액</td>
+                	</tr>
+                	<tr>
+                		<td class="total"onclick="event.cancelBubble=true">${startDay } ~ ${lastDay }</td>
+                		<td class="total"onclick="event.cancelBubble=true">${sumTotalC } 건</td>
+                		<td class="total"onclick="event.cancelBubble=true">${sumTotalP } 원</td>
+                	</tr>
+                </table>
                
-        
+               
+                </div>
                     <table>
                         <thead>
                             <tr>
-                                <th id="td1">카테고리</th>
-                                <th>결제건 수</th>
-                                <th>비율</th>
-                                <th>매출</th>
+                                <th onclick="event.cancelBubble=true">카테고리</th>
+                                <th onclick="event.cancelBubble=true">결제건 수</th>
+                                <th onclick="event.cancelBubble=true">비율</th>
+                                <th onclick="event.cancelBubble=true">매출액</th>
                              </tr>   
                          </thead>
                          <tbody>
-                             <tr>
-                                <td>유제품</td>
-                                <td>30</td>
-                                <td>25</td>
-                                <td>100,000</td>
-                            </tr>
-                            <tr>
-                                <td>홈데코</td>
-                                <td>30</td>
-                                <td>25</td>
-                                <td>100,000</td>
-                            </tr>
-                            <tr>
-                                <td>반찬</td>
-                                <td>30</td>
-                                <td>25</td>
-                                <td>100,000</td>
-                            </tr>
-                            <tr>
-                                <td>다이어트 식단</td>
-                                <td>30</td>
-                                <td>25</td>
-                                <td>100,000</td>
-                            </tr>
-                           
+                         	<c:if test="${!empty pList }">
+                             <c:forEach var="i" items="${pList }" varStatus="cnt">
+	                             <tr>
+	                             	<td>${i.categoryNo }</td>
+	                                <td>${i.totalCount } 건</td>
+	                                <c:if test="${ratio[cnt.index] gt 50 }">
+	                                <td style="color:red;">${ratio[cnt.index] } %</td>
+	                                </c:if>
+	                                <c:if test="${ratio[cnt.index] lt 50 }">
+	                                <td>${ratio[cnt.index] } %</td>
+	                                </c:if>
+	                                
+	                                <td>${i.totalPayment } 원</td>
+	                            </tr>
+                            </c:forEach>
+                            </c:if>
+                            <c:if test="${empty pList }">
+                            	<tr>
+	                                <td colspan="4">결제 내역이 없습니다.</td>
+	                            </tr>
+                            </c:if>
                          </tbody>
                     </table>
 
@@ -103,35 +168,69 @@ input, select,textarea{
                     <br>
 
 
-                    <!------페이징 처리----->
-                <div class="page-center">
-                    <ul class="pagination-t">
-
-                        <!-- disabled: 페이지 비활성화 -->
-                        <li class="page-item-t disabled-t"><a class="page-link-t" href="#"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-chevron-left" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
-                          </svg></a></li>
-
-                        <li class="page-item-t"><a class="page-link-t" href="#">1</a></li>
-
-                        <!-- disabled: 해당 버튼 활성화 -->
-                        <li class="page-item-t active-t" aria-current="page-t">
-                            <a class="page-link-t" href="#">2 <span class="sr-only">(current)</span></a>
-                        </li>
-                        <li class="page-item-t"><a class="page-link-t" href="#">3</a></li>
-                        <li class="page-item-t"><a class="page-link-t" href="#"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-chevron-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
-                          </svg></a></li>
-                    </ul>
-
-                </div>
-
-
+                  
 
 
 
             </div><!--내용담은 컨테이너-->
         </div><!--250px띄운 div-->
+       
+       <script>
+       //매출 상세보기 
+       
+     	 	$(function(){
+   	       		
+   	       		$("tr").on("click",function(){
+   	       			var type=$("#type").val();
+   	       			var type2='category';
+   	       			var startDay=$("#startDay").val();
+   	       			var lastDay=$("#lastDay").val();
+   	        		var categoryNo=$(this).children().eq(0).text();
+   	        		
+   	        		alert(categoryNo)
+   	        		
+   	        
+   	        		 
+   	           		location.href="sDetail.do?type2="+type2+"&type="+type+"&startDay="+startDay+"&lastDay="+lastDay+"&categoryNo="+categoryNo;
+   	       		})
+   	       	})
+               
+       
+       
+   
+      	
+       function goList(type){
+    	   var type=type;
+    	
+    	   location.href="sCategoryList.do?type="+type;
+       }
+       
+        function checkDate(type){
+    	   alert('????')
+    	  var type=type;
+    	  
+    	  if($("#date1").val()<$("#date2").val()){
+	    	  var startD=$("#date1").val();
+	    	  var lastD=$("#date2").val();
+    	  }else{
+    		  var startD=$("#date2").val();
+	    	  var lastD=$("#date1").val();
+    	  }
+    	 
+
+     
+    	  if(!$("#date1").val()){
+    		  alert('검색 시작 날짜를 지정해주세요.');
+    	  }else if(!$("#date2").val()){
+    		  alert('검색 마지막 날짜를 지정해주세요.');
+    	  }else{
+    		  location.href="sCategoryList.do?type="+type+"&startD="+startD+"&lastD="+lastD;
+    	  }
+    	   
+    	   
+       } 
+       
+       </script>
         
        <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

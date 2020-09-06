@@ -25,12 +25,13 @@ public class AdminItem implements Serializable{
 	private String imageOriginalName;	//원래 파일명
 	private String imageRename;			//변경된 파일명
 	private String imagePath;			//저장경로
+	private int itemDiscount;			//할인율
 	
 	public AdminItem() {}
 
 	public AdminItem(int itemNo, String itemName, int itemPrice, int itemRate, String itemDpStatus, int itemCmSales,
 			int itemChoice, Date itemDate, String itemRecommend, String categoryNo, String itemMemo,
-			String itemEventStatus, String imageOriginalName, String imageRename, String imagePath) {
+			String itemEventStatus, String imageOriginalName, String imageRename, String imagePath, int itemDiscount) {
 		super();
 		this.itemNo = itemNo;
 		this.itemName = itemName;
@@ -47,6 +48,7 @@ public class AdminItem implements Serializable{
 		this.imageOriginalName = imageOriginalName;
 		this.imageRename = imageRename;
 		this.imagePath = imagePath;
+		this.itemDiscount = itemDiscount;
 	}
 
 	public int getItemNo() {
@@ -169,6 +171,14 @@ public class AdminItem implements Serializable{
 		this.imagePath = imagePath;
 	}
 
+	public int getItemDiscount() {
+		return itemDiscount;
+	}
+
+	public void setItemDiscount(int itemDiscount) {
+		this.itemDiscount = itemDiscount;
+	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
@@ -180,8 +190,13 @@ public class AdminItem implements Serializable{
 				+ itemChoice + ", itemDate=" + itemDate + ", itemRecommend=" + itemRecommend + ", categoryNo="
 				+ categoryNo + ", itemMemo=" + itemMemo + ", itemEventStatus=" + itemEventStatus
 				+ ", imageOriginalName=" + imageOriginalName + ", imageRename=" + imageRename + ", imagePath="
-				+ imagePath + "]";
+				+ imagePath + ", itemDiscount=" + itemDiscount + "]";
 	}
+
+	
+	
+	
+	
 	
 	
 

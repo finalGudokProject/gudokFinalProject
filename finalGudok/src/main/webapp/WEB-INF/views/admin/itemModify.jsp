@@ -16,6 +16,7 @@
     <style>
 
 
+
 #td1{
     width:15%;
     vertical-align: middle;
@@ -39,6 +40,10 @@ input, select,textarea{
 
 
 /*파일첨부 이미지*/
+
+.filebox{
+float:left;
+}
 .where {
   display: block;
   margin: 25px 15px;
@@ -76,7 +81,7 @@ input, select,textarea{
 }
 
 /* named upload */
-.filebox .upload-name {
+.filebox .upload-name2 {
     display: inline-block;
     padding: .5em .75em;
     font-size: inherit;
@@ -93,29 +98,31 @@ input, select,textarea{
 }
 
 /* imaged preview */
-.filebox .upload-display {
+.filebox .upload-display2{
     margin-bottom: 5px;
 }
 
 @media(min-width: 768px) {
-    .filebox .upload-display {
+    .filebox .upload-display2 {
         display: inline-block;
-        margin-right: 5px;
-        margin-bottom: 0;
+        margin-bottom: 10px;
+       
     }
 }
 
-.filebox .upload-thumb-wrap {
+.filebox .upload-thumb-wrap2{
     display: inline-block;
-    width: 200px;
+    width: 100%;
+    height:350px;
     padding: 2px;
     vertical-align: middle;
     border: 1px solid #ddd;
     border-radius: 5px;
     background-color: #fff;
+    overflow-y:scroll;
 }
 
-.filebox .upload-display img {
+.filebox .upload-display2 img {
     display: block;
     max-width: 100%;
     width: 100% \9;
@@ -128,15 +135,56 @@ input, select,textarea{
     border-color: #2e6da4;
 }
 
-#itemImage{
-	width:100%; 
-	overflow-y:auto; 
-    overflow-x:hidden; 
-    height:500px; 
-    border:1px solid #dee2e6;
+/* named upload */
+.filebox .upload-name1 {
+    display: inline-block;
+    padding: .5em .75em;
+    font-size: inherit;
+    font-family: inherit;
+    line-height: normal;
+    vertical-align: middle;
+    background-color: #f5f5f5;
+  border: 1px solid #ebebeb;
+  border-bottom-color: #e2e2e2;
+  border-radius: .25em;
+  -webkit-appearance: none; /* 네이티브 외형 감추기 */
+  -moz-appearance: none;
+  appearance: none;
+}
+
+/* imaged preview */
+.filebox .upload-display1 {
+    margin-bottom: 5px;
+}
+
+@media(min-width: 768px) {
+    .filebox .upload-display1 {
+        display: inline-block;
+        margin-right: 5px;
+        margin-bottom: 0;
+    }
+}
+
+.filebox .upload-thumb-wrap1 {
+    display: inline-block;
+    width: 350px;
+    padding: 2px;
+    vertical-align: middle;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #fff;
+    height:200px;
+}
+
+.filebox .upload-display1 img {
+    display: block;
+    max-width: 100%;
+    width: 100% \9;
+    height: auto;
 }
 
 </style>
+
 
 </head>
 
@@ -147,7 +195,7 @@ input, select,textarea{
                 <h3>상품 상세 정보</h3>
                 <br>
 
-                <br><br>
+                <br>
                 <form action="itemUpdate.do" method="post" encType="multipart/form-data" onsubmit="return validate()">
               		<input type="hidden" name="page" value="${page }">
               		<input type="hidden" name="itemNo" value="${i.itemNo }">
@@ -339,28 +387,28 @@ input, select,textarea{
                     	</tr>
                     </c:if>
 
-                    <tr>
-                        <td id="td1">제품 상세 이미지</td>
+                     <tr>
+						<td id="td1">상품 이미지</td>
                         <td colspan="3">
-							<div id="itemImage">
-                        		<c:if test="${!empty i.imageRename }">
-									<img id="beforeImage" src="${contextPath }/resources/uploadFiles/${i.imageRename }">
-								</c:if>
-								<c:if test="${empty i.imageRename }">
-	                            	<div id="itemImage"></div>
-	                            </c:if>
-							</div>
-								
-								
+                            <div class="filebox preview-image1"> 
+                            	<div class="upload-display1"><div class="upload-thumb-wrap1"><img id="beforeImage" src="${contextPath }/resources/uploadFiles/${m[0].imageRename}"></div></div>
+	                                <input class="upload-name1" value="파일선택" disabled="disabled" > 
+	                                <label for="input-file1">업로드</label> 
+	                                <input type="file" id="input-file1" class="upload-hidden1" name="uploadFile" accept="image/*" title="이미지 파일만 업로드 가능"> 
+                         	</div>
                         </td>
+                    	
+                    
                     </tr>
+
                     <tr>
-                        <td id="td1">파일 첨부</td>
+                        <td id="td1">상품 상세 설명</td>
                         <td colspan="3">
-                            <div class="filebox preview-image"> 
-                                <input class="upload-name" value="파일선택" disabled="disabled" > 
-                                <label for="input-file">업로드</label> 
-                                <input type="file" id="input-file" class="upload-hidden" name="uploadFile" accept="image/*" title="이미지 파일만 업로드 가능"> 
+                            <div class="filebox preview-image2"> 
+                            	<div class="upload-display2"><div class="upload-thumb-wrap2"><img id="beforeImage" src="${contextPath }/resources/uploadFiles/${i.imageRename}"></div></div>
+                                <input class="upload-name2" value="파일선택" disabled="disabled" > 
+                                <label for="input-file2">업로드</label> 
+                                <input type="file" id="input-file2" class="upload-hidden2" name="uploadFile" accept="image/*" title="이미지 파일만 업로드 가능"> 
                          	</div>
                         </td>
                     </tr>
@@ -368,7 +416,22 @@ input, select,textarea{
           
             <div style="text-align: center;">
                 <input type="submit" class="btn" value="수정">
-                <input type="button" class="btn" onclick="backList()" value="목록">
+	                <c:if test="${type eq 'itemEvent' }">
+	                	<c:url var="goItemEvent" value="iEventInsertView.do">
+	                		<c:param name="page" value="${page }"/>
+	                	</c:url>
+		                <input type="button" class="btn" value="목록" onclick="location.href='${goItemEvent}'">                
+	                </c:if>
+	                <c:if test="${type eq 'itemList' }">
+	                	<c:url var="goItemList" value="itemListA.do">
+	                		<c:param name="page" value="${page }"/>
+	                	</c:url>
+		                <input type="button" class="btn" value="목록" onclick="location.href='${goItemList}'">                
+	                </c:if>
+                
+                
+                
+                
                 <input type="reset" class="btn" value="취소">
             </div>
         </form>
@@ -378,13 +441,6 @@ input, select,textarea{
         </div><!--250px띄운 div-->
         <script>
         
-        //목록보기
-        function backList(){
-        	
-        	var page=${page }
-        	
-        	location.href="itemListA.do?page="+page;
-        }
       
         //상품 등록시 필요정보 공백 제한
         function validate(){
@@ -415,63 +471,102 @@ input, select,textarea{
     
     
         
-        // 파일 업로드 관련
-        $(function(){
-       var fileTarget = $('.filebox .upload-hidden');
+    $(function(){
+        var fileTarget = $('.filebox .upload-hidden1');
 
-        fileTarget.on('change', function(){
-            if(window.FileReader){
-                // 파일명 추출
-                var filename = $(this)[0].files[0].name;
-            } 
-            
-            else {
-                // Old IE 파일명 추출
-                var filename = $(this).val().split('/').pop().split('\\').pop();
-            };
+         fileTarget.on('change', function(){
+             if(window.FileReader){
+                 // 파일명 추출
+                 var filename = $(this)[0].files[0].name;
+             }else{
+                 // Old IE 파일명 추출
+                 var filename = $(this).val().split('/').pop().split('\\').pop();
+             };
 
-            $(this).siblings('.upload-name').val(filename);
-        });
+             $(this).siblings('.upload-name1').val(filename);
+         });
 
-       		 //preview image 
-        var imgTarget = $('.preview-image .upload-hidden');
+        		 //preview image 
+         var imgTarget = $('.preview-image1 .upload-hidden1');
 
-        imgTarget.on('change', function(){
-            var parent = $(this).parent();
-            parent.children('.upload-display').remove();
-            
-            
-            
-            //기존 preview 이미지 삭제
-            var itemImage=$("#itemImage");
-            itemImage.children('.upload-display').remove();
-            $("#beforeImage").remove();
-            if(window.FileReader){
-                //image 파일만
-                if (!$(this)[0].files[0].type.match(/image\//)) return;
-                
-                var reader = new FileReader();
-                reader.onload = function(e){
-                    var src = e.target.result;
-                    itemImage.append('<div class="upload-display"><div class="upload-thumb-wrap"><img src="'+src+'" class="upload-thumb"></div></div>');
-                }
-                reader.readAsDataURL($(this)[0].files[0]);
-            }
+         imgTarget.on('change', function(){
+             var parent = $(this).parent();
+             parent.children('.upload-display1').remove();
 
-            else {
-                $(this)[0].select();
-                $(this)[0].blur();
-                var imgSrc = document.selection.createRange().text;
-                itemImage.append('<div class="upload-display"><div class="upload-thumb-wrap"><img class="upload-thumb"></div></div>');
+             if(window.FileReader){
+                 //image 파일만
+                 if (!$(this)[0].files[0].type.match(/image\//)) return;
+                 
+                 var reader = new FileReader();
+                 reader.onload = function(e){
+                     var src = e.target.result;
+                     $(".upload-display1").html("");
+                     parent.prepend('<div class="upload-display1"><div class="upload-thumb-wrap1"><img src="'+src+'" class="upload-thumb1"></div></div>');
+                 }
+                 reader.readAsDataURL($(this)[0].files[0]);
+             }
 
-                var img = $(this).siblings('.upload-display').find('img');
-                img[0].style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(enable='true',sizingMethod='scale',src=\""+imgSrc+"\")";        
-            } 
-            
+             else {
+                 $(this)[0].select();
+                 $(this)[0].blur();
+                 var imgSrc = document.selection.createRange().text;
+                 parent.prepend('<div class="upload-display1"><div class="upload-thumb-wrap1"><img class="upload-thumb1"></div></div>');
+
+                 var img = $(this).siblings('.upload-display1').find('img');
+                 img[0].style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(enable='true',sizingMethod='scale',src=\""+imgSrc+"\")";        
+             }
+         });
+     }); 
          
-        });
-    });
-        
+         
+      // 파일 업로드 관련
+         $(function(){
+        var fileTarget = $('.filebox .upload-hidden2');
+
+         fileTarget.on('change', function(){
+             if(window.FileReader){
+                 // 파일명 추출
+                 var filename = $(this)[0].files[0].name;
+             } 
+             
+             else {
+                 // Old IE 파일명 추출
+                 var filename = $(this).val().split('/').pop().split('\\').pop();
+             };
+
+             $(this).siblings('.upload-name2').val(filename);
+         });
+
+        		 //preview image 
+         var imgTarget = $('.preview-image2 .upload-hidden2');
+
+         imgTarget.on('change', function(){
+             var parent = $(this).parent();
+             parent.children('.upload-display2').remove();
+
+             if(window.FileReader){
+                 //image 파일만
+                 if (!$(this)[0].files[0].type.match(/image\//)) return;
+                 
+                 var reader = new FileReader();
+                 reader.onload = function(e){
+                     var src = e.target.result;
+                     parent.prepend('<div class="upload-display2"><div class="upload-thumb-wrap2"><img src="'+src+'" class="upload-thumb2"></div></div>');
+                 }
+                 reader.readAsDataURL($(this)[0].files[0]);
+             }
+
+             else {
+                 $(this)[0].select();
+                 $(this)[0].blur();
+                 var imgSrc = document.selection.createRange().text;
+                 parent.prepend('<div class="upload-display2"><div class="upload-thumb-wrap2"><img class="upload-thumb2"></div></div>');
+
+                 var img = $(this).siblings('.upload-display2').find('img');
+                 img[0].style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(enable='true',sizingMethod='scale',src=\""+imgSrc+"\")";        
+             }
+         });
+     });
         </script>
 
        

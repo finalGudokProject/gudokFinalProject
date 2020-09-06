@@ -51,9 +51,14 @@ input, select,textarea{
     border: 1px solid #CCCCCC;
 }
 
-#cursor{
-cursor: pointer;
-}
+.table{
+     padding: 0.75rem;
+       margin:auto;
+        word-wrap:break-word;
+        word-break:break-all;
+        table-layout:fixed;
+         
+    }
 
 </style>
 
@@ -71,15 +76,15 @@ cursor: pointer;
                 <br>
                 <form>
                 <div style="width:100%">
-                <div style="float:left;">
-                	<input type="button" class="btn" value="글 등록" onclick="location.href='eRegisterView.do'">
+                <div style="float:right;">
+                	
           			
                     <input type="button" class="btn" value="게시" onclick="eventStatusY()">
                     <input type="button" class="btn" value="중지" onclick="eventStatusN()">
                     <input type="button" class="btn" value="삭제" onclick="eventDelete()">
                 </div>
-                <div style="float:right;">
-                	<input type="text" id="keyword" name="keyword">
+                <div style="float:left;">
+                	<input type="text" id="word" name="word" value="">
                 	<input type="button" class="btn" value="검색" onclick="eventSearch()">
                 </div>
                 </div>
@@ -101,10 +106,10 @@ cursor: pointer;
                          <tbody>
                     <c:if test="${!empty list }">
                          	<c:forEach var="e" items="${list }" varStatus="cnt">
-                         		<tr id="cursor">
+                         		<tr>
 	                                <td><input type="checkbox" class="common" id="eventNo${cnt.index}" name="eventNo" value="${e.eventNo }"></td>
 	                                <td>${e.eventNo }</td>
-	                                <td onclick="bDetail(${e.eventNo })" id="event" style="pointer:cursor;">${e.eventName }</td>
+	                                <td id="cursor" onclick="bDetail(${e.eventNo })" id="event" style="pointer:cursor;">${e.eventName }</td>
 	                                <td>${eCountList[cnt.index] }</td>
 	                                <td id="eventStatus">${e.eventStatus }</td>
 	                            </tr>
@@ -117,8 +122,9 @@ cursor: pointer;
                      </c:if>       
                          </tbody>
                     </table>
-
-
+                    <div style="float:right">
+						<input type="button" class="btn" value="글 등록" onclick="location.href='eRegisterView.do'">
+					</div>
 
                     <br>
 
@@ -209,15 +215,12 @@ cursor: pointer;
         //검색 
         
         function eventSearch(){
-        	alert('검색 실행됨');
+        	var word=$("#word").val();
+        	alert(word);
         	
-        	var keyword=$("#keyword").val();
         	location.href="searchEventA.do?keyword="+keyword;
         	
         }
-        
-        
-     
         
         
         //이벤트 게시
@@ -294,11 +297,11 @@ cursor: pointer;
         	 				for(var i in data.bannerList){
         	 					
         	 				
-        	 				$tr=$("<tr id='cursor'>");
+        	 				$tr=$("<tr>");
         	 				$td=$("<td onclick='event.cancelBubble=true'>");
         	 				$checkBox=$("<input type='checkbox' class='common' name='eventNo'>").val(data.bannerList[i].eventNo);     	 			
         	 				$eventNo=$("<td onclick='event.cancelBubble=true'>").text(data.bannerList[i].eventNo);
-        	 				$eventName=$("<td>").text(data.bannerList[i].eventName);
+        	 				$eventName=$("<td id='cursor'>").text(data.bannerList[i].eventName);
         	 				$eventCnt=$("<td onclick='event.cancelBubble=true'>").text(data.bannerList[i].eventCnt);
         	 				$eventStatus=$("<td onclick='event.cancelBubble=true'>").text(data.bannerList[i].eventStatus);
         	 				

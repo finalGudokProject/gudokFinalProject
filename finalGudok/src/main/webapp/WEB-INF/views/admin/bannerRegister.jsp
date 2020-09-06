@@ -119,12 +119,14 @@ input, select,textarea{
 
 .filebox .upload-thumb-wrap {
     display: inline-block;
-    width: 350px;
+    width: 450px;
+    height:350px;
     padding: 2px;
     vertical-align: middle;
     border: 1px solid #ddd;
     border-radius: 5px;
     background-color: #fff;
+    overflow-y:scroll;
 }
 
 .filebox .upload-display img {

@@ -20,7 +20,7 @@ Bootstrap CSS
 <style>
 /*폰트 적용*/
 body {
-	font-family: 'Jua', sans-serif;
+	font-family: 'Jua', sans-serif !important;
 	color: #495057;
 }
 
@@ -140,10 +140,25 @@ a:hover {
 	text-decoration: none;
 	color: black;
 }
+
+.card{
+display:inline-block !important;
+
 </style>
 <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap"
 	rel="stylesheet">
 </head>
+<!-- 제이쿼리 -->
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+   <!-- 아이콘 -->
+   <script src="https://kit.fontawesome.com/4b6b63d8f6.js" crossorigin="anonymous"></script>
+   <!-- 부트스트랩 -->
+   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+   <!-- popper 툴팁 -->
+   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+   <!-- 부트스트랩 스크립트(jQuery보다 아래 있어야함) -->
+   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
 <body>
 	<c:set var="contextPath"
 		value="${pageContext.servletContext.contextPath }" scope="application" />
@@ -160,10 +175,10 @@ a:hover {
 		<c:if test="${!empty sessionScope.loginUser }">
 			<ul class="menu-list">
 				<li><c:out value="${loginUser.memberName }님 환영합니다" /></li>
-				<c:url var="elist" value="pointList.do">
+				<c:url var="slist" value="subscribeView.do">
 					<c:param name="memberNo" value="${loginUser.memberNo}"/>
 				</c:url> 
-				<li><a href="${elist}">마이페이지</li>
+				<li><a href="${slist}">마이페이지</li>
 				<li><a href="logout.do">로그아웃</a></li>
 				<li><a href="noticeList.do">고객센터</a></li>
 				<li><a href="#">Who is JH?</a></li>
@@ -199,24 +214,24 @@ a:hover {
               <a class="nav-link" href="itemNew.do"><img src="resources/images/new.png" width="50px" height="50px"><br>신상품</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#"><img src="resources/images/best.png" width="50px" height="50px"><br>베스트</a>
+              <a class="nav-link" href="itemBest.do"><img src="resources/images/best.png" width="50px" height="50px"><br>베스트</a>
             </li>
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown" href="itemFood.do" id="navbarDropdown1" role="button" aria-haspopup="true" aria-expanded="false">
                 <img src="resources/images/food.png" width="50px" height="50px"><br>Food
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown1" id="food-menu">
-                  <a class="dropdown-item" href="#"><img src="resources/images/beverage.png" width="30px" height="30px">&nbsp;음료</a>
+                  <a class="dropdown-item" href="foodSort.do?categoryNo=F1"><img src="resources/images/beverage.png" width="30px" height="30px">&nbsp;음료</a>
                   <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="#"><img src="resources/images/milk.png" width="30px" height="30px">&nbsp;유제품</a>
+                  <a class="dropdown-item" href="foodSort.do?categoryNo=F2"><img src="resources/images/milk.png" width="30px" height="30px">&nbsp;유제품</a>
                   <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="#"><img src="resources/images/bakery.png" width="30px" height="30px">&nbsp;베이커리</a>
+                  <a class="dropdown-item" href="foodSort.do?categoryNo=F3"><img src="resources/images/bakery.png" width="30px" height="30px">&nbsp;베이커리</a>
                   <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="#"><img src="resources/images/canned_food.png" width="30px" height="30px">&nbsp;간편식품</a>
+                  <a class="dropdown-item" href="foodSort.do?categoryNo=F4"><img src="resources/images/canned_food.png" width="30px" height="30px">&nbsp;간편식품</a>
                   <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="#"><img src="resources/images/supplement.png" width="30px" height="30px">&nbsp;건강식품</a>
+                  <a class="dropdown-item" href="foodSort.do?categoryNo=F5"><img src="resources/images/supplement.png" width="30px" height="30px">&nbsp;건강식품</a>
                   <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="#"><img src="resources/images/diet_food.png" width="30px" height="30px">&nbsp;다이어트 식단</a>
+                  <a class="dropdown-item" href="foodSort.do?categoryNo=F6"><img src="resources/images/diet_food.png" width="30px" height="30px">&nbsp;다이어트 식단</a>
                 </div>
               </li>
               <li class="nav-item dropdown">
@@ -224,11 +239,11 @@ a:hover {
                 <img src="resources/images/living.png" width="50px" height="50px"><br>리빙
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown2" id="living-menu">
-                  <a class="dropdown-item" href="#"><img src="resources/images/diffuser.png" width="30px" height="30px">&nbsp;홈데코</a>
+                  <a class="dropdown-item" href="livingSort.do?categoryNo=L3"><img src="resources/images/diffuser.png" width="30px" height="30px">&nbsp;홈데코</a>
                   <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="#"><img src="resources/images/body_care.png" width="30px" height="30px">&nbsp;바디케어</a>
+                  <a class="dropdown-item" href="livingSort.do?categoryNo=L2"><img src="resources/images/body_care.png" width="30px" height="30px">&nbsp;바디케어</a>
                   <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="#"><img src="resources/images/mask.png" width="30px" height="30px">&nbsp;생활용품</a>
+                  <a class="dropdown-item" href="livingSort.do?categoryNo=L1"><img src="resources/images/mask.png" width="30px" height="30px">&nbsp;생활용품</a>
                 </div>
               </li>
             <li class="nav-item">

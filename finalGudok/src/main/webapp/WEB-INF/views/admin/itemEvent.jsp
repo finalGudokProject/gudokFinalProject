@@ -51,15 +51,16 @@ input, select,textarea{
                 <br><br>
                 
                 
-             
+             	
                 <table>
-              
+         
                     <tr>
-                        <td id="td1" style="vertical-align: middle;">
+                        <td id="td1" style="vertical-align: middle;" onclick='event.cancelBubble=true'>
                            	 이벤트 제목
                         </td>
-                        <td colspan="3">
+                        <td colspan="3"  onclick='event.cancelBubble=true'>
                                 <select id="eventNo" name="eventNo" style="float:left;">
+                                		<option value="">이벤트를 선택하세요.</option>
                                     <c:forEach var="i" items="${eArr }">
 	                                    <option value="${i.eventNo }">${i.eventName }</option>
                                     </c:forEach> 
@@ -67,66 +68,82 @@ input, select,textarea{
                         </td>     
                     </tr>
                     <tr>
-                        <td id="td1">
+                        <td id="td1"  onclick='event.cancelBubble=true'>
                           	  할인율
                         </td>
-                        <td colspan="3">
+                        <td colspan="3" onclick='event.cancelBubble=true'>
                             <input type="number" min="0" max="100" id="itemDiscount" name="itemDiscount" style="float:left; width:35%" value=""><label style="float:left"><b>&nbsp;&nbsp;%</b></label>
                         </td>
                     </tr>
                    
                 </table>
-                <br>
-                <br>
-                 <label style="margin-left:20px; margin-bottom:10px;font-size:20px;"><b>이벤트 미등록 상품</b></label>
-                 <div style="float:right;">
-                    <select name="product" style="width:45%">
-                        <option value="0">1차 카테고리</option>
-                        <option value="food">푸드</option>
-                        <option value="living">리빙</option>
+               
+                 <label style="margin-left:20px; margin-top:50px;margin-bottom:15px;font-size:20px;"><b>이벤트 미등록 상품</b></label>
+                 <form name="select_category">
+                 <div style="float:left; margin-left:10px">
+                    <select name="product" id="product" style="width:150px" onchange="itemCategoryList(this.value);">
+                        <option value="">대분류</option>
+                        <option value="F">푸드</option>
+                        <option value="L">리빙</option>
                     </select>
                 &nbsp; 
-                    <select name="product" style="width:45%">
-                        <option value="0">2차 카테고리</option>
-                        <option value="banchan">반찬</option>
-                        <option value="flower">꽃</option>
+                    <select name="itemCategory" id="itemCategory" style="width:150px">
+                        <option value="">소분류</option>
                     </select>
+                    <input type="button" class="btn" value="검색" onclick="search()">
                   </div>
                   <br>
                 
-                   
+                   </form>
 
                     <table>
                         <thead >
                             <tr>
-                                <th>상품번호</th>
-                                <th>상품명</th>
-                                <th>가격</th>
-                                <th>평점</th>
-                                <th><input type="checkbox" id="checkAll"  onclick="event.cancelBubble=true"></th>
+                                <th style="width:20%" onclick='event.cancelBubble=true'>상품번호</th>
+                                <th style="width:40%" onclick='event.cancelBubble=true'>상품명</th>
+                                <th onclick='event.cancelBubble=true'>가격</th>
+                                <th onclick='event.cancelBubble=true'>평점</th>
+                                <th onclick='event.cancelBubble=true'><input type="checkbox" id="checkAll"  onclick="event.cancelBubble=true"></th>
                              </tr>   
                          </thead>
                          <tbody id="chgTable">
                          
-                         
+                         <c:if test="${!empty list }">
                          <c:forEach var="i" items="${list }" varStatus="cnt">
-                             <tr id="cursor">
-                                <td>${i.itemNo }</td>
-                                <td>${i.itemName }</td>
-                                <td>${i.itemPrice }</td>
-                                <td>${i.itemRate }</td>
-                                <td><input type="checkbox"  class="common" id="itemNo${cnt.index }" name="itemNo" value="${i.itemNo }"></td>
+                             <tr>
+                                <td onclick="event.cancelBubble=true">${i.itemNo }</td>
+                                <td id="cursor" onclick="itemDetail()">${i.itemName }</td>
+                                <td onclick="event.cancelBubble=true">${i.itemPrice }원</td>
+                                <td onclick="event.cancelBubble=true">${i.itemRate }</td>
+                                <td onclick="event.cancelBubble=true"><input type="checkbox"  class="common" id="itemNo${cnt.index }" name="itemNo" value="${i.itemNo }"></td>
                             </tr>
-                         </c:forEach>   
+                            
+                         </c:forEach>  
+                         </c:if>
+                         <c:if test="${empty list }">
+                        
+                             <tr>
+                                <td colspan="5">이벤트 미등록 상품이 없습니다.</td>
+                        
+                            </tr>
+                            
+                      
+                         </c:if>
+                         
+                          
                             
                             
                             
                             
                          </tbody>
                     </table>
- 				<div style="text-align: right;"><input type="button" class="btn" value="저장하기" onclick="save()"></div>
+ 				<div style="text-align: right;"><input type="button" class="btn" value="등록하기" onclick="save()"></div>
 				
                     <br>
+                    
+                    
+                    
+           <c:if test="${pi.listCount ne 0 }">
                     
                       <!------페이징 처리----->
                 <div class="page-center">
@@ -141,6 +158,7 @@ input, select,textarea{
 						 <c:if test="${pi.currentPage gt 1 }">
 							<c:url var="blistBack" value="iEventInsertView.do">
 								<c:param name="page" value="${pi.currentPage-1 }"/>
+								<c:param name="itemCategory" value="${itemCategory }"/>
 							</c:url>
 		                        <li class="page-item-t">
 		                        <a class="page-link-t" href="${blistBack }">
@@ -159,6 +177,7 @@ input, select,textarea{
 	                        <c:if test="${p ne pi.currentPage }">
 	                        	<c:url var="blistCheck" value="iEventInsertView.do">
 	                        		<c:param name="page" value="${p }"/>
+	                        		<c:param name="itemCategory" value="${itemCategory }"/>
                         		</c:url>
 		                        <li class="page-item-t"><a class="page-link-t" href="${blistCheck }">${p } <span class="sr-only"></span></a>
 		                        </li>
@@ -176,6 +195,7 @@ input, select,textarea{
 						 <c:if test="${pi.currentPage lt pi.maxPage }">
 							<c:url var="blistAfter" value="iEventInsertView.do">
 								<c:param name="page" value="${pi.currentPage+1 }"/>
+								<c:param name="itemCategory" value="${itemCategory }"/>
 							</c:url>
 	                        <li class="page-item-t">
 	                        <a class="page-link-t" href="${blistAfter }">
@@ -187,22 +207,115 @@ input, select,textarea{
 
                 </div>
 
-                   
+           </c:if>        
 
 		
             </div><!--내용담은 컨테이너-->
         </div><!--250px띄운 div-->
         
         
-        <script>
-        //이벤트 상품 등록 시 공백 제한
-        function save(){
+  		 <script>
+  		 //상품 상세보기
+  		 	
+       	$(function(){
+
+       		$("tr").on("click",function(){
+       			var itemNo=$(this).children().eq(0).text();
+        		 var page=${pi.currentPage };   
+        		 var type="itemEvent";
+        		 
+        		 alert(type);
+           		location.href="itemDetail.do?itemNo="+itemNo+"&page="+page+"&type="+type;
+       		})
         	
+       	})
+  		 
+  		 
+  		 
+  		 //카테고리별 검색
+  		 function search(){
+  			 
+  			 var itemCategory=$("#itemCategory").val();
+  			
+  			 location.href="iEventInsertView.do?itemCategory="+itemCategory;
+  			 
+  			 
+  		 }
+  		 
+  		 //하위 셀렉트박스 리스트 생성
+  		 function itemCategoryList(iVal){
+  			 
+  			 var i=document.forms.select_category;
+  			 var opt=$("#itemCategory option").length;
+  			 
+  			 if(iVal==""){
+  				 num=new Array("소분류");
+  				 vnum=new Array("");
+  				 
+  			 }else if(iVal=="F"){
+  				 num=new Array("음료","유제품","베이커리","간편식","건강식품","다이어트 식단");
+  				 vnum=new Array("F1","F2","F3","F4","F5","F6");
+  			 }else if(iVal=="L"){
+  				 num=new Array("홈데코","바디케어","생활용품");
+  				 vnum=new Array("L1","L2","L3");
+  			 }
+  			 
+  			  for(j=0;j<opt;j++){
+  				 i.itemCategory.options[0]=null;
+  			
+  			 } 
+  			 
+  			 for(k=0;k<num.length;k++){
+  				 i.itemCategory.options[k]=new Option(num[k],vnum[k]);
+  			 }
+  			 
+  			 
+  		 }
+  		 
+  		 //이벤트 선택 시 할인율 정보 있으면 가져오기
+  		 $(function(){
+  		
+  			  $("#eventNo").change(function(){
+  				  
+  			 var eventNo=$("#eventNo option:checked").val();
+  			 alert(eventNo);
+  				  
+  				$.ajax({
+  					url:"selectItemDiscount.do",
+  					traditional:true,
+  					data:{"eventNo":eventNo},
+  					success:function(data){
+  						
+  						
+  					
+  					
+  					$("#itemDiscount").val("");
+  					$("#itemDiscount").val(data.itemDiscount);
+  					
+  						        					
+  					},
+  					error:function(request, status, errorData){
+  	                    alert("error code: " + request.status + "\n"
+  		                           +"message: " + request.responseText
+  		                           +"error: " + errorData);
+  		                  }   
+  				});
+  			 })
+  			  
+  		 })
+  		 
+  		 
+        //이벤트 상품 등록 시 공백 제한
+         function save(){
+        	
+        var eventName=$("#eventNo option:checked").text();
+        confirm("["+eventName+"]의 이벤트 상품으로 등록하시겠습니까?");
         
-    	if($("#itemDiscount").val().trim().length==0){
-	    		alert('할인율을 입력해주세요.(정수 0~100)');
-	    		$("#itemDiscount").focus();
-    
+        if($("#eventNo").val().trim().length==0){
+    		alert('이벤트를 선택하세요.');
+			$("#eventNo").focus();
+  		}else if($("input[name=itemNo]:checked").val()==null){
+	    		alert('이벤트 상품을 선택하세요.');
     	}else{
     		
     		var sendArr=Array();
@@ -212,6 +325,8 @@ input, select,textarea{
     		var eventNo=$("#eventNo").val();
     		var itemDiscount=$("#itemDiscount").val();
     		
+    	
+    		
     		for(i=0; i<chkbox.length;i++){
     			if(chkbox[i].checked==true){
     				sendArr[sendCnt]=chkbox[i].value;
@@ -219,16 +334,15 @@ input, select,textarea{
     			}
     		}
     		
-    		if(sendCnt=0){
-    			alert('등록할 상품을 선택하세요.');
-    		}
+    		alert(sendArr);
+    		
     		
     		$.ajax({
 				url:"eventItemInsert.do",
 				traditional:true,
 				data:{"sendArr":sendArr,"page":page,"eventNo":eventNo,"itemDiscount":itemDiscount},
 				success:function(data){
-					
+					alert('여기까진 성공')
 					getList();
 					        					
 				},
@@ -241,25 +355,23 @@ input, select,textarea{
     		
     	} 
     		
-    	/*------------------------------------------------------------------*/	
-    		
-    		
     
     	}
     	
     	
 
     
-    
+  
  // 상태 변경 후 리스트 가져오기
     function getList(){
    	 var page=${pi.currentPage};
+   	 var itemCategory=$("#itemCategory").val();
    	 
    	 $.ajax({
    		 
    	 	url:"eventItemListChange.do", 
    	 	type:"POST",
-   	 	data:{"page":page},
+   	 	data:{"page":page,"itemCategory":itemCategory},
    	 	dataType:"json",
    	 	success:function(data){
    	 		
@@ -269,7 +381,7 @@ input, select,textarea{
    	        
    	        	$(function(){
 
-   	       		$("#cursor").on("click",function(){
+   	       		$("tr").on("click",function(){
    	       			var itemNo=$(this).children().eq(1).text();
    	        		 var page=${pi.currentPage };   
    	        		
@@ -291,11 +403,11 @@ input, select,textarea{
    	 	
    	 				for(var i in data.list){
    	 					
-   	 				$tr=$("<tr id='cursor'>");
+   	 				$tr=$("<tr>");
    	 				$td=$("<td onclick='event.cancelBubble=true'>");
    	 				$checkBox=$("<input type='checkbox' class='common' name='itemNo'>").val(data.list[i].itemNo);     	 			
    	 				$eventNo=$("<td onclick='event.cancelBubble=true'>").text(data.list[i].itemNo);
-   	 				$eventName=$("<td>").text(data.list[i].itemName);
+   	 				$eventName=$("<td id='cursor'>").text(data.list[i].itemName);
    	 				$eventName.attr('id','test');
    	 				$eventCnt=$("<td onclick='event.cancelBubble=true'>").text(data.list[i].itemPrice+'원');
    	 				$eventStatus=$("<td onclick='event.cancelBubble=true'>").text(data.list[i].itemRate);
@@ -324,9 +436,8 @@ input, select,textarea{
    	 })
    	 
     }
-			
-			
-        
+			 
+		
         
       //모두 체크
 
