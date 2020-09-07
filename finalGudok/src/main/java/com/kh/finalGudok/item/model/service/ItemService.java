@@ -265,4 +265,10 @@ public interface ItemService {
 	int insertOneInquiry();
 
 	int insertInquiry();
+	
+
+	
+	
+
+	int updateItemEventStatusN(int[] dEventArr);
 }

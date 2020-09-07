@@ -339,7 +339,7 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public ArrayList<AdminSecession> selectMemberSecession(Search s, PageInfo pi) {
-		return mDao.selectMemberSecessionCnt(s);
+		return mDao.selectMemberSecession(s,pi);
 	}
 
 	@Override

@@ -598,8 +598,8 @@ public class ItemController {
 	@RequestMapping("eDelete.do")
 	public String deleteEvent(HttpServletRequest request, String sendArr) {
 
-		String dEvent = request.getParameter("sendArr");
-		String[] strArr = dEvent.split(",");
+
+		String[] strArr = sendArr.split(",");
 
 		int[] dEventArr = new int[strArr.length];
 
@@ -1028,9 +1028,7 @@ public class ItemController {
 	@ResponseBody
 	public String deleteBannerItem(HttpServletRequest request, String sendArr) {
 
-		System.out.println(sendArr);
-		String dEvent = request.getParameter("sendArr");
-		String[] strArr = dEvent.split(",");
+		String[] strArr = sendArr.split(",");
 
 		int[] dEventArr = new int[strArr.length];
 
@@ -1041,11 +1039,11 @@ public class ItemController {
 		}
 
 		int result = iService.deleteBannerItem(dEventArr);
-
-		System.out.println("1이 아님?" + result);
+		int result2=iService.updateItemEventStatusN(dEventArr);
+		
 
 		if (result > 0) {
-			System.out.println("삭제 컨트롤러까진 옴");
+			
 			return "success";
 
 		} else {
@@ -1282,7 +1280,7 @@ public class ItemController {
 
 	// 상품 상세보기 -admin
 	@RequestMapping("itemDetail.do")
-	public ModelAndView selectItemDetail(ModelAndView mv, int itemNo, Integer page, String type) {
+	public ModelAndView selectItemDetail(ModelAndView mv, int itemNo, @RequestParam(value="eventNo",required=false) Integer eventNo,Integer page, String type) {
 
 		System.out.println("아이템 디테일" + type);
 
@@ -1299,6 +1297,7 @@ public class ItemController {
 		mv.addObject("i", i);
 		mv.addObject("m", m);
 		mv.addObject("type", type);
+		mv.addObject("eventNo", eventNo);
 		mv.addObject("page", currentPage);
 		mv.setViewName("admin/itemModify");
 
@@ -1392,7 +1391,7 @@ public class ItemController {
 		System.out.println(result3);
 		System.out.println(result4);
 
-		if (result1 > 0 && result2 > 0 && result4 > 0) {
+		if (result4 > 0) {
 
 			mv.addObject("page", page).setViewName("redirect:itemListA.do");
 			return mv;

@@ -667,7 +667,7 @@ margin-top:10px;
        	 				$eventName=$("<td id='cursor'>").text(data.list[i].itemName);
        	 				$eventName.attr('id','test');
        	 				$eventCnt=$("<td onclick='event.cancelBubble=true'>").text(data.list[i].itemPrice+'원');
-       	 				$itemDiscount=$("<td  onclick='event.cancelBubble=true'>").text(data.list[i].itemDiscount+'%');
+       	 				$itemDiscount=$("<td onclick='event.cancelBubble=true'>").text(data.list[i].itemDiscount+'%');
        	 				$eventStatus=$("<td onclick='event.cancelBubble=true'>").text(data.list[i].itemDpStatus);
        	 				
        	 				

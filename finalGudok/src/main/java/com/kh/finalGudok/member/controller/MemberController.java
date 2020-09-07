@@ -43,8 +43,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
-
-import com.kh.finalGudok.member.model.vo.Inquiry;
 import com.kh.finalGudok.item.model.vo.BannerItem;
 import com.kh.finalGudok.item.model.vo.Item;
 import com.kh.finalGudok.item.model.vo.PageInfo;
@@ -64,14 +62,15 @@ import com.kh.finalGudok.member.model.vo.Delivery;
 import com.kh.finalGudok.member.model.vo.Exchange;
 import com.kh.finalGudok.member.model.vo.Grade;
 import com.kh.finalGudok.member.model.vo.Heart;
+import com.kh.finalGudok.member.model.vo.Inquiry;
 import com.kh.finalGudok.member.model.vo.Member;
 import com.kh.finalGudok.member.model.vo.Point;
 import com.kh.finalGudok.member.model.vo.Reply;
 import com.kh.finalGudok.member.model.vo.Review;
 import com.kh.finalGudok.member.model.vo.Search;
 import com.kh.finalGudok.member.model.vo.Subscribe;
-import com.kh.finalGudok.member.model.vo.Withdrawal;
 import com.kh.finalGudok.member.model.vo.Tempkey;
+import com.kh.finalGudok.member.model.vo.Withdrawal;
 
 @SessionAttributes("loginUser")
 @Controller
@@ -860,6 +859,7 @@ public class MemberController {
 		// 회원별 총 구매금액 주입
 		for (int i = 0; i < mList.size(); i++) {
 
+			
 			Integer cnt = mService.selectTotalPay(mList.get(i).getMemberNo());
 
 			if (cnt == null) {
@@ -966,17 +966,19 @@ public class MemberController {
 		}
 
 		Search s = new Search();
-		if (categoryNo.equalsIgnoreCase("memberNo")) {
+		
+		if(categoryNo==null) {
+			s.setMemberNo(word);
+			s.setMemberName(word);
+			s.setMemberId(word);
+			
+		} else if (categoryNo.equalsIgnoreCase("memberNo")) {
 			s.setMemberNo(word);
 		} else if (categoryNo.equalsIgnoreCase("memberId")) {
 			s.setMemberId(word);
 		} else if (categoryNo.equalsIgnoreCase("memberName")) {
 			s.setMemberName(word);
-		} else {
-			s.setMemberNo(word);
-			s.setMemberName(word);
-			s.setMemberId(word);
-		}
+		} 
 
 		// 현재 등급정보
 		ArrayList<Grade> gList = mService.selectGradeList();

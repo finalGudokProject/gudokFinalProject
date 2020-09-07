@@ -484,4 +484,6 @@ public class MemberDao {
 	public ArrayList<AdminSecession> selectMemberSecessionCnt(Search s) {
 		return sqlSessionTemplate.selectOne("memberMapper.selectMemberSecessionCnt", s);
 	}
+
+
 }

@@ -151,6 +151,9 @@
 		<result property="memberId" column="MEMBER_ID"/>
 		<result property="email" column="EMAIL"/>
 		<result property="totalPayment" column="TOTAL_PAYMENT"/>
+		<result property="totalCount" column="TOTAL_COUNT"/>
+		<result property="categoryNo" column="CATEGORY_NO"/>
+		
 	</resultMap>
 	<resultMap type="AdminSecession" id="adminSecessionResultSet">
 		<id property="secessionNo" column="SECESSION_NO"/>
@@ -162,6 +165,8 @@
 		<result property="secessionDate" column="SECESSION_DATE"/>
 		<result property="gradeNo" column="GRADE_NO"/>
 		<result property="total" column="TOTAL"/>
+		<result property="memberName" column="MEMBER_NAME"/>
+		
 	</resultMap>
 	
 	<!-- admin -->
@@ -182,7 +187,7 @@
 		<result property="address2" column="ADDRESS_2"/>
 		<result property="address3" column="ADDRESS_3"/>
 	</resultMap>
-<!-- admin -->
+
 	<resultMap type="AdminExchange" id="adminExchangeResultSet">
 		<id property="exchangeNo" column="EXCHANGE_NO"/>
 		<result property="exchangeStatus" column="EXCHANGE_STATUS"/>
@@ -417,11 +422,34 @@
 		SELECT *
 		FROM GRADE
 		ORDER BY GRADE_NO DESC
+		
 	</select>
 	<select id="selectMemberCnt" resultType="_int">
-		SELECT COUNT(*)
+		
+		SELECT count(*)
+		from(
+		select *
 		FROM MEMBER
 		WHERE MEMBER_STATUS='N'
+		)
+		 <where>
+        	<if test="memberNo!=null">
+        		 <![CDATA[
+		        MEMBER_NO LIKE '%${memberNo}%'  
+		        ]]>      	
+        	</if>
+        	<if test="memberId!=null">
+        		<![CDATA[
+		        OR MEMBER_ID LIKE '%${memberId}%' 
+		         ]]>
+        	</if>
+			<if test="memberName!=null">
+				<![CDATA[
+		        OR MEMBER_NAME LIKE '%${memberName}%' 
+		        ]]>
+			</if>
+			</where>
+		
 	</select>
 	<select id="selectGradeCnt" resultType="int">
 		SELECT COUNT(*)
@@ -431,11 +459,31 @@
 		GROUP BY GRADE_NO
         HAVING GRADE_NO=#{gradeNo}
 	</select>
-	<select id="selectMemberN" resultMap="memberResultSet">
+	<select id="selectMemberN" resultMap="adminMemberResultSet">
+		select *
+		from(
 		SELECT *
 		FROM MEMBER
 		WHERE MEMBER_STATUS='N'
 		ORDER BY MEMBER_NO DESC
+		)
+		 <where>
+        	<if test="memberNo!=null">
+        		 <![CDATA[
+		        MEMBER_NO LIKE '%${memberNo}%'  
+		        ]]>      	
+        	</if>
+        	<if test="memberId!=null">
+        		<![CDATA[
+		        OR MEMBER_ID LIKE '%${memberId}%' 
+		         ]]>
+        	</if>
+			<if test="memberName!=null">
+				<![CDATA[
+		        OR MEMBER_NAME LIKE '%${memberName}%' 
+		        ]]>
+			</if>
+			</where>
 	</select>
 	<update id="updateGradeRate" parameterType="java.util.List">
 		<foreach item="i" index="index" collection="list" open="DECLARE BEGIN" separator=";" close="; END;">
@@ -619,13 +667,19 @@
         WHERE SUBSCRIBE_NO=#{subscribeNo}
 	</select>
 	
-	<select id="selectTotalPayment" parameterType="_int" resultType="int">
+	<select id="selectTotalPayment" parameterType="_int" resultType="integer">
 		SELECT SUM((ITEM_PRICE*AMOUNT)-POINT) AS TOTAL_PAYMENT
 		FROM PAYMENT P
         LEFT JOIN ITEM I ON(P.ITEM_NO=I.ITEM_NO)
 		GROUP BY SUBSCRIBE_NO
 		HAVING SUBSCRIBE_NO=#{subscribeNo}
 	</select>
+	<select id="selectTotalPay" parameterType="_int" resultType="int">
+		SELECT SUM((ITEM_PRICE*AMOUNT)-POINT) AS TOTAL_PAYMENT
+		FROM PAYLIST
+		GROUP BY MEMBER_NO
+		HAVING MEMBER_NO=#{value}
+	</select> 
 	
 	<select id="selectItemTotalP" parameterType="_int" resultType="int">
 		SELECT SUM(ITEM_PRICE*AMOUNT) AS TOTAL_PAYMENT
