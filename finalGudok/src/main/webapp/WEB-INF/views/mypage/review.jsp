@@ -242,8 +242,8 @@
             <li><a href="${ilist}"><img src="resources/images/inquiry.png"
                         style="width: 25%; height: 25%; margin-right: 4%;">1:1문의</a></li>
             <li>
-                <a href="#about"><img src="resources/images/member_information.png"
-                        style="width: 25%; height: 25%; margin-right: 4%;">회원정보</a>
+                <span><img src="resources/images/member_information.png"
+                        style="width: 25%; height: 25%; margin-right: 4%;">회원정보</span>
                 <ul>
                 	<c:url var="myInfo" value="myInfo.do">
 						<c:param name="memberNo" value="${loginUser.memberNo}"/>
@@ -277,7 +277,8 @@
 	              	<span class="grade">황금거위 <span class="etc">&nbsp;등급</span></span>
 	              </c:if>
 	              <br>
-	              <span><a href="#" style="color: black; font-size: 0.8em;">등급 혜택보기</a></span>
+	              <c:url var="grade" value="gradeView.do"></c:url> 
+	              <span><a href="${grade}" style="color: black; font-size: 0.8em;">등급 혜택보기</a></span>
 	            </div>
 	          </div>
 	          <div class="subscribe">
@@ -320,7 +321,12 @@
 	            <td style="width: 30%;" class="top bottom">삭제</td>
 	          </tr>
 	          <c:forEach var="r" items="${list}">
-		          <tr>
+		          	<c:url var="idetail" value="idetail.do">
+			           <c:param name="itemNo" value="${r.itemNo }"/>
+			           <c:param name="page" value="1"/>
+			           <c:param name="memberNo" value="${loginUser.memberNo }"/>
+			        </c:url>
+		          <tr class="go_Item" style="cursor:pointer" onclick="location.href='${idetail}'">
 		            <td>${r.reviewDate}</td>
 		            <td>${r.reviewContent}</td>
 		            <c:url var="rdelete" value="mreviewDelete.do">
@@ -345,6 +351,11 @@
 				location.href='mreviewDelete.do?reviewNo='+reviewNo;
 			}
 		}
+		
+		/* $(".go_Item").click(function(){
+			var itemNo = $(".itemNo").val();
+			location.href='idetail.do?itemNo='+itemNo;
+		}) */
 	</script>
 </body>
 </html>

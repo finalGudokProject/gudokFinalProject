@@ -241,8 +241,8 @@
             <li><a href="${ilist}"><img src="resources/images/inquiry.png"
                         style="width: 25%; height: 25%; margin-right: 4%;">1:1문의</a></li>
             <li>
-                <a href="#about"><img src="resources/images/member_information.png"
-                        style="width: 25%; height: 25%; margin-right: 4%;">회원정보</a>
+                <span><img src="resources/images/member_information.png"
+                        style="width: 25%; height: 25%; margin-right: 4%;">회원정보</span>
                 <ul>
                 	<c:url var="myInfo" value="myInfo.do">
 						<c:param name="memberNo" value="${loginUser.memberNo}"/>
@@ -251,7 +251,8 @@
                     <c:url var="withdrawal" value="myWithdrawal.do">
 						<c:param name="memberNo" value="${loginUser.memberNo}"/>
 					</c:url>
-                    <li><a href="${withdrawal}">회원탈퇴</a></li>
+                    <c:url var="grade" value="gradeView.do"></c:url> 
+	              <span><a href="${grade}" style="color: black; font-size: 0.8em;">등급 혜택보기</a></span>
                 </ul>
             </li>
         </ul>
