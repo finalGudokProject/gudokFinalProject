@@ -804,8 +804,8 @@
 			, DEFAULT
 			, 'N'
 			, 1
-			, 'admin'
-			, 'admin@naver.com'
+			, #{bMember_id}
+			, #{bEmail}
 			, DEFAULT
 		)
 	</insert>
@@ -820,8 +820,8 @@
 			, DEFAULT
 			, 'F'
 			, 1
-			, 'admin'
-			, 'admin@naver.com'
+			, #{bMember_id}
+			, #{bEmail}
 			, DEFAULT
 		)
 	</insert>
@@ -836,8 +836,8 @@
 			, DEFAULT
 			, 'P'
 			, 1
-			, 'user'
-			, 'user@naver.com'
+			, #{bMember_id}
+			, #{bEmail}
 			, DEFAULT
 		)
 	</insert>
@@ -852,8 +852,8 @@
 			, DEFAULT
 			, 'O'
 			, 1
-			, 'user'
-			, 'user@naver.com'
+			, #{bMember_id}
+			, #{bEmail}
 			, DEFAULT
 		)
 	</insert>
@@ -886,8 +886,8 @@
 			, DEFAULT
 			, 'E'
 			, 1
-			, 'admin'
-			, 'admin@naver.com'
+			, #{bMember_id}
+			, #{bEmail}
 			, DEFAULT
 		)
 	</insert>

@@ -121,9 +121,10 @@
         </tbody>
       </table>
             <br><br>
+            <c:if test="${loginUser.memberId eq 'admin' }">
             &nbsp;&nbsp;<a href="adminNoticeInsert.do" type="button" class="btn btn-primary" style="float:right;">글쓰기</a> 
             <input type="button" value="삭제" style="float:right; margin-right: 10px;"" class="btn btn-primary" onclick="nDelete()">
-  
+  			</c:if>
             <br><br><br>
                   
                   

@@ -204,8 +204,9 @@
 	      </tbody>
     </table>
     <br><br>
-     <a href="inquiryInsert.do" type="button" class="btn btn-primary" style="float:right;">글쓰기</a>
-
+    <c:if test="${!empty loginUser }">
+    	<a href="inquiryInsert.do" type="button" class="btn btn-primary" style="float:right;">글쓰기</a>
+	</c:if>
      <br><br><br>
     <!------페이징 처리----->
    <div class="page-center">
