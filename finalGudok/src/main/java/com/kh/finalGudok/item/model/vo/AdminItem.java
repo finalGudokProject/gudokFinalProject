@@ -10,22 +10,22 @@ public class AdminItem implements Serializable{
 	 */
 	private static final long serialVersionUID = 1476512498108750682L;
 	
-	private int itemNo;				//ìƒí’ˆë²ˆí˜¸
-	private String itemName;		//ìƒí’ˆëª…
-	private int itemPrice;			//ê°€ê²©
-	private int itemRate;			//í‰ì 
-	private String itemDpStatus;	//ì „ì‹œìƒíƒœ
-	private int itemCmSales;		//ëˆ„ì íŒë§¤ëŸ‰
-	private int itemChoice;			//ì°œëˆ„ì ìˆ˜
-	private Date itemDate;			//ìƒí’ˆë“±ë¡ì¼
-	private String itemRecommend;	//ì¶”ì²œìƒí’ˆ
-	private String categoryNo;		//ì¹´í…Œê³ ë¦¬ë²ˆí˜¸
-	private String itemMemo;		//ìƒí’ˆë©”ëª¨
-	private String itemEventStatus;	//ì´ë²¤íŠ¸ìƒí’ˆ
-	private String imageOriginalName;	//ì›ë˜ íŒŒì¼ëª…
-	private String imageRename;			//ë³€ê²½ëœ íŒŒì¼ëª…
-	private String imagePath;			//ì €ì¥ê²½ë¡œ
-	private int itemDiscount;			//í• ì¸ìœ¨
+	private int itemNo;				//»óÇ°¹øÈ£
+	private String itemName;		//»óÇ°¸í
+	private int itemPrice;			//°¡°İ
+	private int itemRate;			//ÆòÁ¡
+	private String itemDpStatus;	//Àü½Ã»óÅÂ
+	private int itemCmSales;		//´©ÀûÆÇ¸Å·®
+	private int itemChoice;			//Âò´©Àû¼ö
+	private Date itemDate;			//»óÇ°µî·ÏÀÏ
+	private String itemRecommend;	//ÃßÃµ»óÇ°
+	private String categoryNo;		//Ä«Å×°í¸®¹øÈ£
+	private String itemMemo;		//»óÇ°¸Ş¸ğ
+	private String itemEventStatus;	//ÀÌº¥Æ®»óÇ°
+	private String imageOriginalName;	//¿ø·¡ ÆÄÀÏ¸í
+	private String imageRename;			//º¯°æµÈ ÆÄÀÏ¸í
+	private String imagePath;			//ÀúÀå°æ·Î
+	private int itemDiscount;			//ÇÒÀÎÀ²
 	
 	public AdminItem() {}
 

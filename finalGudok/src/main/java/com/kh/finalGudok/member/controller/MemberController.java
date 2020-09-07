@@ -117,9 +117,9 @@ public class MemberController {
 		int cartCount = mService.cartCount(loginUser.getMemberNo());
 		int pointCount = mService.pointCount(loginUser.getMemberNo());
 
-		System.out.println("êµ¬ë…" + subscribeCount);
-		System.out.println("ì¥ë°”êµ¬ë‹ˆ" + cartCount);
-		System.out.println("í¬ì¸íŠ¸" + pointCount);
+		System.out.println("±¸µ¶" + subscribeCount);
+		System.out.println("Àå¹Ù±¸´Ï" + cartCount);
+		System.out.println("Æ÷ÀÎÆ®" + pointCount);
 
 		if (bcryptPasswordEncoder.matches(m.getMemberPwd(), loginUser.getMemberPwd())) {
 			session.setAttribute("loginUser", loginUser);
@@ -134,7 +134,7 @@ public class MemberController {
 			}
 
 		} else {
-			throw new MemberException("ë¡œê·¸ì¸ ì‹¤íŒ¨");
+			throw new MemberException("·Î±×ÀÎ ½ÇÆĞ");
 		}
 		return mv;
 	}
@@ -161,12 +161,12 @@ public class MemberController {
 		String address3 = (String) jobj.get("address3");
 		String gender = (String) jobj.get("gender");
 
-		// web.xmlì— í•œê¸€ ê¹¨ì§ ë°©ì§€ë¥¼ ìœ„í•´ í•„í„° ë“±ë¡
-		// bCryptë¡œ ì•”í˜¸í™” ì²˜ë¦¬ -> ê´€ë ¨ ë¼ì´ë¸ŒëŸ¬ë¦¬ ì¶”ê°€, xmlë§Œë“¤ì–´ì„œ bean ì„¤ì •
-		// @Autowired ì„ ì–¸
+		// web.xml¿¡ ÇÑ±Û ±úÁü ¹æÁö¸¦ À§ÇØ ÇÊÅÍ µî·Ï
+		// bCrypt·Î ¾ÏÈ£È­ Ã³¸® -> °ü·Ã ¶óÀÌºê·¯¸® Ãß°¡, xml¸¸µé¾î¼­ bean ¼³Á¤
+		// @Autowired ¼±¾ğ
 		String encPwd = bcryptPasswordEncoder.encode(pwd);
 
-		// Memberê°ì²´ì— ë‹´ê¸°
+		// Member°´Ã¼¿¡ ´ã±â
 		m.setMemberId(id);
 		m.setMemberPwd(encPwd);
 		m.setMemberName(name);
@@ -183,7 +183,7 @@ public class MemberController {
 		if (result > 0) {
 			return "success";
 		} else {
-			throw new MemberException("íšŒì›ê°€ì… ì‹¤íŒ¨");
+			throw new MemberException("È¸¿ø°¡ÀÔ ½ÇÆĞ");
 		}
 
 	}
@@ -219,8 +219,8 @@ public class MemberController {
 
 //      MimeMessageHelper messageHelper = new MimeMessageHelper(msg, true, "UTF-8");
 				MimeMessageHelper messageHelper = new MimeMessageHelper(msg, "UTF-8");
-				messageHelper.setSubject("ì´ë©”ì¼ ì¸ì¦");
-				messageHelper.setText("ì¸ì¦ë²ˆí˜¸ëŠ”" + authCode + "ì…ë‹ˆë‹¤.");
+				messageHelper.setSubject("ÀÌ¸ŞÀÏ ÀÎÁõ");
+				messageHelper.setText("ÀÎÁõ¹øÈ£´Â" + authCode + "ÀÔ´Ï´Ù.");
 				msg.setFrom(new InternetAddress(user, "Goose"));
 				messageHelper.setTo(email);
 				msg.setRecipients(MimeMessage.RecipientType.TO, InternetAddress.parse(email));
@@ -264,15 +264,15 @@ public class MemberController {
 
 		Map map = new HashMap();
 
-		// Tempkey í´ë˜ìŠ¤ ì‚¬ìš©í•´ì„œ ë‚œìˆ˜ìƒì„±(ì˜ì–´, ìˆ«ì, íŠ¹ìˆ˜ë¬¸ì ì¡°í•©)
-		String authCode = new Tempkey().generateKey(10); // ì¸ì¦í‚¤ ìƒì„±
+		// Tempkey Å¬·¡½º »ç¿ëÇØ¼­ ³­¼ö»ı¼º(¿µ¾î, ¼ıÀÚ, Æ¯¼ö¹®ÀÚ Á¶ÇÕ)
+		String authCode = new Tempkey().generateKey(10); // ÀÎÁõÅ° »ı¼º
 		System.out.println("authCode : " + authCode);
 
 		m.setMemberId(id);
 		m.setEmail(email);
 		m.setMemberName(name);
 		int result = mService.checkMember(m);
-		if (result > 0) { // ì‚¬ìš©ìê°€ ì…ë ¥í•œ ê°’ê³¼ ì¼ì¹˜í•˜ëŠ” íšŒì›ì´ ì¡´ì¬í•˜ë©´ ë©”ì¼ ë°œì†¡
+		if (result > 0) { // »ç¿ëÀÚ°¡ ÀÔ·ÂÇÑ °ª°ú ÀÏÄ¡ÇÏ´Â È¸¿øÀÌ Á¸ÀçÇÏ¸é ¸ŞÀÏ ¹ß¼Û
 
 			String user = "p.jaemyung91@gmai.com";
 			MimeMessage msg = mailSender.createMimeMessage();
@@ -281,8 +281,8 @@ public class MemberController {
 
 //		      	MimeMessageHelper messageHelper = new MimeMessageHelper(msg, true, "UTF-8");
 				MimeMessageHelper messageHelper = new MimeMessageHelper(msg, "UTF-8");
-				messageHelper.setSubject("ì„ì‹œ ë¹„ë°€ë²ˆí˜¸ ë°œê¸‰");
-				messageHelper.setText("ì„ì‹œ ë¹„ë°€ë²ˆí˜¸ëŠ”" + authCode + "ì…ë‹ˆë‹¤.");
+				messageHelper.setSubject("ÀÓ½Ã ºñ¹Ğ¹øÈ£ ¹ß±Ş");
+				messageHelper.setText("ÀÓ½Ã ºñ¹Ğ¹øÈ£´Â" + authCode + "ÀÔ´Ï´Ù.");
 				msg.setFrom(new InternetAddress(user, "Goose"));
 				messageHelper.setTo(email);
 				msg.setRecipients(MimeMessage.RecipientType.TO, InternetAddress.parse(email));
@@ -298,7 +298,7 @@ public class MemberController {
 			m.setMemberPwd(encPwd);
 			int result2 = mService.changePwd(m);
 
-			if (result2 > 0) { // ì—…ë°ì´íŠ¸ ì„±ê³µ ì‹œ
+			if (result2 > 0) { // ¾÷µ¥ÀÌÆ® ¼º°ø ½Ã
 				map.put("msg", "success");
 				mv.addAllObjects(map);
 				mv.setViewName("jsonView");
@@ -308,27 +308,27 @@ public class MemberController {
 		return mv;
 	}
 
-	// ------------------------------ ë§ˆì´í˜ì´ì§€ ----------------------------------------------
+	// ------------------------------ ¸¶ÀÌÆäÀÌÁö ----------------------------------------------
 
-	// ë§ˆì´í˜ì´ì§€ ì´ë™
+	// ¸¶ÀÌÆäÀÌÁö ÀÌµ¿
 	@RequestMapping("mypage.do")
 	public String mypageView() {
 		return "mypage/subscribe";
 	}
 
-	// íšŒì›ì •ë³´ í™•ì¸ ì „ ë³¸ì¸ í™•ì¸
+	// È¸¿øÁ¤º¸ È®ÀÎ Àü º»ÀÎ È®ÀÎ
 	@RequestMapping("myInfo.do")
 	public String myInfoView() {
 		return "mypage/memberConfirm";
 	}
 
-	// íšŒì› íƒˆí‡´ í˜ì´ì§€
+	// È¸¿ø Å»Åğ ÆäÀÌÁö
 	@RequestMapping("myWithdrawal.do")
 	public String withdrawalView() {
 		return "mypage/memberWithdrawal";
 	}
 
-	// ì°œ ëª©ë¡ í˜ì´ì§€
+	// Âò ¸ñ·Ï ÆäÀÌÁö
 	@RequestMapping("heartView.do")
 	public String heartView() {
 		return "mypage/heart";
@@ -339,26 +339,26 @@ public class MemberController {
 		return "mypage/gradeInfo";
 	}
 
-	// êµ¬ë… ëª©ë¡ í˜ì´ì§€
+	// ±¸µ¶ ¸ñ·Ï ÆäÀÌÁö
 	@RequestMapping("subscribeView.do")
 	public String subscribeView() {
 		return "mypage/subscribe";
 	}
 
-	// ì¥ë°”êµ¬ë‹ˆ ëª©ë¡ í˜ì´ì§€
+	// Àå¹Ù±¸´Ï ¸ñ·Ï ÆäÀÌÁö
 	@RequestMapping("cartView.do")
 	public String cartView() {
 		return "mypage/cart";
 	}
 
-	// êµ¬ë… ì¡°íšŒ
+	// ±¸µ¶ Á¶È¸
 	@RequestMapping("subscribeList.do")
 	@ResponseBody
-	public void subscribeList(HttpServletResponse response, Integer memberNo) throws JsonIOException, IOException { // ë¯¼ì§€
+	public void subscribeList(HttpServletResponse response, Integer memberNo) throws JsonIOException, IOException { // ¹ÎÁö
 
 		ArrayList<Subscribe> list = mService.selectSubscribeList(memberNo);
 
-		System.out.println("êµ¬ë… ë‚´ì—­  : " + list);
+		System.out.println("±¸µ¶ ³»¿ª  : " + list);
 
 		response.setContentType("application/json;charset=utf-8");
 
@@ -366,173 +366,173 @@ public class MemberController {
 		gson.toJson(list, response.getWriter());
 	}
 
-	// ì°œ ëª©ë¡ ë¶ˆëŸ¬ì˜¤ê¸°(ajax)
+	// Âò ¸ñ·Ï ºÒ·¯¿À±â(ajax)
 	@RequestMapping("heartList.do")
 	@ResponseBody
 	public void heartList(HttpServletResponse response, Integer memberNo) throws JsonIOException, IOException {
 		ArrayList<Heart> list = mService.selectHeartList(memberNo);
 
-		System.out.println("ì°œ ë‚´ì—­  : " + list);
+		System.out.println("Âò ³»¿ª  : " + list);
 
 		response.setContentType("application/json;charset=utf-8");
 
 		new Gson().toJson(list, response.getWriter());
 	}
 
-	// ë³¸ì¸ í™•ì¸
+	// º»ÀÎ È®ÀÎ
 	@RequestMapping(value = "memberConfirm.do", method = RequestMethod.POST)
-	public String memberConfirm(Member m, HttpSession session, Model model) { // ë¯¼ì§€
+	public String memberConfirm(Member m, HttpSession session, Model model) { // ¹ÎÁö
 		Member loginUser = mService.loginMember(m);
 
 		System.out.println(m);
 		System.out.println(loginUser);
 
-		// ë‚´ë¶€ì ìœ¼ë¡œ ë³µí˜¸í™” ì²˜ë¦¬ê°€ ì´ë£¨ì–´ì§„ë‹¤. (ì•”í˜¸í™”ëœ íšŒì›ë§Œ ë¡œê·¸ì¸ ê°€ëŠ¥)
-		if (bcryptPasswordEncoder.matches(m.getMemberPwd(), loginUser.getMemberPwd())) { // ë¡œê·¸ì¸ í•  ë©¤ë²„ ê°ì²´ê°€ ì¡°íšŒ ë˜ì—ˆì„ ì‹œ
+		// ³»ºÎÀûÀ¸·Î º¹È£È­ Ã³¸®°¡ ÀÌ·ç¾îÁø´Ù. (¾ÏÈ£È­µÈ È¸¿ø¸¸ ·Î±×ÀÎ °¡´É)
+		if (bcryptPasswordEncoder.matches(m.getMemberPwd(), loginUser.getMemberPwd())) { // ·Î±×ÀÎ ÇÒ ¸â¹ö °´Ã¼°¡ Á¶È¸ µÇ¾úÀ» ½Ã
 			model.addAttribute("loginUser", loginUser);
 			return "mypage/memberInfoView";
-		} else { // ë¡œê·¸ì¸ ì‹¤íŒ¨ì‹œ
-			throw new MemberException("ë³¸ì¸í™•ì¸ ì‹¤íŒ¨");
-			// ì˜ˆì™¸ë¥¼ ë°œìƒì‹œì¼œì„œ ì—ëŸ¬í˜ì´ì§€ë¡œ ë„˜ì–´ê°ˆ ê»€ë°
-			// ìš°ì„  ì˜ˆì™¸ í´ë˜ìŠ¤ëŠ” RuntimeExceptionì„ ìƒì† ë°›ì•„
-			// ì˜ˆì™¸ ì²˜ë¦¬ê°€ ë”°ë¡œ í•„ìš” ì—†ë‹¤.
+		} else { // ·Î±×ÀÎ ½ÇÆĞ½Ã
+			throw new MemberException("º»ÀÎÈ®ÀÎ ½ÇÆĞ");
+			// ¿¹¿Ü¸¦ ¹ß»ı½ÃÄÑ¼­ ¿¡·¯ÆäÀÌÁö·Î ³Ñ¾î°¥ ²«µ¥
+			// ¿ì¼± ¿¹¿Ü Å¬·¡½º´Â RuntimeExceptionÀ» »ó¼Ó ¹Ş¾Æ
+			// ¿¹¿Ü Ã³¸®°¡ µû·Î ÇÊ¿ä ¾ø´Ù.
 
-			// ê·¸ë¦¬ê³  ì˜ˆì™¸ê°€ ë°œìƒ í–ˆì„ ë•Œ commonì— ìˆëŠ” errorPageì—ì„œ
-			// ì²˜ë¦¬ë  ìˆ˜ ìˆë„ë¡ web.xmlì— ê³µìš© ì—ëŸ¬ í˜ì´ì§€ë¥¼ ë“±ë¡í•˜ëŸ¬ ê°€ì!
+			// ±×¸®°í ¿¹¿Ü°¡ ¹ß»ı ÇßÀ» ¶§ common¿¡ ÀÖ´Â errorPage¿¡¼­
+			// Ã³¸®µÉ ¼ö ÀÖµµ·Ï web.xml¿¡ °ø¿ë ¿¡·¯ ÆäÀÌÁö¸¦ µî·ÏÇÏ·¯ °¡ÀÚ!
 		}
 
 	}
 
-	// íšŒì› ì •ë³´ ìˆ˜ì •
+	// È¸¿ø Á¤º¸ ¼öÁ¤
 	@RequestMapping(value = "memberModify.do", method = RequestMethod.POST)
-	public String memberModify(Member m, Model model) { // ë¯¼ì§€
+	public String memberModify(Member m, Model model) { // ¹ÎÁö
 
 		int result = mService.updateMember(m);
 
-		System.out.println("íšŒì›ì •ë³´ ìˆ˜ì • í›„  : " + m);
+		System.out.println("È¸¿øÁ¤º¸ ¼öÁ¤ ÈÄ  : " + m);
 
 		if (result > 0) {
-			// íšŒì›ì •ë³´ê°€ ìˆ˜ì •ë˜ë©´ í˜„ì¬ ë¡œê·¸ì¸ í•œ ì‚¬ëŒì˜ ì •ë³´ë¥¼
-			// ì—…ë°ì´íŠ¸ ì‹œí‚¤ê¸° ìœ„í•´ sessionì— ìˆ˜ì •ëœ ê°ì²´ë¥¼ ë‹´ì•„ì¤˜ì•¼ ëœë‹¤.
-			// @SessionAttribute("loginUser")ë¥¼ í´ë˜ìŠ¤ ìœ„ì— ë‹¬ì•„ì¤¬ê¸° ë•Œë¬¸ì—
-			// modelì— ìˆ˜ì •ëœ íšŒì› ê°ì²´ë¥¼ ë‹´ì
+			// È¸¿øÁ¤º¸°¡ ¼öÁ¤µÇ¸é ÇöÀç ·Î±×ÀÎ ÇÑ »ç¶÷ÀÇ Á¤º¸¸¦
+			// ¾÷µ¥ÀÌÆ® ½ÃÅ°±â À§ÇØ session¿¡ ¼öÁ¤µÈ °´Ã¼¸¦ ´ã¾ÆÁà¾ß µÈ´Ù.
+			// @SessionAttribute("loginUser")¸¦ Å¬·¡½º À§¿¡ ´Ş¾ÆÁá±â ¶§¹®¿¡
+			// model¿¡ ¼öÁ¤µÈ È¸¿ø °´Ã¼¸¦ ´ãÀÚ
 			model.addAttribute("loginUser", m);
 		} else {
-			throw new MemberException("ìˆ˜ì • ì‹¤íŒ¨!");
+			throw new MemberException("¼öÁ¤ ½ÇÆĞ!");
 		}
 
 		return "mypage/memberInfoView";
 	}
 
-	// ì ë¦½ê¸ˆ ë‚´ì—­
+	// Àû¸³±İ ³»¿ª
 	@RequestMapping(value = "pointList.do")
-	public ModelAndView pointList(ModelAndView mv, Integer memberNo) { // ë¯¼ì§€
+	public ModelAndView pointList(ModelAndView mv, Integer memberNo) { // ¹ÎÁö
 		ArrayList<Point> list = mService.selectPointList(memberNo);
 
-		System.out.println("ì ë¦½ê¸ˆ ë‚´ì—­  : " + list);
+		System.out.println("Àû¸³±İ ³»¿ª  : " + list);
 
 		if (list != null) {
 			mv.addObject("list", list);
 			mv.setViewName("mypage/pointList");
 		} else {
-			throw new MemberException("ì ë¦½ê¸ˆë‚´ì—­ ë¦¬ìŠ¤íŠ¸ ë¶ˆëŸ¬ì˜¤ê¸° ì‹¤íŒ¨");
+			throw new MemberException("Àû¸³±İ³»¿ª ¸®½ºÆ® ºÒ·¯¿À±â ½ÇÆĞ");
 		}
 
 		return mv;
 	}
 
-	// ë¦¬ë·° ëª©ë¡
+	// ¸®ºä ¸ñ·Ï
 	@RequestMapping(value = "reviewList.do")
-	public ModelAndView reviewList(ModelAndView mv, Integer memberNo) { // ë¯¼ì§€
+	public ModelAndView reviewList(ModelAndView mv, Integer memberNo) { // ¹ÎÁö
 		ArrayList<Review> list = mService.selectReviewList(memberNo);
 
-		System.out.println("ë¦¬ë·° ë‚´ì—­  : " + list);
+		System.out.println("¸®ºä ³»¿ª  : " + list);
 
 		if (list != null) {
 			mv.addObject("list", list);
 			mv.setViewName("mypage/review");
 		} else {
-			throw new MemberException("ë¦¬ë·° ë¦¬ìŠ¤íŠ¸ ë¶ˆëŸ¬ì˜¤ê¸° ì‹¤íŒ¨");
+			throw new MemberException("¸®ºä ¸®½ºÆ® ºÒ·¯¿À±â ½ÇÆĞ");
 		}
 
 		return mv;
 	}
 
-	// ë¬¸ì˜ ë‚´ì—­
+	// ¹®ÀÇ ³»¿ª
 	@RequestMapping(value = "inquiryList.do")
 	public ModelAndView inquiryList(ModelAndView mv, Integer memberNo) {
 		ArrayList<Inquiry> list = mService.selectInquiryList(memberNo);
 
-		System.out.println("1:1 ë¬¸ì˜ ë‚´ì—­ : " + list);
+		System.out.println("1:1 ¹®ÀÇ ³»¿ª : " + list);
 
 		if (list != null) {
 			mv.addObject("list", list);
 			mv.setViewName("mypage/inquiry");
 		} else {
-			throw new MemberException("1:1 ë¦¬ìŠ¤íŠ¸ ë¶ˆëŸ¬ì˜¤ê¸° ì‹¤íŒ¨");
+			throw new MemberException("1:1 ¸®½ºÆ® ºÒ·¯¿À±â ½ÇÆĞ");
 		}
 
 		return mv;
 	}
 
-	// êµí™˜ ë‚´ì—­
+	// ±³È¯ ³»¿ª
 	@RequestMapping(value = "exchangeList.do")
-	public ModelAndView exchangeList(ModelAndView mv, Integer memberNo) { // ë¯¼ì§€
+	public ModelAndView exchangeList(ModelAndView mv, Integer memberNo) { // ¹ÎÁö
 		ArrayList<Exchange> list = mService.selectExchangeList(memberNo);
 
-		System.out.println("êµí™˜ ë‚´ì—­ : " + list);
+		System.out.println("±³È¯ ³»¿ª : " + list);
 
 		if (list != null) {
 			mv.addObject("list", list);
 			mv.setViewName("mypage/exchange");
 		} else {
-			throw new MemberException("êµí™˜ ë¦¬ìŠ¤íŠ¸ ë¶ˆëŸ¬ì˜¤ê¸° ì‹¤íŒ¨");
+			throw new MemberException("±³È¯ ¸®½ºÆ® ºÒ·¯¿À±â ½ÇÆĞ");
 		}
 
 		return mv;
 	}
 
-	// ë°°ì†¡ ë‚´ì—­
+	// ¹è¼Û ³»¿ª
 	@RequestMapping(value = "deliveryList.do")
-	public ModelAndView deliveryList(ModelAndView mv, Integer memberNo) { // ë¯¼ì§€
+	public ModelAndView deliveryList(ModelAndView mv, Integer memberNo) { // ¹ÎÁö
 		ArrayList<Delivery> list = mService.selectDeliveryList(memberNo);
 
-		System.out.println("ë°°ì†¡ ë‚´ì—­ : " + list);
+		System.out.println("¹è¼Û ³»¿ª : " + list);
 
 		if (list != null) {
 			mv.addObject("list", list);
 			mv.setViewName("mypage/delivery");
 		} else {
-			throw new MemberException("ë°°ì†¡ ë¦¬ìŠ¤íŠ¸ ë¶ˆëŸ¬ì˜¤ê¸° ì‹¤íŒ¨");
+			throw new MemberException("¹è¼Û ¸®½ºÆ® ºÒ·¯¿À±â ½ÇÆĞ");
 		}
 
 		return mv;
 	}
 
-	// ì¥ë°”êµ¬ë‹ˆ ë‚´ì—­
+	// Àå¹Ù±¸´Ï ³»¿ª
 	@RequestMapping("cartList.do")
 	@ResponseBody
-	public void cartList(HttpServletResponse response, Integer memberNo) throws JsonIOException, IOException { // ë¯¼ì§€
+	public void cartList(HttpServletResponse response, Integer memberNo) throws JsonIOException, IOException { // ¹ÎÁö
 		ArrayList<Cart> list = mService.selectCartList(memberNo);
 
-		System.out.println("ì¥ë°”êµ¬ë‹ˆ ë‚´ì—­ : " + list);
+		System.out.println("Àå¹Ù±¸´Ï ³»¿ª : " + list);
 
 		response.setContentType("application/json;charset=utf-8");
 
 		new Gson().toJson(list, response.getWriter());
 	}
 
-	// êµí™˜ ì‹ ì²­
+	// ±³È¯ ½ÅÃ»
 	@RequestMapping("exchangeInsert.do")
-	public String exchangeInsert(HttpServletRequest request, Exchange e) { // ë¯¼ì§€
+	public String exchangeInsert(HttpServletRequest request, Exchange e) { // ¹ÎÁö
 
 		if (e.getExchangeCategory() == 1) {
-			e.setExchangeContent("í’ˆì§ˆë¶ˆëŸ‰");
+			e.setExchangeContent("Ç°ÁúºÒ·®");
 		} else if (e.getExchangeCategory() == 2) {
-			e.setExchangeContent("ì˜¤ë°°ì†¡");
+			e.setExchangeContent("¿À¹è¼Û");
 		}
 
-		System.out.println("êµí™˜ ë‚´ìš© : " + e);
+		System.out.println("±³È¯ ³»¿ë : " + e);
 
 		int result = mService.insertExchange(e);
 		int result2 = mService.updateSubscribe(e.getSubscribeNo());
@@ -540,26 +540,26 @@ public class MemberController {
 		if (result > 0 && result2 > 0) {
 			return "redirect:exchangeList.do";
 		} else {
-			throw new MemberException("êµí™˜ ì‹ ì²­ ì‹¤íŒ¨");
+			throw new MemberException("±³È¯ ½ÅÃ» ½ÇÆĞ");
 		}
 	}
 
 	
 
-	// íƒˆí‡´í•˜ê¸°
+	// Å»ÅğÇÏ±â
 	@RequestMapping("withdrawalInsert.do")
 	public String withdrawalInsert(HttpServletRequest request, Withdrawal w) {
 		if (w.getSecessionCategory() == 1) {
-			w.setSecessionContent("ì„œë¹„ìŠ¤ê°€ ë§ˆìŒì— ë“¤ì§€ ì•ŠìŒ");
+			w.setSecessionContent("¼­ºñ½º°¡ ¸¶À½¿¡ µéÁö ¾ÊÀ½");
 		} else if (w.getSecessionCategory() == 2) {
-			w.setSecessionContent("ê°€ê²©ì´ ë¹„ìŒˆ");
+			w.setSecessionContent("°¡°İÀÌ ºñ½Ó");
 		} else if (w.getSecessionCategory() == 3) {
-			w.setSecessionContent("ì›í•˜ëŠ” ìƒí’ˆì´ ì—†ìŒ");
+			w.setSecessionContent("¿øÇÏ´Â »óÇ°ÀÌ ¾øÀ½");
 		} else if (w.getSecessionCategory() == 4) {
-			w.setSecessionContent("ê°œì¸ì •ë³´ë³´í˜¸ë¥¼ ìœ„í•´");
+			w.setSecessionContent("°³ÀÎÁ¤º¸º¸È£¸¦ À§ÇØ");
 		}
 
-		System.out.println("íƒˆí‡´ ë‚´ìš© : " + w);
+		System.out.println("Å»Åğ ³»¿ë : " + w);
 
 		int result = mService.insertSecession(w);
 		int result2 = mService.updateMemberStatus(w.getMemberNo());
@@ -567,13 +567,13 @@ public class MemberController {
 		if (result > 0 && result2 > 0) {
 			return "home";
 		} else {
-			throw new MemberException("íƒˆí‡´ ì‹¤íŒ¨");
+			throw new MemberException("Å»Åğ ½ÇÆĞ");
 		}
 	}
 
-	// ë¦¬ë·° ì‚­ì œ
+	// ¸®ºä »èÁ¦
 	@RequestMapping("mreviewDelete.do")
-	public String reviewDelete(HttpServletRequest request, Integer reviewNo) {// ë¯¼ì§€
+	public String reviewDelete(HttpServletRequest request, Integer reviewNo) {// ¹ÎÁö
 //		Review review = mService.selectReview(reviewNo); 
 
 		int result = mService.deleteReview(reviewNo);
@@ -581,15 +581,15 @@ public class MemberController {
 		if (result > 0) {
 			return "redirect:reviewList.do";
 		} else {
-			throw new MemberException("ë¦¬ë·° ì‚­ì œ ì‹¤íŒ¨");
+			throw new MemberException("¸®ºä »èÁ¦ ½ÇÆĞ");
 		}
 	}
 
-	// êµ¬ë…ì£¼ê¸° ë³€ê²½
+	// ±¸µ¶ÁÖ±â º¯°æ
 	@RequestMapping("cycleChange.do")
 	public String cycleChange(HttpServletRequest request, Subscribe subscribe) {
-		System.out.println("êµ¬ë…ë²ˆí˜¸ : " + subscribe.getSubscribeNo());
-		System.out.println("ë³€ê²½í•  êµ¬ë…ì£¼ê¸° : " + subscribe.getCycleNo());
+		System.out.println("±¸µ¶¹øÈ£ : " + subscribe.getSubscribeNo());
+		System.out.println("º¯°æÇÒ ±¸µ¶ÁÖ±â : " + subscribe.getCycleNo());
 
 		if (subscribe.getCycleNo() == 1) {
 			subscribe.setCycleNo(1);
@@ -601,25 +601,25 @@ public class MemberController {
 			subscribe.setCycleNo(4);
 		}
 
-		System.out.println("ì£¼ê¸° ë³€ê²½ : " + subscribe);
+		System.out.println("ÁÖ±â º¯°æ : " + subscribe);
 
 		int result = mService.cycleChange(subscribe);
 
 		if (result > 0) {
 			return "mypage/subscribe";
 		} else {
-			throw new MemberException("êµ¬ë…ì£¼ê¸°ë³€ê²½ ì‹¤íŒ¨");
+			throw new MemberException("±¸µ¶ÁÖ±âº¯°æ ½ÇÆĞ");
 		}
 	}
 
-	// ì°œ ì‚­ì œ
+	// Âò »èÁ¦
 	@RequestMapping("heartDelete.do")
 	@ResponseBody
 	public String heartDelete(HttpSession session, HttpServletRequest request,
 			@RequestParam(value = "checkArr[]") List<String> heartList) {
 		Member loginUser = (Member) session.getAttribute("loginUser");
 
-		System.out.println("ì„ íƒì‚­ì œ ì‹¤í–‰ë¨");
+		System.out.println("¼±ÅÃ»èÁ¦ ½ÇÇàµÊ");
 
 		System.out.println(heartList);
 
@@ -641,21 +641,21 @@ public class MemberController {
 		if (result > 0) {
 			return "success";
 		} else {
-			throw new MemberException("ì°œ ì‚­ì œ ì‹¤íŒ¨");
+			throw new MemberException("Âò »èÁ¦ ½ÇÆĞ");
 		}
 	}
 
-	// êµ¬ë…ì·¨ì†Œ
+	// ±¸µ¶Ãë¼Ò
 	@RequestMapping("subscribeCancle.do")
-	public String subscribeCancle(HttpServletRequest request, Cancle c) { // ë¯¼ì§€
+	public String subscribeCancle(HttpServletRequest request, Cancle c) { // ¹ÎÁö
 
 		if (c.getCancleCategory() == 1) {
-			c.setCancleContent("ìƒí’ˆì´ ë¶ˆí•„ìš”");
+			c.setCancleContent("»óÇ°ÀÌ ºÒÇÊ¿ä");
 		} else if (c.getCancleCategory() == 2) {
-			c.setCancleContent("ê°€ê²©ì´ ë¹„ìŒˆ");
+			c.setCancleContent("°¡°İÀÌ ºñ½Ó");
 		}
 
-		System.out.println("ì·¨ì†Œ ë‚´ìš© : " + c);
+		System.out.println("Ãë¼Ò ³»¿ë : " + c);
 
 		int result = mService.insertCancle(c);
 		int result2 = mService.updateSubscribeStatus(c.getSubscribeNo());
@@ -663,18 +663,18 @@ public class MemberController {
 		if (result > 0 && result2 > 0) {
 			return "mypage/subscribe";
 		} else {
-			throw new MemberException("ì·¨ì†Œ ì‹ ì²­ ì‹¤íŒ¨");
+			throw new MemberException("Ãë¼Ò ½ÅÃ» ½ÇÆĞ");
 		}
 	}
 
-	// ì¥ë°”êµ¬ë‹ˆ ì‚­ì œ
+	// Àå¹Ù±¸´Ï »èÁ¦
 	@RequestMapping("cartDelete.do")
 	@ResponseBody
 	public String cartDelete(HttpSession session, HttpServletRequest request,
 			@RequestParam(value = "checkArr[]") List<String> cartList) {
 		Member loginUser = (Member) session.getAttribute("loginUser");
 
-		System.out.println("ì„ íƒì‚­ì œ ì‹¤í–‰ë¨");
+		System.out.println("¼±ÅÃ»èÁ¦ ½ÇÇàµÊ");
 
 		System.out.println(cartList);
 
@@ -703,18 +703,18 @@ public class MemberController {
 		if (result > 0) {
 			return "success";
 		} else {
-			throw new MemberException("ì¥ë°”êµ¬ë‹ˆ ì‚­ì œ ì‹¤íŒ¨");
+			throw new MemberException("Àå¹Ù±¸´Ï »èÁ¦ ½ÇÆĞ");
 		}
 	}
 
-	// ì¥ë°”êµ¬ë‹ˆ ì¶”ê°€
+	// Àå¹Ù±¸´Ï Ãß°¡
 	@RequestMapping("addCart.do")
 	@ResponseBody
 	public String addCart(HttpSession session, HttpServletRequest request,
 			@RequestParam(value = "checkArr[]") List<String> cartList) {
 		Member loginUser = (Member) session.getAttribute("loginUser");
 
-		System.out.println("ì¥ë°”êµ¬ë‹ˆ ì¶”ê°€");
+		System.out.println("Àå¹Ù±¸´Ï Ãß°¡");
 
 		int itemNo;
 		int result = 0;
@@ -725,7 +725,7 @@ public class MemberController {
 
 			HashMap map = new HashMap<Object, Object>();
 
-			System.out.println("ì„ íƒí•œ ì°œ ìƒí’ˆ : " + item);
+			System.out.println("¼±ÅÃÇÑ Âò »óÇ° : " + item);
 
 			if (item != null) {
 				map.put("item", item);
@@ -738,11 +738,11 @@ public class MemberController {
 		if (result > 0) {
 			return "success";
 		} else {
-			throw new MemberException("ì¥ë°”êµ¬ë‹ˆ ì¶”ê°€ ì‹¤íŒ¨");
+			throw new MemberException("Àå¹Ù±¸´Ï Ãß°¡ ½ÇÆĞ");
 		}
 	}
 
-	// 1:1ë¬¸ì˜ ë‹µë³€
+	// 1:1¹®ÀÇ ´äº¯
 	@RequestMapping("inquiryReply.do")
 	@ResponseBody
 	public void inquiryReply(HttpServletResponse response, HttpServletRequest request, Integer boardNo)
@@ -750,7 +750,7 @@ public class MemberController {
 
 		Reply reply = mService.selectReply(boardNo);
 
-		System.out.println("ë‹µë³€ ë‚´ì—­  : " + reply);
+		System.out.println("´äº¯ ³»¿ª  : " + reply);
 
 		response.setContentType("application/json;charset=utf-8");
 
@@ -758,7 +758,7 @@ public class MemberController {
 		gson.toJson(reply, response.getWriter());
 	}
 
-	// ë¹„ë°€ë²ˆí˜¸ ë³€ê²½
+	// ºñ¹Ğ¹øÈ£ º¯°æ
 	@RequestMapping("modifyPassword.do")
 	public String modifyPassword(Member m, Model model,
 			@RequestParam(value = "changeMemberPwd") String changeMemberPwd) {
@@ -775,26 +775,26 @@ public class MemberController {
 
 			int result = mService.updatePassword(m);
 
-			System.out.println("ë¹„ë°€ë²ˆí˜¸ ë³€ê²½ í›„ : " + m);
+			System.out.println("ºñ¹Ğ¹øÈ£ º¯°æ ÈÄ : " + m);
 
 			if (result > 0) {
 				model.addAttribute("loginUser", m);
 			} else {
-				throw new MemberException("ìˆ˜ì • ì‹¤íŒ¨!");
+				throw new MemberException("¼öÁ¤ ½ÇÆĞ!");
 			}
 
 			model.addAttribute("loginUser", loginUser);
 
 			return "mypage/memberInfoView";
 		} else {
-			throw new MemberException("ë³¸ì¸í™•ì¸ ì‹¤íŒ¨");
+			throw new MemberException("º»ÀÎÈ®ÀÎ ½ÇÆĞ");
 		}
 	}
 	
-	// ------------------------------ ë§ˆì´í˜ì´ì§€ ----------------------------------------------
+	// ------------------------------ ¸¶ÀÌÆäÀÌÁö ----------------------------------------------
 	
-	// ------------------------------ ê´€ë¦¬ì ----------------------------------------------
-	// ê´€ë¦¬ì ë“±ê¸‰ & íšŒì› ë¦¬ìŠ¤íŠ¸ ë³´ê¸°-admin
+	// ------------------------------ °ü¸®ÀÚ ----------------------------------------------
+	// °ü¸®ÀÚ µî±Ş & È¸¿ø ¸®½ºÆ® º¸±â-admin
 	@RequestMapping("gradeList.do")
 	public ModelAndView selectGradeList(ModelAndView mv, Integer page,
 			@RequestParam(value = "categoryNo", required = false) String categoryNo,
@@ -822,12 +822,12 @@ public class MemberController {
 			s.setMemberName(word);
 		}
 
-		System.out.println("ì˜¤ë–»ê²Œ ê°€ë‚˜ ë³´ì" + s);
+		System.out.println("¿À¶»°Ô °¡³ª º¸ÀÚ" + s);
 
-		// í˜„ì¬ ë“±ê¸‰ì •ë³´
+		// ÇöÀç µî±ŞÁ¤º¸
 		ArrayList<Grade> gList = mService.selectGradeList();
 
-		// ë“±ê¸‰ë³„ íšŒì› ìˆ˜ ì£¼ì…
+		// µî±Şº° È¸¿ø ¼ö ÁÖÀÔ
 		for (int i = 0; i < gList.size(); i++) {
 			Integer cnt = mService.selectGradeCnt(gList.get(i).getGradeNo());
 
@@ -850,14 +850,14 @@ public class MemberController {
 
 		PageInfo pi = new PageInfo();
 
-		int pageLimit = 10; // ë³´ì—¬ì§ˆ í˜ì´ì§€ ì´ ê°¯ìˆ˜
-		int boardLimit = 5; // ê²Œì‹œíŒ í•œ í˜ì´ì§€ì— ë¿Œë ¤ì§ˆ ê²Œì‹œê¸€ ìˆ˜
+		int pageLimit = 10; // º¸¿©Áú ÆäÀÌÁö ÃÑ °¹¼ö
+		int boardLimit = 5; // °Ô½ÃÆÇ ÇÑ ÆäÀÌÁö¿¡ »Ñ·ÁÁú °Ô½Ã±Û ¼ö
 		pi = getPageInfo2(currentPage, listCount, pageLimit, boardLimit);
 
-		// íƒˆí‡´í•˜ì§€ ì•Šì€ íšŒì› ë¦¬ìŠ¤íŠ¸
+		// Å»ÅğÇÏÁö ¾ÊÀº È¸¿ø ¸®½ºÆ®
 		ArrayList<AdminMember> mList = mService.selectMemberN(s, pi);
 
-		// íšŒì›ë³„ ì´ êµ¬ë§¤ê¸ˆì•¡ ì£¼ì…
+		// È¸¿øº° ÃÑ ±¸¸Å±İ¾× ÁÖÀÔ
 		for (int i = 0; i < mList.size(); i++) {
 
 			Integer cnt = mService.selectTotalPay(mList.get(i).getMemberNo());
@@ -874,12 +874,12 @@ public class MemberController {
 					.addObject("mList", mList).addObject("pi", pi).setViewName("admin/userList");
 			return mv;
 		} else {
-			throw new MemberException("íšŒì› ë¦¬ìŠ¤íŠ¸ í™•ì¸ ì‹¤íŒ¨!");
+			throw new MemberException("È¸¿ø ¸®½ºÆ® È®ÀÎ ½ÇÆĞ!");
 		}
 
 	}
 
-	// ë“±ê¸‰ë³„ ì ë¦½ìœ¨ ë³€ê²½-admin
+	// µî±Şº° Àû¸³À² º¯°æ-admin
 	@RequestMapping("gradeRateInfoChang.do")
 	@ResponseBody
 	public String updateGradeRate(String sendGradeArr, String sendRateArr) {
@@ -912,12 +912,12 @@ public class MemberController {
 			return "success";
 
 		} else {
-			throw new MemberException("ì ë¦½ìœ¨ ë³€ê²½ ì‹¤íŒ¨!");
+			throw new MemberException("Àû¸³À² º¯°æ ½ÇÆĞ!");
 
 		}
 	}
 
-	// ë“±ê¸‰ë³„ ìµœì†Œ ê¸ˆì•¡ ë³€ê²½-admin
+	// µî±Şº° ÃÖ¼Ò ±İ¾× º¯°æ-admin
 	@RequestMapping("gradeMinInfoChang.do")
 	@ResponseBody
 	public String updateGradeMin(String sendGradeMinArr, String sendGradeArr) {
@@ -947,12 +947,12 @@ public class MemberController {
 			return "success";
 
 		} else {
-			throw new MemberException("ì ë¦½ìœ¨ ë³€ê²½ ì‹¤íŒ¨!");
+			throw new MemberException("Àû¸³À² º¯°æ ½ÇÆĞ!");
 
 		}
 	}
 
-	// ajax í›„ ë¦¬ìŠ¤íŠ¸ ê°±ì‹ -admin
+	// ajax ÈÄ ¸®½ºÆ® °»½Å-admin
 	@RequestMapping("gListChange.do")
 	public void updateGradeList(HttpServletResponse response, ModelAndView mv, Integer page,
 			@RequestParam(value = "categoryNo", required = false) String categoryNo,
@@ -978,10 +978,10 @@ public class MemberController {
 			s.setMemberId(word);
 		}
 
-		// í˜„ì¬ ë“±ê¸‰ì •ë³´
+		// ÇöÀç µî±ŞÁ¤º¸
 		ArrayList<Grade> gList = mService.selectGradeList();
 
-		// ë“±ê¸‰ë³„ íšŒì› ìˆ˜ ì£¼ì…
+		// µî±Şº° È¸¿ø ¼ö ÁÖÀÔ
 		for (int i = 0; i < gList.size(); i++) {
 			Integer cnt = mService.selectGradeCnt(gList.get(i).getGradeNo());
 
@@ -1003,11 +1003,11 @@ public class MemberController {
 
 		PageInfo pi = new PageInfo();
 
-		int pageLimit = 10; // ë³´ì—¬ì§ˆ í˜ì´ì§€ ì´ ê°¯ìˆ˜
-		int boardLimit = 5; // ê²Œì‹œíŒ í•œ í˜ì´ì§€ì— ë¿Œë ¤ì§ˆ ê²Œì‹œê¸€ ìˆ˜
+		int pageLimit = 10; // º¸¿©Áú ÆäÀÌÁö ÃÑ °¹¼ö
+		int boardLimit = 5; // °Ô½ÃÆÇ ÇÑ ÆäÀÌÁö¿¡ »Ñ·ÁÁú °Ô½Ã±Û ¼ö
 		pi = getPageInfo2(currentPage, listCount, pageLimit, boardLimit);
 
-		// íƒˆí‡´í•˜ì§€ ì•Šì€ íšŒì› ë¦¬ìŠ¤íŠ¸
+		// Å»ÅğÇÏÁö ¾ÊÀº È¸¿ø ¸®½ºÆ®
 		ArrayList<AdminMember> mList = mService.selectMemberN(s, pi);
 
 		response.setContentType("application/json;charset=utf-8");
@@ -1040,12 +1040,12 @@ public class MemberController {
 			out.close();
 
 		} else {
-			throw new MemberException("ì´ë²¤íŠ¸ ì „ì²´ ì¡°íšŒ ì‹¤íŒ¨!");
+			throw new MemberException("ÀÌº¥Æ® ÀüÃ¼ Á¶È¸ ½ÇÆĞ!");
 		}
 
 	}
 
-	// ë“±ê¸‰ì •ë³´ë³€ê²½ -admin
+	// µî±ŞÁ¤º¸º¯°æ -admin
 	@RequestMapping("rListChang.do")
 	public void updateRateList(HttpServletResponse response, ModelAndView mv, Integer page,
 			@RequestParam(value = "categoryNo", required = false) String categoryNo,
@@ -1071,10 +1071,10 @@ public class MemberController {
 			s.setMemberId(word);
 		}
 
-		// í˜„ì¬ ë“±ê¸‰ì •ë³´
+		// ÇöÀç µî±ŞÁ¤º¸
 		ArrayList<Grade> gList = mService.selectGradeList();
 
-		// ë“±ê¸‰ë³„ íšŒì› ìˆ˜ ì£¼ì…
+		// µî±Şº° È¸¿ø ¼ö ÁÖÀÔ
 		for (int i = 0; i < gList.size(); i++) {
 			Integer cnt = mService.selectGradeCnt(gList.get(i).getGradeNo());
 
@@ -1096,11 +1096,11 @@ public class MemberController {
 
 		PageInfo pi = new PageInfo();
 
-		int pageLimit = 10; // ë³´ì—¬ì§ˆ í˜ì´ì§€ ì´ ê°¯ìˆ˜
-		int boardLimit = 5; // ê²Œì‹œíŒ í•œ í˜ì´ì§€ì— ë¿Œë ¤ì§ˆ ê²Œì‹œê¸€ ìˆ˜
+		int pageLimit = 10; // º¸¿©Áú ÆäÀÌÁö ÃÑ °¹¼ö
+		int boardLimit = 5; // °Ô½ÃÆÇ ÇÑ ÆäÀÌÁö¿¡ »Ñ·ÁÁú °Ô½Ã±Û ¼ö
 		pi = getPageInfo2(currentPage, listCount, pageLimit, boardLimit);
 
-		// íƒˆí‡´í•˜ì§€ ì•Šì€ íšŒì› ë¦¬ìŠ¤íŠ¸
+		// Å»ÅğÇÏÁö ¾ÊÀº È¸¿ø ¸®½ºÆ®
 		ArrayList<AdminMember> mList = mService.selectMemberN(s, pi);
 
 		response.setContentType("application/json;charset=utf-8");
@@ -1131,19 +1131,19 @@ public class MemberController {
 			out.close();
 
 		} else {
-			throw new MemberException("ì´ë²¤íŠ¸ ì „ì²´ ì¡°íšŒ ì‹¤íŒ¨!");
+			throw new MemberException("ÀÌº¥Æ® ÀüÃ¼ Á¶È¸ ½ÇÆĞ!");
 		}
 
 	}
 
-	// â˜… íšŒì› ì •ë³´ ìƒì„¸ë³´ê¸°-admin
+	// ¡Ú È¸¿ø Á¤º¸ »ó¼¼º¸±â-admin
 	@RequestMapping("mDetail.do")
 	public ModelAndView selectOneMember(ModelAndView mv, Integer page, int memberNo, Integer detailPage, String type) {
 
-		// ìƒì„¸ í˜ì´ì§€ë¡œ ì´ë™í•˜ê¸°ì „, íšŒì› ë¦¬ìŠ¤íŠ¸ì˜ í˜ì´ì§€ ë²ˆí˜¸
+		// »ó¼¼ ÆäÀÌÁö·Î ÀÌµ¿ÇÏ±âÀü, È¸¿ø ¸®½ºÆ®ÀÇ ÆäÀÌÁö ¹øÈ£
 		int beforePage = page;
 
-		// í•˜ë‹¨ ê²°ì œ í˜ì´ì§€ì˜ í˜ì´ì§€ ë²ˆí˜¸
+		// ÇÏ´Ü °áÁ¦ ÆäÀÌÁöÀÇ ÆäÀÌÁö ¹øÈ£
 		int currentPage = 1;
 
 		if (detailPage != null) {
@@ -1152,17 +1152,17 @@ public class MemberController {
 
 		int listCount = mService.getMemberPayCnt(memberNo);
 
-		// ìƒì„¸ í˜ì´ì§€ ë‚´ ê²°ì œ í˜ì´ì§€ì˜ ì •ë³´
+		// »ó¼¼ ÆäÀÌÁö ³» °áÁ¦ ÆäÀÌÁöÀÇ Á¤º¸
 		PageInfo pi = new PageInfo();
 
-		int pageLimit = 10; // ë³´ì—¬ì§ˆ í˜ì´ì§€ ì´ ê°¯ìˆ˜
-		int boardLimit = 5; // ê²Œì‹œíŒ í•œ í˜ì´ì§€ì— ë¿Œë ¤ì§ˆ ê²Œì‹œê¸€ ìˆ˜
+		int pageLimit = 10; // º¸¿©Áú ÆäÀÌÁö ÃÑ °¹¼ö
+		int boardLimit = 5; // °Ô½ÃÆÇ ÇÑ ÆäÀÌÁö¿¡ »Ñ·ÁÁú °Ô½Ã±Û ¼ö
 		pi = getPageInfo2(currentPage, listCount, pageLimit, boardLimit);
 
-		// í•´ë‹¹ íšŒì› ì •ë³´
+		// ÇØ´ç È¸¿ø Á¤º¸
 		AdminMember m = mService.selectOneMember(memberNo);
 
-		// íšŒì›ë³„ ê²°ì œë¦¬ìŠ¤íŠ¸
+		// È¸¿øº° °áÁ¦¸®½ºÆ®
 		ArrayList<AdminPayment> pList = mService.selectMemberPay(memberNo, pi);
 		Integer totalPayment = mService.selectTotalPay(memberNo);
 		if (totalPayment == null) {
@@ -1170,7 +1170,7 @@ public class MemberController {
 		}
 
 		System.out.println(m);
-		System.out.println("pListëŠ”" + pList);
+		System.out.println("pList´Â" + pList);
 
 		if (m != null) {
 			mv.addObject("pList", pList).addObject("totalPayment", totalPayment).addObject("memberNo", memberNo)
@@ -1178,12 +1178,12 @@ public class MemberController {
 					.setViewName("admin/userDetail");
 			return mv;
 		} else {
-			throw new MemberException("íšŒì› ìƒì„¸ í™•ì¸ ì‹¤íŒ¨!");
+			throw new MemberException("È¸¿ø »ó¼¼ È®ÀÎ ½ÇÆĞ!");
 		}
 
 	}
 
-	// íšŒì› ì •ë³´ ìˆ˜ì •(ê´€ë¦¬ì)-admin
+	// È¸¿ø Á¤º¸ ¼öÁ¤(°ü¸®ÀÚ)-admin
 	@RequestMapping("mUpdateA.do")
 	public ModelAndView updateMemberA(ModelAndView mv, AdminMember m, Integer beforePage) {
 
@@ -1195,15 +1195,15 @@ public class MemberController {
 			return mv;
 
 		} else {
-			throw new MemberException("íšŒì› ì •ë³´ ìˆ˜ì • ì‹¤íŒ¨!");
+			throw new MemberException("È¸¿ø Á¤º¸ ¼öÁ¤ ½ÇÆĞ!");
 		}
 	}
 
-	// íšŒì› ì‚­ì œ-admin
+	// È¸¿ø »èÁ¦-admin
 	@RequestMapping("deleteM.do")
 	public ModelAndView deleteMemberA(ModelAndView mv, Integer memberNo, Integer beforePage) {
 
-		System.out.println("ë„ì°¨ì¿ ");
+		System.out.println("µµÂ÷Äí");
 
 		System.out.println(m);
 		int result = mService.deleteMemberA(memberNo);
@@ -1222,12 +1222,12 @@ public class MemberController {
 			return mv;
 
 		} else {
-			throw new MemberException("íšŒì› ì‚­ì œ ì‹¤íŒ¨!");
+			throw new MemberException("È¸¿ø »èÁ¦ ½ÇÆĞ!");
 		}
 
 	}
 
-	// íƒˆí‡´íšŒì› ë¦¬ìŠ¤íŠ¸ -admin
+	// Å»ÅğÈ¸¿ø ¸®½ºÆ® -admin
 	@RequestMapping("sList.do")
 	public ModelAndView selectSecessionList(ModelAndView mv, Integer page,
 			@RequestParam(value = "categoryNo", required = false) String categoryNo,
@@ -1244,9 +1244,9 @@ public class MemberController {
 			word = null;
 		}
 
-		System.out.println("ì¹´í…Œê³ ë¦¬ëŠ”" + categoryNo);
-		System.out.println("íƒ€ì…ì€" + type);
-		System.out.println("ë‹¨ì–´ëŠ”" + word);
+		System.out.println("Ä«Å×°í¸®´Â" + categoryNo);
+		System.out.println("Å¸ÀÔÀº" + type);
+		System.out.println("´Ü¾î´Â" + word);
 
 		Search s = new Search();
 		if (categoryNo != null) {
@@ -1272,9 +1272,9 @@ public class MemberController {
 			s.setCategory2(word);
 		}
 
-		System.out.println("sëˆˆ" + s);
+		System.out.println("s´«" + s);
 
-		// íƒˆí‡´ ì‚¬ìœ ë³„ ë¹„ìœ¨ ë³´ì—¬ì¤„ ë¦¬ìŠ¤íŠ¸
+		// Å»Åğ »çÀ¯º° ºñÀ² º¸¿©ÁÙ ¸®½ºÆ®
 
 		ArrayList<AdminSecession> sList = new ArrayList<>();
 
@@ -1289,7 +1289,7 @@ public class MemberController {
 			sList.add(as);
 		}
 
-		// ë“±ê¸‰ë³„ íƒˆí‡´ ì¸ì›
+		// µî±Şº° Å»Åğ ÀÎ¿ø
 
 		ArrayList<AdminSecession> mList = new ArrayList<>();
 
@@ -1306,7 +1306,7 @@ public class MemberController {
 
 		System.out.println("mList" + mList);
 
-		// íƒˆí‡´ íšŒì›ë“¤ ë¦¬ìŠ¤íŠ¸
+		// Å»Åğ È¸¿øµé ¸®½ºÆ®
 
 		int currentPage = 1;
 
@@ -1314,14 +1314,14 @@ public class MemberController {
 			currentPage = page;
 		}
 
-		// íƒˆí‡´íšŒì› ì„¸ê¸°
+		// Å»ÅğÈ¸¿ø ¼¼±â
 		int listCount = mService.getMemberCntY(s);
 
-		System.out.println("ëª‡ëª… ê°€ì ¸ì˜¨ê±°ì•¼" + listCount);
+		System.out.println("¸î¸í °¡Á®¿Â°Å¾ß" + listCount);
 		PageInfo pi = new PageInfo();
 
-		int pageLimit = 10; // ë³´ì—¬ì§ˆ í˜ì´ì§€ ì´ ê°¯ìˆ˜
-		int boardLimit = 5; // ê²Œì‹œíŒ í•œ í˜ì´ì§€ì— ë¿Œë ¤ì§ˆ ê²Œì‹œê¸€ ìˆ˜
+		int pageLimit = 10; // º¸¿©Áú ÆäÀÌÁö ÃÑ °¹¼ö
+		int boardLimit = 5; // °Ô½ÃÆÇ ÇÑ ÆäÀÌÁö¿¡ »Ñ·ÁÁú °Ô½Ã±Û ¼ö
 		pi = getPageInfo2(currentPage, listCount, pageLimit, boardLimit);
 
 		ArrayList<AdminSecession> msList = mService.selectMemberSecession(s, pi);
@@ -1334,11 +1334,11 @@ public class MemberController {
 					.addObject("pi", pi).setViewName("admin/secessionList");
 			return mv;
 		} else {
-			throw new MemberException("íƒˆí‡´ ë‚´ì—­ í™•ì¸ ì‹¤íŒ¨!");
+			throw new MemberException("Å»Åğ ³»¿ª È®ÀÎ ½ÇÆĞ!");
 		}
 	}
 
-	// ì£¼ë¬¸ ìƒí’ˆ ë¦¬ìŠ¤íŠ¸-admin
+	// ÁÖ¹® »óÇ° ¸®½ºÆ®-admin
 	@RequestMapping("oList.do")
 	public ModelAndView selectOrderList(ModelAndView mv, Integer page,
 			@RequestParam(value = "category", required = false) String category,
@@ -1387,8 +1387,8 @@ public class MemberController {
 
 		PageInfo pi = new PageInfo();
 
-		int pageLimit = 10; // ë³´ì—¬ì§ˆ í˜ì´ì§€ ì´ ê°¯ìˆ˜
-		int boardLimit = 5; // ê²Œì‹œíŒ í•œ í˜ì´ì§€ì— ë¿Œë ¤ì§ˆ ê²Œì‹œê¸€ ìˆ˜
+		int pageLimit = 10; // º¸¿©Áú ÆäÀÌÁö ÃÑ °¹¼ö
+		int boardLimit = 5; // °Ô½ÃÆÇ ÇÑ ÆäÀÌÁö¿¡ »Ñ·ÁÁú °Ô½Ã±Û ¼ö
 		pi = getPageInfo2(currentPage, listCount, pageLimit, boardLimit);
 
 		ArrayList<AdminSubscribe> oList = mService.selectOrderList(s, pi);
@@ -1402,12 +1402,12 @@ public class MemberController {
 
 			return mv;
 		} else {
-			throw new MemberException("ì£¼ë¬¸ ë‚´ì—­ í™•ì¸ ì‹¤íŒ¨!");
+			throw new MemberException("ÁÖ¹® ³»¿ª È®ÀÎ ½ÇÆĞ!");
 		}
 
 	}
 
-	// ê´€ë¦¬ì ë°°ì†¡ ìƒíƒœ ë³€ê²½-admin
+	// °ü¸®ÀÚ ¹è¼Û »óÅÂ º¯°æ-admin
 	@RequestMapping("updateDelivery.do")
 	@ResponseBody
 	public String updateDelivery(String sendArr, String deliveryStatus) {
@@ -1427,24 +1427,24 @@ public class MemberController {
 
 		int result = mService.updateDelivery(dArr);
 
-		System.out.println("ê²°ê³¼ëŠ”" + result);
+		System.out.println("°á°ú´Â" + result);
 		if (result < 0) {
 
 			return "success";
 
 		} else {
-			throw new MemberException("ìƒíƒœ ë³€ê²½ ì‹¤íŒ¨!");
+			throw new MemberException("»óÅÂ º¯°æ ½ÇÆĞ!");
 		}
 	}
 
-	// ì£¼ë¬¸ìƒíƒœë³€ê²½ -admin
+	// ÁÖ¹®»óÅÂº¯°æ -admin
 	@RequestMapping("oListChange.do")
 	public void changeOrderList(HttpServletResponse response, Integer page,
 			@RequestParam(value = "category", required = false) String category,
 			@RequestParam(value = "word", required = false) String word,
 			@RequestParam(value = "type", required = false) String type) throws IOException {
 
-		System.out.println("ì—¬ê¸° ì œë°œ ì™€ë‘");
+		System.out.println("¿©±â Á¦¹ß ¿Í¶û");
 
 		if (category == "") {
 			category = null;
@@ -1484,24 +1484,24 @@ public class MemberController {
 
 		PageInfo pi = new PageInfo();
 
-		int pageLimit = 10; // ë³´ì—¬ì§ˆ í˜ì´ì§€ ì´ ê°¯ìˆ˜
-		int boardLimit = 5; // ê²Œì‹œíŒ í•œ í˜ì´ì§€ì— ë¿Œë ¤ì§ˆ ê²Œì‹œê¸€ ìˆ˜
+		int pageLimit = 10; // º¸¿©Áú ÆäÀÌÁö ÃÑ °¹¼ö
+		int boardLimit = 5; // °Ô½ÃÆÇ ÇÑ ÆäÀÌÁö¿¡ »Ñ·ÁÁú °Ô½Ã±Û ¼ö
 		pi = getPageInfo2(currentPage, listCount, pageLimit, boardLimit);
 
 		ArrayList<AdminSubscribe> oList = mService.selectOrderList(s, pi);
 
 		for (int i = 0; i < oList.size(); i++) {
 			if (oList.get(i).getDeliveryStatus().equalsIgnoreCase("N")) {
-				oList.get(i).setDeliveryStatus("ë°°ì†¡ ëŒ€ê¸°");
+				oList.get(i).setDeliveryStatus("¹è¼Û ´ë±â");
 			} else if (oList.get(i).getDeliveryStatus().equalsIgnoreCase("D")) {
-				oList.get(i).setDeliveryStatus("ë°°ì†¡ì¤‘");
+				oList.get(i).setDeliveryStatus("¹è¼ÛÁß");
 			} else {
-				oList.get(i).setDeliveryStatus("ë°°ì†¡ì™„ë£Œ");
+				oList.get(i).setDeliveryStatus("¹è¼Û¿Ï·á");
 			}
 
 		}
 
-		System.out.println("ì—¬ê¸° ì œë°œ ì™€ë‘2");
+		System.out.println("¿©±â Á¦¹ß ¿Í¶û2");
 
 		response.setContentType("application/json;charset=utf-8");
 
@@ -1535,27 +1535,27 @@ public class MemberController {
 
 	}
 
-	// êµ¬ë…ë‚´ì—­ ìƒì„¸ë³´ê¸° -admin
+	// ±¸µ¶³»¿ª »ó¼¼º¸±â -admin
 	@RequestMapping("oDetail.do")
 	public ModelAndView selectOrderDetail(ModelAndView mv, Integer page, Integer subscribeNo, String type) {
 
-		System.out.println("íƒ€ì…ì€???" + type);
-		// êµ¬ë… ìƒì„¸ ë‚´ì—­ ì¡°íšŒ
+		System.out.println("Å¸ÀÔÀº???" + type);
+		// ±¸µ¶ »ó¼¼ ³»¿ª Á¶È¸
 		AdminSubscribe sc = mService.selectOrder(subscribeNo);
 
 		System.out.println("sc" + sc);
-		// ì´ ê¸ˆì•¡(í• ì¸ ì „ ê¸ˆì•¡)
+		// ÃÑ ±İ¾×(ÇÒÀÎ Àü ±İ¾×)
 		int total = mService.selectItemTotalP(subscribeNo);
 		System.out.println("total" + total);
 
-		// ê²°ì œ ë‚´ì—­ ì¡°íšŒ
+		// °áÁ¦ ³»¿ª Á¶È¸
 		AdminPayment p = mService.selectPayment(subscribeNo);
 
 		p.setTotalPayment(mService.selectTotalPayment(subscribeNo));
 
 		System.out.println("p" + p);
 
-		System.out.println("í˜ì´ì§€ëŠ”ì—¬" + page);
+		System.out.println("ÆäÀÌÁö´Â¿©" + page);
 
 		if (sc != null && p != null) {
 
@@ -1564,46 +1564,46 @@ public class MemberController {
 
 			return mv;
 		} else {
-			throw new MemberException("ìƒíƒœ ë³€ê²½ ì‹¤íŒ¨!");
+			throw new MemberException("»óÅÂ º¯°æ ½ÇÆĞ!");
 		}
 
 	}
 
-	// êµ¬ë… ë‚´ìš© ë³€ê²½ -admin
+	// ±¸µ¶ ³»¿ë º¯°æ -admin
 	@RequestMapping("updateSubscribe.do")
 	public ModelAndView updateSubscribeA(ModelAndView mv, Integer page, Integer subscribeNo) {
 
 		int result = mService.updateSubscribeA(subscribeNo);
 
-		System.out.println("ë²ˆí˜¸ëŠ”" + subscribeNo + "í˜ì´ì§€ëŠ”" + page + "ê²°ê³¼ëŠ”!!!" + result);
+		System.out.println("¹øÈ£´Â" + subscribeNo + "ÆäÀÌÁö´Â" + page + "°á°ú´Â!!!" + result);
 
 		if (result > 0) {
 			mv.addObject("page", page).setViewName("redirect:oList.do");
 			return mv;
 		} else {
-			throw new MemberException("êµ¬ë… ì·¨ì†Œ ì‹¤íŒ¨!");
+			throw new MemberException("±¸µ¶ Ãë¼Ò ½ÇÆĞ!");
 		}
 	}
 
-	// êµí™˜ ë¦¬ìŠ¤íŠ¸ -admin
+	// ±³È¯ ¸®½ºÆ® -admin
 	@RequestMapping("exchangList.do")
 	public ModelAndView exchangeListView(ModelAndView mv, Integer page,
 			@RequestParam(value = "category", required = false) String category,
 			@RequestParam(value = "word", required = false) String word,
 			@RequestParam(value = "type", required = false) String type) {
-		// ì£¼ê°„ êµí™˜ ì‚¬ìœ ë³„ ë¹„ìœ¨ì„ ì¡°íšŒí•˜ê¸° ìœ„í•œ ë‚ ì§œ ìˆ˜ì§‘
-		Calendar start = Calendar.getInstance(); // í˜„ì¬ ì‹œê°„
-		Date startDate = new Date(start.getTimeInMillis()); // Dateí˜•ìœ¼ë¡œ ë³€í™˜
+		// ÁÖ°£ ±³È¯ »çÀ¯º° ºñÀ²À» Á¶È¸ÇÏ±â À§ÇÑ ³¯Â¥ ¼öÁı
+		Calendar start = Calendar.getInstance(); // ÇöÀç ½Ã°£
+		Date startDate = new Date(start.getTimeInMillis()); // DateÇüÀ¸·Î º¯È¯
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		String startDay = sdf.format(startDate);
 
 		start.add(Calendar.DATE, -7);
 		Date lastDate = new Date(start.getTimeInMillis());
-		String lastDay = sdf.format(lastDate); // 7ì¼ì „
+		String lastDay = sdf.format(lastDate); // 7ÀÏÀü
 		System.out.println(startDay);
 		System.out.println(lastDay);
 
-		// ì°¨íŠ¸ìš© ë¦¬ìŠ¤íŠ¸
+		// Â÷Æ®¿ë ¸®½ºÆ®
 		ArrayList<Search> list = new ArrayList<>();
 
 		for (int i = 1; i < 4; i++) {
@@ -1623,11 +1623,11 @@ public class MemberController {
 			System.out.println(list.get(i - 1).getTemp2());
 		}
 
-		// êµí™˜ë¦¬ìŠ¤íŠ¸
+		// ±³È¯¸®½ºÆ®
 
-		System.out.println("ì¹´í…Œê³ ë¦¬ëŠ” " + category);
-		System.out.println("íƒ€ì…ì€ " + type);
-		System.out.println("ê²€ìƒ‰ì–´ëŠ” " + word);
+		System.out.println("Ä«Å×°í¸®´Â " + category);
+		System.out.println("Å¸ÀÔÀº " + type);
+		System.out.println("°Ë»ö¾î´Â " + word);
 
 		if (category == "") {
 			category = null;
@@ -1664,23 +1664,23 @@ public class MemberController {
 			currentPage = page;
 		}
 
-		System.out.println("sëŠ”" + s);
+		System.out.println("s´Â" + s);
 		int listCount = mService.getExchangeCnt(s);
 
-		System.out.println("ëª‡ê°œ?" + listCount);
+		System.out.println("¸î°³?" + listCount);
 		PageInfo pi = new PageInfo();
 
-		int pageLimit = 10; // ë³´ì—¬ì§ˆ í˜ì´ì§€ ì´ ê°¯ìˆ˜
-		int boardLimit = 5; // ê²Œì‹œíŒ í•œ í˜ì´ì§€ì— ë¿Œë ¤ì§ˆ ê²Œì‹œê¸€ ìˆ˜
+		int pageLimit = 10; // º¸¿©Áú ÆäÀÌÁö ÃÑ °¹¼ö
+		int boardLimit = 5; // °Ô½ÃÆÇ ÇÑ ÆäÀÌÁö¿¡ »Ñ·ÁÁú °Ô½Ã±Û ¼ö
 		pi = getPageInfo2(currentPage, listCount, pageLimit, boardLimit);
 
 		ArrayList<AdminExchange> eList = mService.selectExchange(s, pi);
 
 		for (int i = 0; i < eList.size(); i++) {
 			if (eList.get(i).getExchangeStatus().equalsIgnoreCase("N")) {
-				eList.get(i).setExchangeStatus("êµí™˜ ëŒ€ê¸°");
+				eList.get(i).setExchangeStatus("±³È¯ ´ë±â");
 			} else {
-				eList.get(i).setExchangeStatus("êµí™˜ ì™„ë£Œ");
+				eList.get(i).setExchangeStatus("±³È¯ ¿Ï·á");
 			}
 
 		}
@@ -1693,11 +1693,11 @@ public class MemberController {
 
 			return mv;
 		} else {
-			throw new MemberException("êµí™˜ ë‚´ì—­ ì¡°íšŒ ì‹¤íŒ¨!");
+			throw new MemberException("±³È¯ ³»¿ª Á¶È¸ ½ÇÆĞ!");
 		}
 	}
 
-	// êµí™˜ ìƒíƒœ ë³€ê²½-admin
+	// ±³È¯ »óÅÂ º¯°æ-admin
 	@RequestMapping("eChange.do")
 	@ResponseBody
 	public String exchangeChange(Integer page, String type, String sendArr) {
@@ -1722,18 +1722,18 @@ public class MemberController {
 			return "success";
 
 		} else {
-			throw new MemberException("êµí™˜ ìƒíƒœ ë³€ê²½ ì‹¤íŒ¨!");
+			throw new MemberException("±³È¯ »óÅÂ º¯°æ ½ÇÆĞ!");
 		}
 	}
 
-	// êµí™˜ ìƒíƒœë³€ê²½ í›„ ë¦¬ìŠ¤íŠ¸ ê°€ì ¸ì˜¤ê¸°-admin
+	// ±³È¯ »óÅÂº¯°æ ÈÄ ¸®½ºÆ® °¡Á®¿À±â-admin
 	@RequestMapping("exchangeListChange.do")
 	public void selectChangedExchangeList(HttpServletResponse response, Integer page,
 			@RequestParam(value = "category", required = false) String category,
 			@RequestParam(value = "word", required = false) String word,
 			@RequestParam(value = "type", required = false) String type) throws IOException {
 
-		// êµí™˜ë¦¬ìŠ¤íŠ¸
+		// ±³È¯¸®½ºÆ®
 		if (category == "") {
 			category = null;
 		}
@@ -1772,17 +1772,17 @@ public class MemberController {
 
 		PageInfo pi = new PageInfo();
 
-		int pageLimit = 10; // ë³´ì—¬ì§ˆ í˜ì´ì§€ ì´ ê°¯ìˆ˜
-		int boardLimit = 5; // ê²Œì‹œíŒ í•œ í˜ì´ì§€ì— ë¿Œë ¤ì§ˆ ê²Œì‹œê¸€ ìˆ˜
+		int pageLimit = 10; // º¸¿©Áú ÆäÀÌÁö ÃÑ °¹¼ö
+		int boardLimit = 5; // °Ô½ÃÆÇ ÇÑ ÆäÀÌÁö¿¡ »Ñ·ÁÁú °Ô½Ã±Û ¼ö
 		pi = getPageInfo2(currentPage, listCount, pageLimit, boardLimit);
 
 		ArrayList<AdminExchange> eList = mService.selectExchange(s, pi);
 
 		for (int i = 0; i < eList.size(); i++) {
 			if (eList.get(i).getExchangeStatus().equalsIgnoreCase("N")) {
-				eList.get(i).setExchangeStatus("êµí™˜ ëŒ€ê¸°");
+				eList.get(i).setExchangeStatus("±³È¯ ´ë±â");
 			} else {
-				eList.get(i).setExchangeStatus("êµí™˜ ì™„ë£Œ");
+				eList.get(i).setExchangeStatus("±³È¯ ¿Ï·á");
 			}
 
 		}
@@ -1821,20 +1821,20 @@ public class MemberController {
 			out.close();
 
 		} else {
-			throw new MemberException("ì´ë²¤íŠ¸ ì „ì²´ ì¡°íšŒ ì‹¤íŒ¨!");
+			throw new MemberException("ÀÌº¥Æ® ÀüÃ¼ Á¶È¸ ½ÇÆĞ!");
 		}
 
 	}
 
-	// ê¸°ê°„ë³„ í†µê³„-admin
+	// ±â°£º° Åë°è-admin
 	@RequestMapping("sDateList.do")
 	public ModelAndView selectSalesDate(ModelAndView mv, Integer page, String type,
 			@RequestParam(value = "startD", required = false) String startD,
 			@RequestParam(value = "lastD", required = false) String lastD) {
 
-		System.out.println("íƒ€ì…ì€?" + type);
-		System.out.println("ì²«ë‚ ì€?" + startD);
-		System.out.println("ëë‚ ì€?" + lastD);
+		System.out.println("Å¸ÀÔÀº?" + type);
+		System.out.println("Ã¹³¯Àº?" + startD);
+		System.out.println("³¡³¯Àº?" + lastD);
 
 		int currentPage = 1;
 
@@ -1842,44 +1842,44 @@ public class MemberController {
 			currentPage = page;
 		}
 
-		// ê³µí†µ ë³€ìˆ˜
+		// °øÅë º¯¼ö
 
-		Calendar last = Calendar.getInstance(); // í˜„ì¬ ì‹œê°„
+		Calendar last = Calendar.getInstance(); // ÇöÀç ½Ã°£
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		SimpleDateFormat sdfy = new SimpleDateFormat("yyyy");
 		SimpleDateFormat sdfm = new SimpleDateFormat("yyyy-MM");
 		String lastDay = "";
 		String startDay = "";
-		int sumTotalP = 0; // ì´ ë§¤ì¶œ
-		int sumTotalC = 0; // ì´ ê±´ ìˆ˜
+		int sumTotalP = 0; // ÃÑ ¸ÅÃâ
+		int sumTotalC = 0; // ÃÑ °Ç ¼ö
 
 		ArrayList<String> pArr = new ArrayList<>();
 		Search s = new Search();
 		PageInfo pi = new PageInfo();
 		ArrayList<AdminPayment> pList = new ArrayList<>();
 
-		// ê¸°ë³¸ ì²« í™”ë©´ (N) --> í•´ë‹¹ë…„ë„ì˜ 1ì›” 1ì¼ë¶€í„° ê²€ìƒ‰
+		// ±âº» Ã¹ È­¸é (N) --> ÇØ´ç³âµµÀÇ 1¿ù 1ÀÏºÎÅÍ °Ë»ö
 		if (type.equalsIgnoreCase("N")) {
 
 			lastDay = sdf.format(last.getTime());
 			startDay = lastDay.substring(0, 4).concat("-01-01");
 
-			// ê²€ìƒ‰í•  ë‚ ì§œ ë½‘ì•„ì˜¤ê¸°
+			// °Ë»öÇÒ ³¯Â¥ »Ì¾Æ¿À±â
 
-			s.setLastDay(lastDay); // ë§ˆì§€ë§‰ ë‚ ì§œ
-			s.setStartDay(startDay); // ì²˜ìŒ ë‚ ì§œ
+			s.setLastDay(lastDay); // ¸¶Áö¸· ³¯Â¥
+			s.setStartDay(startDay); // Ã³À½ ³¯Â¥
 			System.out.println(s);
 			pArr = mService.selectDateList(s);
 
-			// í™”ë©´ì— ë…¸ì¶œë  ë§¤ì¶œ ë¦¬ìŠ¤íŠ¸ ë§Œë“¤ê¸°
+			// È­¸é¿¡ ³ëÃâµÉ ¸ÅÃâ ¸®½ºÆ® ¸¸µé±â
 			int listCount = mService.getSalesCnt(s);
-			int pageLimit = 10; // ë³´ì—¬ì§ˆ í˜ì´ì§€ ì´ ê°¯ìˆ˜
-			int boardLimit = 5; // ê²Œì‹œíŒ í•œ í˜ì´ì§€ì— ë¿Œë ¤ì§ˆ ê²Œì‹œê¸€ ìˆ˜
+			int pageLimit = 10; // º¸¿©Áú ÆäÀÌÁö ÃÑ °¹¼ö
+			int boardLimit = 5; // °Ô½ÃÆÇ ÇÑ ÆäÀÌÁö¿¡ »Ñ·ÁÁú °Ô½Ã±Û ¼ö
 			pi = getPageInfo2(currentPage, listCount, pageLimit, boardLimit);
 
 			pList = mService.selectPaymentList(pArr, pi);
 
-			// ê²€ìƒ‰í•œ ê°’ì˜ ì´ í•©ê³„
+			// °Ë»öÇÑ °ªÀÇ ÃÑ ÇÕ°è
 			ArrayList<AdminPayment> tot = mService.selectPaymentList(pArr);
 
 			for (int i = 0; i < tot.size(); i++) {
@@ -1889,28 +1889,28 @@ public class MemberController {
 				sumTotalP += p;
 			}
 
-			// ì˜¤ëŠ˜ ê²€ìƒ‰(T)
+			// ¿À´Ã °Ë»ö(T)
 		} else if (type.equalsIgnoreCase("T")) {
 
 			lastDay = sdf.format(last.getTime());
 			startDay = lastDay;
 
-			// ê²€ìƒ‰í•  ë‚ ì§œ ë½‘ì•„ì˜¤ê¸°
+			// °Ë»öÇÒ ³¯Â¥ »Ì¾Æ¿À±â
 
-			s.setLastDay(lastDay); // ë§ˆì§€ë§‰ ë‚ ì§œ
-			s.setStartDay(startDay); // ì²˜ìŒ ë‚ ì§œ
+			s.setLastDay(lastDay); // ¸¶Áö¸· ³¯Â¥
+			s.setStartDay(startDay); // Ã³À½ ³¯Â¥
 			System.out.println(s);
 			pArr = mService.selectDateList(s);
 
-			// í™”ë©´ì— ë…¸ì¶œë  ë§¤ì¶œ ë¦¬ìŠ¤íŠ¸ ë§Œë“¤ê¸°
+			// È­¸é¿¡ ³ëÃâµÉ ¸ÅÃâ ¸®½ºÆ® ¸¸µé±â
 			int listCount = mService.getSalesCnt(s);
-			int pageLimit = 10; // ë³´ì—¬ì§ˆ í˜ì´ì§€ ì´ ê°¯ìˆ˜
-			int boardLimit = 5; // ê²Œì‹œíŒ í•œ í˜ì´ì§€ì— ë¿Œë ¤ì§ˆ ê²Œì‹œê¸€ ìˆ˜
+			int pageLimit = 10; // º¸¿©Áú ÆäÀÌÁö ÃÑ °¹¼ö
+			int boardLimit = 5; // °Ô½ÃÆÇ ÇÑ ÆäÀÌÁö¿¡ »Ñ·ÁÁú °Ô½Ã±Û ¼ö
 			pi = getPageInfo2(currentPage, listCount, pageLimit, boardLimit);
 
 			pList = mService.selectPaymentList(pArr, pi);
 
-			// ê²€ìƒ‰í•œ ê°’ì˜ ì´ í•©ê³„
+			// °Ë»öÇÑ °ªÀÇ ÃÑ ÇÕ°è
 			ArrayList<AdminPayment> tot = mService.selectPaymentList(pArr);
 
 			for (int i = 0; i < tot.size(); i++) {
@@ -1920,30 +1920,30 @@ public class MemberController {
 				sumTotalP += p;
 			}
 
-			// ì¼ì£¼ì¼ ê²€ìƒ‰(W)
+			// ÀÏÁÖÀÏ °Ë»ö(W)
 		} else if (type.equalsIgnoreCase("W")) {
 
 			lastDay = sdf.format(last.getTime());
 			last.add(Calendar.DATE, -7);
 			Date lastDate = new Date(last.getTimeInMillis());
-			startDay = sdf.format(lastDate); // 7ì¼ì „
+			startDay = sdf.format(lastDate); // 7ÀÏÀü
 
-			// ê²€ìƒ‰í•  ë‚ ì§œ ë½‘ì•„ì˜¤ê¸°
+			// °Ë»öÇÒ ³¯Â¥ »Ì¾Æ¿À±â
 
-			s.setLastDay(lastDay); // ë§ˆì§€ë§‰ ë‚ ì§œ
-			s.setStartDay(startDay); // ì²˜ìŒ ë‚ ì§œ
+			s.setLastDay(lastDay); // ¸¶Áö¸· ³¯Â¥
+			s.setStartDay(startDay); // Ã³À½ ³¯Â¥
 			System.out.println(s);
 			pArr = mService.selectDateList(s);
 
-			// í™”ë©´ì— ë…¸ì¶œë  ë§¤ì¶œ ë¦¬ìŠ¤íŠ¸ ë§Œë“¤ê¸°
+			// È­¸é¿¡ ³ëÃâµÉ ¸ÅÃâ ¸®½ºÆ® ¸¸µé±â
 			int listCount = mService.getSalesCnt(s);
-			int pageLimit = 10; // ë³´ì—¬ì§ˆ í˜ì´ì§€ ì´ ê°¯ìˆ˜
-			int boardLimit = 5; // ê²Œì‹œíŒ í•œ í˜ì´ì§€ì— ë¿Œë ¤ì§ˆ ê²Œì‹œê¸€ ìˆ˜
+			int pageLimit = 10; // º¸¿©Áú ÆäÀÌÁö ÃÑ °¹¼ö
+			int boardLimit = 5; // °Ô½ÃÆÇ ÇÑ ÆäÀÌÁö¿¡ »Ñ·ÁÁú °Ô½Ã±Û ¼ö
 			pi = getPageInfo2(currentPage, listCount, pageLimit, boardLimit);
 
 			pList = mService.selectPaymentList(pArr, pi);
 
-			// ê²€ìƒ‰í•œ ê°’ì˜ ì´ í•©ê³„
+			// °Ë»öÇÑ °ªÀÇ ÃÑ ÇÕ°è
 			ArrayList<AdminPayment> tot = mService.selectPaymentList(pArr);
 
 			for (int i = 0; i < tot.size(); i++) {
@@ -1953,32 +1953,32 @@ public class MemberController {
 				sumTotalP += p;
 			}
 
-			// í•œë‹¬ ê²€ìƒ‰ (O)
+			// ÇÑ´Ş °Ë»ö (O)
 		} else if (type.equalsIgnoreCase("O")) {
 
 			lastDay = sdf.format(last.getTime());
 			last.add(Calendar.MONTH, -1);
 			Date lastDate = new Date(last.getTimeInMillis());
-			startDay = sdf.format(lastDate); // 1ë‹¬ì „
+			startDay = sdf.format(lastDate); // 1´ŞÀü
 			System.out.println(lastDay);
 			System.out.println(startDay);
 
-			// ê²€ìƒ‰í•  ë‚ ì§œ ë½‘ì•„ì˜¤ê¸°
+			// °Ë»öÇÒ ³¯Â¥ »Ì¾Æ¿À±â
 
-			s.setLastDay(lastDay); // ë§ˆì§€ë§‰ ë‚ ì§œ
-			s.setStartDay(startDay); // ì²˜ìŒ ë‚ ì§œ
+			s.setLastDay(lastDay); // ¸¶Áö¸· ³¯Â¥
+			s.setStartDay(startDay); // Ã³À½ ³¯Â¥
 			System.out.println(s);
 			pArr = mService.selectDateList(s);
 
-			// í™”ë©´ì— ë…¸ì¶œë  ë§¤ì¶œ ë¦¬ìŠ¤íŠ¸ ë§Œë“¤ê¸°
+			// È­¸é¿¡ ³ëÃâµÉ ¸ÅÃâ ¸®½ºÆ® ¸¸µé±â
 			int listCount = mService.getSalesCnt(s);
-			int pageLimit = 10; // ë³´ì—¬ì§ˆ í˜ì´ì§€ ì´ ê°¯ìˆ˜
-			int boardLimit = 5; // ê²Œì‹œíŒ í•œ í˜ì´ì§€ì— ë¿Œë ¤ì§ˆ ê²Œì‹œê¸€ ìˆ˜
+			int pageLimit = 10; // º¸¿©Áú ÆäÀÌÁö ÃÑ °¹¼ö
+			int boardLimit = 5; // °Ô½ÃÆÇ ÇÑ ÆäÀÌÁö¿¡ »Ñ·ÁÁú °Ô½Ã±Û ¼ö
 			pi = getPageInfo2(currentPage, listCount, pageLimit, boardLimit);
 
 			pList = mService.selectPaymentList(pArr, pi);
 
-			// ê²€ìƒ‰í•œ ê°’ì˜ ì´ í•©ê³„
+			// °Ë»öÇÑ °ªÀÇ ÃÑ ÇÕ°è
 			for (int i = 0; i < pList.size(); i++) {
 				int p = pList.get(i).getTotalPayment();
 				sumTotalP += p;
@@ -1986,7 +1986,7 @@ public class MemberController {
 				sumTotalC += c;
 			}
 
-			// ì—°ë„ë³„ ê²€ìƒ‰ (Y)
+			// ¿¬µµº° °Ë»ö (Y)
 		} else if (type.equalsIgnoreCase("Y")) {
 
 			System.out.println(startD);
@@ -1996,16 +1996,16 @@ public class MemberController {
 			System.out.println(startDay);
 			System.out.println(lastDay);
 
-			s.setLastDay(lastDay); // ë§ˆì§€ë§‰ ë‚ ì§œ
-			s.setStartDay(startDay); // ì²˜ìŒ ë‚ ì§œ
+			s.setLastDay(lastDay); // ¸¶Áö¸· ³¯Â¥
+			s.setStartDay(startDay); // Ã³À½ ³¯Â¥
 			System.out.println(s);
-			pArr = mService.selectYearList(s); // ì‚¬ì´ ê¸°ê°„ ë½‘ì•„ì˜¤ê¸°
+			pArr = mService.selectYearList(s); // »çÀÌ ±â°£ »Ì¾Æ¿À±â
 
-			// í™”ë©´ì— ë…¸ì¶œë  ë§¤ì¶œ ë¦¬ìŠ¤íŠ¸ ë§Œë“¤ê¸°
+			// È­¸é¿¡ ³ëÃâµÉ ¸ÅÃâ ¸®½ºÆ® ¸¸µé±â
 			int listCount = mService.getSalesYearCnt(pArr);
-			System.out.println("ë¦¬ìŠ¤íŠ¸ì¹´ìš´íŠ¸ëŠìœ¼ìœ¼ì€" + listCount);
-			int pageLimit = 10; // ë³´ì—¬ì§ˆ í˜ì´ì§€ ì´ ê°¯ìˆ˜
-			int boardLimit = 5; // ê²Œì‹œíŒ í•œ í˜ì´ì§€ì— ë¿Œë ¤ì§ˆ ê²Œì‹œê¸€ ìˆ˜
+			System.out.println("¸®½ºÆ®Ä«¿îÆ®´ÀÀ¸À¸Àº" + listCount);
+			int pageLimit = 10; // º¸¿©Áú ÆäÀÌÁö ÃÑ °¹¼ö
+			int boardLimit = 5; // °Ô½ÃÆÇ ÇÑ ÆäÀÌÁö¿¡ »Ñ·ÁÁú °Ô½Ã±Û ¼ö
 			pi = getPageInfo2(currentPage, listCount, pageLimit, boardLimit);
 
 			pList = mService.selectPaymentYearsList(pArr, pi);
@@ -2016,7 +2016,7 @@ public class MemberController {
 
 			System.out.println(pList);
 
-			// ê²€ìƒ‰í•œ ê°’ì˜ ì´ í•©ê³„
+			// °Ë»öÇÑ °ªÀÇ ÃÑ ÇÕ°è
 			ArrayList<AdminPayment> tot = mService.selectPaymentYearsList(pArr);
 
 			for (int i = 0; i < tot.size(); i++) {
@@ -2026,7 +2026,7 @@ public class MemberController {
 				sumTotalP += p;
 			}
 
-			// ì›”ë³„ ê²€ìƒ‰ (M)
+			// ¿ùº° °Ë»ö (M)
 		} else if (type.equalsIgnoreCase("M")) {
 
 			System.out.println(startD);
@@ -2036,17 +2036,17 @@ public class MemberController {
 			System.out.println(startDay);
 			System.out.println(lastDay);
 
-			s.setLastDay(lastDay); // ë§ˆì§€ë§‰ ë‚ ì§œ
-			s.setStartDay(startDay); // ì²˜ìŒ ë‚ ì§œ
+			s.setLastDay(lastDay); // ¸¶Áö¸· ³¯Â¥
+			s.setStartDay(startDay); // Ã³À½ ³¯Â¥
 			System.out.println(s);
-			pArr = mService.selectMonthList(s); // ì‚¬ì´ ê¸°ê°„ ë½‘ì•„ì˜¤ê¸°
+			pArr = mService.selectMonthList(s); // »çÀÌ ±â°£ »Ì¾Æ¿À±â
 			System.out.println(pArr);
 
-			// í™”ë©´ì— ë…¸ì¶œë  ë§¤ì¶œ ë¦¬ìŠ¤íŠ¸ ë§Œë“¤ê¸°
+			// È­¸é¿¡ ³ëÃâµÉ ¸ÅÃâ ¸®½ºÆ® ¸¸µé±â
 			int listCount = mService.getSalesMonthsCnt(pArr);
-			System.out.println("ë¦¬ìŠ¤íŠ¸ì¹´ìš´íŠ¸ëŠìœ¼ìœ¼ì€" + listCount);
-			int pageLimit = 10; // ë³´ì—¬ì§ˆ í˜ì´ì§€ ì´ ê°¯ìˆ˜
-			int boardLimit = 5; // ê²Œì‹œíŒ í•œ í˜ì´ì§€ì— ë¿Œë ¤ì§ˆ ê²Œì‹œê¸€ ìˆ˜
+			System.out.println("¸®½ºÆ®Ä«¿îÆ®´ÀÀ¸À¸Àº" + listCount);
+			int pageLimit = 10; // º¸¿©Áú ÆäÀÌÁö ÃÑ °¹¼ö
+			int boardLimit = 5; // °Ô½ÃÆÇ ÇÑ ÆäÀÌÁö¿¡ »Ñ·ÁÁú °Ô½Ã±Û ¼ö
 			pi = getPageInfo2(currentPage, listCount, pageLimit, boardLimit);
 
 			pList = mService.selectPaymentMonthsList(pArr, pi);
@@ -2057,7 +2057,7 @@ public class MemberController {
 
 			System.out.println(pList);
 
-			// ê²€ìƒ‰í•œ ê°’ì˜ ì´ í•©ê³„
+			// °Ë»öÇÑ °ªÀÇ ÃÑ ÇÕ°è
 			ArrayList<AdminPayment> tot = mService.selectPaymentMonthsList(pArr);
 
 			for (int i = 0; i < tot.size(); i++) {
@@ -2067,28 +2067,28 @@ public class MemberController {
 				sumTotalP += p;
 			}
 
-			// ì¼ë³„ ê²€ìƒ‰ (D)
+			// ÀÏº° °Ë»ö (D)
 		} else if (type.equalsIgnoreCase("D")) {
 
 			lastDay = lastD;
 			startDay = startD;
 
-			// ê²€ìƒ‰í•  ë‚ ì§œ ë½‘ì•„ì˜¤ê¸°
+			// °Ë»öÇÒ ³¯Â¥ »Ì¾Æ¿À±â
 
-			s.setLastDay(lastDay); // ë§ˆì§€ë§‰ ë‚ ì§œ
-			s.setStartDay(startDay); // ì²˜ìŒ ë‚ ì§œ
+			s.setLastDay(lastDay); // ¸¶Áö¸· ³¯Â¥
+			s.setStartDay(startDay); // Ã³À½ ³¯Â¥
 			System.out.println(s);
 			pArr = mService.selectDateList(s);
 
-			// í™”ë©´ì— ë…¸ì¶œë  ë§¤ì¶œ ë¦¬ìŠ¤íŠ¸ ë§Œë“¤ê¸°
+			// È­¸é¿¡ ³ëÃâµÉ ¸ÅÃâ ¸®½ºÆ® ¸¸µé±â
 			int listCount = mService.getSalesCnt(s);
-			int pageLimit = 10; // ë³´ì—¬ì§ˆ í˜ì´ì§€ ì´ ê°¯ìˆ˜
-			int boardLimit = 5; // ê²Œì‹œíŒ í•œ í˜ì´ì§€ì— ë¿Œë ¤ì§ˆ ê²Œì‹œê¸€ ìˆ˜
+			int pageLimit = 10; // º¸¿©Áú ÆäÀÌÁö ÃÑ °¹¼ö
+			int boardLimit = 5; // °Ô½ÃÆÇ ÇÑ ÆäÀÌÁö¿¡ »Ñ·ÁÁú °Ô½Ã±Û ¼ö
 			pi = getPageInfo2(currentPage, listCount, pageLimit, boardLimit);
 
 			pList = mService.selectPaymentList(pArr, pi);
 
-			// ê²€ìƒ‰í•œ ê°’ì˜ ì´ í•©ê³„
+			// °Ë»öÇÑ °ªÀÇ ÃÑ ÇÕ°è
 			ArrayList<AdminPayment> tot = mService.selectPaymentList(pArr);
 
 			for (int i = 0; i < tot.size(); i++) {
@@ -2105,25 +2105,25 @@ public class MemberController {
 		return mv;
 	}
 
-	// ì¹´í…Œê³ ë¦¬ë³„ ë¦¬ìŠ¤íŠ¸ -admin
+	// Ä«Å×°í¸®º° ¸®½ºÆ® -admin
 	@RequestMapping("sCategoryList.do")
 	public ModelAndView selectSalesCategory(ModelAndView mv, String type,
 			@RequestParam(value = "startD", required = false) String startD,
 			@RequestParam(value = "lastD", required = false) String lastD) {
 
-		System.out.println("íƒ€ì…ì€?" + type);
+		System.out.println("Å¸ÀÔÀº?" + type);
 
-		// ê³µí†µ ë³€ìˆ˜
+		// °øÅë º¯¼ö
 
-		Calendar last = Calendar.getInstance(); // í˜„ì¬ ì‹œê°„
+		Calendar last = Calendar.getInstance(); // ÇöÀç ½Ã°£
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		SimpleDateFormat sdfy = new SimpleDateFormat("yyyy");
 		SimpleDateFormat sdfm = new SimpleDateFormat("yyyy-MM");
 		Search sc = new Search();
 		String lastDay = "";
 		String startDay = "";
-		int sumTotalP = 0; // ì´ ë§¤ì¶œ
-		int sumTotalC = 0; // ì´ ê±´ ìˆ˜
+		int sumTotalP = 0; // ÃÑ ¸ÅÃâ
+		int sumTotalC = 0; // ÃÑ °Ç ¼ö
 
 		ArrayList<AdminPayment> pList = new ArrayList<>();
 		ArrayList<Double> ratio = new ArrayList<>();
@@ -2136,7 +2136,7 @@ public class MemberController {
 			cat.add(s);
 		}
 
-		// ê¸°ë³¸ ì²« í™”ë©´ (N) --> í•´ë‹¹ë…„ë„ì˜ 1ì›” 1ì¼ë¶€í„° ê²€ìƒ‰
+		// ±âº» Ã¹ È­¸é (N) --> ÇØ´ç³âµµÀÇ 1¿ù 1ÀÏºÎÅÍ °Ë»ö
 		if (type.equalsIgnoreCase("N")) {
 
 			lastDay = sdf.format(last.getTime());
@@ -2147,7 +2147,7 @@ public class MemberController {
 				cat.get(i).setLastDay(lastDay);
 			}
 
-			// í™”ë©´ì— ë…¸ì¶œë  ë§¤ì¶œ ë¦¬ìŠ¤íŠ¸ ë§Œë“¤ê¸°
+			// È­¸é¿¡ ³ëÃâµÉ ¸ÅÃâ ¸®½ºÆ® ¸¸µé±â
 
 			for (int i = 0; i < cat.size(); i++) {
 
@@ -2165,7 +2165,7 @@ public class MemberController {
 
 			}
 
-			// ê²€ìƒ‰í•œ ê°’ì˜ ì´ í•©ê³„
+			// °Ë»öÇÑ °ªÀÇ ÃÑ ÇÕ°è
 			for (int i = 0; i < pList.size(); i++) {
 				int p = pList.get(i).getTotalPayment();
 				sumTotalP += p;
@@ -2174,7 +2174,7 @@ public class MemberController {
 				sumTotalC += c;
 			}
 
-			// ì¹´í…Œê³ ë¦¬ë³„ ë¹„ìœ¨
+			// Ä«Å×°í¸®º° ºñÀ²
 
 			for (int i = 0; i < pList.size(); i++) {
 				System.out.println(pList.get(i).getTotalPayment());
@@ -2190,7 +2190,7 @@ public class MemberController {
 
 			System.out.println(ratio);
 
-			// ì˜¤ëŠ˜ ê²€ìƒ‰(T)
+			// ¿À´Ã °Ë»ö(T)
 		} else if (type.equalsIgnoreCase("T")) {
 
 			lastDay = sdf.format(last.getTime());
@@ -2200,7 +2200,7 @@ public class MemberController {
 				cat.get(i).setLastDay(lastDay);
 			}
 
-			// í™”ë©´ì— ë…¸ì¶œë  ë§¤ì¶œ ë¦¬ìŠ¤íŠ¸ ë§Œë“¤ê¸°
+			// È­¸é¿¡ ³ëÃâµÉ ¸ÅÃâ ¸®½ºÆ® ¸¸µé±â
 
 			for (int i = 0; i < cat.size(); i++) {
 
@@ -2218,7 +2218,7 @@ public class MemberController {
 
 			}
 
-			// ê²€ìƒ‰í•œ ê°’ì˜ ì´ í•©ê³„
+			// °Ë»öÇÑ °ªÀÇ ÃÑ ÇÕ°è
 			for (int i = 0; i < pList.size(); i++) {
 				int p = pList.get(i).getTotalPayment();
 				sumTotalP += p;
@@ -2226,7 +2226,7 @@ public class MemberController {
 				sumTotalC += c;
 			}
 
-			// ì¹´í…Œê³ ë¦¬ë³„ ë¹„ìœ¨
+			// Ä«Å×°í¸®º° ºñÀ²
 
 			for (int i = 0; i < pList.size(); i++) {
 				System.out.println(pList.get(i).getTotalPayment());
@@ -2242,19 +2242,19 @@ public class MemberController {
 
 			}
 
-			// ì¼ì£¼ì¼ ê²€ìƒ‰(W)
+			// ÀÏÁÖÀÏ °Ë»ö(W)
 		} else if (type.equalsIgnoreCase("W")) {
 
 			lastDay = sdf.format(last.getTime());
 			last.add(Calendar.DATE, -7);
 			Date lastDate = new Date(last.getTimeInMillis());
-			startDay = sdf.format(lastDate); // 7ì¼ì „
+			startDay = sdf.format(lastDate); // 7ÀÏÀü
 			for (int i = 0; i < cat.size(); i++) {
 				cat.get(i).setStartDay(startDay);
 				cat.get(i).setLastDay(lastDay);
 			}
 
-			// í™”ë©´ì— ë…¸ì¶œë  ë§¤ì¶œ ë¦¬ìŠ¤íŠ¸ ë§Œë“¤ê¸°
+			// È­¸é¿¡ ³ëÃâµÉ ¸ÅÃâ ¸®½ºÆ® ¸¸µé±â
 
 			for (int i = 0; i < cat.size(); i++) {
 
@@ -2271,14 +2271,14 @@ public class MemberController {
 				}
 
 			}
-			// ê²€ìƒ‰í•œ ê°’ì˜ ì´ í•©ê³„
+			// °Ë»öÇÑ °ªÀÇ ÃÑ ÇÕ°è
 			for (int i = 0; i < pList.size(); i++) {
 				int p = pList.get(i).getTotalPayment();
 				sumTotalP += p;
 				int c = pList.get(i).getTotalCount();
 				sumTotalC += c;
 			}
-			// ì¹´í…Œê³ ë¦¬ë³„ ë¹„ìœ¨
+			// Ä«Å×°í¸®º° ºñÀ²
 
 			for (int i = 0; i < pList.size(); i++) {
 				System.out.println(pList.get(i).getTotalPayment());
@@ -2294,13 +2294,13 @@ public class MemberController {
 
 			}
 
-			// í•œë‹¬ ê²€ìƒ‰ (O)
+			// ÇÑ´Ş °Ë»ö (O)
 		} else if (type.equalsIgnoreCase("O")) {
 
 			lastDay = sdf.format(last.getTime());
 			last.add(Calendar.MONTH, -1);
 			Date lastDate = new Date(last.getTimeInMillis());
-			startDay = sdf.format(lastDate); // 1ë‹¬ì „
+			startDay = sdf.format(lastDate); // 1´ŞÀü
 			System.out.println(lastDay);
 			System.out.println(startDay);
 			for (int i = 0; i < cat.size(); i++) {
@@ -2308,7 +2308,7 @@ public class MemberController {
 				cat.get(i).setLastDay(lastDay);
 			}
 
-			// í™”ë©´ì— ë…¸ì¶œë  ë§¤ì¶œ ë¦¬ìŠ¤íŠ¸ ë§Œë“¤ê¸°
+			// È­¸é¿¡ ³ëÃâµÉ ¸ÅÃâ ¸®½ºÆ® ¸¸µé±â
 
 			for (int i = 0; i < cat.size(); i++) {
 
@@ -2326,14 +2326,14 @@ public class MemberController {
 
 			}
 
-			// ê²€ìƒ‰í•œ ê°’ì˜ ì´ í•©ê³„
+			// °Ë»öÇÑ °ªÀÇ ÃÑ ÇÕ°è
 			for (int i = 0; i < pList.size(); i++) {
 				int p = pList.get(i).getTotalPayment();
 				sumTotalP += p;
 				int c = pList.get(i).getTotalCount();
 				sumTotalC += c;
 			}
-			// ì¹´í…Œê³ ë¦¬ë³„ ë¹„ìœ¨
+			// Ä«Å×°í¸®º° ºñÀ²
 
 			for (int i = 0; i < pList.size(); i++) {
 				System.out.println(pList.get(i).getTotalPayment());
@@ -2347,7 +2347,7 @@ public class MemberController {
 				ratio.add(r);
 			}
 
-			// ì¼ë³„ ê²€ìƒ‰ (D)
+			// ÀÏº° °Ë»ö (D)
 		} else if (type.equalsIgnoreCase("D")) {
 
 			lastDay = lastD;
@@ -2357,7 +2357,7 @@ public class MemberController {
 				cat.get(i).setLastDay(lastDay);
 			}
 
-			// í™”ë©´ì— ë…¸ì¶œë  ë§¤ì¶œ ë¦¬ìŠ¤íŠ¸ ë§Œë“¤ê¸°
+			// È­¸é¿¡ ³ëÃâµÉ ¸ÅÃâ ¸®½ºÆ® ¸¸µé±â
 
 			for (int i = 0; i < cat.size(); i++) {
 
@@ -2373,14 +2373,14 @@ public class MemberController {
 					pList.add(p);
 				}
 			}
-			// ê²€ìƒ‰í•œ ê°’ì˜ ì´ í•©ê³„
+			// °Ë»öÇÑ °ªÀÇ ÃÑ ÇÕ°è
 			for (int i = 0; i < pList.size(); i++) {
 				int p = pList.get(i).getTotalPayment();
 				sumTotalP += p;
 				int c = pList.get(i).getTotalCount();
 				sumTotalC += c;
 			}
-			// ì¹´í…Œê³ ë¦¬ë³„ ë¹„ìœ¨
+			// Ä«Å×°í¸®º° ºñÀ²
 
 			for (int i = 0; i < pList.size(); i++) {
 				System.out.println(pList.get(i).getTotalPayment());
@@ -2402,7 +2402,7 @@ public class MemberController {
 
 	}
 
-	// ê²°ì œ ìƒì„¸ë¦¬ìŠ¤íŠ¸ -admin
+	// °áÁ¦ »ó¼¼¸®½ºÆ® -admin
 	@RequestMapping("sDetail.do")
 	public ModelAndView selectSalesDetail(ModelAndView mv, Integer beforePage, Integer page, String startD,
 			String startDay, String lastDay, String type, String type2,
@@ -2411,10 +2411,10 @@ public class MemberController {
 			@RequestParam(value = "word", required = false) String word,
 			@RequestParam(value = "category", required = false) String category) throws java.text.ParseException {
 
-		// ê³µí†µ ë³€ìˆ˜
+		// °øÅë º¯¼ö
 
 		ArrayList<AdminPayment> pList = new ArrayList<>();
-		// í˜ì´ì§€
+		// ÆäÀÌÁö
 		int currentPage = 1;
 
 		if (page != null) {
@@ -2425,9 +2425,9 @@ public class MemberController {
 		String start = "";
 		String last = "";
 
-		System.out.println("ì „ë‹¬ë°›ì€ íƒ€ì…ì€!!!!!!" + type);
-		System.out.println("startDëŠ”" + startD);
-		System.out.println("lastDëŠ”" + lastD);
+		System.out.println("Àü´Ş¹ŞÀº Å¸ÀÔÀº!!!!!!" + type);
+		System.out.println("startD´Â" + startD);
+		System.out.println("lastD´Â" + lastD);
 		System.out.println(category);
 
 		if (type2.equals("date")) {
@@ -2440,7 +2440,7 @@ public class MemberController {
 				categoryNo = null;
 			}
 
-			// ì¼ë³„ ê²€ìƒ‰ì¼ë•Œ
+			// ÀÏº° °Ë»öÀÏ¶§
 			if (startD.length() == 10) {
 
 				start = startD;
@@ -2450,9 +2450,9 @@ public class MemberController {
 				st.setTime(sdf.parse(startD));
 				st.add(Calendar.DATE, +1);
 				Date lastDate = new Date(st.getTimeInMillis());
-				last = sdf.format(lastDate); // í•˜ë£¨ ë’¤
+				last = sdf.format(lastDate); // ÇÏ·ç µÚ
 
-			} else if (startD.length() == 7) { // ì›”ë³„ ê²€ìƒ‰ì¼ë•Œ
+			} else if (startD.length() == 7) { // ¿ùº° °Ë»öÀÏ¶§
 
 				start = startD.concat("-01");
 
@@ -2461,9 +2461,9 @@ public class MemberController {
 				st.setTime(sdf.parse(startD));
 				st.add(Calendar.MONTH, +1);
 				Date lastDate = new Date(st.getTimeInMillis());
-				last = sdf.format(lastDate).concat("-01"); // í•˜ë£¨ ë’¤
+				last = sdf.format(lastDate).concat("-01"); // ÇÏ·ç µÚ
 
-			} else if (startD.length() == 4) { // ì—°ë³„ ê²€ìƒ‰ì¼ë•Œ
+			} else if (startD.length() == 4) { // ¿¬º° °Ë»öÀÏ¶§
 
 				start = startD.concat("-01-01");
 
@@ -2472,9 +2472,9 @@ public class MemberController {
 				st.setTime(sdf.parse(startD));
 				st.add(Calendar.YEAR, +1);
 				Date lastDate = new Date(st.getTimeInMillis());
-				last = sdf.format(lastDate).concat("-01-01"); // í•˜ë£¨ ë’¤
+				last = sdf.format(lastDate).concat("-01-01"); // ÇÏ·ç µÚ
 
-				System.out.println("4ê°œì§œë¦¬ì¼ë•Œ");
+				System.out.println("4°³Â¥¸®ÀÏ¶§");
 
 			}
 
@@ -2482,12 +2482,12 @@ public class MemberController {
 				category = "N";
 			}
 
-			System.out.println("ì¹´ì¹´ì¹´í…Œê³ ë¦¬ëŠ”" + category);
+			System.out.println("Ä«Ä«Ä«Å×°í¸®´Â" + category);
 
 			Search s = new Search();
-			s.setStartDay(start); // ê²€ìƒ‰ ë‚ ì§œ
+			s.setStartDay(start); // °Ë»ö ³¯Â¥
 			s.setLastDay(last);
-			s.setCategoryNo(categoryNo); // ì¹´í…Œê³ ë¦¬
+			s.setCategoryNo(categoryNo); // Ä«Å×°í¸®
 			s.setCategory1(category);
 
 			if (category.equalsIgnoreCase("subscribeNo")) {
@@ -2512,17 +2512,17 @@ public class MemberController {
 			System.out.println(s);
 
 			int listCount = mService.getSalesDetailCnt(s);
-			System.out.println("ê°¯ìˆ˜ëŠ”" + listCount);
+			System.out.println("°¹¼ö´Â" + listCount);
 
-			int pageLimit = 10; // ë³´ì—¬ì§ˆ í˜ì´ì§€ ì´ ê°¯ìˆ˜
-			int boardLimit = 5; // ê²Œì‹œíŒ í•œ í˜ì´ì§€ì— ë¿Œë ¤ì§ˆ ê²Œì‹œê¸€ ìˆ˜
+			int pageLimit = 10; // º¸¿©Áú ÆäÀÌÁö ÃÑ °¹¼ö
+			int boardLimit = 5; // °Ô½ÃÆÇ ÇÑ ÆäÀÌÁö¿¡ »Ñ·ÁÁú °Ô½Ã±Û ¼ö
 			pi = getPageInfo2(currentPage, listCount, pageLimit, boardLimit);
 
-			// ë¦¬ìŠ¤íŠ¸ ê°€ì ¸ì˜¤ê¸° (ì´ ê²°ì œê¸ˆì•¡ ì œì™¸)
+			// ¸®½ºÆ® °¡Á®¿À±â (ÃÑ °áÁ¦±İ¾× Á¦¿Ü)
 			pList = mService.selectPaymentDetail(s, pi);
 			System.out.println(pList.size());
 
-			// ì¹´í…Œê³ ë¦¬ì—ì„œ ì™”ìœ¼ë©´
+			// Ä«Å×°í¸®¿¡¼­ ¿ÔÀ¸¸é
 		} else {
 
 			if (word == "") {
@@ -2536,12 +2536,12 @@ public class MemberController {
 				category = "N";
 			}
 
-			System.out.println("ì¹´ì¹´ì¹´í…Œê³ ë¦¬ëŠ”" + category);
+			System.out.println("Ä«Ä«Ä«Å×°í¸®´Â" + category);
 
 			Search s = new Search();
-			s.setStartDay(start); // ê²€ìƒ‰ ë‚ ì§œ
+			s.setStartDay(start); // °Ë»ö ³¯Â¥
 			s.setLastDay(last);
-			s.setCategoryNo(categoryNo); // ì¹´í…Œê³ ë¦¬
+			s.setCategoryNo(categoryNo); // Ä«Å×°í¸®
 			s.setCategory1(category);
 
 			if (category.equalsIgnoreCase("subscribeNo")) {
@@ -2566,13 +2566,13 @@ public class MemberController {
 			System.out.println(s);
 
 			int listCount = mService.getSalesDetailCnt(s);
-			System.out.println("ê°¯ìˆ˜ëŠ”" + listCount);
+			System.out.println("°¹¼ö´Â" + listCount);
 
-			int pageLimit = 10; // ë³´ì—¬ì§ˆ í˜ì´ì§€ ì´ ê°¯ìˆ˜
-			int boardLimit = 5; // ê²Œì‹œíŒ í•œ í˜ì´ì§€ì— ë¿Œë ¤ì§ˆ ê²Œì‹œê¸€ ìˆ˜
+			int pageLimit = 10; // º¸¿©Áú ÆäÀÌÁö ÃÑ °¹¼ö
+			int boardLimit = 5; // °Ô½ÃÆÇ ÇÑ ÆäÀÌÁö¿¡ »Ñ·ÁÁú °Ô½Ã±Û ¼ö
 			pi = getPageInfo2(currentPage, listCount, pageLimit, boardLimit);
 
-			// ë¦¬ìŠ¤íŠ¸ ê°€ì ¸ì˜¤ê¸° (ì´ ê²°ì œê¸ˆì•¡ ì œì™¸)
+			// ¸®½ºÆ® °¡Á®¿À±â (ÃÑ °áÁ¦±İ¾× Á¦¿Ü)
 			pList = mService.selectPaymentDetail(s, pi);
 			System.out.println(pList.size());
 
@@ -2584,34 +2584,34 @@ public class MemberController {
 		return mv;
 	}
 
-	// ê´€ë¦¬ìë©”ì¸---admin
+	// °ü¸®ÀÚ¸ŞÀÎ---admin
 	@RequestMapping("aMain.do")
 	public ModelAndView selectAdminMain(ModelAndView mv) {
 
-		// ë°©ë¬¸ ê°€ì… í†µê³„ ì°¨íŠ¸
+		// ¹æ¹® °¡ÀÔ Åë°è Â÷Æ®
 
-		Calendar last = Calendar.getInstance(); // í˜„ì¬ ì‹œê°„
-		Date startDate = new Date(last.getTimeInMillis()); // Dateí˜•ìœ¼ë¡œ ë³€í™˜
+		Calendar last = Calendar.getInstance(); // ÇöÀç ½Ã°£
+		Date startDate = new Date(last.getTimeInMillis()); // DateÇüÀ¸·Î º¯È¯
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		String lastDay = sdf.format(startDate);
 
 		last.add(Calendar.DATE, -7);
 		Date lastDate = new Date(last.getTimeInMillis());
-		String startDay = sdf.format(lastDate); // 7ì¼ì „
+		String startDay = sdf.format(lastDate); // 7ÀÏÀü
 
 		Search s = new Search();
-		s.setLastDay(lastDay);// ìµœê·¼ ë‚ ì§œ
-		s.setStartDay(startDay); // 7ì¼ì „ ë‚ ì§œ
+		s.setLastDay(lastDay);// ÃÖ±Ù ³¯Â¥
+		s.setStartDay(startDay); // 7ÀÏÀü ³¯Â¥
 
-		// 7ì¼ì˜ ë‚ ì§œ ë°ì´í„° ë½‘ì•„ì˜¤ê¸°
+		// 7ÀÏÀÇ ³¯Â¥ µ¥ÀÌÅÍ »Ì¾Æ¿À±â
 		ArrayList<String> dArr = mService.selectDateList(s);
 
 		ArrayList<Chart> cArr = new ArrayList<>();
 
-		// ë°©ë¬¸&ê°€ì… ì°¨íŠ¸ ë§Œë“¤ê¸°
+		// ¹æ¹®&°¡ÀÔ Â÷Æ® ¸¸µé±â
 		for (int i = 0; i < dArr.size(); i++) {
 			Chart c = new Chart();
-			System.out.println("ië²ˆì§¸ dArrì€?" + dArr.get(i));
+			System.out.println("i¹øÂ° dArrÀº?" + dArr.get(i));
 			int mCnt = mService.selectTodayMember(dArr.get(i));
 			int vCnt = mService.selectTodayVisitor(dArr.get(i));
 			String vDay = dArr.get(i).substring(5, 10).replace("-", "/");
@@ -2622,11 +2622,11 @@ public class MemberController {
 			cArr.add(c);
 		}
 
-		// ì£¼ê°„ ë§¤ì¶œí˜„í™© ì°¨íŠ¸
-		int sumTotalP = 0; // ì´ ë§¤ì¶œ
-		int sumTotalC = 0; // ì´ ê±´ ìˆ˜
+		// ÁÖ°£ ¸ÅÃâÇöÈ² Â÷Æ®
+		int sumTotalP = 0; // ÃÑ ¸ÅÃâ
+		int sumTotalC = 0; // ÃÑ °Ç ¼ö
 
-		// í™”ë©´ì— ë…¸ì¶œë  ë§¤ì¶œ ë¦¬ìŠ¤íŠ¸ ë§Œë“¤ê¸°
+		// È­¸é¿¡ ³ëÃâµÉ ¸ÅÃâ ¸®½ºÆ® ¸¸µé±â
 
 		ArrayList<AdminPayment> pList = new ArrayList<>();
 
@@ -2647,8 +2647,8 @@ public class MemberController {
 
 		}
 
-		System.out.println("pListëŠ”" + pList);
-		System.out.println("pListê¸¸ì´ëŠ”" + pList.size());
+		System.out.println("pList´Â" + pList);
+		System.out.println("pList±æÀÌ´Â" + pList.size());
 
 		for (int i = 0; i < pList.size(); i++) {
 			int c = pList.get(i).getTotalCount();
@@ -2657,19 +2657,19 @@ public class MemberController {
 			sumTotalP += p;
 		}
 
-		// êµí™˜ ëŒ€ê¸° ë¦¬ìŠ¤íŠ¸
+		// ±³È¯ ´ë±â ¸®½ºÆ®
 		ArrayList<AdminExchange> exList = mService.selectExchangeMain();
 
-		// ë°°ì†¡ ëŒ€ê¸° ë¦¬ìŠ¤íŠ¸
+		// ¹è¼Û ´ë±â ¸®½ºÆ®
 		ArrayList<AdminSubscribe> dList = mService.selectDeliveryMain();
 
-		// ë¯¸ë‹µë³€ ë¬¸ì˜ ë¦¬ìŠ¤íŠ¸
+		// ¹Ì´äº¯ ¹®ÀÇ ¸®½ºÆ®
 		ArrayList<AdminBoard> bList = mService.selectBoardMain();
 
-		// ê³µì§€ì‚¬í•­ ë¦¬ìŠ¤íŠ¸
+		// °øÁö»çÇ× ¸®½ºÆ®
 		ArrayList<AdminBoard> nList = mService.selectNoticeMain();
 
-		// ì´ë²¤íŠ¸ ë¦¬ìŠ¤íŠ¸
+		// ÀÌº¥Æ® ¸®½ºÆ®
 		ArrayList<BannerItem> eList = mService.selectEventMain();
 		System.out.println(eList);
 
@@ -2679,6 +2679,6 @@ public class MemberController {
 		return mv;
 	}
 
-	// ------------------------------ ê´€ë¦¬ì ----------------------------------------------
+	// ------------------------------ °ü¸®ÀÚ ----------------------------------------------
 
 }

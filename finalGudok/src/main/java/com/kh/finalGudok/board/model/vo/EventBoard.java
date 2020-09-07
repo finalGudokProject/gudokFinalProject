@@ -9,8 +9,8 @@ public class EventBoard implements Serializable {
 	 */
 	private static final long serialVersionUID = -649241899205567546L;
 
-	private int eBoard_no;		// ê²Œì‹œë¬¼ ë²ˆí˜¸
-	private String eE_status; 	// ê²Œì‹œ ì—¬ë¶€
+	private int eBoard_no;		// °Ô½Ã¹° ¹øÈ£
+	private String eE_status; 	// °Ô½Ã ¿©ºÎ
 	
 	public EventBoard() {
 	}

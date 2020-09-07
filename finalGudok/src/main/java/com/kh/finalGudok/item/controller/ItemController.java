@@ -141,42 +141,42 @@ public class ItemController {
 		}
 		if (categoryNo.equals("F1")) {
 			int dListCount = iService.dListCount();
-//			System.out.println("ìŒë£Œ Count : " + dListCount);
+//			System.out.println("À½·á Count : " + dListCount);
 			PageInfo pi = getPageInfo(currentPage, dListCount);
 			ArrayList<ItemListView> dList = iService.selectDList(pi);
 			mv.addObject("list", dList).addObject("pi", pi).addObject("foodChk", "F0")
 					.addObject("categoryNo", categoryNo).setViewName("items/itemFood");
 		} else if (categoryNo.equals("F2")) {
 			int mListCount = iService.mListCount();
-//			System.out.println("ìœ ì œí’ˆ Count : " + mListCount);
+//			System.out.println("À¯Á¦Ç° Count : " + mListCount);
 			PageInfo pi = getPageInfo(currentPage, mListCount);
 			ArrayList<ItemListView> mList = iService.selectMList(pi);
 			mv.addObject("list", mList).addObject("pi", pi).addObject("foodChk", "F0")
 					.addObject("categoryNo", categoryNo).setViewName("items/itemFood");
 		} else if (categoryNo.equals("F3")) {
 			int bListCount = iService.bListCount();
-//			System.out.println("ë² ì´ì»¤ë¦¬ Count : " + bListCount);
+//			System.out.println("º£ÀÌÄ¿¸® Count : " + bListCount);
 			PageInfo pi = getPageInfo(currentPage, bListCount);
 			ArrayList<ItemListView> bList = iService.selectBList(pi);
 			mv.addObject("list", bList).addObject("pi", pi).addObject("foodChk", "F0")
 					.addObject("categoryNo", categoryNo).setViewName("items/itemFood");
 		} else if (categoryNo.equals("F4")) {
 			int sListCount = iService.sListCount();
-//			System.out.println("ê°„í¸ Count : " + sListCount);
+//			System.out.println("°£Æí Count : " + sListCount);
 			PageInfo pi = getPageInfo(currentPage, sListCount);
 			ArrayList<ItemListView> sList = iService.selectSList(pi);
 			mv.addObject("list", sList).addObject("pi", pi).addObject("foodChk", "F0")
 					.addObject("categoryNo", categoryNo).setViewName("items/itemFood");
 		} else if (categoryNo.equals("F5")) {
 			int hListCount = iService.hListCount();
-//			System.out.println("ê±´ê°• Count : " + hListCount);
+//			System.out.println("°Ç°­ Count : " + hListCount);
 			PageInfo pi = getPageInfo(currentPage, hListCount);
 			ArrayList<ItemListView> hList = iService.selectHList(pi);
 			mv.addObject("list", hList).addObject("pi", pi).addObject("foodChk", "F0")
 					.addObject("categoryNo", categoryNo).setViewName("items/itemFood");
 		} else if (categoryNo.equals("F6")) {
 			int diListCount = iService.diListCount();
-//			System.out.println("ë‹¤ì´ì–´íŠ¸ Count : " + diListCount);
+//			System.out.println("´ÙÀÌ¾îÆ® Count : " + diListCount);
 			PageInfo pi = getPageInfo(currentPage, diListCount);
 			ArrayList<ItemListView> diList = iService.selectDiList(pi);
 			mv.addObject("list", diList).addObject("pi", pi).addObject("foodChk", "F0")
@@ -195,7 +195,7 @@ public class ItemController {
 		}
 		if (categoryNo != null) {
 			int livingCateCount = iService.livingCateCount(categoryNo);
-			System.out.println("ë¦¬ë¹™ Count : " + livingCateCount);
+			System.out.println("¸®ºù Count : " + livingCateCount);
 			PageInfo pi = getPageInfo(currentPage, livingCateCount);
 			ArrayList<ItemListView> livingCateList = iService.livingCateList(pi, categoryNo, sortNo);
 			mv.addObject("list", livingCateList).addObject("pi", pi).addObject("livingChk", "L0")
@@ -304,19 +304,19 @@ public class ItemController {
 //		System.out.println("itemNo : " + itemNo + ", page : " + page);
 		int currentPage = page;
 		int result = iService.detailCount(itemNo);
-//		System.out.println("ì¦ê°€í•¨? : " + result);
+//		System.out.println("Áõ°¡ÇÔ? : " + result);
 		if (result > 0) {
 			ItemListView ilv = iService.selectItem(itemNo);
 
 			if (ilv != null) {
 				mv.addObject("ilv", ilv).addObject("currentPage", currentPage).setViewName("items/itemDetail");
 			} else {
-				throw new ItemException("ì¡°íšŒ ì‹¤íŒ¨");
+				throw new ItemException("Á¶È¸ ½ÇÆĞ");
 			}
 
-			// í•´ë‹¹ ìƒí’ˆ ë¦¬ë·° ì¡°íšŒ
+			// ÇØ´ç »óÇ° ¸®ºä Á¶È¸
 			ArrayList<Review> review = iService.selectReview(itemNo);
-//			System.out.println("review í™•ì¸ : " + review);
+//			System.out.println("review È®ÀÎ : " + review);
 			if (review != null) {
 				ArrayList<ReviewView> reviewImg = iService.selectAllReviewImg(itemNo);
 				mv.addObject("review", review).addObject("img", reviewImg).setViewName("items/itemDetail");
@@ -327,7 +327,7 @@ public class ItemController {
 			mv.addObject("hResult", hResult).setViewName("items/itemDetail");
 
 		} else {
-			throw new ItemException("ì¡°íšŒìˆ˜ ì¦ê°€ ì‹¤íŒ¨");
+			throw new ItemException("Á¶È¸¼ö Áõ°¡ ½ÇÆĞ");
 		}
 		return mv;
 	}
@@ -358,12 +358,12 @@ public class ItemController {
 	@ResponseBody
 	public String choiceInsert(HttpServletRequest request, Heart h, Integer itemNo) {
 		int result = iService.insertChoice(h);
-//		System.out.println("ì°œ í™•ì¸ : " + result);
+//		System.out.println("Âò È®ÀÎ : " + result);
 		int result2 = iService.updatePChoice(itemNo);
 		if (result > 0 && result2 > 0) {
 			return "success";
 		} else {
-			throw new ItemException("ì°œ ì‹¤íŒ¨");
+			throw new ItemException("Âò ½ÇÆĞ");
 		}
 	}
 
@@ -371,16 +371,16 @@ public class ItemController {
 	@ResponseBody
 	public String choiceDelete(HttpServletRequest request, Heart h, Integer itemNo) {
 		int result = iService.deleteChoice(h);
-//		System.out.println("ì°œ ì‚­ì œ í™•ì¸ : " + result);
+//		System.out.println("Âò »èÁ¦ È®ÀÎ : " + result);
 		int result2 = iService.updateMChoice(itemNo);
 		if (result > 0 && result2 > 0) {
 			return "success";
 		} else {
-			throw new ItemException("ì°œ ì‚­ì œ ì‹¤íŒ¨");
+			throw new ItemException("Âò »èÁ¦ ½ÇÆĞ");
 		}
 	}
 
-	// ì¥ë°”êµ¬ë‹ˆ ì„ íƒ ë¦¬ìŠ¤íŠ¸ ì‚­ì œ
+	// Àå¹Ù±¸´Ï ¼±ÅÃ ¸®½ºÆ® »èÁ¦
 	@ResponseBody
 	@RequestMapping(value = "basketDel.do", method = RequestMethod.POST)
 	public String cartDelete(HttpSession session, HttpServletRequest request,
@@ -402,7 +402,7 @@ public class ItemController {
 
 	}
 
-	// ì¥ë°”êµ¬ë‹ˆ ì¶”ê°€
+	// Àå¹Ù±¸´Ï Ãß°¡
 	@RequestMapping("basket.do")
 	@ResponseBody
 	public String insertCart(HttpServletRequest request, Cart c) {
@@ -410,11 +410,11 @@ public class ItemController {
 		if (result > 0) {
 			return "success";
 		} else {
-			throw new ItemException("ì¶”ê°€ ì‹¤íŒ¨");
+			throw new ItemException("Ãß°¡ ½ÇÆĞ");
 		}
 	}
 
-	// ì¥ë°”êµ¬ë‹ˆ í˜ì´ì§€ ë¦¬ìŠ¤íŠ¸ ë¶ˆëŸ¬ì˜¤ê¸°
+	// Àå¹Ù±¸´Ï ÆäÀÌÁö ¸®½ºÆ® ºÒ·¯¿À±â
 	@RequestMapping("basketPage.do")
 	public ModelAndView basketPage(ModelAndView mv, Integer memberNo) {
 		ArrayList<Cart> list = iService.selectBasket(memberNo);
@@ -423,7 +423,7 @@ public class ItemController {
 		return mv;
 	}
 
-	// ìƒì„¸ í˜ì´ì§€ ìƒí’ˆ ë¬¸ì˜
+	// »ó¼¼ ÆäÀÌÁö »óÇ° ¹®ÀÇ
 	@RequestMapping("inquire.do")
 	@ResponseBody
 	public String itemInquire(HttpServletRequest request, Board b) {
@@ -437,7 +437,7 @@ public class ItemController {
 		}
 	}
 
-	// ë¦¬ë·° ìƒì„¸ë³´ê¸°
+	// ¸®ºä »ó¼¼º¸±â
 	@RequestMapping("reviewDetail.do")
 	public ModelAndView reviewDetail(ModelAndView mv, @RequestParam("reviewNo") int reviewNo) {
 		ArrayList<ReviewView> rv = iService.selectReviewDetail(reviewNo);
@@ -472,7 +472,7 @@ public class ItemController {
 		return renameFileName;
 	}
 
-	// ìƒí’ˆë“±ë¡-admin
+	// »óÇ°µî·Ï-admin
 	@RequestMapping("iInsert.do")
 	public String itemInsert(HttpServletRequest request, AdminItem i,
 			@RequestParam(value = "uploadFile1") MultipartFile uploadFile1,
@@ -509,16 +509,16 @@ public class ItemController {
 			return "redirect:iInsertView.do";
 
 		} else {
-			throw new ItemException("ìƒí’ˆ ë“±ë¡ ì‹¤íŒ¨");
+			throw new ItemException("»óÇ° µî·Ï ½ÇÆĞ");
 		}
 
 	}
 
-	// ë°°ë„ˆ ì´ë²¤íŠ¸ ë“±ë¡-admin
+	// ¹è³Ê ÀÌº¥Æ® µî·Ï-admin
 	@RequestMapping("eInsert.do")
 	public String insertEvent(HttpServletRequest request, Event e, @RequestParam("uploadFile") MultipartFile file) {
 
-		System.out.println("ì´ë²¤íŠ¸ ë“±ë¡ ë„ì°©");
+		System.out.println("ÀÌº¥Æ® µî·Ï µµÂø");
 		String renameFileName = saveFile(request, file);
 		String root = request.getSession().getServletContext().getRealPath("resources");
 		String savePath = root + "\\uploadFiles";
@@ -533,18 +533,18 @@ public class ItemController {
 		if (result1 > 0 && result2 > 0) {
 			return "redirect:eList.do";
 		} else {
-			throw new ItemException("ë°°ë„ˆ ë“±ë¡ ì‹¤íŒ¨!");
+			throw new ItemException("¹è³Ê µî·Ï ½ÇÆĞ!");
 		}
 
 	}
 
-	// ì´ë²¤íŠ¸ ë“±ë¡ í˜ì´ì§€ ê°€ê¸°
+	// ÀÌº¥Æ® µî·Ï ÆäÀÌÁö °¡±â
 	@RequestMapping("eRegisterView.do")
 	public String eventRegisterView() {
 		return "admin/bannerRegister";
 	}
 
-	// ì´ë²¤íŠ¸ ë¦¬ìŠ¤íŠ¸ ë³´ê¸°-admin
+	// ÀÌº¥Æ® ¸®½ºÆ® º¸±â-admin
 	@RequestMapping("eList.do")
 	public ModelAndView selectEvent(ModelAndView mv, Integer page,
 			@RequestParam(value = "word", required = false) String word) {
@@ -563,16 +563,16 @@ public class ItemController {
 
 		PageInfo pi = new PageInfo();
 
-		int pageLimit = 10; // ë³´ì—¬ì§ˆ í˜ì´ì§€ ì´ ê°¯ìˆ˜
-		int boardLimit = 5; // ê²Œì‹œíŒ í•œ í˜ì´ì§€ì— ë¿Œë ¤ì§ˆ ê²Œì‹œê¸€ ìˆ˜
+		int pageLimit = 10; // º¸¿©Áú ÆäÀÌÁö ÃÑ °¹¼ö
+		int boardLimit = 5; // °Ô½ÃÆÇ ÇÑ ÆäÀÌÁö¿¡ »Ñ·ÁÁú °Ô½Ã±Û ¼ö
 		pi = getPageInfo2(currentPage, listCount, pageLimit, boardLimit);
 
-		ArrayList<BannerItem> list = iService.selectEventListA(word, pi); // ì´ë²¤íŠ¸ ë¦¬ìŠ¤íŠ¸
+		ArrayList<BannerItem> list = iService.selectEventListA(word, pi); // ÀÌº¥Æ® ¸®½ºÆ®
 		ArrayList<Integer> eCountList = new ArrayList<>();
 
 		for (int i = 0; i < list.size(); i++) {
 
-			Integer s = iService.selectEventListCount(list.get(i).getEventNo()); // ì´ë²¤íŠ¸ë‹¹ ìƒí’ˆê°¯ìˆ˜
+			Integer s = iService.selectEventListCount(list.get(i).getEventNo()); // ÀÌº¥Æ®´ç »óÇ°°¹¼ö
 			if (s == null) {
 				s = 0;
 			}
@@ -589,12 +589,12 @@ public class ItemController {
 			mv.setViewName("admin/bannerList");
 
 		} else {
-			throw new ItemException("ì´ë²¤íŠ¸ ì „ì²´ ì¡°íšŒ ì‹¤íŒ¨!");
+			throw new ItemException("ÀÌº¥Æ® ÀüÃ¼ Á¶È¸ ½ÇÆĞ!");
 		}
 		return mv;
 	}
 
-	// ì´ë²¤íŠ¸ ì‚­ì œ-admin
+	// ÀÌº¥Æ® »èÁ¦-admin
 	@RequestMapping("eDelete.do")
 	public String deleteEvent(HttpServletRequest request, String sendArr) {
 
@@ -605,13 +605,13 @@ public class ItemController {
 
 		for (int i = 0; i < strArr.length; i++) {
 			dEventArr[i] = Integer.valueOf(strArr[i]);
-			System.out.println("ì„ íƒëœ ê°’:" + strArr[i]);
+			System.out.println("¼±ÅÃµÈ °ª:" + strArr[i]);
 		}
 
-		int result1 = 0; // ì´ë²¤íŠ¸ ì‚­ì œ
-		int result2 = 0; // ì—°ê²°ëœ ìƒí’ˆ ì‚­ì œ
-		int result3 = 0; // ë°°ë„ˆ ì´ë¯¸ì§€ ì‚­ì œ
-		int result4 = 0; // ì´ë¯¸ì§€ ì‚­ì œ
+		int result1 = 0; // ÀÌº¥Æ® »èÁ¦
+		int result2 = 0; // ¿¬°áµÈ »óÇ° »èÁ¦
+		int result3 = 0; // ¹è³Ê ÀÌ¹ÌÁö »èÁ¦
+		int result4 = 0; // ÀÌ¹ÌÁö »èÁ¦
 
 		for (int k = 0; k < dEventArr.length; k++) {
 
@@ -632,17 +632,17 @@ public class ItemController {
 			return "redirect:eList.do";
 
 		} else {
-			throw new ItemException("ì´ë²¤íŠ¸ ì‚­ì œ ì‹¤íŒ¨!");
+			throw new ItemException("ÀÌº¥Æ® »èÁ¦ ½ÇÆĞ!");
 		}
 
 	}
 
-	// ì´ë²¤íŠ¸ ê²Œì‹œ-admin
+	// ÀÌº¥Æ® °Ô½Ã-admin
 	@RequestMapping("eChangeY.do")
 	@ResponseBody
 	public String updateEventStatusY(String sendArr) {
 
-		System.out.println("yì»¨íŠ¸ë¡¤ëŸ¬ì˜´");
+		System.out.println("yÄÁÆ®·Ñ·¯¿È");
 		System.out.println(sendArr);
 
 		String[] strArr = sendArr.split(",");
@@ -659,30 +659,30 @@ public class ItemController {
 			System.out.println(dEventArr.get(i).getEventNo());
 		}
 
-		System.out.println("dEventArrê¸¸ì´" + dEventArr.size());
-		System.out.println("í™•ì¸í• ê²ƒ" + dEventArr.toString());
+		System.out.println("dEventArr±æÀÌ" + dEventArr.size());
+		System.out.println("È®ÀÎÇÒ°Í" + dEventArr.toString());
 
 		int result = 0;
 
 		result = iService.updateEventStatusY(dEventArr);
 
-		System.out.println("ë³€ê²½ëœ ê°¯ìˆ˜" + result);
+		System.out.println("º¯°æµÈ °¹¼ö" + result);
 
 		if (result > 0) {
 
 			return "success";
 
 		} else {
-			throw new ItemException("ì´ë²¤íŠ¸ ê²Œì‹œ ë³€ê²½ ì‹¤íŒ¨!");
+			throw new ItemException("ÀÌº¥Æ® °Ô½Ã º¯°æ ½ÇÆĞ!");
 		}
 	}
 
-	// ì´ë²¤íŠ¸ ì¤‘ì§€-admin
+	// ÀÌº¥Æ® ÁßÁö-admin
 	@RequestMapping("eChangeN.do")
 	@ResponseBody
 	public String updateEventStatusN(String sendArr) {
 
-		System.out.println("yì»¨íŠ¸ë¡¤ëŸ¬ì˜´");
+		System.out.println("yÄÁÆ®·Ñ·¯¿È");
 		System.out.println(sendArr);
 
 		String[] strArr = sendArr.split(",");
@@ -699,43 +699,43 @@ public class ItemController {
 			System.out.println(dEventArr.get(i).getEventNo());
 		}
 
-		System.out.println("dEventArrê¸¸ì´" + dEventArr.size());
-		System.out.println("í™•ì¸í• ê²ƒ" + dEventArr.toString());
+		System.out.println("dEventArr±æÀÌ" + dEventArr.size());
+		System.out.println("È®ÀÎÇÒ°Í" + dEventArr.toString());
 
 		int result = 0;
 
 		result = iService.updateEventStatusN(dEventArr);
 
-		System.out.println("ë³€ê²½ëœ ê°¯ìˆ˜" + result);
+		System.out.println("º¯°æµÈ °¹¼ö" + result);
 
 		if (result > 0) {
 
 			return "success";
 
 		} else {
-			throw new ItemException("ì´ë²¤íŠ¸ ê²Œì‹œ ë³€ê²½ ì‹¤íŒ¨!");
+			throw new ItemException("ÀÌº¥Æ® °Ô½Ã º¯°æ ½ÇÆĞ!");
 		}
 	}
 
-	// ë¦¬ë·° ìˆ˜ì •
+	// ¸®ºä ¼öÁ¤
 	@RequestMapping("reviewUpdate.do")
 	public ModelAndView reviewUpdate(Review r, ModelAndView mv, @RequestParam("itemNo") int itemNo) {
 //			System.out.println("Review : " + r);
 		int result = iService.reviewUpdate(r);
-//			System.out.println("itemNo í™•ì¸ : " + itemNo);
-//			System.out.println("review update ê²°ê³¼ : " + result);
+//			System.out.println("itemNo È®ÀÎ : " + itemNo);
+//			System.out.println("review update °á°ú : " + result);
 		if (result > 0) {
 			int rateResult = iService.updateReviewRate(itemNo);
-//				System.out.println("í‰ê·  update í™•ì¸ : " + rateResult);
+//				System.out.println("Æò±Õ update È®ÀÎ : " + rateResult);
 			mv.setViewName("redirect:itemReview.do?itemNo=" + itemNo);
 		}
 		return mv;
 	}
 
-	// ë¦¬ë·° ì‚­ì œ
+	// ¸®ºä »èÁ¦
 	@RequestMapping("reviewDelete.do")
 	public ModelAndView reviewDelete(HttpServletRequest request, ModelAndView mv, int reviewNo, int itemNo) {
-//			System.out.println("reviewNo ë„˜ì–´ ì˜´? : " + reviewNo);
+//			System.out.println("reviewNo ³Ñ¾î ¿È? : " + reviewNo);
 
 		ArrayList<ReviewView> rv = iService.selectDeleteReview(reviewNo);
 		for (ReviewView r : rv) {
@@ -744,7 +744,7 @@ public class ItemController {
 			}
 		}
 		int chkImg = iService.checkImage(reviewNo);
-		System.out.println("ReviewImage ì¡°íšŒ ë˜ë‚˜? : " + chkImg);
+		System.out.println("ReviewImage Á¶È¸ µÇ³ª? : " + chkImg);
 		if (chkImg > 0) {
 			int imResult = iService.imageDelete(reviewNo);
 			if (imResult > 0) {
@@ -775,7 +775,7 @@ public class ItemController {
 		}
 	}
 
-	// ë¦¬ë·° ì“°ê¸°
+	// ¸®ºä ¾²±â
 	@RequestMapping(value = "reviewInsert.do", method = RequestMethod.POST)
 	public String reviewInsert(Review r, Image i, ReviewImage ri, HttpServletRequest request,
 			@RequestParam(value = "page", required = false) Integer page,
@@ -813,7 +813,7 @@ public class ItemController {
 			return "redirect:idetail.do?itemNo=" + itemNo + "&page=" + currentPage + "&memberNo=" + memberNo
 					+ "#reviewPI";
 		} else {
-			throw new ItemException("ë¦¬ë·° ë“±ë¡ ì‹¤íŒ¨");
+			throw new ItemException("¸®ºä µî·Ï ½ÇÆĞ");
 		}
 	}
 
@@ -846,7 +846,7 @@ public class ItemController {
 		return renameFileName;
 	}
 
-	// ì´ë²¤íŠ¸ ë¦¬ìŠ¤íŠ¸ ë³´ê¸°-admin
+	// ÀÌº¥Æ® ¸®½ºÆ® º¸±â-admin
 	@RequestMapping("eListChange.do")
 	public void selectEventChange(HttpServletResponse response, Integer page,
 			@RequestParam(value = "itemCategory", required = false) String itemCategory) throws IOException {
@@ -861,16 +861,16 @@ public class ItemController {
 
 		PageInfo pi = new PageInfo();
 
-		int pageLimit = 10; // ë³´ì—¬ì§ˆ í˜ì´ì§€ ì´ ê°¯ìˆ˜
-		int boardLimit = 5; // ê²Œì‹œíŒ í•œ í˜ì´ì§€ì— ë¿Œë ¤ì§ˆ ê²Œì‹œê¸€ ìˆ˜
+		int pageLimit = 10; // º¸¿©Áú ÆäÀÌÁö ÃÑ °¹¼ö
+		int boardLimit = 5; // °Ô½ÃÆÇ ÇÑ ÆäÀÌÁö¿¡ »Ñ·ÁÁú °Ô½Ã±Û ¼ö
 		pi = getPageInfo2(currentPage, listCount, pageLimit, boardLimit);
 
-		ArrayList<BannerItem> list = iService.selectEventListA(itemCategory, pi); // ì´ë²¤íŠ¸ ë¦¬ìŠ¤íŠ¸
+		ArrayList<BannerItem> list = iService.selectEventListA(itemCategory, pi); // ÀÌº¥Æ® ¸®½ºÆ®
 		ArrayList<Integer> eCountList = new ArrayList<>();
 
 		for (int i = 0; i < list.size(); i++) {
 
-			Integer s = iService.selectEventListCount(list.get(i).getEventNo()); // ì´ë²¤íŠ¸ë‹¹ ìƒí’ˆê°¯ìˆ˜
+			Integer s = iService.selectEventListCount(list.get(i).getEventNo()); // ÀÌº¥Æ®´ç »óÇ°°¹¼ö
 			if (s == null) {
 				s = 0;
 			}
@@ -905,24 +905,24 @@ public class ItemController {
 			out.close();
 
 		} else {
-			throw new ItemException("ì´ë²¤íŠ¸ ì „ì²´ ì¡°íšŒ ì‹¤íŒ¨!");
+			throw new ItemException("ÀÌº¥Æ® ÀüÃ¼ Á¶È¸ ½ÇÆĞ!");
 		}
 
 	}
 
-	// ì´ë²¤íŠ¸ ê²€ìƒ‰-admin
+	// ÀÌº¥Æ® °Ë»ö-admin
 	@RequestMapping("searchEventA.do")
 	public String searchEventA(String keyword) {
 
 		Event e = new Event();
 		e.setEventName(keyword);
-		System.out.println("ë„ì°©?" + keyword);
+		System.out.println("µµÂø?" + keyword);
 
 		return null;
 
 	}
 
-	// íŒë§¤ ìƒí’ˆ ì „ì²´ ë³´ê¸°-admin
+	// ÆÇ¸Å »óÇ° ÀüÃ¼ º¸±â-admin
 	@RequestMapping("itemListA.do")
 	public ModelAndView selectItemListA(ModelAndView mv, Integer page,
 			@RequestParam(value = "categoryNo", required = false) String categoryNo,
@@ -951,12 +951,12 @@ public class ItemController {
 			s.setItemName(word);
 
 		} else {
-			System.out.println("ìˆëŠ” ê²½ìš°");
+			System.out.println("ÀÖ´Â °æ¿ì");
 			if (type.equalsIgnoreCase("itemNo")) {
-				System.out.println("ë„˜ë²„ì— ë‹¨ì–´ ì €ì¥");
+				System.out.println("³Ñ¹ö¿¡ ´Ü¾î ÀúÀå");
 				s.setItemNo(word);
 			} else {
-				System.out.println("ì´ë¦„ì— ë‹¨ì–´ ì €ì¥");
+				System.out.println("ÀÌ¸§¿¡ ´Ü¾î ÀúÀå");
 				s.setItemName(word);
 			}
 		}
@@ -970,11 +970,11 @@ public class ItemController {
 		}
 
 		int listCount = iService.getItemCountA(s);
-		System.out.println("ê°¯ìˆ˜ìš°?" + listCount);
+		System.out.println("°¹¼ö¿ì?" + listCount);
 		PageInfo pi = new PageInfo();
 
-		int pageLimit = 10; // ë³´ì—¬ì§ˆ í˜ì´ì§€ ì´ ê°¯ìˆ˜
-		int boardLimit = 5; // ê²Œì‹œíŒ í•œ í˜ì´ì§€ì— ë¿Œë ¤ì§ˆ ê²Œì‹œê¸€ ìˆ˜
+		int pageLimit = 10; // º¸¿©Áú ÆäÀÌÁö ÃÑ °¹¼ö
+		int boardLimit = 5; // °Ô½ÃÆÇ ÇÑ ÆäÀÌÁö¿¡ »Ñ·ÁÁú °Ô½Ã±Û ¼ö
 		pi = getPageInfo2(currentPage, listCount, pageLimit, boardLimit);
 
 		ArrayList<BannerItem> rList = iService.selectRecommendList();
@@ -994,7 +994,7 @@ public class ItemController {
 
 	}
 
-	// ê°™ì€ ì´ë²¤íŠ¸ ë²ˆí˜¸ë¥¼ ì§€ë‹Œ ì•„ì´í…œë“¤ ë¦¬ìŠ¤íŠ¸ ë³´ê¸°-admin
+	// °°Àº ÀÌº¥Æ® ¹øÈ£¸¦ Áö´Ñ ¾ÆÀÌÅÛµé ¸®½ºÆ® º¸±â-admin
 	@RequestMapping("bannerDetail.do")
 	public ModelAndView bannerDetail(ModelAndView mv, int eventNo, Integer page) throws IOException {
 
@@ -1010,8 +1010,8 @@ public class ItemController {
 		int listCount = iService.getbannerItemCount(eventNo);
 
 		PageInfo pi = new PageInfo();
-		int pageLimit = 10; // ë³´ì—¬ì§ˆ í˜ì´ì§€ ì´ ê°¯ìˆ˜
-		int boardLimit = 5; // ê²Œì‹œíŒ í•œ í˜ì´ì§€ì— ë¿Œë ¤ì§ˆ ê²Œì‹œê¸€ ìˆ˜
+		int pageLimit = 10; // º¸¿©Áú ÆäÀÌÁö ÃÑ °¹¼ö
+		int boardLimit = 5; // °Ô½ÃÆÇ ÇÑ ÆäÀÌÁö¿¡ »Ñ·ÁÁú °Ô½Ã±Û ¼ö
 
 		pi = getPageInfo2(currentPage, listCount, pageLimit, boardLimit);
 
@@ -1023,7 +1023,7 @@ public class ItemController {
 		return mv;
 	}
 
-	// ì´ë²¤íŠ¸ ìƒí’ˆ ì œì™¸-admin
+	// ÀÌº¥Æ® »óÇ° Á¦¿Ü-admin
 	@RequestMapping("bannerItemDelete.do")
 	@ResponseBody
 	public String deleteBannerItem(HttpServletRequest request, String sendArr) {
@@ -1042,19 +1042,19 @@ public class ItemController {
 
 		int result = iService.deleteBannerItem(dEventArr);
 
-		System.out.println("1ì´ ì•„ë‹˜?" + result);
+		System.out.println("1ÀÌ ¾Æ´Ô?" + result);
 
 		if (result > 0) {
-			System.out.println("ì‚­ì œ ì»¨íŠ¸ë¡¤ëŸ¬ê¹Œì§„ ì˜´");
+			System.out.println("»èÁ¦ ÄÁÆ®·Ñ·¯±îÁø ¿È");
 			return "success";
 
 		} else {
-			throw new ItemException("ì´ë²¤íŠ¸ ì‚­ì œ ì‹¤íŒ¨!");
+			throw new ItemException("ÀÌº¥Æ® »èÁ¦ ½ÇÆĞ!");
 		}
 
 	}
 
-	// ë°°ë„ˆ ìƒí’ˆ ì œì™¸ ajaxìš© -admin
+	// ¹è³Ê »óÇ° Á¦¿Ü ajax¿ë -admin
 	@RequestMapping("biChange.do")
 
 	public void biChange(int eventNo, HttpServletResponse response, Integer page) throws IOException {
@@ -1071,8 +1071,8 @@ public class ItemController {
 		int listCount = iService.getbannerItemCount(eventNo);
 
 		PageInfo pi = new PageInfo();
-		int pageLimit = 10; // ë³´ì—¬ì§ˆ í˜ì´ì§€ ì´ ê°¯ìˆ˜
-		int boardLimit = 5; // ê²Œì‹œíŒ í•œ í˜ì´ì§€ì— ë¿Œë ¤ì§ˆ ê²Œì‹œê¸€ ìˆ˜
+		int pageLimit = 10; // º¸¿©Áú ÆäÀÌÁö ÃÑ °¹¼ö
+		int boardLimit = 5; // °Ô½ÃÆÇ ÇÑ ÆäÀÌÁö¿¡ »Ñ·ÁÁú °Ô½Ã±Û ¼ö
 
 		pi = getPageInfo2(currentPage, listCount, pageLimit, boardLimit);
 
@@ -1106,17 +1106,17 @@ public class ItemController {
 			out.close();
 
 		} else {
-			throw new ItemException("ì´ë²¤íŠ¸ë³„ ìƒí’ˆ ì¡°íšŒ ì‹¤íŒ¨!");
+			throw new ItemException("ÀÌº¥Æ®º° »óÇ° Á¶È¸ ½ÇÆĞ!");
 		}
 
 	}
 
-	// ì•„ì´í…œ ê²Œì‹œ-admin
+	// ¾ÆÀÌÅÛ °Ô½Ã-admin
 	@RequestMapping("iChangeY.do")
 	@ResponseBody
 	public String updateItemStatusY(String sendArr) {
 
-		System.out.println("ì¤‘ì§€ ì»¨íŠ¸ë¡¤ëŸ¬");
+		System.out.println("ÁßÁö ÄÁÆ®·Ñ·¯");
 		System.out.println(sendArr);
 
 		String[] strArr = sendArr.split(",");
@@ -1134,30 +1134,30 @@ public class ItemController {
 			System.out.println(iArr.get(i).getItemNo());
 		}
 
-		System.out.println("iArrê¸¸ì´" + iArr.size());
-		System.out.println("í™•ì¸í• ê²ƒ" + iArr.toString());
+		System.out.println("iArr±æÀÌ" + iArr.size());
+		System.out.println("È®ÀÎÇÒ°Í" + iArr.toString());
 
 		int result = 0;
 
 		result = iService.updateItemStatusY(iArr);
 
-		System.out.println("ë³€ê²½ëœ ê°¯ìˆ˜" + result);
+		System.out.println("º¯°æµÈ °¹¼ö" + result);
 
 		if (result > 0) {
 
 			return "success";
 
 		} else {
-			throw new ItemException("ì´ë²¤íŠ¸ ê²Œì‹œ ë³€ê²½ ì‹¤íŒ¨!");
+			throw new ItemException("ÀÌº¥Æ® °Ô½Ã º¯°æ ½ÇÆĞ!");
 		}
 	}
 
-	// ì•„ì´í…œ ê²Œì‹œ ì¤‘ì§€-admin
+	// ¾ÆÀÌÅÛ °Ô½Ã ÁßÁö-admin
 	@RequestMapping("iChangeN.do")
 	@ResponseBody
 	public String updateItemStatusN(String sendArr) {
 
-		System.out.println("ì¤‘ì§€ ì»¨íŠ¸ë¡¤ëŸ¬");
+		System.out.println("ÁßÁö ÄÁÆ®·Ñ·¯");
 		System.out.println(sendArr);
 
 		String[] strArr = sendArr.split(",");
@@ -1175,25 +1175,25 @@ public class ItemController {
 			System.out.println(iArr.get(i).getItemNo());
 		}
 
-		System.out.println("iArrê¸¸ì´" + iArr.size());
-		System.out.println("í™•ì¸í• ê²ƒ" + iArr.toString());
+		System.out.println("iArr±æÀÌ" + iArr.size());
+		System.out.println("È®ÀÎÇÒ°Í" + iArr.toString());
 
 		int result = 0;
 
 		result = iService.updateItemStatusN(iArr);
 
-		System.out.println("ë³€ê²½ëœ ê°¯ìˆ˜" + result);
+		System.out.println("º¯°æµÈ °¹¼ö" + result);
 
 		if (result > 0) {
 
 			return "success";
 
 		} else {
-			throw new ItemException("ì´ë²¤íŠ¸ ê²Œì‹œ ë³€ê²½ ì‹¤íŒ¨!");
+			throw new ItemException("ÀÌº¥Æ® °Ô½Ã º¯°æ ½ÇÆĞ!");
 		}
 	}
 
-	// ìƒíƒœ ë³€ê²½ í›„ ìƒí’ˆ ë¦¬ìŠ¤íŠ¸ ë³´ê¸°-admin
+	// »óÅÂ º¯°æ ÈÄ »óÇ° ¸®½ºÆ® º¸±â-admin
 	@RequestMapping("iListChange.do")
 	public void selectItemChange(HttpServletResponse response, Integer page,
 			@RequestParam(value = "categoryNo", required = false) String categoryNo,
@@ -1240,8 +1240,8 @@ public class ItemController {
 
 		PageInfo pi = new PageInfo();
 
-		int pageLimit = 10; // ë³´ì—¬ì§ˆ í˜ì´ì§€ ì´ ê°¯ìˆ˜
-		int boardLimit = 5; // ê²Œì‹œíŒ í•œ í˜ì´ì§€ì— ë¿Œë ¤ì§ˆ ê²Œì‹œê¸€ ìˆ˜
+		int pageLimit = 10; // º¸¿©Áú ÆäÀÌÁö ÃÑ °¹¼ö
+		int boardLimit = 5; // °Ô½ÃÆÇ ÇÑ ÆäÀÌÁö¿¡ »Ñ·ÁÁú °Ô½Ã±Û ¼ö
 		pi = getPageInfo2(currentPage, listCount, pageLimit, boardLimit);
 
 		ArrayList<BannerItem> list = iService.selectItemListA(s, pi);
@@ -1275,16 +1275,16 @@ public class ItemController {
 			out.close();
 
 		} else {
-			throw new ItemException("ì´ë²¤íŠ¸ ì „ì²´ ì¡°íšŒ ì‹¤íŒ¨!");
+			throw new ItemException("ÀÌº¥Æ® ÀüÃ¼ Á¶È¸ ½ÇÆĞ!");
 		}
 
 	}
 
-	// ìƒí’ˆ ìƒì„¸ë³´ê¸° -admin
+	// »óÇ° »ó¼¼º¸±â -admin
 	@RequestMapping("itemDetail.do")
 	public ModelAndView selectItemDetail(ModelAndView mv, int itemNo, Integer page, String type) {
 
-		System.out.println("ì•„ì´í…œ ë””í…Œì¼" + type);
+		System.out.println("¾ÆÀÌÅÛ µğÅ×ÀÏ" + type);
 
 		int currentPage = 1;
 
@@ -1292,8 +1292,8 @@ public class ItemController {
 			currentPage = page;
 		}
 
-		BannerItem i = iService.selectAdminItem(itemNo); // ìƒí’ˆ ì •ë³´
-		ArrayList<BannerItem> m = iService.selectItemImg(itemNo); // ì´ë¯¸ì§€ ì •ë³´
+		BannerItem i = iService.selectAdminItem(itemNo); // »óÇ° Á¤º¸
+		ArrayList<BannerItem> m = iService.selectItemImg(itemNo); // ÀÌ¹ÌÁö Á¤º¸
 		System.out.println(m);
 
 		mv.addObject("i", i);
@@ -1305,17 +1305,17 @@ public class ItemController {
 		return mv;
 	}
 
-	// ìƒí’ˆ ì •ë³´ ìˆ˜ì •
+	// »óÇ° Á¤º¸ ¼öÁ¤
 	@RequestMapping("itemUpdate.do")
 	public ModelAndView updateItem(ModelAndView mv, HttpServletRequest request, BannerItem i,
 			@RequestParam("page") Integer page, @RequestParam("uploadFile") MultipartFile file) {
 
-		int imgNo = iService.selectImageNo(i); // ì´ë¯¸ì§€ ë²ˆí˜¸ ê°€ì ¸ì˜¤ê¸°
+		int imgNo = iService.selectImageNo(i); // ÀÌ¹ÌÁö ¹øÈ£ °¡Á®¿À±â
 
 		System.out.println(imgNo);
 		String renameFileName = "";
 		int result1 = 0;
-		// ê¸°ì¡´ ì´ë¯¸ì§€ íŒŒì¼ ì‚­ì œ
+		// ±âÁ¸ ÀÌ¹ÌÁö ÆÄÀÏ »èÁ¦
 		if (!file.getOriginalFilename().equals("")) {
 			if (i.getImageOriginalName() != null) {
 				deleteFile(i.getImageRename(), request);
@@ -1330,27 +1330,27 @@ public class ItemController {
 			i.setImagePath(savePath);
 			i.setItemNo(imgNo);
 
-			result1 = iService.updateItemImg(i); // ì´ë¯¸ì§€ íŒŒì¼ëª… DBì •ë³´ ë³€ê²½
+			result1 = iService.updateItemImg(i); // ÀÌ¹ÌÁö ÆÄÀÏ¸í DBÁ¤º¸ º¯°æ
 
-			System.out.println("ì„±ê³µ?" + result1);
+			System.out.println("¼º°ø?" + result1);
 			System.out.println(i.getItemNo());
 
 		}
 
-		int result2 = iService.updateItem(i); // itemí…Œì´ë¸” ì •ë³´ ìˆ˜ì •
-//			int result3=iService.deleteEventItem(i); //ì´ë²¤íŠ¸ ë“±ë¡ í…Œì´ë¸”ì—ì„œ ìƒí’ˆ ì‚­ì œ
+		int result2 = iService.updateItem(i); // itemÅ×ÀÌºí Á¤º¸ ¼öÁ¤
+//			int result3=iService.deleteEventItem(i); //ÀÌº¥Æ® µî·Ï Å×ÀÌºí¿¡¼­ »óÇ° »èÁ¦
 
 		if (result1 > 0 || result2 > 0) {
 			mv.addObject("page", page).setViewName("redirect:itemListA.do");
 		} else {
-			throw new ItemException("ìƒí’ˆ ì •ë³´ ìˆ˜ì • ì‹¤íŒ¨!");
+			throw new ItemException("»óÇ° Á¤º¸ ¼öÁ¤ ½ÇÆĞ!");
 		}
 
 		return mv;
 
 	}
 
-	// ìƒí’ˆ ì‚­ì œ-admin
+	// »óÇ° »èÁ¦-admin
 	@RequestMapping("iDelete.do")
 	public ModelAndView deleteItemA(ModelAndView mv, HttpServletRequest request, String sendArr, Integer page) {
 
@@ -1361,15 +1361,15 @@ public class ItemController {
 
 		for (int i = 0; i < strArr.length; i++) {
 			dEventArr[i] = Integer.valueOf(strArr[i]);
-			System.out.println("ì„ íƒëœ ê°’:" + strArr[i]);
+			System.out.println("¼±ÅÃµÈ °ª:" + strArr[i]);
 		}
 
-		int result1 = 0; // ìƒí’ˆ ì‚­ì œ
-		int result2 = 0; // ìƒí’ˆ ì´ë¯¸ì§€ ì‚­ì œ
-		int result3 = 0; // ìƒí’ˆ ì´ë¯¸ì§€ ì‚­ì œ
-		int result4 = 0; // ìƒí’ˆ ì´ë¯¸ì§€ ì‚­ì œ
+		int result1 = 0; // »óÇ° »èÁ¦
+		int result2 = 0; // »óÇ° ÀÌ¹ÌÁö »èÁ¦
+		int result3 = 0; // »óÇ° ÀÌ¹ÌÁö »èÁ¦
+		int result4 = 0; // »óÇ° ÀÌ¹ÌÁö »èÁ¦
 
-		// ì„ íƒí•œ ìƒí’ˆì˜ ì •ë³´ë¥¼ ê°ì²´ì— ë‹´ì•„ ê°ê°ì˜ í…Œì´ë¸”ì— ìˆëŠ” ê°’ì„ ì‚­ì œ
+		// ¼±ÅÃÇÑ »óÇ°ÀÇ Á¤º¸¸¦ °´Ã¼¿¡ ´ã¾Æ °¢°¢ÀÇ Å×ÀÌºí¿¡ ÀÖ´Â °ªÀ» »èÁ¦
 		for (int k = 0; k < dEventArr.length; k++) {
 
 			BannerItem b = iService.selectDeleteItem(dEventArr[k]);
@@ -1378,7 +1378,7 @@ public class ItemController {
 			if (b.getImageOriginalName() != null) {
 				deleteFile(b.getImageRename(), request);
 			}
-			System.out.println("ë‚˜ì™€ë" + dEventArr[k]);
+			System.out.println("³ª¿Í¶ù" + dEventArr[k]);
 
 			result1 = iService.deleteImgA(dEventArr[k]);
 			result2 = iService.deleteItemImgA(dEventArr[k]);
@@ -1387,7 +1387,7 @@ public class ItemController {
 
 		}
 
-		System.out.println("ì‹œì‘" + result1);
+		System.out.println("½ÃÀÛ" + result1);
 		System.out.println(result2);
 		System.out.println(result3);
 		System.out.println(result4);
@@ -1398,12 +1398,12 @@ public class ItemController {
 			return mv;
 
 		} else {
-			throw new ItemException("ì´ë²¤íŠ¸ ì‚­ì œ ì‹¤íŒ¨!");
+			throw new ItemException("ÀÌº¥Æ® »èÁ¦ ½ÇÆĞ!");
 		}
 
 	}
 
-	// ì´ë²¤íŠ¸ ìƒí’ˆ ë“±ë¡-admin
+	// ÀÌº¥Æ® »óÇ° µî·Ï-admin
 	@RequestMapping("iEventInsertView.do")
 	public ModelAndView itemEventInsertView(ModelAndView mv, Integer page,
 			@RequestParam(value = "itemCategory", required = false) String itemCategory) {
@@ -1421,14 +1421,14 @@ public class ItemController {
 
 		PageInfo pi = new PageInfo();
 
-		int pageLimit = 10; // ë³´ì—¬ì§ˆ í˜ì´ì§€ ì´ ê°¯ìˆ˜
-		int boardLimit = 5; // ê²Œì‹œíŒ í•œ í˜ì´ì§€ì— ë¿Œë ¤ì§ˆ ê²Œì‹œê¸€ ìˆ˜
+		int pageLimit = 10; // º¸¿©Áú ÆäÀÌÁö ÃÑ °¹¼ö
+		int boardLimit = 5; // °Ô½ÃÆÇ ÇÑ ÆäÀÌÁö¿¡ »Ñ·ÁÁú °Ô½Ã±Û ¼ö
 		pi = getPageInfo2(currentPage, listCount, pageLimit, boardLimit);
 
-		// ì´ë²¤íŠ¸ ëª©ë¡
+		// ÀÌº¥Æ® ¸ñ·Ï
 		ArrayList<BannerItem> eArr = iService.selectEventOption();
 
-		// ì´ë²¤íŠ¸ ë“±ë¡ì´ ì•ˆëœ ìƒí’ˆ ë¦¬ìŠ¤íŠ¸
+		// ÀÌº¥Æ® µî·ÏÀÌ ¾ÈµÈ »óÇ° ¸®½ºÆ®
 		ArrayList<BannerItem> list = iService.selectItems(itemCategory, pi);
 
 		if (eArr != null && list != null) {
@@ -1442,12 +1442,12 @@ public class ItemController {
 			return mv;
 
 		} else {
-			throw new ItemException("ì´ë²¤íŠ¸ ì‚­ì œ ì‹¤íŒ¨!");
+			throw new ItemException("ÀÌº¥Æ® »èÁ¦ ½ÇÆĞ!");
 		}
 
 	}
 
-	// ì•„ì´í…œ ì´ë²¤íŠ¸ì— ë“±ë¡ -admin
+	// ¾ÆÀÌÅÛ ÀÌº¥Æ®¿¡ µî·Ï -admin
 	@RequestMapping("eventItemInsert.do")
 	@ResponseBody
 	public String eventItemInsert(HttpServletRequest request, int eventNo, int itemDiscount, String sendArr,
@@ -1468,10 +1468,10 @@ public class ItemController {
 
 		for (int k = 0; k < iArr.length; k++) {
 
-			// ì•„ì´í…œ í…Œì´ë¸”ì—ì„œ ìŠ¤í…Œì´í„°ìŠ¤ yë¡œ ë°”ê¿”ì£¼ê¸°
+			// ¾ÆÀÌÅÛ Å×ÀÌºí¿¡¼­ ½ºÅ×ÀÌÅÍ½º y·Î ¹Ù²ãÁÖ±â
 			result1 = iService.updateItemEventStatus(iArr[k]);
 
-			// ì´ë²¤íŠ¸ ìƒí’ˆì— ìƒí’ˆë²ˆí˜¸, í• ì¸ìœ¨, ì´ë²¤íŠ¸ ë²ˆí˜¸ë¡œ í…Œì´ë¸” ì±„ìš°ê¸° (ê¸°ì¡´ ìë£ŒëŠ” ì‚­ì œ)
+			// ÀÌº¥Æ® »óÇ°¿¡ »óÇ°¹øÈ£, ÇÒÀÎÀ², ÀÌº¥Æ® ¹øÈ£·Î Å×ÀÌºí Ã¤¿ì±â (±âÁ¸ ÀÚ·á´Â »èÁ¦)
 			BannerItem i = new BannerItem();
 			i.setItemNo(iArr[k]);
 			i.setEventNo(eventNo);
@@ -1490,12 +1490,12 @@ public class ItemController {
 			return "success";
 
 		} else {
-			throw new ItemException("ì´ë²¤íŠ¸ ì‚­ì œ ì‹¤íŒ¨!");
+			throw new ItemException("ÀÌº¥Æ® »èÁ¦ ½ÇÆĞ!");
 		}
 
 	}
 
-	// ì´ë²¤íŠ¸ ìƒí’ˆ ë¦¬ìŠ¤íŠ¸ ë³€ê²½ -admin
+	// ÀÌº¥Æ® »óÇ° ¸®½ºÆ® º¯°æ -admin
 	@RequestMapping("eventItemListChange.do")
 	public void EventItemListChange(HttpServletResponse response, Integer page,
 			@RequestParam(value = "itemCategory", required = false) String itemCategory) throws IOException {
@@ -1514,13 +1514,13 @@ public class ItemController {
 
 		PageInfo pi = new PageInfo();
 
-		int pageLimit = 10; // ë³´ì—¬ì§ˆ í˜ì´ì§€ ì´ ê°¯ìˆ˜
-		int boardLimit = 5; // ê²Œì‹œíŒ í•œ í˜ì´ì§€ì— ë¿Œë ¤ì§ˆ ê²Œì‹œê¸€ ìˆ˜
+		int pageLimit = 10; // º¸¿©Áú ÆäÀÌÁö ÃÑ °¹¼ö
+		int boardLimit = 5; // °Ô½ÃÆÇ ÇÑ ÆäÀÌÁö¿¡ »Ñ·ÁÁú °Ô½Ã±Û ¼ö
 		pi = getPageInfo2(currentPage, listCount, pageLimit, boardLimit);
 
-		// ì´ë²¤íŠ¸ ë“±ë¡ì´ ì•ˆëœ ìƒí’ˆ ëª©ë¡
-		System.out.println("ì—¬ê¸° í™•ì¸í•´ë³´ì");
-		System.out.println("categoryëŠ”" + itemCategory);
+		// ÀÌº¥Æ® µî·ÏÀÌ ¾ÈµÈ »óÇ° ¸ñ·Ï
+		System.out.println("¿©±â È®ÀÎÇØº¸ÀÚ");
+		System.out.println("category´Â" + itemCategory);
 		ArrayList<BannerItem> list = iService.selectItems(itemCategory, pi);
 
 		response.setContentType("application/json;charset=utf-8");
@@ -1551,12 +1551,12 @@ public class ItemController {
 			out.close();
 
 		} else {
-			throw new ItemException("ë¦¬ìŠ¤íŠ¸ ê°±ì‹  ì‹¤íŒ¨!");
+			throw new ItemException("¸®½ºÆ® °»½Å ½ÇÆĞ!");
 		}
 
 	}
 
-	// ì´ë²¤íŠ¸ í• ì¸ìœ¨ ì¡°íšŒ -admin
+	// ÀÌº¥Æ® ÇÒÀÎÀ² Á¶È¸ -admin
 	@RequestMapping("selectItemDiscount.do")
 	public void selectItemDiscount(HttpServletResponse response, int eventNo) throws IOException {
 		response.setContentType("application/json;charset=utf-8");
@@ -1581,7 +1581,7 @@ public class ItemController {
 
 	}
 
-	// ì¶”ì²œ ê°¯ìˆ˜ í™•ì¸ -admin
+	// ÃßÃµ °¹¼ö È®ÀÎ -admin
 
 	@RequestMapping("recommendChk.do")
 	public void recommendCheck(HttpServletResponse response, Integer sendCnt) throws IOException {
@@ -1602,7 +1602,7 @@ public class ItemController {
 
 	}
 
-	// ì¶”ì²œ ìƒí’ˆ ìƒíƒœë³€í™˜í•˜ê³  ë¦¬ìŠ¤íŠ¸ê°€ì ¸ì˜¤ê¸°-admin
+	// ÃßÃµ »óÇ° »óÅÂº¯È¯ÇÏ°í ¸®½ºÆ®°¡Á®¿À±â-admin
 
 	@RequestMapping("recommend.do")
 	public void recommendItemString(HttpServletResponse response, String sendArr) throws IOException {
@@ -1643,7 +1643,7 @@ public class ItemController {
 
 	}
 
-	// ------------------------------ê²°ì œ êµ¬í˜„-----------------------------------------
+	// ------------------------------°áÁ¦ ±¸Çö-----------------------------------------
 
 	IamportClient client = new IamportClient("3086404975484077",
 			"EsAndJxwJmc8oD49ezXFzHqWyessiK4XcFlpoSW8f8hDMmN0VLFus6r1kTtDDyBQdWfCOcK4l2I7ow7j");
@@ -1674,7 +1674,7 @@ public class ItemController {
 
 	}
 
-	// ------------------------------ì¦‰ì‹œ ê²°ì œ ìš”ì²­-------------------------------------
+	// ------------------------------Áï½Ã °áÁ¦ ¿äÃ»-------------------------------------
 
 	private void firstPayment(String customerUid, BigDecimal price, String name, int cycle)
 			throws IamportResponseException, IOException {
@@ -1685,10 +1685,10 @@ public class ItemController {
 		String impUid = "";
 
 		try {
-			// ìµœì´ˆ ê²°ì œ ì‹¤í–‰
+			// ÃÖÃÊ °áÁ¦ ½ÇÇà
 			IamportResponse<Payment> payment_response = client.againPayment(againData);
 //						assertEquals(payment_response.getResponse().getStatus(), "paid");
-			// ê²°ì œ ì„±ê³µ ì—¬ë¶€
+			// °áÁ¦ ¼º°ø ¿©ºÎ
 			firstPaymentStatus = payment_response.getResponse().getStatus();
 			impUid = payment_response.getResponse().getImpUid();
 
@@ -1700,13 +1700,13 @@ public class ItemController {
 			e.printStackTrace();
 		}
 
-//					System.out.println("ìµœì´ˆê²°ì œ ê²°ê³¼ : " + firstPaymentStatus);
+//					System.out.println("ÃÖÃÊ°áÁ¦ °á°ú : " + firstPaymentStatus);
 		if (firstPaymentStatus.equalsIgnoreCase("paid") == true) {
 			if ((client.paymentByImpUid(impUid).getResponse().getStatus()).equalsIgnoreCase("paid") == true) {
 
-				// DBì— customerUid, priceì €ì¥
+				// DB¿¡ customerUid, priceÀúÀå
 
-				// DBì— ì €ì¥í–ˆìœ¼ë©´ ì •ê¸°ê²°ì œ ìŠ¤ì¼€ì¥´ ì˜ˆì•½
+				// DB¿¡ ÀúÀåÇßÀ¸¸é Á¤±â°áÁ¦ ½ºÄÉÁì ¿¹¾à
 				subscriptionPayment(customerUid, price, cycle);
 			}
 		} else {
@@ -1723,19 +1723,19 @@ public class ItemController {
 
 	}
 
-	// ------------------------------ê²°ì œ ì˜ˆì•½-----------------------------------
+	// ------------------------------°áÁ¦ ¿¹¾à-----------------------------------
 
 	private void subscriptionPayment(String customerUid, BigDecimal price, int cycle)
 			throws IamportResponseException, IOException {
 
-		// í˜„ì¬ì‹œê°„ unixtimeìœ¼ë¡œ ê°€ì ¸ì˜¤ê¸°
+		// ÇöÀç½Ã°£ unixtimeÀ¸·Î °¡Á®¿À±â
 		long currentTime = System.currentTimeMillis() / 1000L;
 		long subscriptionTime = 0;
-		// êµ¬ë…ì£¼ê¸°ì— ë”°ë¼ì„œ ì˜ˆì•½ ë‚ ì§œ ì„¸íŒ…ì„ ë‹¤ë¥´ê²Œ í•´ì•¼ë¨(unixtimeìœ¼ë¡œ ê³„ì‚°í•´ì•¼ ë¨)
-		// 1ì£¼ì¼ : í˜„ì¬ì‹œê°„ + 604800
-		// 2ì£¼ì¼ : í˜„ì¬ì‹œê°„ + 1209600
-		// 3ì£¼ì¼ : í˜„ì¬ì‹œê°„ + 1814400
-		// 4ì£¼ì¼ : í˜„ì¬ì‹œê°„ + 2419200
+		// ±¸µ¶ÁÖ±â¿¡ µû¶ó¼­ ¿¹¾à ³¯Â¥ ¼¼ÆÃÀ» ´Ù¸£°Ô ÇØ¾ßµÊ(unixtimeÀ¸·Î °è»êÇØ¾ß µÊ)
+		// 1ÁÖÀÏ : ÇöÀç½Ã°£ + 604800
+		// 2ÁÖÀÏ : ÇöÀç½Ã°£ + 1209600
+		// 3ÁÖÀÏ : ÇöÀç½Ã°£ + 1814400
+		// 4ÁÖÀÏ : ÇöÀç½Ã°£ + 2419200
 		String merchantUid = "";
 //					subscriptionTime = currentTime + 180;
 //					merchantUid = getRandomMerchantUid();
@@ -1783,11 +1783,11 @@ public class ItemController {
 //					System.out.println(schedule_response.getResponse().size());
 //					List<ScheduleEntry> req_schedules = scheduleData.getSchedules();
 
-		// ì˜ˆì•½ ì‹œê°„ì— ê²°ì œ ëë‹¤ê³  ê°€ì •í•´ì„œ êµ¬í˜„í•´ ë†“ì€ ê²ƒ
+		// ¿¹¾à ½Ã°£¿¡ °áÁ¦ µÆ´Ù°í °¡Á¤ÇØ¼­ ±¸ÇöÇØ ³õÀº °Í
 		for (int i = 0; i < schedules.size(); i++) {
 			if ((schedules.get(i).getMerchantUid()).equalsIgnoreCase(merchantUid)
 					&& (schedules.get(i).getScheduleAt()).equals(date)) {
-				System.out.println("ì˜ˆì•½ ê²°ì œ ì„±ê³µ");
+				System.out.println("¿¹¾à °áÁ¦ ¼º°ø");
 			}
 		}
 

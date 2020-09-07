@@ -25,7 +25,7 @@ public class Member implements Serializable {
 	private Date enrollDate;
 	private Date modifyDate;
 	private String memberStatus;
-	private String emailStatus;	// ì´ë©”ì¼ ì¸ì¦ ì‹œ ì¸ì¦ìƒíƒœ í™•ì¸
+	private String emailStatus;	// ÀÌ¸ŞÀÏ ÀÎÁõ ½Ã ÀÎÁõ»óÅÂ È®ÀÎ
 	private int point;
 	private int gradeNo;
 	

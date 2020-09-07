@@ -10,12 +10,12 @@ public class Inquiry implements Serializable{
 	 */
 	private static final long serialVersionUID = -369409540221247231L;
 
-	private int iBoard_no;				// ê²Œì‹œë¬¼ ë²ˆí˜¸
-	private String iInquiry_yn;			// ë‹µë³€ ì—¬ë¶€ 
-	private Date iInquiry_date;			// ë‹µë³€ ë‚ ì§œ
-	private String iInquiry_content;	// ë‹µë³€ ë‚´ìš©
-	private String iBoard_type;			// ë¬¸ì˜ ìœ í˜•
-	private String iInquiry_name;		// ë¬¸ì˜ëª…
+	private int iBoard_no;				// °Ô½Ã¹° ¹øÈ£
+	private String iInquiry_yn;			// ´äº¯ ¿©ºÎ 
+	private Date iInquiry_date;			// ´äº¯ ³¯Â¥
+	private String iInquiry_content;	// ´äº¯ ³»¿ë
+	private String iBoard_type;			// ¹®ÀÇ À¯Çü
+	private String iInquiry_name;		// ¹®ÀÇ¸í
 	
 	public Inquiry() {
 	}

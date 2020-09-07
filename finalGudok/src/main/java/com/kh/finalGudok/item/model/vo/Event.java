@@ -9,14 +9,14 @@ public class Event implements Serializable{
 	 */
 	private static final long serialVersionUID = -22352937179450221L;
 	
-	private int eventNo;			//ì´ë²¤íŠ¸ ë²ˆí˜¸
-	private int itemNo;				//ìƒí’ˆë²ˆí˜¸
-	private String eventStatus;		//ì´ë²¤íŠ¸ ìƒíƒœ
-	private String eventName;		//ì´ë²¤íŠ¸ëª…
-	private int itemDiscount;		//í• ì¸ìœ¨
-	private String imageOriginalName;	//ì›ë˜ íŒŒì¼ëª…
-	private String imageRename;			//ë³€ê²½ëœ íŒŒì¼ëª…
-	private String imagePath;			//ì €ì¥ê²½ë¡œ
+	private int eventNo;			//ÀÌº¥Æ® ¹øÈ£
+	private int itemNo;				//»óÇ°¹øÈ£
+	private String eventStatus;		//ÀÌº¥Æ® »óÅÂ
+	private String eventName;		//ÀÌº¥Æ®¸í
+	private int itemDiscount;		//ÇÒÀÎÀ²
+	private String imageOriginalName;	//¿ø·¡ ÆÄÀÏ¸í
+	private String imageRename;			//º¯°æµÈ ÆÄÀÏ¸í
+	private String imagePath;			//ÀúÀå°æ·Î
 	
 
 	

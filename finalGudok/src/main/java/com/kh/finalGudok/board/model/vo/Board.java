@@ -11,21 +11,21 @@ public class Board implements Serializable {
 	 */
 	private static final long serialVersionUID = -5093762690289456321L;
 
-	private int bMember_no;		// ê²Œì‹œí•œ íšŒì› ë²ˆí˜¸
-	private String bMember_id;		// ê²Œì‹œí•œ íšŒì› ì•„ì´ë””
-	private String bEmail;			// ê²Œì‹œí•œ íšŒì› ì´ë©”ì¼
-	private String bBoard_code;		// ê²Œì‹œë¬¼ ì½”ë“œ
-	private int bBoard_no;			// ê²Œì‹œë¬¼ ë²ˆí˜¸
-	private String bTitle;			// ì œëª©
-	private String bContent;		// ë‚´ìš©
-	private int bRead_num;			// ì¡°íšŒìˆ˜
-	private String originalFileName;// ì´ë¯¸ì§€ ì›ë˜ì´ë¦„
-	private String renameFileName;	// ì´ë¯¸ì§€ ìˆ˜ì •ì´ë¦„
-	private String imagePath;		// ì´ë¯¸ì§€ ê²½ë¡œ
-	private int bItem_no;			// ìƒí’ˆë²ˆí˜¸
-	private int rownum;				// ê²Œì‹œë¬¼ ë²ˆí˜¸ ìˆœì„œë¥¼ ìœ„í•œ rownum
+	private int bMember_no;		// °Ô½ÃÇÑ È¸¿ø ¹øÈ£
+	private String bMember_id;		// °Ô½ÃÇÑ È¸¿ø ¾ÆÀÌµğ
+	private String bEmail;			// °Ô½ÃÇÑ È¸¿ø ÀÌ¸ŞÀÏ
+	private String bBoard_code;		// °Ô½Ã¹° ÄÚµå
+	private int bBoard_no;			// °Ô½Ã¹° ¹øÈ£
+	private String bTitle;			// Á¦¸ñ
+	private String bContent;		// ³»¿ë
+	private int bRead_num;			// Á¶È¸¼ö
+	private String originalFileName;// ÀÌ¹ÌÁö ¿ø·¡ÀÌ¸§
+	private String renameFileName;	// ÀÌ¹ÌÁö ¼öÁ¤ÀÌ¸§
+	private String imagePath;		// ÀÌ¹ÌÁö °æ·Î
+	private int bItem_no;			// »óÇ°¹øÈ£
+	private int rownum;				// °Ô½Ã¹° ¹øÈ£ ¼ø¼­¸¦ À§ÇÑ rownum
 	
-	private Date bWrite_date;		// ì‘ì„±ì¼ì
+	private Date bWrite_date;		// ÀÛ¼ºÀÏÀÚ
 
 	public Board() {
 	}

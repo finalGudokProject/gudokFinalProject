@@ -41,15 +41,15 @@ public class BoardController {
 	// admin Notice
 	// List
 	@RequestMapping("adminNoticeList.do")
-	public ModelAndView adminNoticeList(ModelAndView mv, @RequestParam(value = "page", required = false) Integer page) { // ê¸°ë³¸
-																															// ìë£Œí˜•ìœ¼ë¡œ
-																															// ë°›ì„
-																															// ìˆ˜
-																															// ì—†ê¸°
-																															// ë•Œë¬¸ì—
-																															// Integerë¥¼
-																															// ì“´ë‹¤
-		// í˜ì´ì§• ê´€ë ¨ ì²˜ë¦¬ë¶€í„° í•˜ì
+	public ModelAndView adminNoticeList(ModelAndView mv, @RequestParam(value = "page", required = false) Integer page) { // ±âº»
+																															// ÀÚ·áÇüÀ¸·Î
+																															// ¹ŞÀ»
+																															// ¼ö
+																															// ¾ø±â
+																															// ¶§¹®¿¡
+																															// Integer¸¦
+																															// ¾´´Ù
+		// ÆäÀÌÂ¡ °ü·Ã Ã³¸®ºÎÅÍ ÇÏÀÚ
 		int currentPage = 1;
 		if (page != null) {
 			currentPage = page;
@@ -59,7 +59,7 @@ public class BoardController {
 
 		bPageInfo pi = getPageInfo(currentPage, listCount);
 
-		// í˜ì´ì§• ì²˜ë¦¬ê°€ ëë‚˜ë©´ ê²Œì‹œê¸€ì„ ì¶”ë ¤ì˜¤ì
+		// ÆäÀÌÂ¡ Ã³¸®°¡ ³¡³ª¸é °Ô½Ã±ÛÀ» Ãß·Á¿ÀÀÚ
 		ArrayList<Board> list = bService.selectListNotice(pi);
 //		System.out.println(list);
 		if (list != null) {
@@ -67,7 +67,7 @@ public class BoardController {
 			mv.addObject("pi", pi);
 			mv.setViewName("admin/adminNoticeList");
 		} else {
-			throw new BoardException("ê²Œì‹œê¸€ ì „ì²´ ì¡°íšŒ ì‹¤íŒ¨!");
+			throw new BoardException("°Ô½Ã±Û ÀüÃ¼ Á¶È¸ ½ÇÆĞ!");
 		}
 
 		return mv;
@@ -81,11 +81,11 @@ public class BoardController {
 
 	@RequestMapping("noticeInsert.do")
 	public String noticeInsert(HttpServletRequest request, Board b,
-			@RequestParam(value = "uploadNotice", required = false) MultipartFile file) { // ë‹¤ì¤‘ ì—…ë¡œë“œ íŒŒì¼ì€
+			@RequestParam(value = "uploadNotice", required = false) MultipartFile file) { // ´ÙÁß ¾÷·Îµå ÆÄÀÏÀº
 																							// List<MultipartFile> file
-																							// ì´ìš© ì°¾ì•„ì„œ í•´ë´
-		// NoticeControllerì— ìˆëŠ” saveFile ë©”ì†Œë“œ ê°€ì ¸ì˜¤ê³  buploadFilesí´ë”ë¡œ ìˆ˜ì •í•˜ì
-		// ê·¸ë¦¬ê³  ì´ë²ˆì—” ë‚ ì§œë¥¼ í™œìš©í•œ renameì„ ì ìš©í•´ ë³´ì
+																							// ÀÌ¿ë Ã£¾Æ¼­ ÇØºÁ
+		// NoticeController¿¡ ÀÖ´Â saveFile ¸Ş¼Òµå °¡Á®¿À°í buploadFilesÆú´õ·Î ¼öÁ¤ÇÏÀÚ
+		// ±×¸®°í ÀÌ¹ø¿£ ³¯Â¥¸¦ È°¿ëÇÑ renameÀ» Àû¿ëÇØ º¸ÀÚ
 
 		if (!file.getOriginalFilename().equals("")) {
 
@@ -105,30 +105,30 @@ public class BoardController {
 		if ((result1 > 0 && result2 < 0) || (result1 > 0 && result2 > 0)) {
 			return "redirect:adminNoticeList.do";
 		} else {
-			throw new BoardException("ê²Œì‹œê¸€ ë“±ë¡ ì‹¤íŒ¨!");
+			throw new BoardException("°Ô½Ã±Û µî·Ï ½ÇÆĞ!");
 		}
 	}
 
-	// íŒŒì¼ì´ ì €ì¥ ë  ê²½ë¡œë¥¼ ì„¤ì •í•˜ëŠ” ë©”ì†Œë“œ
+	// ÆÄÀÏÀÌ ÀúÀå µÉ °æ·Î¸¦ ¼³Á¤ÇÏ´Â ¸Ş¼Òµå
 	private String saveFile(MultipartFile file, HttpServletRequest request) {
 
 		String root = request.getSession().getServletContext().getRealPath("resources");
-		// request.getSession().getServletContext() -> webappê²½ë¡œ
-		// getRealPath -> File: ë¹¼ê³ ë‚˜ì˜¤ëŠ” ê²½ë¡œ
+		// request.getSession().getServletContext() -> webapp°æ·Î
+		// getRealPath -> File: »©°í³ª¿À´Â °æ·Î
 
 		String savePath = root + "\\aNoticeUploadFiles";
-		// í´ë”ê°€ ì—†ìœ¼ë©´ ë§Œë“¤ë©´ ë˜ê³  í´ë”ê°€ ì—†ìœ¼ë©´ ì´ë ‡ê²Œ íŒŒì¼ ì´ë¦„ì„ ì¨ì„œ ë§Œë“ ë‹¤
+		// Æú´õ°¡ ¾øÀ¸¸é ¸¸µé¸é µÇ°í Æú´õ°¡ ¾øÀ¸¸é ÀÌ·¸°Ô ÆÄÀÏ ÀÌ¸§À» ½á¼­ ¸¸µç´Ù
 
 		File folder = new File(savePath);
 
-		if (!folder.exists()) { // webappì•„ë˜ì— ìˆëŠ” resources í´ë” ì•„ë˜ì—
-								// nuloadFilesê°€ ì—†ì–´ì„œ Fileê°ì²´ë¥¼ ì°¾ì„ ìˆ˜ ì—†ë‹¤ë©´
-			folder.mkdirs(); // í´ë”ë¥¼ ë§Œë“¤ì–´ë¼
+		if (!folder.exists()) { // webapp¾Æ·¡¿¡ ÀÖ´Â resources Æú´õ ¾Æ·¡¿¡
+								// nuloadFiles°¡ ¾ø¾î¼­ File°´Ã¼¸¦ Ã£À» ¼ö ¾ø´Ù¸é
+			folder.mkdirs(); // Æú´õ¸¦ ¸¸µé¾î¶ó
 
 		}
 
-		// ê³µì§€ê¸€ì€ íŒŒì¼ëª… ì¤‘ë³µ ì œê±°ëŠ” ì‹ ê²½ì“°ì§€ ì•Šê³  í–ˆì§€ë§Œ
-		// ê²Œì‹œíŒì—ì„œëŠ” íŒŒì¼ëª…ì„ ë‚ ì§œ(ì—…ë¡œë“œ ì‹œê°„)ë¡œ rename í•´ë³´ì
+		// °øÁö±ÛÀº ÆÄÀÏ¸í Áßº¹ Á¦°Å´Â ½Å°æ¾²Áö ¾Ê°í ÇßÁö¸¸
+		// °Ô½ÃÆÇ¿¡¼­´Â ÆÄÀÏ¸íÀ» ³¯Â¥(¾÷·Îµå ½Ã°£)·Î rename ÇØº¸ÀÚ
 
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
 		String originFileName = file.getOriginalFilename();
@@ -136,13 +136,13 @@ public class BoardController {
 				+ originFileName.substring(originFileName.lastIndexOf(".") + 1);
 
 		String filePath = folder + "\\" + renameFileName;
-		// ì‹¤ì œ ì €ì¥ ë  íŒŒì¼ì˜ ê²½ë¡œ + renameíŒŒì¼ëª…
+		// ½ÇÁ¦ ÀúÀå µÉ ÆÄÀÏÀÇ °æ·Î + renameÆÄÀÏ¸í
 
 		try {
 			file.transferTo(new File(filePath));
-			// ì´ ìƒíƒœë¡œëŠ” íŒŒì¼ ì—…ë¡œë“œê°€ ë˜ì§€ ì•ŠëŠ”ë‹¤.
-			// ì™œëƒë©´ íŒŒì¼ ì œí•œí¬ê¸°ì— ëŒ€í•œ ì„¤ì •ì„ ì£¼ì§€ ì•Šì•˜ê¸° ë•Œë¬¸ì´ë‹¤.
-			// root-context.xmlì— ì—…ë¡œë“œ ì œí•œ íŒŒì¼ í¬ê¸°ë¥¼ ì§€ì •í•´ ì£¼ì.
+			// ÀÌ »óÅÂ·Î´Â ÆÄÀÏ ¾÷·Îµå°¡ µÇÁö ¾Ê´Â´Ù.
+			// ¿Ö³Ä¸é ÆÄÀÏ Á¦ÇÑÅ©±â¿¡ ´ëÇÑ ¼³Á¤À» ÁÖÁö ¾Ê¾Ò±â ¶§¹®ÀÌ´Ù.
+			// root-context.xml¿¡ ¾÷·Îµå Á¦ÇÑ ÆÄÀÏ Å©±â¸¦ ÁöÁ¤ÇØ ÁÖÀÚ.
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -156,7 +156,7 @@ public class BoardController {
 	public ModelAndView adminNoticeDetail(ModelAndView mv, int bBoard_no, @RequestParam("page") Integer page) {
 		int currentPage = page;
 
-		int result = bService.addReadCount(bBoard_no); // ì¡°íšŒìˆ˜ê°€ ì¦ê°€ ë˜ì–´ì•¼ë§Œ ê²Œì‹œë¬¼ ìƒì„¸ë³´ê¸°ê°€ ê°€ëŠ¥í•˜ë‹¤
+		int result = bService.addReadCount(bBoard_no); // Á¶È¸¼ö°¡ Áõ°¡ µÇ¾î¾ß¸¸ °Ô½Ã¹° »ó¼¼º¸±â°¡ °¡´ÉÇÏ´Ù
 
 		if (result > 0) {
 			Board board = bService.selectIDetail(bBoard_no);
@@ -164,10 +164,10 @@ public class BoardController {
 				mv.addObject("board", board).addObject("currentPage", currentPage)
 						.setViewName("admin/adminNoticeDetail");
 			} else {
-				throw new BoardException("ê²Œì‹œê¸€ ì¡°íšŒ ì‹¤íŒ¨");
+				throw new BoardException("°Ô½Ã±Û Á¶È¸ ½ÇÆĞ");
 			}
 		} else {
-			throw new BoardException("ê²Œì‹œê¸€ ì¡°íšŒìˆ˜ ì¦ê°€ ì‹¤íŒ¨!");
+			throw new BoardException("°Ô½Ã±Û Á¶È¸¼ö Áõ°¡ ½ÇÆĞ!");
 		}
 		return mv;
 	}
@@ -188,9 +188,9 @@ public class BoardController {
 			@RequestParam("page") Integer page,
 			@RequestParam(value = "uploadNotice", required = false) MultipartFile file) {
 
-		if (!file.getOriginalFilename().equals("")) { // ì›ë˜ íŒŒì¼ëª…ì´ ì¡´ì¬í•˜ë©´
-			if (b.getRenameFileName() != null) { // ë°”ë€ì´ë¦„ì´ ì¡´ì¬í•˜ë©´
-				deleteFile(b.getRenameFileName(), request); // ë°”ë€ì´ë¦„ ì‚­ì œ
+		if (!file.getOriginalFilename().equals("")) { // ¿ø·¡ ÆÄÀÏ¸íÀÌ Á¸ÀçÇÏ¸é
+			if (b.getRenameFileName() != null) { // ¹Ù²ïÀÌ¸§ÀÌ Á¸ÀçÇÏ¸é
+				deleteFile(b.getRenameFileName(), request); // ¹Ù²ïÀÌ¸§ »èÁ¦
 			}
 			String renameFileName = saveFile(file, request);
 
@@ -207,7 +207,7 @@ public class BoardController {
 		if (result1 > 0 || result2 > 0) {
 			mv.addObject("page", page).setViewName("redirect:adminNoticeList.do");
 		} else {
-			throw new BoardException("ê²Œì‹œê¸€ ìˆ˜ì • ì‹¤íŒ¨!!");
+			throw new BoardException("°Ô½Ã±Û ¼öÁ¤ ½ÇÆĞ!!");
 		}
 
 		return mv;
@@ -235,7 +235,7 @@ public class BoardController {
 			deleteFile(b.getRenameFileName(), request);
 		}
 
-		// ê²Œì‹œê¸€ ì‚­ì œí•˜ê¸°
+		// °Ô½Ã±Û »èÁ¦ÇÏ±â
 		int result1 = bService.deleteImage(bBoard_no);
 		int result2 = bService.deleteBoardImage(bBoard_no);
 		int result3 = bService.deleteBoard(bBoard_no);
@@ -243,11 +243,11 @@ public class BoardController {
 		if (result1 > 0 && result2 > 0 && result3 > 0) {
 			return "redirect:adminNoticeList.do";
 		} else {
-			throw new BoardException("ê²Œì‹œë¬¼ ì‚­ì œ ì‹¤íŒ¨!");
+			throw new BoardException("°Ô½Ã¹° »èÁ¦ ½ÇÆĞ!");
 		}
 	}
 
-	// ì„ íƒ ì‚­ì œ
+	// ¼±ÅÃ »èÁ¦
 	@RequestMapping("noticeDeleteCheck.do")
 	@ResponseBody
 	public String noticeDeleteCheck(HttpServletRequest request, String sendArr) {
@@ -258,7 +258,7 @@ public class BoardController {
 
 		for (int i = 0; i < strArr.length; i++) {
 			NoticeArr[i] = Integer.valueOf(strArr[i]);
-			System.out.println("ì„ íƒëœ ê°’:" + strArr[i]);
+			System.out.println("¼±ÅÃµÈ °ª:" + strArr[i]);
 		}
 
 		int result1 = 0;
@@ -282,12 +282,12 @@ public class BoardController {
 			return "redirect:adminNoticeList.do";
 
 		} else {
-			throw new BoardException("ê³µì§€ê¸€ ì‚­ì œ ì‹¤íŒ¨!");
+			throw new BoardException("°øÁö±Û »èÁ¦ ½ÇÆĞ!");
 		}
 
 	}
 
-	// ì‚­ì œ í›„ ë°”ë€ ê²Œì‹œíŒ ë³´ê¸°
+	// »èÁ¦ ÈÄ ¹Ù²ï °Ô½ÃÆÇ º¸±â
 	@RequestMapping("noticeListChange.do")
 	public void noticeListChange(HttpServletResponse response, Integer page) throws IOException {
 
@@ -302,7 +302,7 @@ public class BoardController {
 
 		ArrayList<Board> list = bService.selectListNotice(pi);
 
-		System.out.println("ì‚­ì œ ì „ ëª©ë¡ : " + list);
+		System.out.println("»èÁ¦ Àü ¸ñ·Ï : " + list);
 
 		response.setContentType("application/json;charset=utf-8");
 
@@ -333,11 +333,11 @@ public class BoardController {
 			out.close();
 
 		} else {
-			throw new BoardException("ê³µì§€ ì „ì²´ ì¡°íšŒ ì‹¤íŒ¨!");
+			throw new BoardException("°øÁö ÀüÃ¼ Á¶È¸ ½ÇÆĞ!");
 		}
 	}
 
-	// ê²€ìƒ‰
+	// °Ë»ö
 	@RequestMapping("searchNoticeList.do")
 	public ModelAndView searchNoticeList(ModelAndView mv, @RequestParam(value = "page", required = false) Integer page,
 			@RequestParam("searchType") String searchType, @RequestParam("keyword") String keyword) {
@@ -366,18 +366,18 @@ public class BoardController {
 			mv.addObject("keyword", keyword);
 			mv.setViewName("admin/adminNoticeSearch");
 		} else {
-			throw new BoardException("ê²Œì‹œê¸€ ì „ì²´ ì¡°íšŒ ì‹¤íŒ¨!");
+			throw new BoardException("°Ô½Ã±Û ÀüÃ¼ Á¶È¸ ½ÇÆĞ!");
 		}
 
 		return mv;
 	}
 
-	// ê²€ìƒ‰ í›„ ìƒíƒœ ë³€í™˜ í›„ í˜ì´ì§€
+	// °Ë»ö ÈÄ »óÅÂ º¯È¯ ÈÄ ÆäÀÌÁö
 	@RequestMapping("noticeSearchListChange.do")
 	public void noticeSearchListChange(HttpServletResponse response, Integer page,
 			@RequestParam("searchType") String searchType, @RequestParam("keyword") String keyword) throws IOException {
 
-		System.out.println("ê²€ìƒ‰ í›„ ë³€í™˜ í˜ì´ì§€ : " + searchType);
+		System.out.println("°Ë»ö ÈÄ º¯È¯ ÆäÀÌÁö : " + searchType);
 		System.out.println(keyword);
 
 		int currentPage = 1;
@@ -426,7 +426,7 @@ public class BoardController {
 			out.close();
 
 		} else {
-			throw new BoardException("ê³µì§€ ì¡°íšŒ ì‹¤íŒ¨!");
+			throw new BoardException("°øÁö Á¶È¸ ½ÇÆĞ!");
 		}
 	}
 
@@ -434,16 +434,16 @@ public class BoardController {
 
 	// FAQ
 
-	// ë¦¬ìŠ¤íŠ¸ ì¶œë ¥
+	// ¸®½ºÆ® Ãâ·Â
 	@RequestMapping("adminFAQList.do")
-	public ModelAndView adminFAQList(ModelAndView mv, @RequestParam(value = "page", required = false) Integer page) { // ê¸°ë³¸
-																														// ìë£Œí˜•ìœ¼ë¡œ
-																														// ë°›ì„
-																														// ìˆ˜
-																														// ì—†ê¸°
-																														// ë•Œë¬¸ì—
-																														// Integerë¥¼
-																														// ì“´ë‹¤
+	public ModelAndView adminFAQList(ModelAndView mv, @RequestParam(value = "page", required = false) Integer page) { // ±âº»
+																														// ÀÚ·áÇüÀ¸·Î
+																														// ¹ŞÀ»
+																														// ¼ö
+																														// ¾ø±â
+																														// ¶§¹®¿¡
+																														// Integer¸¦
+																														// ¾´´Ù
 
 		int currentPage = 1;
 		if (page != null) {
@@ -461,7 +461,7 @@ public class BoardController {
 			mv.addObject("pi", pi);
 			mv.setViewName("admin/adminFAQList");
 		} else {
-			throw new BoardException("ê²Œì‹œê¸€ ì „ì²´ ì¡°íšŒ ì‹¤íŒ¨!");
+			throw new BoardException("°Ô½Ã±Û ÀüÃ¼ Á¶È¸ ½ÇÆĞ!");
 		}
 
 		return mv;
@@ -481,7 +481,7 @@ public class BoardController {
 		if (result > 0) {
 			return "redirect:adminFAQList.do";
 		} else {
-			throw new BoardException("ê²Œì‹œê¸€ ë“±ë¡ ì‹¤íŒ¨!");
+			throw new BoardException("°Ô½Ã±Û µî·Ï ½ÇÆĞ!");
 		}
 	}
 
@@ -490,17 +490,17 @@ public class BoardController {
 	public ModelAndView adminFAQDetail(ModelAndView mv, int bBoard_no, @RequestParam("page") Integer page) {
 		int currentPage = page;
 
-		int result = bService.addReadCount(bBoard_no); // ì¡°íšŒìˆ˜ê°€ ì¦ê°€ ë˜ì–´ì•¼ë§Œ ê²Œì‹œë¬¼ ìƒì„¸ë³´ê¸°ê°€ ê°€ëŠ¥í•˜ë‹¤
+		int result = bService.addReadCount(bBoard_no); // Á¶È¸¼ö°¡ Áõ°¡ µÇ¾î¾ß¸¸ °Ô½Ã¹° »ó¼¼º¸±â°¡ °¡´ÉÇÏ´Ù
 
 		if (result > 0) {
 			Board board = bService.selectDetail(bBoard_no);
 			if (board != null) {
 				mv.addObject("board", board).addObject("currentPage", currentPage).setViewName("admin/adminFAQDetail");
 			} else {
-				throw new BoardException("ê²Œì‹œê¸€ ì¡°íšŒ ì‹¤íŒ¨");
+				throw new BoardException("°Ô½Ã±Û Á¶È¸ ½ÇÆĞ");
 			}
 		} else {
-			throw new BoardException("ê²Œì‹œê¸€ ì¡°íšŒìˆ˜ ì¦ê°€ ì‹¤íŒ¨!");
+			throw new BoardException("°Ô½Ã±Û Á¶È¸¼ö Áõ°¡ ½ÇÆĞ!");
 		}
 		return mv;
 	}
@@ -522,7 +522,7 @@ public class BoardController {
 		if (result > 0) {
 			mv.addObject("page", page).setViewName("redirect:adminFAQList.do");
 		} else {
-			throw new BoardException("ê²Œì‹œê¸€ ìˆ˜ì • ì‹¤íŒ¨!!");
+			throw new BoardException("°Ô½Ã±Û ¼öÁ¤ ½ÇÆĞ!!");
 		}
 
 		return mv;
@@ -538,11 +538,11 @@ public class BoardController {
 		if (result > 0) {
 			return "redirect:adminFAQList.do";
 		} else {
-			throw new BoardException("ê²Œì‹œë¬¼ ì‚­ì œ ì‹¤íŒ¨!");
+			throw new BoardException("°Ô½Ã¹° »èÁ¦ ½ÇÆĞ!");
 		}
 	}
 
-	// ì„ íƒ ì‚­ì œ
+	// ¼±ÅÃ »èÁ¦
 	@RequestMapping("FAQDeleteCheck.do")
 	@ResponseBody
 	public String FAQDeleteCheck(HttpServletRequest request, String sendArr) {
@@ -553,7 +553,7 @@ public class BoardController {
 
 		for (int i = 0; i < strArr.length; i++) {
 			FAQArr[i] = Integer.valueOf(strArr[i]);
-			System.out.println("ì„ íƒëœ ê°’:" + strArr[i]);
+			System.out.println("¼±ÅÃµÈ °ª:" + strArr[i]);
 		}
 
 		int result = 0;
@@ -573,12 +573,12 @@ public class BoardController {
 			return "redirect:adminFAQList.do";
 
 		} else {
-			throw new BoardException("FAQê¸€ ì‚­ì œ ì‹¤íŒ¨!");
+			throw new BoardException("FAQ±Û »èÁ¦ ½ÇÆĞ!");
 		}
 
 	}
 
-	// ì‚­ì œ í›„ ë°”ë€ ê²Œì‹œíŒ ë³´ê¸°
+	// »èÁ¦ ÈÄ ¹Ù²ï °Ô½ÃÆÇ º¸±â
 	@RequestMapping("FAQListChange.do")
 	public void FAQListChange(HttpServletResponse response, Integer page) throws IOException {
 
@@ -593,7 +593,7 @@ public class BoardController {
 
 		ArrayList<Board> list = bService.selectListFAQ(pi);
 
-		System.out.println("ì‚­ì œ ì „ ëª©ë¡ : " + list);
+		System.out.println("»èÁ¦ Àü ¸ñ·Ï : " + list);
 
 		response.setContentType("application/json;charset=utf-8");
 
@@ -624,11 +624,11 @@ public class BoardController {
 			out.close();
 
 		} else {
-			throw new BoardException("FAQ ì „ì²´ ì¡°íšŒ ì‹¤íŒ¨!");
+			throw new BoardException("FAQ ÀüÃ¼ Á¶È¸ ½ÇÆĞ!");
 		}
 	}
 
-	// ê²€ìƒ‰
+	// °Ë»ö
 	@RequestMapping("searchFAQList.do")
 	public ModelAndView searchFAQList(ModelAndView mv, @RequestParam(value = "page", required = false) Integer page,
 			@RequestParam("searchType") String searchType, @RequestParam("keyword") String keyword) {
@@ -657,18 +657,18 @@ public class BoardController {
 			mv.addObject("keyword", keyword);
 			mv.setViewName("admin/adminFAQSearch");
 		} else {
-			throw new BoardException("ê²Œì‹œê¸€ ì „ì²´ ì¡°íšŒ ì‹¤íŒ¨!");
+			throw new BoardException("°Ô½Ã±Û ÀüÃ¼ Á¶È¸ ½ÇÆĞ!");
 		}
 
 		return mv;
 	}
 
-	// ê²€ìƒ‰ í›„ ìƒíƒœ ë³€í™˜ í›„ í˜ì´ì§€
+	// °Ë»ö ÈÄ »óÅÂ º¯È¯ ÈÄ ÆäÀÌÁö
 	@RequestMapping("FAQSearchListChange.do")
 	public void FAQSearchListChange(HttpServletResponse response, Integer page,
 			@RequestParam("searchType") String searchType, @RequestParam("keyword") String keyword) throws IOException {
 
-		System.out.println("ê²€ìƒ‰ í›„ ë³€í™˜ í˜ì´ì§€ : " + searchType);
+		System.out.println("°Ë»ö ÈÄ º¯È¯ ÆäÀÌÁö : " + searchType);
 		System.out.println(keyword);
 
 		int currentPage = 1;
@@ -717,7 +717,7 @@ public class BoardController {
 			out.close();
 
 		} else {
-			throw new BoardException("FAQ ì¡°íšŒ ì‹¤íŒ¨!");
+			throw new BoardException("FAQ Á¶È¸ ½ÇÆĞ!");
 		}
 	}
 
@@ -727,8 +727,8 @@ public class BoardController {
 	// List
 	@RequestMapping("adminProductProposalList.do")
 	public ModelAndView adminProductProposalList(ModelAndView mv,
-			@RequestParam(value = "page", required = false) Integer page) { // ê¸°ë³¸ ìë£Œí˜•ìœ¼ë¡œ ë°›ì„ ìˆ˜ ì—†ê¸° ë•Œë¬¸ì— Integerë¥¼ ì“´ë‹¤
-		// í˜ì´ì§• ê´€ë ¨ ì²˜ë¦¬ë¶€í„° í•˜ì
+			@RequestParam(value = "page", required = false) Integer page) { // ±âº» ÀÚ·áÇüÀ¸·Î ¹ŞÀ» ¼ö ¾ø±â ¶§¹®¿¡ Integer¸¦ ¾´´Ù
+		// ÆäÀÌÂ¡ °ü·Ã Ã³¸®ºÎÅÍ ÇÏÀÚ
 		int currentPage = 1;
 		if (page != null) {
 			currentPage = page;
@@ -745,7 +745,7 @@ public class BoardController {
 			mv.addObject("pi", pi);
 			mv.setViewName("admin/adminProductProposalList");
 		} else {
-			throw new BoardException("ê²Œì‹œê¸€ ì „ì²´ ì¡°íšŒ ì‹¤íŒ¨!");
+			throw new BoardException("°Ô½Ã±Û ÀüÃ¼ Á¶È¸ ½ÇÆĞ!");
 		}
 
 		return mv;
@@ -756,7 +756,7 @@ public class BoardController {
 	public ModelAndView adminProductProposalDetail(ModelAndView mv, int bBoard_no, @RequestParam("page") Integer page) {
 		int currentPage = page;
 
-		int result = bService.addReadCount(bBoard_no); // ì¡°íšŒìˆ˜ê°€ ì¦ê°€ ë˜ì–´ì•¼ë§Œ ê²Œì‹œë¬¼ ìƒì„¸ë³´ê¸°ê°€ ê°€ëŠ¥í•˜ë‹¤
+		int result = bService.addReadCount(bBoard_no); // Á¶È¸¼ö°¡ Áõ°¡ µÇ¾î¾ß¸¸ °Ô½Ã¹° »ó¼¼º¸±â°¡ °¡´ÉÇÏ´Ù
 
 		if (result > 0) {
 			Board board = bService.selectIDetail(bBoard_no);
@@ -764,10 +764,10 @@ public class BoardController {
 				mv.addObject("board", board).addObject("currentPage", currentPage)
 						.setViewName("admin/adminProductProposalDetail");
 			} else {
-				throw new BoardException("ê²Œì‹œê¸€ ì¡°íšŒ ì‹¤íŒ¨");
+				throw new BoardException("°Ô½Ã±Û Á¶È¸ ½ÇÆĞ");
 			}
 		} else {
-			throw new BoardException("ê²Œì‹œê¸€ ì¡°íšŒìˆ˜ ì¦ê°€ ì‹¤íŒ¨!");
+			throw new BoardException("°Ô½Ã±Û Á¶È¸¼ö Áõ°¡ ½ÇÆĞ!");
 		}
 		return mv;
 	}
@@ -783,7 +783,7 @@ public class BoardController {
 			PdeleteFile(b.getRenameFileName(), request);
 		}
 
-		// ê²Œì‹œê¸€ ì‚­ì œí•˜ê¸°
+		// °Ô½Ã±Û »èÁ¦ÇÏ±â
 		int result1 = bService.deleteImage(bBoard_no);
 		int result2 = bService.deleteBoardImage(bBoard_no);
 		int result3 = bService.deleteBoard(bBoard_no);
@@ -791,11 +791,11 @@ public class BoardController {
 		if (result1 > 0 && result2 > 0 && result3 > 0) {
 			return "redirect:adminProductProposalList.do";
 		} else {
-			throw new BoardException("ê²Œì‹œë¬¼ ì‚­ì œ ì‹¤íŒ¨!");
+			throw new BoardException("°Ô½Ã¹° »èÁ¦ ½ÇÆĞ!");
 		}
 	}
 
-	// ì„ íƒ ì‚­ì œ
+	// ¼±ÅÃ »èÁ¦
 	@RequestMapping("proposalDeleteCheck.do")
 	@ResponseBody
 	public String proposalDeleteCheck(HttpServletRequest request, String sendArr) {
@@ -806,7 +806,7 @@ public class BoardController {
 
 		for (int i = 0; i < strArr.length; i++) {
 			ProposalArr[i] = Integer.valueOf(strArr[i]);
-			System.out.println("ì„ íƒëœ ê°’:" + strArr[i]);
+			System.out.println("¼±ÅÃµÈ °ª:" + strArr[i]);
 		}
 
 		int result1 = 0;
@@ -831,12 +831,12 @@ public class BoardController {
 			return "redirect:adminProductProposalList.do";
 
 		} else {
-			throw new BoardException("Proposalê¸€ ì‚­ì œ ì‹¤íŒ¨!");
+			throw new BoardException("Proposal±Û »èÁ¦ ½ÇÆĞ!");
 		}
 
 	}
 
-	// ì‚­ì œ í›„ ë°”ë€ ê²Œì‹œíŒ ë³´ê¸°
+	// »èÁ¦ ÈÄ ¹Ù²ï °Ô½ÃÆÇ º¸±â
 	@RequestMapping("proposalListChange.do")
 	public void proposalListChange(HttpServletResponse response, Integer page) throws IOException {
 
@@ -851,7 +851,7 @@ public class BoardController {
 
 		ArrayList<Board> list = bService.selectListProductProposal(pi);
 
-		System.out.println("ì‚­ì œ ì „ ëª©ë¡ : " + list);
+		System.out.println("»èÁ¦ Àü ¸ñ·Ï : " + list);
 
 		response.setContentType("application/json;charset=utf-8");
 
@@ -883,11 +883,11 @@ public class BoardController {
 			out.close();
 
 		} else {
-			throw new BoardException("Proposal ì „ì²´ ì¡°íšŒ ì‹¤íŒ¨!");
+			throw new BoardException("Proposal ÀüÃ¼ Á¶È¸ ½ÇÆĞ!");
 		}
 	}
 
-	// ê²€ìƒ‰
+	// °Ë»ö
 	@RequestMapping("searchProposalList.do")
 	public ModelAndView searchProposalList(ModelAndView mv,
 			@RequestParam(value = "page", required = false) Integer page, @RequestParam("searchType") String searchType,
@@ -917,18 +917,18 @@ public class BoardController {
 			mv.addObject("keyword", keyword);
 			mv.setViewName("admin/adminProductProposalSearch");
 		} else {
-			throw new BoardException("ê²Œì‹œê¸€ ì „ì²´ ì¡°íšŒ ì‹¤íŒ¨!");
+			throw new BoardException("°Ô½Ã±Û ÀüÃ¼ Á¶È¸ ½ÇÆĞ!");
 		}
 
 		return mv;
 	}
 
-	// ê²€ìƒ‰ í›„ ìƒíƒœ ë³€í™˜ í›„ í˜ì´ì§€
+	// °Ë»ö ÈÄ »óÅÂ º¯È¯ ÈÄ ÆäÀÌÁö
 	@RequestMapping("proposalSearchListChange.do")
 	public void proposalSearchListChange(HttpServletResponse response, Integer page,
 			@RequestParam("searchType") String searchType, @RequestParam("keyword") String keyword) throws IOException {
 
-		System.out.println("ê²€ìƒ‰ í›„ ë³€í™˜ í˜ì´ì§€ : " + searchType);
+		System.out.println("°Ë»ö ÈÄ º¯È¯ ÆäÀÌÁö : " + searchType);
 		System.out.println(keyword);
 
 		int currentPage = 1;
@@ -978,7 +978,7 @@ public class BoardController {
 			out.close();
 
 		} else {
-			throw new BoardException("Proposal ì¡°íšŒ ì‹¤íŒ¨!");
+			throw new BoardException("Proposal Á¶È¸ ½ÇÆĞ!");
 		}
 	}
 
@@ -986,8 +986,8 @@ public class BoardController {
 	// admin Inquiry List
 	@RequestMapping("adminInquiryList")
 	public ModelAndView adminInquiryList(ModelAndView mv,
-			@RequestParam(value = "page", required = false) Integer page) { // ê¸°ë³¸ ìë£Œí˜•ìœ¼ë¡œ ë°›ì„ ìˆ˜ ì—†ê¸° ë•Œë¬¸ì— Integerë¥¼ ì“´ë‹¤
-		// í˜ì´ì§• ê´€ë ¨ ì²˜ë¦¬ë¶€í„° í•˜ì
+			@RequestParam(value = "page", required = false) Integer page) { // ±âº» ÀÚ·áÇüÀ¸·Î ¹ŞÀ» ¼ö ¾ø±â ¶§¹®¿¡ Integer¸¦ ¾´´Ù
+		// ÆäÀÌÂ¡ °ü·Ã Ã³¸®ºÎÅÍ ÇÏÀÚ
 		int currentPage = 1;
 		if (page != null) {
 			currentPage = page;
@@ -998,7 +998,7 @@ public class BoardController {
 		bPageInfo pi = getPageInfo(currentPage, listCount);
 
 		ArrayList<Board> list1 = bService.selectListInquiry1(pi);
-		// ë¹„ê³µê°œ, ê³µê°œ, ë‹µë³€ìƒíƒœë¥¼ í‘œê¸°í•˜ê¸° ìœ„í•œ ArrayList
+		// ºñ°ø°³, °ø°³, ´äº¯»óÅÂ¸¦ Ç¥±âÇÏ±â À§ÇÑ ArrayList
 		ArrayList<secret> list2 = bService.selectListInquiry2(pi);
 		ArrayList<Inquiry> list3 = bService.selectListInquiry3(pi);
 		System.out.println("list1 : " + list1);
@@ -1012,7 +1012,7 @@ public class BoardController {
 			mv.addObject("pi", pi);
 			mv.setViewName("admin/adminInquiryList");
 		} else {
-			throw new BoardException("ê²Œì‹œê¸€ ì „ì²´ ì¡°íšŒ ì‹¤íŒ¨!");
+			throw new BoardException("°Ô½Ã±Û ÀüÃ¼ Á¶È¸ ½ÇÆĞ!");
 		}
 
 		return mv;
@@ -1023,7 +1023,7 @@ public class BoardController {
 	public ModelAndView adminInquiryDetail(ModelAndView mv, int bBoard_no, @RequestParam("page") Integer page) {
 		int currentPage = page;
 
-		int result = bService.addReadCount(bBoard_no); // ì¡°íšŒìˆ˜ê°€ ì¦ê°€ ë˜ì–´ì•¼ë§Œ ê²Œì‹œë¬¼ ìƒì„¸ë³´ê¸°ê°€ ê°€ëŠ¥í•˜ë‹¤
+		int result = bService.addReadCount(bBoard_no); // Á¶È¸¼ö°¡ Áõ°¡ µÇ¾î¾ß¸¸ °Ô½Ã¹° »ó¼¼º¸±â°¡ °¡´ÉÇÏ´Ù
 
 		if (result > 0) {
 			Board board = bService.selectOIDetail1(bBoard_no);
@@ -1036,10 +1036,10 @@ public class BoardController {
 				mv.addObject("board", board).addObject("secret", secret).addObject("inquiry", inquiry)
 						.addObject("currentPage", currentPage).setViewName("admin/adminInquiryDetail");
 			} else {
-				throw new BoardException("ê²Œì‹œê¸€ ì¡°íšŒ ì‹¤íŒ¨");
+				throw new BoardException("°Ô½Ã±Û Á¶È¸ ½ÇÆĞ");
 			}
 		} else {
-			throw new BoardException("ê²Œì‹œê¸€ ì¡°íšŒìˆ˜ ì¦ê°€ ì‹¤íŒ¨!");
+			throw new BoardException("°Ô½Ã±Û Á¶È¸¼ö Áõ°¡ ½ÇÆĞ!");
 		}
 		return mv;
 	}
@@ -1067,7 +1067,7 @@ public class BoardController {
 		if (result > 0) {
 			return "redirect:adminInquiryList.do";
 		} else {
-			throw new BoardException("ê²Œì‹œê¸€ ë“±ë¡ ì‹¤íŒ¨!");
+			throw new BoardException("°Ô½Ã±Û µî·Ï ½ÇÆĞ!");
 		}
 	}
 
@@ -1081,7 +1081,7 @@ public class BoardController {
 			iDeleteFile(b.getRenameFileName(), request);
 		}
 
-		// ê²Œì‹œê¸€ ì‚­ì œí•˜ê¸°
+		// °Ô½Ã±Û »èÁ¦ÇÏ±â
 		int result1 = bService.deleteImage(bBoard_no);
 		int result2 = bService.deleteBoardImage(bBoard_no);
 		int result3 = bService.deleteBoard(bBoard_no);
@@ -1091,11 +1091,11 @@ public class BoardController {
 		if (result1 > 0 && result2 > 0 && result3 > 0 && result4 > 0 && result5 > 0) {
 			return "redirect:adminInquiryList.do";
 		} else {
-			throw new BoardException("ê²Œì‹œë¬¼ ì‚­ì œ ì‹¤íŒ¨!");
+			throw new BoardException("°Ô½Ã¹° »èÁ¦ ½ÇÆĞ!");
 		}
 	}
 
-	// ì„ íƒ ì‚­ì œ
+	// ¼±ÅÃ »èÁ¦
 	@RequestMapping("inquiryDeleteCheck.do")
 	@ResponseBody
 	public String inquiryDeleteCheck(HttpServletRequest request, String sendArr) {
@@ -1106,7 +1106,7 @@ public class BoardController {
 
 		for (int i = 0; i < strArr.length; i++) {
 			InquriyArr[i] = Integer.valueOf(strArr[i]);
-			System.out.println("ì„ íƒëœ ê°’:" + strArr[i]);
+			System.out.println("¼±ÅÃµÈ °ª:" + strArr[i]);
 		}
 
 		int result1 = 0;
@@ -1135,12 +1135,12 @@ public class BoardController {
 			return "redirect:adminInquiryList.do";
 
 		} else {
-			throw new BoardException("ë¬¸ì˜ê¸€ ì‚­ì œ ì‹¤íŒ¨!");
+			throw new BoardException("¹®ÀÇ±Û »èÁ¦ ½ÇÆĞ!");
 		}
 
 	}
 
-	// ì‚­ì œ í›„ ë°”ë€ ê²Œì‹œíŒ ë³´ê¸°
+	// »èÁ¦ ÈÄ ¹Ù²ï °Ô½ÃÆÇ º¸±â
 	@RequestMapping("inquiryListChange.do")
 	public void inquiryListChange(HttpServletResponse response, Integer page) throws IOException {
 
@@ -1157,9 +1157,9 @@ public class BoardController {
 		ArrayList<secret> list2 = bService.selectListInquiry2(pi);
 		ArrayList<Inquiry> list3 = bService.selectListInquiry3(pi);
 
-		System.out.println("ì‚­ì œ ì „ ëª©ë¡ : " + list1);
-		System.out.println("ì‚­ì œ ì „ ëª©ë¡ : " + list2);
-		System.out.println("ì‚­ì œ ì „ ëª©ë¡ : " + list3);
+		System.out.println("»èÁ¦ Àü ¸ñ·Ï : " + list1);
+		System.out.println("»èÁ¦ Àü ¸ñ·Ï : " + list2);
+		System.out.println("»èÁ¦ Àü ¸ñ·Ï : " + list3);
 
 		response.setContentType("application/json;charset=utf-8");
 
@@ -1192,11 +1192,11 @@ public class BoardController {
 			out.close();
 
 		} else {
-			throw new BoardException("ë¬¸ì˜ ì „ì²´ ì¡°íšŒ ì‹¤íŒ¨!");
+			throw new BoardException("¹®ÀÇ ÀüÃ¼ Á¶È¸ ½ÇÆĞ!");
 		}
 	}
 
-	// ê²€ìƒ‰
+	// °Ë»ö
 	@RequestMapping("searchInquiryList.do")
 	public ModelAndView searchInquiryList(ModelAndView mv, @RequestParam(value = "page", required = false) Integer page,
 			@RequestParam("searchType") String searchType, @RequestParam("keyword") String keyword,
@@ -1237,19 +1237,19 @@ public class BoardController {
 			mv.addObject("inquiry_yn", inquiry_yn);
 			mv.setViewName("admin/adminInquirySearch");
 		} else {
-			throw new BoardException("ê²Œì‹œê¸€ ì „ì²´ ì¡°íšŒ ì‹¤íŒ¨!");
+			throw new BoardException("°Ô½Ã±Û ÀüÃ¼ Á¶È¸ ½ÇÆĞ!");
 		}
 
 		return mv;
 	}
 
-	// ê²€ìƒ‰ í›„ ìƒíƒœ ë³€í™˜ í›„ í˜ì´ì§€
+	// °Ë»ö ÈÄ »óÅÂ º¯È¯ ÈÄ ÆäÀÌÁö
 	@RequestMapping("inquirySearchListChange.do")
 	public void inquirySearchListChange(HttpServletResponse response, Integer page,
 			@RequestParam("searchType") String searchType, @RequestParam("keyword") String keyword,
 			@RequestParam("inquiry_yn") String inquiry_yn) throws IOException {
 
-		System.out.println("ê²€ìƒ‰ í›„ ë³€í™˜ í˜ì´ì§€ : " + searchType);
+		System.out.println("°Ë»ö ÈÄ º¯È¯ ÆäÀÌÁö : " + searchType);
 		System.out.println(keyword);
 		System.out.println(inquiry_yn);
 
@@ -1306,7 +1306,7 @@ public class BoardController {
 			out.close();
 
 		} else {
-			throw new BoardException("ê³µì§€ ì¡°íšŒ ì‹¤íŒ¨!");
+			throw new BoardException("°øÁö Á¶È¸ ½ÇÆĞ!");
 		}
 	}
 
@@ -1315,8 +1315,8 @@ public class BoardController {
 	// List
 	@RequestMapping("adminEventList.do")
 	public ModelAndView adminEventDetail(ModelAndView mv,
-			@RequestParam(value = "page", required = false) Integer page) { // ê¸°ë³¸ ìë£Œí˜•ìœ¼ë¡œ ë°›ì„ ìˆ˜ ì—†ê¸° ë•Œë¬¸ì— Integerë¥¼ ì“´ë‹¤
-		// í˜ì´ì§• ê´€ë ¨ ì²˜ë¦¬ë¶€í„° í•˜ì
+			@RequestParam(value = "page", required = false) Integer page) { // ±âº» ÀÚ·áÇüÀ¸·Î ¹ŞÀ» ¼ö ¾ø±â ¶§¹®¿¡ Integer¸¦ ¾´´Ù
+		// ÆäÀÌÂ¡ °ü·Ã Ã³¸®ºÎÅÍ ÇÏÀÚ
 		int currentPage = 1;
 		if (page != null) {
 			currentPage = page;
@@ -1326,9 +1326,9 @@ public class BoardController {
 
 		bPageInfo pi = getPageInfo(currentPage, listCount);
 
-		// í˜ì´ì§• ì²˜ë¦¬ê°€ ëë‚˜ë©´ ê²Œì‹œê¸€ì„ ì¶”ë ¤ì˜¤ì
+		// ÆäÀÌÂ¡ Ã³¸®°¡ ³¡³ª¸é °Ô½Ã±ÛÀ» Ãß·Á¿ÀÀÚ
 		ArrayList<Board> list1 = bService.selectListEvent1(pi);
-		// ê²Œì‹œì—¬ë¶€ë¥¼ ìœ„í•œ ArrayList
+		// °Ô½Ã¿©ºÎ¸¦ À§ÇÑ ArrayList
 		ArrayList<EventBoard> list2 = bService.selectListEvent2(pi);
 		System.out.println(list1);
 		System.out.println(list2);
@@ -1338,7 +1338,7 @@ public class BoardController {
 			mv.addObject("pi", pi);
 			mv.setViewName("admin/adminEventList");
 		} else {
-			throw new BoardException("ê²Œì‹œê¸€ ì „ì²´ ì¡°íšŒ ì‹¤íŒ¨!");
+			throw new BoardException("°Ô½Ã±Û ÀüÃ¼ Á¶È¸ ½ÇÆĞ!");
 		}
 
 		return mv;
@@ -1349,7 +1349,7 @@ public class BoardController {
 	public ModelAndView adminEventDetail(ModelAndView mv, int bBoard_no, @RequestParam("page") Integer page) {
 		int currentPage = page;
 
-		int result = bService.addReadCount(bBoard_no); // ì¡°íšŒìˆ˜ê°€ ì¦ê°€ ë˜ì–´ì•¼ë§Œ ê²Œì‹œë¬¼ ìƒì„¸ë³´ê¸°ê°€ ê°€ëŠ¥í•˜ë‹¤
+		int result = bService.addReadCount(bBoard_no); // Á¶È¸¼ö°¡ Áõ°¡ µÇ¾î¾ß¸¸ °Ô½Ã¹° »ó¼¼º¸±â°¡ °¡´ÉÇÏ´Ù
 
 		if (result > 0) {
 			Board board = bService.selectIDetail(bBoard_no);
@@ -1360,10 +1360,10 @@ public class BoardController {
 				mv.addObject("board", board).addObject("eventBoard", eventBoard).addObject("currentPage", currentPage)
 						.setViewName("admin/adminEventDetail");
 			} else {
-				throw new BoardException("ê²Œì‹œê¸€ ì¡°íšŒ ì‹¤íŒ¨");
+				throw new BoardException("°Ô½Ã±Û Á¶È¸ ½ÇÆĞ");
 			}
 		} else {
-			throw new BoardException("ê²Œì‹œê¸€ ì¡°íšŒìˆ˜ ì¦ê°€ ì‹¤íŒ¨!");
+			throw new BoardException("°Ô½Ã±Û Á¶È¸¼ö Áõ°¡ ½ÇÆĞ!");
 		}
 		return mv;
 	}
@@ -1376,11 +1376,11 @@ public class BoardController {
 
 	@RequestMapping("eventInsert.do")
 	public String eventInsert(HttpServletRequest request, Board b, EventBoard e,
-			@RequestParam(value = "uploadEvent", required = false) MultipartFile file) { // ë‹¤ì¤‘ ì—…ë¡œë“œ íŒŒì¼ì€
+			@RequestParam(value = "uploadEvent", required = false) MultipartFile file) { // ´ÙÁß ¾÷·Îµå ÆÄÀÏÀº
 																							// List<MultipartFile> file
-																							// ì´ìš© ì°¾ì•„ì„œ í•´ë´
-		// NoticeControllerì— ìˆëŠ” saveFile ë©”ì†Œë“œ ê°€ì ¸ì˜¤ê³  buploadFilesí´ë”ë¡œ ìˆ˜ì •í•˜ì
-		// ê·¸ë¦¬ê³  ì´ë²ˆì—” ë‚ ì§œë¥¼ í™œìš©í•œ renameì„ ì ìš©í•´ ë³´ì
+																							// ÀÌ¿ë Ã£¾Æ¼­ ÇØºÁ
+		// NoticeController¿¡ ÀÖ´Â saveFile ¸Ş¼Òµå °¡Á®¿À°í buploadFilesÆú´õ·Î ¼öÁ¤ÇÏÀÚ
+		// ±×¸®°í ÀÌ¹ø¿£ ³¯Â¥¸¦ È°¿ëÇÑ renameÀ» Àû¿ëÇØ º¸ÀÚ
 
 		if (!file.getOriginalFilename().equals("")) {
 
@@ -1401,30 +1401,30 @@ public class BoardController {
 		if ((result1 > 0 && result2 > 0 && result3 < 0) || (result1 > 0 && result2 > 0 && result3 > 0)) {
 			return "redirect:adminEventList.do";
 		} else {
-			throw new BoardException("ê²Œì‹œê¸€ ë“±ë¡ ì‹¤íŒ¨!");
+			throw new BoardException("°Ô½Ã±Û µî·Ï ½ÇÆĞ!");
 		}
 	}
 
-	// íŒŒì¼ì´ ì €ì¥ ë  ê²½ë¡œë¥¼ ì„¤ì •í•˜ëŠ” ë©”ì†Œë“œ
+	// ÆÄÀÏÀÌ ÀúÀå µÉ °æ·Î¸¦ ¼³Á¤ÇÏ´Â ¸Ş¼Òµå
 	private String eSaveFile(MultipartFile file, HttpServletRequest request) {
 
 		String root = request.getSession().getServletContext().getRealPath("resources");
-		// request.getSession().getServletContext() -> webappê²½ë¡œ
-		// getRealPath -> File: ë¹¼ê³ ë‚˜ì˜¤ëŠ” ê²½ë¡œ
+		// request.getSession().getServletContext() -> webapp°æ·Î
+		// getRealPath -> File: »©°í³ª¿À´Â °æ·Î
 
 		String savePath = root + "\\eventUploadFiles";
-		// í´ë”ê°€ ì—†ìœ¼ë©´ ë§Œë“¤ë©´ ë˜ê³  í´ë”ê°€ ì—†ìœ¼ë©´ ì´ë ‡ê²Œ íŒŒì¼ ì´ë¦„ì„ ì¨ì„œ ë§Œë“ ë‹¤
+		// Æú´õ°¡ ¾øÀ¸¸é ¸¸µé¸é µÇ°í Æú´õ°¡ ¾øÀ¸¸é ÀÌ·¸°Ô ÆÄÀÏ ÀÌ¸§À» ½á¼­ ¸¸µç´Ù
 
 		File folder = new File(savePath);
 
-		if (!folder.exists()) { // webappì•„ë˜ì— ìˆëŠ” resources í´ë” ì•„ë˜ì—
-								// nuloadFilesê°€ ì—†ì–´ì„œ Fileê°ì²´ë¥¼ ì°¾ì„ ìˆ˜ ì—†ë‹¤ë©´
-			folder.mkdirs(); // í´ë”ë¥¼ ë§Œë“¤ì–´ë¼
+		if (!folder.exists()) { // webapp¾Æ·¡¿¡ ÀÖ´Â resources Æú´õ ¾Æ·¡¿¡
+								// nuloadFiles°¡ ¾ø¾î¼­ File°´Ã¼¸¦ Ã£À» ¼ö ¾ø´Ù¸é
+			folder.mkdirs(); // Æú´õ¸¦ ¸¸µé¾î¶ó
 
 		}
 
-		// ê³µì§€ê¸€ì€ íŒŒì¼ëª… ì¤‘ë³µ ì œê±°ëŠ” ì‹ ê²½ì“°ì§€ ì•Šê³  í–ˆì§€ë§Œ
-		// ê²Œì‹œíŒì—ì„œëŠ” íŒŒì¼ëª…ì„ ë‚ ì§œ(ì—…ë¡œë“œ ì‹œê°„)ë¡œ rename í•´ë³´ì
+		// °øÁö±ÛÀº ÆÄÀÏ¸í Áßº¹ Á¦°Å´Â ½Å°æ¾²Áö ¾Ê°í ÇßÁö¸¸
+		// °Ô½ÃÆÇ¿¡¼­´Â ÆÄÀÏ¸íÀ» ³¯Â¥(¾÷·Îµå ½Ã°£)·Î rename ÇØº¸ÀÚ
 
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
 		String originFileName = file.getOriginalFilename();
@@ -1432,13 +1432,13 @@ public class BoardController {
 				+ originFileName.substring(originFileName.lastIndexOf(".") + 1);
 
 		String filePath = folder + "\\" + renameFileName;
-		// ì‹¤ì œ ì €ì¥ ë  íŒŒì¼ì˜ ê²½ë¡œ + renameíŒŒì¼ëª…
+		// ½ÇÁ¦ ÀúÀå µÉ ÆÄÀÏÀÇ °æ·Î + renameÆÄÀÏ¸í
 
 		try {
 			file.transferTo(new File(filePath));
-			// ì´ ìƒíƒœë¡œëŠ” íŒŒì¼ ì—…ë¡œë“œê°€ ë˜ì§€ ì•ŠëŠ”ë‹¤.
-			// ì™œëƒë©´ íŒŒì¼ ì œí•œí¬ê¸°ì— ëŒ€í•œ ì„¤ì •ì„ ì£¼ì§€ ì•Šì•˜ê¸° ë•Œë¬¸ì´ë‹¤.
-			// root-context.xmlì— ì—…ë¡œë“œ ì œí•œ íŒŒì¼ í¬ê¸°ë¥¼ ì§€ì •í•´ ì£¼ì.
+			// ÀÌ »óÅÂ·Î´Â ÆÄÀÏ ¾÷·Îµå°¡ µÇÁö ¾Ê´Â´Ù.
+			// ¿Ö³Ä¸é ÆÄÀÏ Á¦ÇÑÅ©±â¿¡ ´ëÇÑ ¼³Á¤À» ÁÖÁö ¾Ê¾Ò±â ¶§¹®ÀÌ´Ù.
+			// root-context.xml¿¡ ¾÷·Îµå Á¦ÇÑ ÆÄÀÏ Å©±â¸¦ ÁöÁ¤ÇØ ÁÖÀÚ.
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1464,9 +1464,9 @@ public class BoardController {
 			@RequestParam("page") Integer page,
 			@RequestParam(value = "uploadEvent", required = false) MultipartFile file) {
 
-		if (!file.getOriginalFilename().equals("")) { // ì›ë˜ íŒŒì¼ëª…ì´ ì¡´ì¬í•˜ë©´
-			if (b.getRenameFileName() != null) { // ë°”ë€ì´ë¦„ì´ ì¡´ì¬í•˜ë©´
-				eDeleteFile(b.getRenameFileName(), request); // ë°”ë€ì´ë¦„ ì‚­ì œ
+		if (!file.getOriginalFilename().equals("")) { // ¿ø·¡ ÆÄÀÏ¸íÀÌ Á¸ÀçÇÏ¸é
+			if (b.getRenameFileName() != null) { // ¹Ù²ïÀÌ¸§ÀÌ Á¸ÀçÇÏ¸é
+				eDeleteFile(b.getRenameFileName(), request); // ¹Ù²ïÀÌ¸§ »èÁ¦
 			}
 			String renameFileName = eSaveFile(file, request);
 
@@ -1483,7 +1483,7 @@ public class BoardController {
 		if (result1 > 0 || result2 > 0) {
 			mv.addObject("page", page).setViewName("redirect:adminEventList.do");
 		} else {
-			throw new BoardException("ê²Œì‹œê¸€ ìˆ˜ì • ì‹¤íŒ¨!!");
+			throw new BoardException("°Ô½Ã±Û ¼öÁ¤ ½ÇÆĞ!!");
 		}
 
 		return mv;
@@ -1510,7 +1510,7 @@ public class BoardController {
 			eDeleteFile(b.getRenameFileName(), request);
 		}
 
-		// ê²Œì‹œê¸€ ì‚­ì œí•˜ê¸°
+		// °Ô½Ã±Û »èÁ¦ÇÏ±â
 		int result1 = bService.deleteEventBoard(bBoard_no);
 		int result2 = bService.deleteImage(bBoard_no);
 		int result3 = bService.deleteBoardImage(bBoard_no);
@@ -1519,17 +1519,17 @@ public class BoardController {
 		if (result1 > 0 && result2 > 0 && result3 > 0 && result4 > 0) {
 			return "redirect:adminEventList.do";
 		} else {
-			throw new BoardException("ê²Œì‹œë¬¼ ì‚­ì œ ì‹¤íŒ¨!");
+			throw new BoardException("°Ô½Ã¹° »èÁ¦ ½ÇÆĞ!");
 		}
 	}
 
-	// ìƒíƒœ ë³€ê²½
-	// ê²Œì‹œ
+	// »óÅÂ º¯°æ
+	// °Ô½Ã
 	@RequestMapping("eventChangeY.do")
 	@ResponseBody
 	public String updateEventStatusY(String sendArr) {
 
-		System.out.println("yì»¨íŠ¸ë¡¤ëŸ¬ì˜´");
+		System.out.println("yÄÁÆ®·Ñ·¯¿È");
 		System.out.println(sendArr);
 
 		String[] strArr = sendArr.split(",");
@@ -1546,31 +1546,31 @@ public class BoardController {
 			System.out.println(EventArr.get(i).geteBoard_no());
 		}
 
-		System.out.println("EventArrê¸¸ì´" + EventArr.size());
-		System.out.println("í™•ì¸í• ê²ƒ" + EventArr.toString());
+		System.out.println("EventArr±æÀÌ" + EventArr.size());
+		System.out.println("È®ÀÎÇÒ°Í" + EventArr.toString());
 
 		int result = 0;
 
 		result = bService.updateEventStatusY(EventArr);
 
-		System.out.println("ë³€ê²½ëœ ê°¯ìˆ˜" + result);
+		System.out.println("º¯°æµÈ °¹¼ö" + result);
 
 		if (result > 0) {
 
 			return "success";
 
 		} else {
-			throw new BoardException("ì´ë²¤íŠ¸ ê²Œì‹œ ë³€ê²½ ì‹¤íŒ¨!");
+			throw new BoardException("ÀÌº¥Æ® °Ô½Ã º¯°æ ½ÇÆĞ!");
 		}
 	}
 
-	// ì¤‘ì§€
+	// ÁßÁö
 
 	@RequestMapping("eventChangeN.do")
 	@ResponseBody
 	public String updateEventStatusN(String sendArr) {
 
-		System.out.println("nì»¨íŠ¸ë¡¤ëŸ¬ì˜´");
+		System.out.println("nÄÁÆ®·Ñ·¯¿È");
 		System.out.println(sendArr);
 
 		String[] strArr = sendArr.split(",");
@@ -1587,28 +1587,28 @@ public class BoardController {
 			System.out.println(EventArr.get(i).geteBoard_no());
 		}
 
-		System.out.println("EventArrê¸¸ì´" + EventArr.size());
-		System.out.println("í™•ì¸í• ê²ƒ" + EventArr.toString());
+		System.out.println("EventArr±æÀÌ" + EventArr.size());
+		System.out.println("È®ÀÎÇÒ°Í" + EventArr.toString());
 
 		int result = 0;
 
 		result = bService.updateEventStatusN(EventArr);
 
-		System.out.println("ë³€ê²½ëœ ê°¯ìˆ˜" + result);
+		System.out.println("º¯°æµÈ °¹¼ö" + result);
 
 		if (result > 0) {
 
 			return "success";
 
 		} else {
-			throw new BoardException("ì´ë²¤íŠ¸ ê²Œì‹œ ë³€ê²½ ì‹¤íŒ¨!");
+			throw new BoardException("ÀÌº¥Æ® °Ô½Ã º¯°æ ½ÇÆĞ!");
 		}
 	}
 
-	// ê²Œì‹œorì¤‘ì§€orì‚­ì œ í›„ ë°”ë€ ê²Œì‹œíŒ ë³´ê¸°
+	// °Ô½ÃorÁßÁöor»èÁ¦ ÈÄ ¹Ù²ï °Ô½ÃÆÇ º¸±â
 	@RequestMapping("eventListChange.do")
 	public void eventListChange(HttpServletResponse response, Integer page) throws IOException {
-		// í˜ì´ì§• ê´€ë ¨ ì²˜ë¦¬ë¶€í„° í•˜ì
+		// ÆäÀÌÂ¡ °ü·Ã Ã³¸®ºÎÅÍ ÇÏÀÚ
 		int currentPage = 1;
 		if (page != null) {
 			currentPage = page;
@@ -1618,9 +1618,9 @@ public class BoardController {
 
 		bPageInfo pi = getPageInfo(currentPage, listCount);
 
-		// í˜ì´ì§• ì²˜ë¦¬ê°€ ëë‚˜ë©´ ê²Œì‹œê¸€ì„ ì¶”ë ¤ì˜¤ì
+		// ÆäÀÌÂ¡ Ã³¸®°¡ ³¡³ª¸é °Ô½Ã±ÛÀ» Ãß·Á¿ÀÀÚ
 		ArrayList<Board> list1 = bService.selectListEvent1(pi);
-		// ê²Œì‹œì—¬ë¶€ë¥¼ ìœ„í•œ ArrayList
+		// °Ô½Ã¿©ºÎ¸¦ À§ÇÑ ArrayList
 		ArrayList<EventBoard> list2 = bService.selectListEvent2(pi);
 		System.out.println(list1);
 		System.out.println(list2);
@@ -1652,11 +1652,11 @@ public class BoardController {
 			out.close();
 
 		} else {
-			throw new ItemException("ì´ë²¤íŠ¸ ì „ì²´ ì¡°íšŒ ì‹¤íŒ¨!");
+			throw new ItemException("ÀÌº¥Æ® ÀüÃ¼ Á¶È¸ ½ÇÆĞ!");
 		}
 	}
 
-	// ì„ íƒ ì‚­ì œ
+	// ¼±ÅÃ »èÁ¦
 	@RequestMapping("eventDeleteCheck.do")
 	@ResponseBody
 	public String eventDeleteCheck(HttpServletRequest request, String sendArr) {
@@ -1667,7 +1667,7 @@ public class BoardController {
 
 		for (int i = 0; i < strArr.length; i++) {
 			dEventArr[i] = Integer.valueOf(strArr[i]);
-			System.out.println("ì„ íƒëœ ê°’:" + strArr[i]);
+			System.out.println("¼±ÅÃµÈ °ª:" + strArr[i]);
 		}
 
 		int result1 = 0;
@@ -1694,12 +1694,12 @@ public class BoardController {
 			return "redirect:adminEventList.do";
 
 		} else {
-			throw new BoardException("ì´ë²¤íŠ¸ ì‚­ì œ ì‹¤íŒ¨!");
+			throw new BoardException("ÀÌº¥Æ® »èÁ¦ ½ÇÆĞ!");
 		}
 
 	}
 
-	// ê²€ìƒ‰
+	// °Ë»ö
 	@RequestMapping("adminEventSearch.do")
 	public ModelAndView searchEventList(ModelAndView mv, @RequestParam(value = "page", required = false) Integer page,
 			@RequestParam("post_yn") String post_yn, @RequestParam("searchType") String searchType,
@@ -1736,19 +1736,19 @@ public class BoardController {
 			mv.addObject("post_yn", post_yn);
 			mv.setViewName("admin/adminEventSearch");
 		} else {
-			throw new BoardException("ê²Œì‹œê¸€ ì „ì²´ ì¡°íšŒ ì‹¤íŒ¨!");
+			throw new BoardException("°Ô½Ã±Û ÀüÃ¼ Á¶È¸ ½ÇÆĞ!");
 		}
 
 		return mv;
 	}
 
-	// ê²€ìƒ‰ í›„ ìƒíƒœ ë³€í™˜ í›„ í˜ì´ì§€
+	// °Ë»ö ÈÄ »óÅÂ º¯È¯ ÈÄ ÆäÀÌÁö
 	@RequestMapping("eventSearchListChange.do")
 	public void eventSearchListChange(HttpServletResponse response, Integer page,
 			@RequestParam("searchType") String searchType, @RequestParam("keyword") String keyword,
 			@RequestParam("post_yn") String post_yn) throws IOException {
 
-		System.out.println("ê²€ìƒ‰ í›„ ë³€í™˜ í˜ì´ì§€ : " + searchType);
+		System.out.println("°Ë»ö ÈÄ º¯È¯ ÆäÀÌÁö : " + searchType);
 		System.out.println(keyword);
 
 		int currentPage = 1;
@@ -1798,7 +1798,7 @@ public class BoardController {
 			out.close();
 
 		} else {
-			throw new ItemException("ì´ë²¤íŠ¸ ì „ì²´ ì¡°íšŒ ì‹¤íŒ¨!");
+			throw new ItemException("ÀÌº¥Æ® ÀüÃ¼ Á¶È¸ ½ÇÆĞ!");
 		}
 	}
 
@@ -1823,15 +1823,15 @@ public class BoardController {
 
 	// Notice List
 	@RequestMapping("noticeList.do")
-	public ModelAndView noticeList(ModelAndView mv, @RequestParam(value = "page", required = false) Integer page) { // ê¸°ë³¸
-																													// ìë£Œí˜•ìœ¼ë¡œ
-																													// ë°›ì„
-																													// ìˆ˜
-																													// ì—†ê¸°
-																													// ë•Œë¬¸ì—
-																													// Integerë¥¼
-																													// ì“´ë‹¤
-		// í˜ì´ì§• ê´€ë ¨ ì²˜ë¦¬ë¶€í„° í•˜ì
+	public ModelAndView noticeList(ModelAndView mv, @RequestParam(value = "page", required = false) Integer page) { // ±âº»
+																													// ÀÚ·áÇüÀ¸·Î
+																													// ¹ŞÀ»
+																													// ¼ö
+																													// ¾ø±â
+																													// ¶§¹®¿¡
+																													// Integer¸¦
+																													// ¾´´Ù
+		// ÆäÀÌÂ¡ °ü·Ã Ã³¸®ºÎÅÍ ÇÏÀÚ
 		int currentPage = 1;
 		if (page != null) {
 			currentPage = page;
@@ -1848,7 +1848,7 @@ public class BoardController {
 			mv.addObject("pi", pi);
 			mv.setViewName("serviceCenter/noticeList");
 		} else {
-			throw new BoardException("ê²Œì‹œê¸€ ì „ì²´ ì¡°íšŒ ì‹¤íŒ¨!");
+			throw new BoardException("°Ô½Ã±Û ÀüÃ¼ Á¶È¸ ½ÇÆĞ!");
 		}
 
 		return mv;
@@ -1859,7 +1859,7 @@ public class BoardController {
 	public ModelAndView noticeDetail(ModelAndView mv, int bBoard_no, @RequestParam("page") Integer page) {
 		int currentPage = page;
 
-		int result = bService.addReadCount(bBoard_no); // ì¡°íšŒìˆ˜ê°€ ì¦ê°€ ë˜ì–´ì•¼ë§Œ ê²Œì‹œë¬¼ ìƒì„¸ë³´ê¸°ê°€ ê°€ëŠ¥í•˜ë‹¤
+		int result = bService.addReadCount(bBoard_no); // Á¶È¸¼ö°¡ Áõ°¡ µÇ¾î¾ß¸¸ °Ô½Ã¹° »ó¼¼º¸±â°¡ °¡´ÉÇÏ´Ù
 
 		if (result > 0) {
 			Board board = bService.selectDetail(bBoard_no);
@@ -1867,25 +1867,25 @@ public class BoardController {
 				mv.addObject("board", board).addObject("currentPage", currentPage)
 						.setViewName("serviceCenter/noticeDetail");
 			} else {
-				throw new BoardException("ê²Œì‹œê¸€ ì¡°íšŒ ì‹¤íŒ¨");
+				throw new BoardException("°Ô½Ã±Û Á¶È¸ ½ÇÆĞ");
 			}
 		} else {
-			throw new BoardException("ê²Œì‹œê¸€ ì¡°íšŒìˆ˜ ì¦ê°€ ì‹¤íŒ¨!");
+			throw new BoardException("°Ô½Ã±Û Á¶È¸¼ö Áõ°¡ ½ÇÆĞ!");
 		}
 		return mv;
 	}
 
 	// FAQ List
 	@RequestMapping("FAQList.do")
-	public ModelAndView FAQList(ModelAndView mv, @RequestParam(value = "page", required = false) Integer page) { // ê¸°ë³¸
-																													// ìë£Œí˜•ìœ¼ë¡œ
-																													// ë°›ì„
-																													// ìˆ˜
-																													// ì—†ê¸°
-																													// ë•Œë¬¸ì—
-																													// Integerë¥¼
-																													// ì“´ë‹¤
-		// í˜ì´ì§• ê´€ë ¨ ì²˜ë¦¬ë¶€í„° í•˜ì
+	public ModelAndView FAQList(ModelAndView mv, @RequestParam(value = "page", required = false) Integer page) { // ±âº»
+																													// ÀÚ·áÇüÀ¸·Î
+																													// ¹ŞÀ»
+																													// ¼ö
+																													// ¾ø±â
+																													// ¶§¹®¿¡
+																													// Integer¸¦
+																													// ¾´´Ù
+		// ÆäÀÌÂ¡ °ü·Ã Ã³¸®ºÎÅÍ ÇÏÀÚ
 		int currentPage = 1;
 		if (page != null) {
 			currentPage = page;
@@ -1902,7 +1902,7 @@ public class BoardController {
 			mv.addObject("pi", pi);
 			mv.setViewName("serviceCenter/FAQList");
 		} else {
-			throw new BoardException("ê²Œì‹œê¸€ ì „ì²´ ì¡°íšŒ ì‹¤íŒ¨!");
+			throw new BoardException("°Ô½Ã±Û ÀüÃ¼ Á¶È¸ ½ÇÆĞ!");
 		}
 
 		return mv;
@@ -1913,7 +1913,7 @@ public class BoardController {
 	public ModelAndView FAQDetail(ModelAndView mv, int bBoard_no, @RequestParam("page") Integer page) {
 		int currentPage = page;
 
-		int result = bService.addReadCount(bBoard_no); // ì¡°íšŒìˆ˜ê°€ ì¦ê°€ ë˜ì–´ì•¼ë§Œ ê²Œì‹œë¬¼ ìƒì„¸ë³´ê¸°ê°€ ê°€ëŠ¥í•˜ë‹¤
+		int result = bService.addReadCount(bBoard_no); // Á¶È¸¼ö°¡ Áõ°¡ µÇ¾î¾ß¸¸ °Ô½Ã¹° »ó¼¼º¸±â°¡ °¡´ÉÇÏ´Ù
 
 		if (result > 0) {
 			Board board = bService.selectDetail(bBoard_no);
@@ -1921,10 +1921,10 @@ public class BoardController {
 				mv.addObject("board", board).addObject("currentPage", currentPage)
 						.setViewName("serviceCenter/FAQDetail");
 			} else {
-				throw new BoardException("ê²Œì‹œê¸€ ì¡°íšŒ ì‹¤íŒ¨");
+				throw new BoardException("°Ô½Ã±Û Á¶È¸ ½ÇÆĞ");
 			}
 		} else {
-			throw new BoardException("ê²Œì‹œê¸€ ì¡°íšŒìˆ˜ ì¦ê°€ ì‹¤íŒ¨!");
+			throw new BoardException("°Ô½Ã±Û Á¶È¸¼ö Áõ°¡ ½ÇÆĞ!");
 		}
 		return mv;
 	}
@@ -1932,8 +1932,8 @@ public class BoardController {
 	// productProposal List
 	@RequestMapping("productProposalList.do")
 	public ModelAndView productProposalList(ModelAndView mv,
-			@RequestParam(value = "page", required = false) Integer page) { // ê¸°ë³¸ ìë£Œí˜•ìœ¼ë¡œ ë°›ì„ ìˆ˜ ì—†ê¸° ë•Œë¬¸ì— Integerë¥¼ ì“´ë‹¤
-		// í˜ì´ì§• ê´€ë ¨ ì²˜ë¦¬ë¶€í„° í•˜ì
+			@RequestParam(value = "page", required = false) Integer page) { // ±âº» ÀÚ·áÇüÀ¸·Î ¹ŞÀ» ¼ö ¾ø±â ¶§¹®¿¡ Integer¸¦ ¾´´Ù
+		// ÆäÀÌÂ¡ °ü·Ã Ã³¸®ºÎÅÍ ÇÏÀÚ
 		int currentPage = 1;
 		if (page != null) {
 			currentPage = page;
@@ -1950,7 +1950,7 @@ public class BoardController {
 			mv.addObject("pi", pi);
 			mv.setViewName("serviceCenter/productProposalList");
 		} else {
-			throw new BoardException("ê²Œì‹œê¸€ ì „ì²´ ì¡°íšŒ ì‹¤íŒ¨!");
+			throw new BoardException("°Ô½Ã±Û ÀüÃ¼ Á¶È¸ ½ÇÆĞ!");
 		}
 
 		return mv;
@@ -1961,7 +1961,7 @@ public class BoardController {
 	public ModelAndView ProductProposalDetail(ModelAndView mv, int bBoard_no, @RequestParam("page") Integer page) {
 		int currentPage = page;
 
-		int result = bService.addReadCount(bBoard_no); // ì¡°íšŒìˆ˜ê°€ ì¦ê°€ ë˜ì–´ì•¼ë§Œ ê²Œì‹œë¬¼ ìƒì„¸ë³´ê¸°ê°€ ê°€ëŠ¥í•˜ë‹¤
+		int result = bService.addReadCount(bBoard_no); // Á¶È¸¼ö°¡ Áõ°¡ µÇ¾î¾ß¸¸ °Ô½Ã¹° »ó¼¼º¸±â°¡ °¡´ÉÇÏ´Ù
 
 		if (result > 0) {
 			Board board = bService.selectIDetail(bBoard_no);
@@ -1969,10 +1969,10 @@ public class BoardController {
 				mv.addObject("board", board).addObject("currentPage", currentPage)
 						.setViewName("serviceCenter/productProposalDetail");
 			} else {
-				throw new BoardException("ê²Œì‹œê¸€ ì¡°íšŒ ì‹¤íŒ¨");
+				throw new BoardException("°Ô½Ã±Û Á¶È¸ ½ÇÆĞ");
 			}
 		} else {
-			throw new BoardException("ê²Œì‹œê¸€ ì¡°íšŒìˆ˜ ì¦ê°€ ì‹¤íŒ¨!");
+			throw new BoardException("°Ô½Ã±Û Á¶È¸¼ö Áõ°¡ ½ÇÆĞ!");
 		}
 		return mv;
 	}
@@ -1986,8 +1986,8 @@ public class BoardController {
 	@RequestMapping("ProductProposalInsert.do")
 	public String ProductProposalInsert(HttpServletRequest request, Board b,
 			@RequestParam(value = "uploadProposal", required = false) MultipartFile file) {
-		// NoticeControllerì— ìˆëŠ” saveFile ë©”ì†Œë“œ ê°€ì ¸ì˜¤ê³  buploadFilesí´ë”ë¡œ ìˆ˜ì •í•˜ì
-		// ê·¸ë¦¬ê³  ì´ë²ˆì—” ë‚ ì§œë¥¼ í™œìš©í•œ renameì„ ì ìš©í•´ ë³´ì
+		// NoticeController¿¡ ÀÖ´Â saveFile ¸Ş¼Òµå °¡Á®¿À°í buploadFilesÆú´õ·Î ¼öÁ¤ÇÏÀÚ
+		// ±×¸®°í ÀÌ¹ø¿£ ³¯Â¥¸¦ È°¿ëÇÑ renameÀ» Àû¿ëÇØ º¸ÀÚ
 		System.out.println(file.getOriginalFilename());
 		if (!file.getOriginalFilename().equals("")) {
 
@@ -2007,30 +2007,30 @@ public class BoardController {
 		if ((result1 > 0 && result2 > 0) || (result1 > 0 && result2 < 0)) {
 			return "redirect:productProposalList.do";
 		} else {
-			throw new BoardException("ê²Œì‹œê¸€ ë“±ë¡ ì‹¤íŒ¨!");
+			throw new BoardException("°Ô½Ã±Û µî·Ï ½ÇÆĞ!");
 		}
 	}
 
-	// íŒŒì¼ì´ ì €ì¥ ë  ê²½ë¡œë¥¼ ì„¤ì •í•˜ëŠ” ë©”ì†Œë“œ
+	// ÆÄÀÏÀÌ ÀúÀå µÉ °æ·Î¸¦ ¼³Á¤ÇÏ´Â ¸Ş¼Òµå
 	private String pSaveFile(MultipartFile file, HttpServletRequest request) {
 
 		String root = request.getSession().getServletContext().getRealPath("resources");
-		// request.getSession().getServletContext() -> webappê²½ë¡œ
-		// getRealPath -> File: ë¹¼ê³ ë‚˜ì˜¤ëŠ” ê²½ë¡œ
+		// request.getSession().getServletContext() -> webapp°æ·Î
+		// getRealPath -> File: »©°í³ª¿À´Â °æ·Î
 
 		String savePath = root + "\\proposalUploadFiles";
-		// í´ë”ê°€ ì—†ìœ¼ë©´ ë§Œë“¤ë©´ ë˜ê³  í´ë”ê°€ ì—†ìœ¼ë©´ ì´ë ‡ê²Œ íŒŒì¼ ì´ë¦„ì„ ì¨ì„œ ë§Œë“ ë‹¤
+		// Æú´õ°¡ ¾øÀ¸¸é ¸¸µé¸é µÇ°í Æú´õ°¡ ¾øÀ¸¸é ÀÌ·¸°Ô ÆÄÀÏ ÀÌ¸§À» ½á¼­ ¸¸µç´Ù
 
 		File folder = new File(savePath);
 
-		if (!folder.exists()) { // webappì•„ë˜ì— ìˆëŠ” resources í´ë” ì•„ë˜ì—
-								// nuloadFilesê°€ ì—†ì–´ì„œ Fileê°ì²´ë¥¼ ì°¾ì„ ìˆ˜ ì—†ë‹¤ë©´
-			folder.mkdirs(); // í´ë”ë¥¼ ë§Œë“¤ì–´ë¼
+		if (!folder.exists()) { // webapp¾Æ·¡¿¡ ÀÖ´Â resources Æú´õ ¾Æ·¡¿¡
+								// nuloadFiles°¡ ¾ø¾î¼­ File°´Ã¼¸¦ Ã£À» ¼ö ¾ø´Ù¸é
+			folder.mkdirs(); // Æú´õ¸¦ ¸¸µé¾î¶ó
 
 		}
 
-		// ê³µì§€ê¸€ì€ íŒŒì¼ëª… ì¤‘ë³µ ì œê±°ëŠ” ì‹ ê²½ì“°ì§€ ì•Šê³  í–ˆì§€ë§Œ
-		// ê²Œì‹œíŒì—ì„œëŠ” íŒŒì¼ëª…ì„ ë‚ ì§œ(ì—…ë¡œë“œ ì‹œê°„)ë¡œ rename í•´ë³´ì
+		// °øÁö±ÛÀº ÆÄÀÏ¸í Áßº¹ Á¦°Å´Â ½Å°æ¾²Áö ¾Ê°í ÇßÁö¸¸
+		// °Ô½ÃÆÇ¿¡¼­´Â ÆÄÀÏ¸íÀ» ³¯Â¥(¾÷·Îµå ½Ã°£)·Î rename ÇØº¸ÀÚ
 
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
 		String originFileName = file.getOriginalFilename();
@@ -2038,13 +2038,13 @@ public class BoardController {
 				+ originFileName.substring(originFileName.lastIndexOf(".") + 1);
 
 		String filePath = folder + "\\" + renameFileName;
-		// ì‹¤ì œ ì €ì¥ ë  íŒŒì¼ì˜ ê²½ë¡œ + renameíŒŒì¼ëª…
+		// ½ÇÁ¦ ÀúÀå µÉ ÆÄÀÏÀÇ °æ·Î + renameÆÄÀÏ¸í
 
 		try {
 			file.transferTo(new File(filePath));
-			// ì´ ìƒíƒœë¡œëŠ” íŒŒì¼ ì—…ë¡œë“œê°€ ë˜ì§€ ì•ŠëŠ”ë‹¤.
-			// ì™œëƒë©´ íŒŒì¼ ì œí•œí¬ê¸°ì— ëŒ€í•œ ì„¤ì •ì„ ì£¼ì§€ ì•Šì•˜ê¸° ë•Œë¬¸ì´ë‹¤.
-			// root-context.xmlì— ì—…ë¡œë“œ ì œí•œ íŒŒì¼ í¬ê¸°ë¥¼ ì§€ì •í•´ ì£¼ì.
+			// ÀÌ »óÅÂ·Î´Â ÆÄÀÏ ¾÷·Îµå°¡ µÇÁö ¾Ê´Â´Ù.
+			// ¿Ö³Ä¸é ÆÄÀÏ Á¦ÇÑÅ©±â¿¡ ´ëÇÑ ¼³Á¤À» ÁÖÁö ¾Ê¾Ò±â ¶§¹®ÀÌ´Ù.
+			// root-context.xml¿¡ ¾÷·Îµå Á¦ÇÑ ÆÄÀÏ Å©±â¸¦ ÁöÁ¤ÇØ ÁÖÀÚ.
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -2073,7 +2073,7 @@ public class BoardController {
 			PdeleteFile(b.getRenameFileName(), request);
 		}
 
-		// ê²Œì‹œê¸€ ì‚­ì œí•˜ê¸°
+		// °Ô½Ã±Û »èÁ¦ÇÏ±â
 		int result1 = bService.deleteImage(bBoard_no);
 		int result2 = bService.deleteBoardImage(bBoard_no);
 		int result3 = bService.deleteBoard(bBoard_no);
@@ -2081,7 +2081,7 @@ public class BoardController {
 		if (result1 > 0 && result2 > 0 && result3 > 0) {
 			return "redirect:productProposalList.do";
 		} else {
-			throw new BoardException("ê²Œì‹œë¬¼ ì‚­ì œ ì‹¤íŒ¨!");
+			throw new BoardException("°Ô½Ã¹° »èÁ¦ ½ÇÆĞ!");
 		}
 	}
 
@@ -2100,9 +2100,9 @@ public class BoardController {
 			@RequestParam("page") Integer page,
 			@RequestParam(value = "uploadProposal", required = false) MultipartFile file) {
 
-		if (!file.getOriginalFilename().equals("")) { // ì›ë˜ íŒŒì¼ëª…ì´ ì¡´ì¬í•˜ë©´
-			if (b.getRenameFileName() != null) { // ë°”ë€ì´ë¦„ì´ ì¡´ì¬í•˜ë©´
-				deleteFile(b.getRenameFileName(), request); // ë°”ë€ì´ë¦„ ì‚­ì œ
+		if (!file.getOriginalFilename().equals("")) { // ¿ø·¡ ÆÄÀÏ¸íÀÌ Á¸ÀçÇÏ¸é
+			if (b.getRenameFileName() != null) { // ¹Ù²ïÀÌ¸§ÀÌ Á¸ÀçÇÏ¸é
+				deleteFile(b.getRenameFileName(), request); // ¹Ù²ïÀÌ¸§ »èÁ¦
 			}
 			String renameFileName = pSaveFile(file, request);
 
@@ -2119,7 +2119,7 @@ public class BoardController {
 		if (result1 > 0 || result2 > 0) {
 			mv.addObject("page", page).setViewName("redirect:productProposalList.do");
 		} else {
-			throw new BoardException("ê²Œì‹œê¸€ ìˆ˜ì • ì‹¤íŒ¨!!");
+			throw new BoardException("°Ô½Ã±Û ¼öÁ¤ ½ÇÆĞ!!");
 		}
 
 		return mv;
@@ -2128,15 +2128,15 @@ public class BoardController {
 
 	// Inquiry List
 	@RequestMapping("sinquiryList")
-	public ModelAndView inquirylList(ModelAndView mv, @RequestParam(value = "page", required = false) Integer page) { // ê¸°ë³¸
-																														// ìë£Œí˜•ìœ¼ë¡œ
-																														// ë°›ì„
-																														// ìˆ˜
-																														// ì—†ê¸°
-																														// ë•Œë¬¸ì—
-																														// Integerë¥¼
-																														// ì“´ë‹¤
-		// í˜ì´ì§• ê´€ë ¨ ì²˜ë¦¬ë¶€í„° í•˜ì
+	public ModelAndView inquirylList(ModelAndView mv, @RequestParam(value = "page", required = false) Integer page) { // ±âº»
+																														// ÀÚ·áÇüÀ¸·Î
+																														// ¹ŞÀ»
+																														// ¼ö
+																														// ¾ø±â
+																														// ¶§¹®¿¡
+																														// Integer¸¦
+																														// ¾´´Ù
+		// ÆäÀÌÂ¡ °ü·Ã Ã³¸®ºÎÅÍ ÇÏÀÚ
 		int currentPage = 1;
 		if (page != null) {
 			currentPage = page;
@@ -2147,7 +2147,7 @@ public class BoardController {
 		bPageInfo pi = getPageInfo(currentPage, listCount);
 
 		ArrayList<Board> list1 = bService.selectListInquiry1(pi);
-		// ë¹„ê³µê°œ, ê³µê°œ, ë‹µë³€ìƒíƒœë¥¼ í‘œê¸°í•˜ê¸° ìœ„í•œ ArrayList
+		// ºñ°ø°³, °ø°³, ´äº¯»óÅÂ¸¦ Ç¥±âÇÏ±â À§ÇÑ ArrayList
 		ArrayList<secret> list2 = bService.selectListInquiry2(pi);
 		ArrayList<Inquiry> list3 = bService.selectListInquiry3(pi);
 		System.out.println("list1 : " + list1.size());
@@ -2161,7 +2161,7 @@ public class BoardController {
 			mv.addObject("pi", pi);
 			mv.setViewName("serviceCenter/inquiryList");
 		} else {
-			throw new BoardException("ê²Œì‹œê¸€ ì „ì²´ ì¡°íšŒ ì‹¤íŒ¨!");
+			throw new BoardException("°Ô½Ã±Û ÀüÃ¼ Á¶È¸ ½ÇÆĞ!");
 		}
 
 		return mv;
@@ -2179,7 +2179,7 @@ public class BoardController {
 			mv.addObject("board", board).addObject("currentPage", currentPage)
 					.setViewName("serviceCenter/inquiryPassword");
 		} else {
-			throw new BoardException("ê²Œì‹œê¸€ ì¡°íšŒ ì‹¤íŒ¨");
+			throw new BoardException("°Ô½Ã±Û Á¶È¸ ½ÇÆĞ");
 		}
 		return mv;
 	}
@@ -2210,23 +2210,23 @@ public class BoardController {
 		System.out.println(page);
 
 		int currentPage = page;
-		int result = bService.addReadCount(bBoard_no); // ì¡°íšŒìˆ˜ê°€ ì¦ê°€ ë˜ì–´ì•¼ë§Œ ê²Œì‹œë¬¼ ìƒì„¸ë³´ê¸°ê°€ ê°€ëŠ¥í•˜ë‹¤
+		int result = bService.addReadCount(bBoard_no); // Á¶È¸¼ö°¡ Áõ°¡ µÇ¾î¾ß¸¸ °Ô½Ã¹° »ó¼¼º¸±â°¡ °¡´ÉÇÏ´Ù
 
 		if (result > 0) {
 			Board board = bService.selectOIDetail1(bBoard_no);
-			System.out.println("ì¸ì¦detail: " + board);
+			System.out.println("ÀÎÁõdetail: " + board);
 			secret secret = bService.selectOIDetail2(bBoard_no);
-			System.out.println("ì¸ì¦detail: " + secret);
+			System.out.println("ÀÎÁõdetail: " + secret);
 			Inquiry inquiry = bService.selectOIDetail3(bBoard_no);
-			System.out.println("ì¸ì¦detail: " + inquiry);
+			System.out.println("ÀÎÁõdetail: " + inquiry);
 			if (board != null && secret != null && inquiry != null) {
 				mv.addObject("board", board).addObject("secret", secret).addObject("inquiry", inquiry)
 						.addObject("currentPage", currentPage).setViewName("serviceCenter/inquiryDetail");
 			} else {
-				throw new BoardException("ê²Œì‹œê¸€ ì¡°íšŒ ì‹¤íŒ¨");
+				throw new BoardException("°Ô½Ã±Û Á¶È¸ ½ÇÆĞ");
 			}
 		} else {
-			throw new BoardException("ê²Œì‹œê¸€ ì¡°íšŒìˆ˜ ì¦ê°€ ì‹¤íŒ¨!");
+			throw new BoardException("°Ô½Ã±Û Á¶È¸¼ö Áõ°¡ ½ÇÆĞ!");
 		}
 
 		return mv;
@@ -2236,7 +2236,7 @@ public class BoardController {
 	@RequestMapping("inquiryDetail")
 	public ModelAndView inquiryDetail(ModelAndView mv, int bBoard_no, @RequestParam("page") Integer page) {
 		int currentPage = page;
-		int result = bService.addReadCount(bBoard_no); // ì¡°íšŒìˆ˜ê°€ ì¦ê°€ ë˜ì–´ì•¼ë§Œ ê²Œì‹œë¬¼ ìƒì„¸ë³´ê¸°ê°€ ê°€ëŠ¥í•˜ë‹¤
+		int result = bService.addReadCount(bBoard_no); // Á¶È¸¼ö°¡ Áõ°¡ µÇ¾î¾ß¸¸ °Ô½Ã¹° »ó¼¼º¸±â°¡ °¡´ÉÇÏ´Ù
 
 		if (result > 0) {
 			Board board = bService.selectOIDetail1(bBoard_no);
@@ -2249,10 +2249,10 @@ public class BoardController {
 				mv.addObject("board", board).addObject("secret", secret).addObject("inquiry", inquiry)
 						.addObject("currentPage", currentPage).setViewName("serviceCenter/inquiryDetail");
 			} else {
-				throw new BoardException("ê²Œì‹œê¸€ ì¡°íšŒ ì‹¤íŒ¨");
+				throw new BoardException("°Ô½Ã±Û Á¶È¸ ½ÇÆĞ");
 			}
 		} else {
-			throw new BoardException("ê²Œì‹œê¸€ ì¡°íšŒìˆ˜ ì¦ê°€ ì‹¤íŒ¨!");
+			throw new BoardException("°Ô½Ã±Û Á¶È¸¼ö Áõ°¡ ½ÇÆĞ!");
 		}
 		return mv;
 	}
@@ -2267,8 +2267,8 @@ public class BoardController {
 	public String inquiryInsert(HttpServletRequest request, Board b, secret s, Inquiry i,
 			@RequestParam("oSecret") String oSecret,
 			@RequestParam(value = "uploadInquiry", required = false) MultipartFile file) {
-		// NoticeControllerì— ìˆëŠ” saveFile ë©”ì†Œë“œ ê°€ì ¸ì˜¤ê³  buploadFilesí´ë”ë¡œ ìˆ˜ì •í•˜ì
-		// ê·¸ë¦¬ê³  ì´ë²ˆì—” ë‚ ì§œë¥¼ í™œìš©í•œ renameì„ ì ìš©í•´ ë³´ì
+		// NoticeController¿¡ ÀÖ´Â saveFile ¸Ş¼Òµå °¡Á®¿À°í buploadFilesÆú´õ·Î ¼öÁ¤ÇÏÀÚ
+		// ±×¸®°í ÀÌ¹ø¿£ ³¯Â¥¸¦ È°¿ëÇÑ renameÀ» Àû¿ëÇØ º¸ÀÚ
 
 		if (!file.getOriginalFilename().equals("")) {
 
@@ -2297,30 +2297,30 @@ public class BoardController {
 				|| (result1 > 0 && result2 > 0 && result3 > 0 && result4 < 0)) {
 			return "redirect:sinquiryList.do";
 		} else {
-			throw new BoardException("ê²Œì‹œê¸€ ë“±ë¡ ì‹¤íŒ¨!");
+			throw new BoardException("°Ô½Ã±Û µî·Ï ½ÇÆĞ!");
 		}
 	}
 
-	// íŒŒì¼ì´ ì €ì¥ ë  ê²½ë¡œë¥¼ ì„¤ì •í•˜ëŠ” ë©”ì†Œë“œ
+	// ÆÄÀÏÀÌ ÀúÀå µÉ °æ·Î¸¦ ¼³Á¤ÇÏ´Â ¸Ş¼Òµå
 	private String iSaveFile(MultipartFile file, HttpServletRequest request) {
 
 		String root = request.getSession().getServletContext().getRealPath("resources");
-		// request.getSession().getServletContext() -> webappê²½ë¡œ
-		// getRealPath -> File: ë¹¼ê³ ë‚˜ì˜¤ëŠ” ê²½ë¡œ
+		// request.getSession().getServletContext() -> webapp°æ·Î
+		// getRealPath -> File: »©°í³ª¿À´Â °æ·Î
 
 		String savePath = root + "\\inquiryUploadFiles";
-		// í´ë”ê°€ ì—†ìœ¼ë©´ ë§Œë“¤ë©´ ë˜ê³  í´ë”ê°€ ì—†ìœ¼ë©´ ì´ë ‡ê²Œ íŒŒì¼ ì´ë¦„ì„ ì¨ì„œ ë§Œë“ ë‹¤
+		// Æú´õ°¡ ¾øÀ¸¸é ¸¸µé¸é µÇ°í Æú´õ°¡ ¾øÀ¸¸é ÀÌ·¸°Ô ÆÄÀÏ ÀÌ¸§À» ½á¼­ ¸¸µç´Ù
 
 		File folder = new File(savePath);
 
-		if (!folder.exists()) { // webappì•„ë˜ì— ìˆëŠ” resources í´ë” ì•„ë˜ì—
-								// nuloadFilesê°€ ì—†ì–´ì„œ Fileê°ì²´ë¥¼ ì°¾ì„ ìˆ˜ ì—†ë‹¤ë©´
-			folder.mkdirs(); // í´ë”ë¥¼ ë§Œë“¤ì–´ë¼
+		if (!folder.exists()) { // webapp¾Æ·¡¿¡ ÀÖ´Â resources Æú´õ ¾Æ·¡¿¡
+								// nuloadFiles°¡ ¾ø¾î¼­ File°´Ã¼¸¦ Ã£À» ¼ö ¾ø´Ù¸é
+			folder.mkdirs(); // Æú´õ¸¦ ¸¸µé¾î¶ó
 
 		}
 
-		// ê³µì§€ê¸€ì€ íŒŒì¼ëª… ì¤‘ë³µ ì œê±°ëŠ” ì‹ ê²½ì“°ì§€ ì•Šê³  í–ˆì§€ë§Œ
-		// ê²Œì‹œíŒì—ì„œëŠ” íŒŒì¼ëª…ì„ ë‚ ì§œ(ì—…ë¡œë“œ ì‹œê°„)ë¡œ rename í•´ë³´ì
+		// °øÁö±ÛÀº ÆÄÀÏ¸í Áßº¹ Á¦°Å´Â ½Å°æ¾²Áö ¾Ê°í ÇßÁö¸¸
+		// °Ô½ÃÆÇ¿¡¼­´Â ÆÄÀÏ¸íÀ» ³¯Â¥(¾÷·Îµå ½Ã°£)·Î rename ÇØº¸ÀÚ
 
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
 		String originFileName = file.getOriginalFilename();
@@ -2328,13 +2328,13 @@ public class BoardController {
 				+ originFileName.substring(originFileName.lastIndexOf(".") + 1);
 
 		String filePath = folder + "\\" + renameFileName;
-		// ì‹¤ì œ ì €ì¥ ë  íŒŒì¼ì˜ ê²½ë¡œ + renameíŒŒì¼ëª…
+		// ½ÇÁ¦ ÀúÀå µÉ ÆÄÀÏÀÇ °æ·Î + renameÆÄÀÏ¸í
 
 		try {
 			file.transferTo(new File(filePath));
-			// ì´ ìƒíƒœë¡œëŠ” íŒŒì¼ ì—…ë¡œë“œê°€ ë˜ì§€ ì•ŠëŠ”ë‹¤.
-			// ì™œëƒë©´ íŒŒì¼ ì œí•œí¬ê¸°ì— ëŒ€í•œ ì„¤ì •ì„ ì£¼ì§€ ì•Šì•˜ê¸° ë•Œë¬¸ì´ë‹¤.
-			// root-context.xmlì— ì—…ë¡œë“œ ì œí•œ íŒŒì¼ í¬ê¸°ë¥¼ ì§€ì •í•´ ì£¼ì.
+			// ÀÌ »óÅÂ·Î´Â ÆÄÀÏ ¾÷·Îµå°¡ µÇÁö ¾Ê´Â´Ù.
+			// ¿Ö³Ä¸é ÆÄÀÏ Á¦ÇÑÅ©±â¿¡ ´ëÇÑ ¼³Á¤À» ÁÖÁö ¾Ê¾Ò±â ¶§¹®ÀÌ´Ù.
+			// root-context.xml¿¡ ¾÷·Îµå Á¦ÇÑ ÆÄÀÏ Å©±â¸¦ ÁöÁ¤ÇØ ÁÖÀÚ.
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -2363,9 +2363,9 @@ public class BoardController {
 			@RequestParam("oSecret") String oSecret, HttpServletRequest request, @RequestParam("page") Integer page,
 			@RequestParam(value = "uploadInquiry", required = false) MultipartFile file) {
 
-		if (!file.getOriginalFilename().equals("")) { // ì›ë˜ íŒŒì¼ëª…ì´ ì¡´ì¬í•˜ë©´
-			if (b.getRenameFileName() != null) { // ë°”ë€ì´ë¦„ì´ ì¡´ì¬í•˜ë©´
-				deleteFile(b.getRenameFileName(), request); // ë°”ë€ì´ë¦„ ì‚­ì œ
+		if (!file.getOriginalFilename().equals("")) { // ¿ø·¡ ÆÄÀÏ¸íÀÌ Á¸ÀçÇÏ¸é
+			if (b.getRenameFileName() != null) { // ¹Ù²ïÀÌ¸§ÀÌ Á¸ÀçÇÏ¸é
+				deleteFile(b.getRenameFileName(), request); // ¹Ù²ïÀÌ¸§ »èÁ¦
 			}
 			String renameFileName = iSaveFile(file, request);
 
@@ -2395,7 +2395,7 @@ public class BoardController {
 		if (result1 > 0 || result2 > 0 || result3 > 0 || result4 > 0) {
 			mv.addObject("page", page).setViewName("redirect:sinquiryList.do");
 		} else {
-			throw new BoardException("ê²Œì‹œê¸€ ìˆ˜ì • ì‹¤íŒ¨!!");
+			throw new BoardException("°Ô½Ã±Û ¼öÁ¤ ½ÇÆĞ!!");
 		}
 
 		return mv;
@@ -2422,7 +2422,7 @@ public class BoardController {
 			iDeleteFile(b.getRenameFileName(), request);
 		}
 
-		// ê²Œì‹œê¸€ ì‚­ì œí•˜ê¸°
+		// °Ô½Ã±Û »èÁ¦ÇÏ±â
 		int result1 = bService.deleteImage(bBoard_no);
 		int result2 = bService.deleteBoardImage(bBoard_no);
 		int result3 = bService.deleteBoard(bBoard_no);
@@ -2432,22 +2432,22 @@ public class BoardController {
 		if (result1 > 0 && result2 > 0 && result3 > 0 && result4 > 0 && result5 > 0) {
 			return "redirect:sinquiryList.do";
 		} else {
-			throw new BoardException("ê²Œì‹œë¬¼ ì‚­ì œ ì‹¤íŒ¨!");
+			throw new BoardException("°Ô½Ã¹° »èÁ¦ ½ÇÆĞ!");
 		}
 	}
 
 	// event
 	// List
 	@RequestMapping("eventList.do")
-	public ModelAndView eventList(ModelAndView mv, @RequestParam(value = "page", required = false) Integer page) { // ê¸°ë³¸
-																													// ìë£Œí˜•ìœ¼ë¡œ
-																													// ë°›ì„
-																													// ìˆ˜
-																													// ì—†ê¸°
-																													// ë•Œë¬¸ì—
-																													// Integerë¥¼
-																													// ì“´ë‹¤
-		// í˜ì´ì§• ê´€ë ¨ ì²˜ë¦¬ë¶€í„° í•˜ì
+	public ModelAndView eventList(ModelAndView mv, @RequestParam(value = "page", required = false) Integer page) { // ±âº»
+																													// ÀÚ·áÇüÀ¸·Î
+																													// ¹ŞÀ»
+																													// ¼ö
+																													// ¾ø±â
+																													// ¶§¹®¿¡
+																													// Integer¸¦
+																													// ¾´´Ù
+		// ÆäÀÌÂ¡ °ü·Ã Ã³¸®ºÎÅÍ ÇÏÀÚ
 		int currentPage = 1;
 		if (page != null) {
 			currentPage = page;
@@ -2457,9 +2457,9 @@ public class BoardController {
 
 		bPageInfo pi = getPageInfo(currentPage, listCount);
 
-		// í˜ì´ì§• ì²˜ë¦¬ê°€ ëë‚˜ë©´ ê²Œì‹œê¸€ì„ ì¶”ë ¤ì˜¤ì
+		// ÆäÀÌÂ¡ Ã³¸®°¡ ³¡³ª¸é °Ô½Ã±ÛÀ» Ãß·Á¿ÀÀÚ
 		ArrayList<Board> list1 = bService.selectListEvent1(pi);
-		// ê²Œì‹œì—¬ë¶€ë¥¼ ìœ„í•œ ArrayList
+		// °Ô½Ã¿©ºÎ¸¦ À§ÇÑ ArrayList
 		ArrayList<EventBoard> list2 = bService.selectListEvent2(pi);
 		System.out.println(list1);
 		System.out.println(list2);
@@ -2469,7 +2469,7 @@ public class BoardController {
 			mv.addObject("pi", pi);
 			mv.setViewName("event/eventList");
 		} else {
-			throw new BoardException("ê²Œì‹œê¸€ ì „ì²´ ì¡°íšŒ ì‹¤íŒ¨!");
+			throw new BoardException("°Ô½Ã±Û ÀüÃ¼ Á¶È¸ ½ÇÆĞ!");
 		}
 
 		return mv;
@@ -2480,7 +2480,7 @@ public class BoardController {
 	public ModelAndView eventDetail(ModelAndView mv, int bBoard_no, @RequestParam("page") Integer page) {
 		int currentPage = page;
 
-		int result = bService.addReadCount(bBoard_no); // ì¡°íšŒìˆ˜ê°€ ì¦ê°€ ë˜ì–´ì•¼ë§Œ ê²Œì‹œë¬¼ ìƒì„¸ë³´ê¸°ê°€ ê°€ëŠ¥í•˜ë‹¤
+		int result = bService.addReadCount(bBoard_no); // Á¶È¸¼ö°¡ Áõ°¡ µÇ¾î¾ß¸¸ °Ô½Ã¹° »ó¼¼º¸±â°¡ °¡´ÉÇÏ´Ù
 
 		if (result > 0) {
 			Board board = bService.selectIDetail(bBoard_no);
@@ -2491,10 +2491,10 @@ public class BoardController {
 				mv.addObject("board", board).addObject("eventBoard", eventBoard).addObject("currentPage", currentPage)
 						.setViewName("event/eventDetail");
 			} else {
-				throw new BoardException("ê²Œì‹œê¸€ ì¡°íšŒ ì‹¤íŒ¨");
+				throw new BoardException("°Ô½Ã±Û Á¶È¸ ½ÇÆĞ");
 			}
 		} else {
-			throw new BoardException("ê²Œì‹œê¸€ ì¡°íšŒìˆ˜ ì¦ê°€ ì‹¤íŒ¨!");
+			throw new BoardException("°Ô½Ã±Û Á¶È¸¼ö Áõ°¡ ½ÇÆĞ!");
 		}
 		return mv;
 	}

@@ -9,9 +9,9 @@ public class secret implements Serializable {
 	 */
 	private static final long serialVersionUID = -649241899205567546L;
 	
-	private int oBoard_no;			// ë¹„ê³µê°œ ê²Œì‹œë¬¼ ë²ˆí˜¸
-	private String oSecret;			// ê³µê°œ ì—¬ë¶€
-	private String oSecret_pwd;	    // ë¹„ë°€ë²ˆí˜¸
+	private int oBoard_no;			// ºñ°ø°³ °Ô½Ã¹° ¹øÈ£
+	private String oSecret;			// °ø°³ ¿©ºÎ
+	private String oSecret_pwd;	    // ºñ¹Ð¹øÈ£
 	
 	public secret() {
 	}
