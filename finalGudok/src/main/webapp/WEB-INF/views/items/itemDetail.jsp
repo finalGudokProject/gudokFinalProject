@@ -254,7 +254,8 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 </head>
 <body>
 	<jsp:include page="../common/menubar.jsp"/>
-	<fmt:formatNumber var="itemPrice" value="${ilv.itemPrice}" type="number"/>
+	<fmt:formatNumber var="discountPrice" value="${(ilv.itemPrice - ilv.itemPrice*(ilv.itemDiscount/100))}" type="number"/>
+    <fmt:formatNumber var="itemPrice" value="${ilv.itemPrice}" type="number"/>
 	<div class="container" style="margin-top:3%;">
 		<div class="row">
 			
@@ -335,7 +336,14 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 								</c:otherwise>
 							</c:choose>
 						</div>
-					<div style="padding:5% 0 5% 0;margin-bottom:3%;font-size:30px;border-bottom:1px dotted lightgray;"><b>${itemPrice }원</b></div>
+					<div style="padding:5% 0 5% 0;margin-bottom:3%;font-size:30px;border-bottom:1px dotted lightgray;">
+					<c:if test="${ilv.itemDiscount != 0}">
+	                	<s style="color:red;"><b>${itemPrice }원</b></s><b>→${discountPrice }원</b>
+					</c:if>
+					<c:if test="${ilv.itemDiscount == 0}">
+						<b>${itemPrice }원</b>
+					</c:if>
+					</div>
 					<div class="amountDC">
 						<table style="vertical-align:middle;">
 							<tr class="countTr">
@@ -345,7 +353,14 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 							</tr>
 						</table>
 						<br>
-						<div class="amountPriceDiv"><div style="margin-bottom:2%;padding-top:2%;font-weight:bold;" id="priceId">${itemPrice }원</div>
+						<div class="amountPriceDiv"><div style="margin-bottom:2%;padding-top:2%;font-weight:bold;" id="priceId">
+							<c:if test="${ilv.itemDiscount != 0}">
+			                	${discountPrice }원
+							</c:if>
+							<c:if test="${ilv.itemDiscount == 0}">
+								${itemPrice }원
+							</c:if>
+						</div>
 						<input type="hidden" value="${ilv.itemNo}" name="${ilv.itemNo}">
 						<input type="hidden" value="${loginUser.memberNo}" name="${loginUser.memberNo}">
 						<input type="hidden" value="${loginUser.memberId}" name="${loginUser.memberId}">
@@ -768,12 +783,23 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 			$(function(){
 				
 				var amount = $(".amountT").val();
-				var total = ${ilv.itemPrice };
+				var real = ${ilv.itemPrice};
+				var total = 0;
+				var price = 0;
+				var discount = ${ilv.itemDiscount};
+				console.log("확인 : " + discount);
+				if(discount == 0){
+					total = ${ilv.itemPrice };
+					price = ${ilv.itemPrice };
+				}else{
+					total = real - real*(discount/100);
+					price = real - real*(discount/100);
+				}
 				$("#signP").click(function(){
 					amount = Number(amount) + 1;
 					/* console.log(amount); */
 					$(".amountT").val(amount);
-					total = total + ${ilv.itemPrice};
+					total = total + price;
 					console.log(total);
 					$("#priceId").text("");
 					$("#priceId").text(addComma(total)+"원");
@@ -787,7 +813,7 @@ input[type=button]:hover:before,input[type=button]:hover:after{
 						amount = Number(amount) - 1;
 						$(".amountT").val(amount);
 						/* console.log(amount); */
-						total = total - ${ilv.itemPrice};
+						total = total - price;
 						console.log(total);
 						$("#priceId").text("");
 						$("#priceId").text(addComma(total)+"원");
