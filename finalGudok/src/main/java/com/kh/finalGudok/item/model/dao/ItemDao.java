@@ -14,6 +14,7 @@ import com.kh.finalGudok.item.model.vo.Event;
 
 import com.kh.finalGudok.item.model.vo.Board;
 import com.kh.finalGudok.item.model.vo.Cart;
+import com.kh.finalGudok.item.model.vo.CartView;
 import com.kh.finalGudok.item.model.vo.Heart;
 
 import com.kh.finalGudok.item.model.vo.Image;
@@ -173,7 +174,7 @@ public class ItemDao {
 		return sqlSessionTemplate.selectOne("heartMapper.selectHeart", itemNo);
 	}
 
-	public ArrayList<Cart> selectBasket(int memberNo) {
+	public ArrayList<CartView> selectBasket(int memberNo) {
 		return (ArrayList) sqlSessionTemplate.selectList("cartMapper.selectCart", memberNo);
 	}
 
@@ -627,5 +628,9 @@ public class ItemDao {
 
 	public int insertInquiry() {
 		return sqlSessionTemplate.insert("itemMapper.insertInquiry");
+	}
+
+	public ArrayList<ItemListView> selectPN(Integer memberNo) {
+		return (ArrayList)sqlSessionTemplate.selectList("itemListMapper.selectPN", memberNo);
 	}
 }

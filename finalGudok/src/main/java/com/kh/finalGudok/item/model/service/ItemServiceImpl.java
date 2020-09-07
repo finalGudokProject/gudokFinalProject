@@ -10,6 +10,7 @@ import com.kh.finalGudok.item.model.vo.AdminItem;
 import com.kh.finalGudok.item.model.vo.BannerItem;
 import com.kh.finalGudok.item.model.vo.Board;
 import com.kh.finalGudok.item.model.vo.Cart;
+import com.kh.finalGudok.item.model.vo.CartView;
 import com.kh.finalGudok.item.model.vo.Event;
 import com.kh.finalGudok.item.model.vo.Heart;
 import com.kh.finalGudok.item.model.vo.Image;
@@ -185,7 +186,7 @@ public class ItemServiceImpl implements ItemService {
 	}
 
 	@Override
-	public ArrayList<Cart> selectBasket(int memberNo) {
+	public ArrayList<CartView> selectBasket(int memberNo) {
 		return iDao.selectBasket(memberNo);
 	}
 
@@ -651,6 +652,11 @@ public class ItemServiceImpl implements ItemService {
 	@Override
 	public int insertInquiry() {
 		return iDao.insertInquiry();
+	}
+
+	@Override
+	public ArrayList<ItemListView> selectPN(Integer memberNo) {
+		return iDao.selectPN(memberNo);
 	}
 
 }

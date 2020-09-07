@@ -35,6 +35,7 @@ import com.kh.finalGudok.item.model.vo.AdminItem;
 import com.kh.finalGudok.item.model.vo.BannerItem;
 import com.kh.finalGudok.item.model.vo.Board;
 import com.kh.finalGudok.item.model.vo.Cart;
+import com.kh.finalGudok.item.model.vo.CartView;
 import com.kh.finalGudok.item.model.vo.Event;
 import com.kh.finalGudok.item.model.vo.Heart;
 import com.kh.finalGudok.item.model.vo.Image;
@@ -297,6 +298,8 @@ public class ItemController {
 		}
 		return mv;
 	}
+	
+	
 
 	@RequestMapping("idetail.do")
 	public ModelAndView itemDetailPage(ModelAndView mv, Integer itemNo, @RequestParam("page") Integer page,
@@ -417,7 +420,7 @@ public class ItemController {
 	// 장바구니 페이지 리스트 불러오기
 	@RequestMapping("basketPage.do")
 	public ModelAndView basketPage(ModelAndView mv, Integer memberNo) {
-		ArrayList<Cart> list = iService.selectBasket(memberNo);
+		ArrayList<CartView> list = iService.selectBasket(memberNo);
 		mv.addObject("list", list).setViewName("order/basket");
 //			System.out.println("basketList : " + list);
 		return mv;

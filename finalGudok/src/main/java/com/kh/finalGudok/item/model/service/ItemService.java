@@ -8,6 +8,7 @@ import com.kh.finalGudok.item.model.vo.Event;
 
 import com.kh.finalGudok.item.model.vo.Board;
 import com.kh.finalGudok.item.model.vo.Cart;
+import com.kh.finalGudok.item.model.vo.CartView;
 import com.kh.finalGudok.item.model.vo.Heart;
 
 import com.kh.finalGudok.item.model.vo.Image;
@@ -86,7 +87,7 @@ public interface ItemService {
 
 	Heart detailHeart(int itemNo);
 
-	ArrayList<Cart> selectBasket(int memberNo);
+	ArrayList<CartView> selectBasket(int memberNo);
 
 	int updatePChoice(int itemNo);
 
@@ -265,4 +266,6 @@ public interface ItemService {
 	int insertOneInquiry();
 
 	int insertInquiry();
+
+	ArrayList<ItemListView> selectPN(Integer memberNo);
 }

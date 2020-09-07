@@ -15,8 +15,8 @@
 	<!-- sweetalert끝 -->
 <style>
 	.basketImg{
-		width:30%;
-		height:30%;
+		width:20rem;
+		height:20rem;
 	}
 	.listChk{
 		width:5%;
@@ -97,23 +97,33 @@
 				<thead>
 				<tr style="border-bottom:1px solid lightgray; vertical-align:middle;">
 					<th class="listChk"  style="width:3%;"><input type="checkbox" id="allChk"></th>
-					<th style="width:7%;"><label for="chk" style="display:block;margin:0px;text-align:center;">전체선택(<span id="frontCount">0</span>/<span id="afterCount">${list.size() }</span>)</label></th>
-					<th colspan="2">상품정보</th>
-					<th style="width:15%;">수량</th>
-					<th style="width:10%;">구독주기</th>
-					<th style="width:10%;">상품가격</th>
+					<th style="width:7%;"><label for="chk" style="display:block;margin:0px;text-align:left;">전체선택(<span id="frontCount">0</span>/<span id="afterCount">${list.size() }</span>)</label></th>
+					<th colspan="2" style="width:5rem;text-align:left;">상품정보</th>
+					<th style="width:13%;">수량</th>
+					<th style="width:8%;">구독주기</th>
+					<th style="width:14%;">상품가격</th>
 				</tr>
 				
 				</thead>
 				<tbody id="tbody">
 				
 				<c:forEach var="c" items="${list }" varStatus="vs">
+				<fmt:formatNumber var="discountPrice" value="${(c.itemPrice - c.itemPrice*(c.itemDiscount/100)) * c.cartCount}" type="number"/>
 				<fmt:formatNumber var="itemPrice" value="${c.itemPrice * c.cartCount }" type="number"/>
 				<tr style="border-bottom:1px solid lightgray;vertical-align:middle;">
-					<td class="listChk"><input type="checkbox" class="chk" value="${c.itemPrice * c.cartCount}" data-cartNo="${c.cartNo }"></td>
-					<td colspan="2" style="width:30%;"><img src="${contextPath }/resources/images/breadLogo.jpg" class="basketImg"></td>
-					<td><input type="hidden" id="totalPriceInput">${c.itemName }</td>
-					<td class="countTd">
+					<td class="listChk">
+					<c:if test="${c.itemDiscount == 0 }">
+					<input type="checkbox" class="chk" value="${c.itemPrice * c.cartCount}" data-cartNo="${c.cartNo }">
+					</c:if>
+					<c:if test="${c.itemDiscount != 0 }">
+					<input type="checkbox" class="chk" value="${(c.itemPrice - c.itemPrice*(c.itemDiscount/100)) * c.cartCount}" data-cartNo="${c.cartNo }">
+					</c:if>
+					</td>
+					<td colspan="2" style="width:25rem;text-align:center;">
+						<img src="${contextPath }/resources/uploadFiles/${c.itemRename}" class="basketImg">
+					</td>
+					<td><input type="hidden" id="totalPriceInput" style="width:10rem;">${c.itemName }</td>
+					<td class="countTd" style="width:20rem;">
 					<c:if test="${c.cartCount == 1 }">
 					<img src="${contextPath }/resources/images/XSIGN.png" class="signImgM" id="signM">
 					</c:if>
@@ -121,10 +131,15 @@
 					<img src="${contextPath }/resources/images/minus.png" class="signImgM" id="signM">
 					</c:if>
 					<input type="hidden">
-					<input type="hidden" value="${c.itemPrice }">
+					<c:if test="${c.itemDiscount != 0}">
+	                	<input type="hidden" value="${c.itemPrice - c.itemPrice*(c.itemDiscount/100)}">
+					</c:if>
+					<c:if test="${c.itemDiscount == 0}">
+						<input type="hidden" value="${c.itemPrice }">
+					</c:if>
 					<input type="text" readonly class="amountT" value="${c.cartCount }" style="width:50px;text-align:center;">
 					<img src="${contextPath }/resources/images/plus.png" class="signImgP" id="signP"></td>
-					<td>
+					<td style="width:10rem;">
 					<c:choose>
 						<c:when test="${c.cartSubs == 1 }">
 							<select style="width:80px;height:30px;" name="cartSubs">
@@ -160,7 +175,14 @@
 						</c:otherwise>
 					</c:choose>
 					</td>
-					<td>${itemPrice}원</td>
+					<td>
+						<c:if test="${c.itemDiscount != 0}">
+		                	<s style="color:red;">${itemPrice }원</s><br>→${discountPrice }원
+						</c:if>
+						<c:if test="${c.itemDiscount == 0}">
+							${itemPrice }원
+						</c:if>
+					</td>
 				</tr>
 				</c:forEach>
 				</tbody>

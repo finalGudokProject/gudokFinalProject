@@ -353,12 +353,6 @@
 						<img src="${contextPath}/resources/uploadFiles/${i.itemRename}" class="card-img-top mainImg" alt="..." style="position:relative;">
 					</div>
 					</c:if>
-					
-					<c:if test="${i.itemDiscount == 0}">
-					<div class="cardHeader">
-					<img src="${contextPath}/resources/uploadFiles/${i.itemRename}" class="card-img-top mainImg" alt="...">
-					</div>
-					</c:if>
 					<div class="cardBody">
 						<h3 class="card-title"><b>${i.itemName }</b></h3>
 						<c:if test="${!empty i.itemMemo }"><h5>${i.itemMemo}</h5></c:if>
