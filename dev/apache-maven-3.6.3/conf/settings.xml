@@ -51,7 +51,7 @@ under the License.
    |
    | Default: ${user.home}/.m2/repository
   -->
-<localRepository>C:\finalProjectGudok\gudokFinalProject\finalGudok\dev\apache-maven-3.6.3\repository</localRepository>
+<localRepository>C:\finalProjectGudok\gudokFinalProject\dev\apache-maven-3.6.3\repository</localRepository>
 
   <!-- interactiveMode
    | This will determine whether maven prompts you when it needs input. If set to false,
