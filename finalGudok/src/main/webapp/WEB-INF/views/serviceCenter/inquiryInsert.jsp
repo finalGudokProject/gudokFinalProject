@@ -138,7 +138,7 @@
       </div>
       <div class="col-9">
         
-          <form action="oInquiryInsert.do" method="post" enctype="multipart/form-data">
+          <form action="oInquiryInsert.do" method="post" enctype="multipart/form-data" onsubmit="return validate();">
             <div style="font-size: 30px;">1:1 문의</div>
             <hr style="border-color:rgb(0, 125, 255);">
             <table style="text-align: center; margin-top:15px">
@@ -158,7 +158,7 @@
                     <tr>
                         <th style="width:10%; padding:20px;">제목</th>
                         <td style="width: 39%;" colspan="3">
-                            <textarea class="form-control" rows="1" style="resize: none;  margin-left:10%;width:550px;" name="bTitle"></textarea>
+                            <textarea class="form-control" rows="1" style="resize: none;  margin-left:10%;width:550px;" name="bTitle" id="bTitle"></textarea>
                         </td>
                     </tr>
                     <tr>
@@ -169,10 +169,10 @@
                             <input type="radio" name="oSecret" id="close" value="N">비밀글
                         </td>
                         <th style="width:15%; padding:20px;">비밀번호</th>
-                        <td style="width: 39%;"><input type="password" id="oSecret_pwd" name="oSecret_pwd"></td>
+                        <td style="width: 39%;"><input type="password" id="oSecret_pwd" name="oSecret_pwd" disabled></td>
                     </tr>
                     <tr>
-                        <th style="padding:20px;">내용</th><td colspan="3"><textarea class="form-control" rows="20" style="resize: none;" name="bContent"></textarea></td>
+                        <th style="padding:20px;">내용</th><td colspan="3"><textarea class="form-control" rows="20" style="resize: none;" name="bContent" id=""></textarea></td>
                     </tr>
                     <tr>
                         <th style="padding:20px;">이미지</th><td colspan="3"><div class="filebox bs3-primary preview-image">
@@ -200,7 +200,50 @@
 			</footer>
             
         <script>
+       
+               $("input[name='oSecret']").change(function(){
+      	   
+            	   if($("input[name='oSecret']:checked").val()=='Y'){
+            		   $("#oSecret_pwd").prop( "disabled", true );
+            		   $("#oSecret_pwd").val("");
+
+            	   }else{
+            		   $("#oSecret_pwd").prop( "disabled", false );
+
+            	   }
+            	   
+               })
+               
+               
+                  
+        function validate(){
+            	  
+            	   if($("#bTitle").val().trim().length == 0){
+                       alert("제목을 입력하세요");
+                       $("#bTitle").focus();
+                       return false;
+            	   }
+            	   else if($("#bContent").val().trim().length == 0){
+            		   alert("내용을 입력하세요");
+                       $("#bContent").focus();
+                       return false;
+            	   }
+            	   else{
+                    	alert("1:1문의가 등록되었습니다!");           
+                    }
+                 }
+            	   
+               
+
+             
+        
+        
+        
         $(document).ready(function(){
+        	
+        	
+        	
+        	
         var fileTarget = $('.filebox .upload-hidden');
 
             fileTarget.on('change', function(){

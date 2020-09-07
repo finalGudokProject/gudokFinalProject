@@ -567,7 +567,7 @@
 	<select id="selectSearchListInquiry3" resultMap="inquiry">
 		SELECT I.INQUIRY_YN
 		FROM BOARD B
-		 LEFT JOIN ONE_INQUIRY O ON (B.BOARD_NO = O.BOARD_NO)
+		LEFT JOIN ONE_INQUIRY O ON (B.BOARD_NO = O.BOARD_NO)
         LEFT JOIN INQUIRY I ON (B.BOARD_NO = I.BOARD_NO)
         <where>
 			<if test="searchType=='title' and inquiry_yn.equals('All')">
@@ -640,7 +640,103 @@
 	</select>
 	
 	
+	<!-- Inquiry ServiceCenter -->
+	<select id="selectSearchListsInquiry1" resultMap="boardResultSet1">
+		SELECT ROWNUM, B.*
+		FROM (SELECT *
+        FROM BOARD B
+        LEFT JOIN BOARD_IMAGE BI on (B.BOARD_NO = BI.BOARD_NO)
+        LEFT JOIN IMAGE on (B_IMAGE_NO = IMAGE_NO)
+        LEFT JOIN ONE_INQUIRY O ON (B.BOARD_NO = O.BOARD_NO)
+        LEFT JOIN INQUIRY I ON (B.BOARD_NO = I.BOARD_NO)
+        ORDER BY B.BOARD_NO) B
+        <where>
+			<if test="searchType=='title'">
+				B.BOARD_CODE= 'O'
+				AND B.TITLE LIKE '%${keyword}%'
+			</if>
+			
+			<if test="searchType=='content'">
+				B.BOARD_CODE= 'O'
+				AND B.CONTENT LIKE '%${keyword}%'
+			</if>
 
+			<if test="searchType=='user'">
+				B.BOARD_CODE= 'O'
+				AND B.MEMBER_ID LIKE '%${keyword}%'
+			</if>
+			
+			<if test="searchType=='All'">
+				B.BOARD_CODE= 'O'
+				AND (B.TITLE LIKE '%${keyword}%'
+				OR B.CONTENT LIKE '%${keyword}%'
+				OR B.MEMBER_ID LIKE '%${keyword}%')
+			</if>
+		</where>
+        ORDER BY ROWNUM DESC
+	</select>
+	
+	<select id="selectSearchListsInquiry2" resultMap="secret">
+		SELECT O.SECRET
+		FROM BOARD B
+		LEFT JOIN ONE_INQUIRY O ON (B.BOARD_NO = O.BOARD_NO)
+        LEFT JOIN INQUIRY I ON (B.BOARD_NO = I.BOARD_NO)
+        <where>
+			<if test="searchType=='title'">
+				B.BOARD_CODE= 'O'
+				AND B.TITLE LIKE '%${keyword}%'
+			</if>
+			
+			<if test="searchType=='content'">
+				B.BOARD_CODE= 'O'
+				AND B.CONTENT LIKE '%${keyword}%'
+			</if>
+
+			<if test="searchType=='user'">
+				B.BOARD_CODE= 'O'
+				AND B.MEMBER_ID LIKE '%${keyword}%'
+			</if>
+			
+			<if test="searchType=='All'">
+				B.BOARD_CODE= 'O'
+				AND (B.TITLE LIKE '%${keyword}%'
+				OR B.CONTENT LIKE '%${keyword}%'
+				OR B.MEMBER_ID LIKE '%${keyword}%')
+			</if>
+		</where>
+        ORDER BY B.BOARD_NO DESC
+	</select>
+	
+	<select id="selectSearchListsInquiry3" resultMap="inquiry">
+		SELECT I.INQUIRY_YN
+		FROM BOARD B
+		LEFT JOIN ONE_INQUIRY O ON (B.BOARD_NO = O.BOARD_NO)
+        LEFT JOIN INQUIRY I ON (B.BOARD_NO = I.BOARD_NO)
+        <where>
+			<if test="searchType=='title'">
+				B.BOARD_CODE= 'O'
+				AND B.TITLE LIKE '%${keyword}%'
+			</if>
+			
+			<if test="searchType=='content'">
+				B.BOARD_CODE= 'O'
+				AND B.CONTENT LIKE '%${keyword}%'
+			</if>
+
+			<if test="searchType=='user'">
+				B.BOARD_CODE= 'O'
+				AND B.MEMBER_ID LIKE '%${keyword}%'
+			</if>
+			
+			<if test="searchType=='All'">
+				B.BOARD_CODE= 'O'
+				AND (B.TITLE LIKE '%${keyword}%'
+				OR B.CONTENT LIKE '%${keyword}%'
+				OR B.MEMBER_ID LIKE '%${keyword}%')
+			</if>
+		</where>
+        ORDER BY B.BOARD_NO DESC
+	</select>
 
 
 	
@@ -701,7 +797,7 @@
 	<!-- notice -->
 	<insert id="insertNotice" parameterType="Board">
 		INSERT INTO BOARD VALUES(
-			SEQ_BNO.NEXTVAL
+			SEQ_BOARD_NO.NEXTVAL
 			, #{bTitle}
 			, #{bContent}
 			, SYSDATE
@@ -717,7 +813,7 @@
 	<!-- FAQ -->
 	<insert id="insertFAQ" parameterType="Board">
 		INSERT INTO BOARD VALUES(
-			SEQ_BNO.NEXTVAL
+			SEQ_BOARD_NO.NEXTVAL
 			, #{bTitle}
 			, #{bContent}
 			, SYSDATE
@@ -733,7 +829,7 @@
 	<!-- productProposal -->
 	<insert id="insertProductProposal" parameterType="Board">
 		INSERT INTO BOARD VALUES(
-			SEQ_BNO.NEXTVAL
+			SEQ_BOARD_NO.NEXTVAL
 			, #{bTitle}
 			, #{bContent}
 			, SYSDATE
@@ -749,7 +845,7 @@
 	<!-- inquiry -->
 	<insert id="insertInquiry1" parameterType="Board">
 		INSERT INTO BOARD VALUES(
-			SEQ_BNO.NEXTVAL
+			SEQ_BOARD_NO.NEXTVAL
 			, #{bTitle}
 			, #{bContent}
 			, SYSDATE
@@ -764,7 +860,7 @@
 	
 	<insert id="insertInquiry2" parameterType="secret">
 		INSERT INTO ONE_INQUIRY VALUES(
-			SEQ_BNO.CURRVAL
+			SEQ_BOARD_NO.CURRVAL
 			, #{oSecret }
 			, #{oSecret_pwd}
 		)
@@ -772,7 +868,7 @@
 	
 	<insert id="insertInquiry3" parameterType="inquiry">
 		INSERT INTO INQUIRY VALUES(
-			SEQ_BNO.CURRVAL
+			SEQ_BOARD_NO.CURRVAL
 			, 'N'
 			, NULL
 			, #{iInquiry_content }
@@ -783,7 +879,7 @@
 	<!-- Event -->
 	<insert id="insertEvent1" parameterType="Board">
 		INSERT INTO BOARD VALUES(
-			SEQ_BNO.NEXTVAL
+			SEQ_BOARD_NO.NEXTVAL
 			, #{bTitle}
 			, #{bContent}
 			, SYSDATE
@@ -798,7 +894,7 @@
 	
 	<insert id="insertEvent2" parameterType="eventBoard">
 		INSERT INTO EVENT_BOARD VALUES(
-			SEQ_BNO.CURRVAL
+			SEQ_BOARD_NO.CURRVAL
 			, 'Y'
 		)
 	</insert>
@@ -806,8 +902,8 @@
 	<!-- image -->
 	<insert id="insertImage" parameterType="Board">
 		INSERT ALL
-		INTO IMAGE VALUES(SEQ_MID.NEXTVAL, #{imagePath}, #{originalFileName}, #{renameFileName})
-		INTO BOARD_IMAGE VALUES(SEQ_BID.NEXTVAL, SEQ_BNO.CURRVAL, SEQ_MID.CURRVAL)
+		INTO IMAGE VALUES(SEQ_IMAGE_NO.NEXTVAL, #{imagePath}, #{originalFileName}, #{renameFileName})
+		INTO BOARD_IMAGE VALUES(SEQ_BOARD_IMAGE_NO.NEXTVAL, SEQ_BOARD_NO.CURRVAL, SEQ_IMAGE_NO.CURRVAL)
 		SELECT*
 		FROM DUAL
 	</insert>

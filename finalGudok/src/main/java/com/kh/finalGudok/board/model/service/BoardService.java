@@ -127,10 +127,48 @@ public interface BoardService {
 	
 	ArrayList<Inquiry> selectSearchListInquiry3(bPageInfo pi, Search search);
 	
+	// inquiry serviceCenter
+	ArrayList<Board> selectSearchListsInquiry1(bPageInfo pi, Search search);
+
+	ArrayList<secret> selectSearchListsInquiry2(bPageInfo pi, Search search);
+
+	ArrayList<Inquiry> selectSearchListsInquiry3(bPageInfo pi, Search search);
+	
 	// event
 	ArrayList<Board> selectSearchListEvent1(bPageInfo pi, Search search);
 
 	ArrayList<EventBoard> selectSearchListEvent2(bPageInfo pi, Search search);
 
 	int getListCountEventSearch();
+
+	
+
+
+	
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+	
+
+	
+
+	
+
+	
+
+
 }

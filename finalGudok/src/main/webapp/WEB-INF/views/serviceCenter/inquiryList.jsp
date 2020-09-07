@@ -127,21 +127,22 @@
         </ul>
       </div>
       <div class="col-9">
-      <form action="inquiryList.do" method="post" enctype="multipart/form-data">
-        
+       
           <div style="font-size: 30px;">1:1 문의</div>
-       <div class="input-group">
-            <select class="custom-select" id="inputGroupSelect04" style="margin-left: 500px; width:100px">
-              <option selected>모두</option>
-              <option value="1">제목</option>
-              <option value="2">내용</option>
-              <option value="3">제목+내용</option>
+       	  <form action="searchsInquiryList.do" method="post" enctype="multipart/form-data">
+          <div class="input-group">
+            <select class="custom-select" id="inputGroupSelect04" id="searchType" name="searchType" style="margin-left: 500px; width:100px">
+              <option value="All">모두</option>
+                <option value="title">제목</option>
+                <option value="content">내용</option>          
+                <option value="user">작성자</option>
             </select>
-            <input type="text" class="form-control" style="float:right; width:170px;height: 38px;">
+            <input type="text" class="form-control" id="keyword" name="keyword" value="" style="float:right; width:170px;height: 38px;">
             <div class="input-group-append" style="float:right; width: 55px; height: 38px;">
-              <input type="button" value="검색" class="btn btn-primary" >
+              <input type="submit" value="검색" id="searchBtn" name="searchBtn" class="btn btn-primary">
             </div>
             </div>
+            </form>
          
         
         <table style="text-align: center; margin-top:15px">
@@ -204,12 +205,11 @@
     </table>
     <br><br>
      <a href="inquiryInsert.do" type="button" class="btn btn-primary" style="float:right;">글쓰기</a>
-     </form>
+
      <br><br><br>
     <!------페이징 처리----->
    <div class="page-center">
-   					<c:choose>
-	      			<c:when test="${fn:length(list1)>0 }">
+   				
                     <ul class="pagination-t">
                     
                        <!-- 이전 -->
@@ -264,11 +264,6 @@
 							</svg></a></li>
                   		</c:if>
                     </ul>
-					</c:when>
-					<c:otherwise>
-
-					</c:otherwise>
-				</c:choose>
                 </div>
                 
     <br><br><br>

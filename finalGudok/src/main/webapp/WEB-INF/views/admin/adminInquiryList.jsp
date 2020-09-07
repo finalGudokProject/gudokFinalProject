@@ -234,7 +234,7 @@
 			    				traditional:true,
 			    				data:{"sendArr":sendArr},
 			    				success:function(data){
-			    					alert("선택한 이벤트들을 삭제합니다");
+			    					alert("선택한 1:1 문의들을 삭제합니다");
 			    					getInquiryList();
 			    				},
 			    				error:function(request, status, errorData){

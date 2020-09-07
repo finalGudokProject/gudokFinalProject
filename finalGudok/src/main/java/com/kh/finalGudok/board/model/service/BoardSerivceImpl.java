@@ -293,6 +293,21 @@ public class BoardSerivceImpl implements BoardService {
 		return bDao.selectSearchListInquiry3(pi, search);
 	}
 	
+	// Inquiry ServiceCenter
+	@Override
+	public ArrayList<Board> selectSearchListsInquiry1(bPageInfo pi, Search search) {
+		return bDao.selectSearchListsInquiry1(pi, search);
+	}
+
+	@Override
+	public ArrayList<secret> selectSearchListsInquiry2(bPageInfo pi, Search search) {
+		return bDao.selectSearchListsInquiry2(pi, search);
+	}
+
+	@Override
+	public ArrayList<Inquiry> selectSearchListsInquiry3(bPageInfo pi, Search search) {
+		return bDao.selectSearchListsInquiry3(pi, search);
+	}
 
 	// Event
 
@@ -310,4 +325,42 @@ public class BoardSerivceImpl implements BoardService {
 	public ArrayList<EventBoard> selectSearchListEvent2(bPageInfo pi,  Search search) {
 		return bDao.selectSearchListEvent2(pi, search);
 	}
+
+	
+
+	
+
+	
+
+
+	
+
+	
+
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+	
+	
+	
+
 }

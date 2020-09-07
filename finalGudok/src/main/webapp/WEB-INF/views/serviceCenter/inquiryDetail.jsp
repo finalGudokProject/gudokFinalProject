@@ -137,7 +137,9 @@
 			</c:url>
 			
             <a href="sinquiryList.do" type="button" class="btn btn-primary" style="float:right;">목록으로</a>
+            <c:if test="${inquiry.iInquiry_content eq null }">
             <a href="${inquiryUpdateView }" type="button" class="btn btn-primary" style="float:right;margin-right:10px">수정</a>
+            </c:if>
             <a href="${inquiryDelete }" type="button" class="btn btn-primary" style="float:right;margin-right:10px">삭제</a>
             </div>
             </div>
