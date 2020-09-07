@@ -169,19 +169,6 @@ public interface ItemService {
 	int checkImage(int reviewNo);
 
 	int updateReviewRate0(int itemNo);
-
-
-//	int l1Count();
-//
-//	int l2Count();
-//
-//	int l3Count();
-//
-//	ArrayList<ItemListView> l1List(PageInfo pi, String sortNo);
-//
-//	ArrayList<ItemListView> l2List(PageInfo pi, String sortNo);
-//
-//	ArrayList<ItemListView> l3List(PageInfo pi, String sortNo);
 	
 	int updateEventStatusN(ArrayList<Event> dEventArr);
 

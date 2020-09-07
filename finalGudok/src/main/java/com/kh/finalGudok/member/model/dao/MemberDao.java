@@ -103,7 +103,7 @@ public class MemberDao {
 		return sqlSessionTemplate.update("memberMapper.updateSubscribe", subscribeNo);
 	}
 
-	public Review selectReview(Integer reviewNo) {
+	public Review selectReview(int reviewNo) {
 		return sqlSessionTemplate.selectOne("memberMapper.selectReview", reviewNo);
 	}
 
@@ -485,5 +485,19 @@ public class MemberDao {
 		return sqlSessionTemplate.selectOne("memberMapper.selectMemberSecessionCnt", s);
 	}
 
+<<<<<<< HEAD
 
+=======
+	public int deleteReviewImage(int reviewNo) {
+		return sqlSessionTemplate.delete("memberMapper.deleteReviewImage", reviewNo);
+	}
+
+	public int checkImage(int reviewNo) {
+		return sqlSessionTemplate.selectOne("memberMapper.checkImage", reviewNo);
+	}
+
+	public int imageDelete(int reviewNo) {
+		return sqlSessionTemplate.delete("memberMapper.imageDelete", reviewNo);
+	}
+>>>>>>> refs/remotes/origin/master
 }

@@ -296,8 +296,8 @@
             <li><a href="${ilist}"><img src="resources/images/inquiry.png"
                         style="width: 25%; height: 25%; margin-right: 4%;">1:1문의</a></li>
             <li>
-                <a href="#about"><img src="resources/images/member_information.png"
-                        style="width: 25%; height: 25%; margin-right: 4%;">회원정보</a>
+                <span><img src="resources/images/member_information.png"
+                        style="width: 25%; height: 25%; margin-right: 4%;">회원정보</span>
                 <ul>
                 	<c:url var="myInfo" value="myInfo.do">
 						<c:param name="memberNo" value="${loginUser.memberNo}"/>

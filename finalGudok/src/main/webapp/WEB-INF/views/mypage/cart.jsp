@@ -40,6 +40,13 @@
     .myPage_Menu>li {
         margin-bottom: 10%;
     }
+    
+    .myPage_Menu li span {
+        display: block;
+        color: #000;
+        padding: 8px 16px;
+        text-decoration: none;
+    }
 
     .myPage_Menu li a {
         display: block;
@@ -181,7 +188,7 @@
     .image img {
       float: left;
       width: 100px;
-      height: auto;
+      height: 70px;
     }
 
     .product {
@@ -281,8 +288,8 @@
             <li><a href="${ilist}"><img src="resources/images/inquiry.png"
                         style="width: 25%; height: 25%; margin-right: 4%;">1:1문의</a></li>
             <li>
-                <a href="#about"><img src="resources/images/member_information.png"
-                        style="width: 25%; height: 25%; margin-right: 4%;">회원정보</a>
+                <span><img src="resources/images/member_information.png"
+                        style="width: 25%; height: 25%; margin-right: 4%;">회원정보</span>
                 <ul>
                 	<c:url var="myInfo" value="myInfo.do">
 						<c:param name="memberNo" value="${loginUser.memberNo}"/>
@@ -316,7 +323,8 @@
 	              	<span class="grade">황금거위 <span class="etc">&nbsp;등급</span></span>
 	              </c:if>
 	              <br>
-	              <span><a href="#" style="color: black; font-size: 0.8em;">등급 혜택보기</a></span>
+	              <c:url var="grade" value="gradeView.do"></c:url> 
+	              <span><a href="${grade}" style="color: black; font-size: 0.8em;">등급 혜택보기</a></span>
 	            </div>
 	          </div>
 	          <div class="subscribe">
@@ -474,7 +482,7 @@
 							$checkBox = $("<input type='checkbox' name='check' class='check' style='margin: auto 0;'>").attr('data-cartNum', data[i].cartNo).attr('value',data[i].itemPrice * data[i].cartCount);			
 							$imageTd = $("<td style='width:15%' class='bottom'>");
 							$imageDiv = $("<div class='image'>")
-							$img = $("<img src='resources/images/milk.jpg'>");
+							$img = $("<img src=${contextPath}/resources/uploadFiles/"+data[i].imageRename+">");
 							$productTd = $("<td class='bottom'>");
 							$productSpan = $("<span style='float:left; margin-left: 1%;'>").text(data[i].itemName);
 							$cycleTd = $("<td class='bottom'>");

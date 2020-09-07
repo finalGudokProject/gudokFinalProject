@@ -102,7 +102,7 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public Review selectReview(Integer reviewNo) {
+	public Review selectReview(int reviewNo) {
 		return mDao.selectReview(reviewNo);
 	}
 
@@ -520,6 +520,21 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public ArrayList<AdminSubscribe> selectDeliveryMain() {
 		return mDao.selectDeliveryMain();
+	}
+
+	@Override
+	public int deleteReviewImage(int reviewNo) {
+		return mDao.deleteReviewImage(reviewNo);
+	}
+
+	@Override
+	public int checkImage(int reviewNo) {
+		return mDao.checkImage(reviewNo);
+	}
+
+	@Override
+	public int imageDelete(int reviewNo) {
+		return mDao.imageDelete(reviewNo);
 	}
 
 }

@@ -572,8 +572,20 @@ public class MemberController {
 
 	// 리뷰 삭제
 	@RequestMapping("mreviewDelete.do")
-	public String reviewDelete(HttpServletRequest request, Integer reviewNo) {// 민지
-//		Review review = mService.selectReview(reviewNo); 
+	public String reviewDelete(HttpServletRequest request, int reviewNo) {// 민지
+		
+		System.out.println(reviewNo);
+		
+		int chkImg = mService.checkImage(reviewNo);
+		System.out.println("ReviewImage 조회 되나? : " + chkImg);
+		if (chkImg > 0) {
+			int imResult = mService.imageDelete(reviewNo);
+			
+			if (imResult > 0) {
+				mService.deleteReviewImage(reviewNo);
+				System.out.println("reviewimage테이블 삭제");
+			}
+		}
 
 		int result = mService.deleteReview(reviewNo);
 
