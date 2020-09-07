@@ -485,7 +485,7 @@
 						$heart_item = $("<div class='heart_item'>");
 						$checkBox = $("<input type='checkbox' class='check' name='heartNo'>").attr('data-cartNum', heartNo).attr('data-itemNum', itemNo);			
 						$imageDiv = $("<div class='image'>");
-						$img = $("<img src=${contextPath}/resources/uploadFiles/"+'data[i].imageRename'+">");
+						$img = $("<img src='resources/images/milk.jpg'>");
 						$product = $("<div class='product'>");
 						$itemName = $("<span>").text(data[i].itemName);
 						var str = String(data[i].itemPrice);
