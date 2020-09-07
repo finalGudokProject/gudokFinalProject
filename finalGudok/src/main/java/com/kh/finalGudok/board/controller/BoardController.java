@@ -51,11 +51,13 @@ public class BoardController {
 		
 		int listCount = bService.getListCountNotice();
 		
-		bPageInfo pi = getPageInfo(currentPage, listCount);
+		int pageLimit = 10; // 보여질 페이지 총 갯수
+		int boardLimit =10; // 게시판 한 페이지에 뿌려질 게시글 수
 		
-		// 페이징 처리가 끝나면 게시글을 추려오자
+		bPageInfo pi = getPageInfo(currentPage, listCount, pageLimit, boardLimit);
+		
 		ArrayList<Board> list = bService.selectListNotice(pi);
-//		System.out.println(list);
+
 		if(list != null) {
 			mv.addObject("list",list);
 			mv.addObject("pi",pi);
@@ -311,7 +313,10 @@ public class BoardController {
 			
 			int listCount = bService.getListCountNotice();
 			
-			bPageInfo pi = getPageInfo(currentPage, listCount);
+			int pageLimit = 10; // 보여질 페이지 총 갯수
+			int boardLimit =10; // 게시판 한 페이지에 뿌려질 게시글 수
+			
+			bPageInfo pi = getPageInfo(currentPage, listCount, pageLimit, boardLimit);
 			
 			ArrayList<Board> list = bService.selectListNotice(pi);
 			
@@ -369,7 +374,10 @@ public class BoardController {
 		
 		int listCount = bService.getListCountNotice();
 		
-		bPageInfo pi = getPageInfo(currentPage, listCount);
+		int pageLimit = 10; // 보여질 페이지 총 갯수
+		int boardLimit =10; // 게시판 한 페이지에 뿌려질 게시글 수
+		
+		bPageInfo pi = getPageInfo(currentPage, listCount, pageLimit, boardLimit);
 		
 		ArrayList<Board> list = bService.selectSearchListNotice(pi, search);
 		
@@ -409,7 +417,10 @@ public class BoardController {
 		
 		int listCount = bService.getListCountNotice();
 		
-		bPageInfo pi = getPageInfo(currentPage, listCount);
+		int pageLimit = 10; // 보여질 페이지 총 갯수
+		int boardLimit =10; // 게시판 한 페이지에 뿌려질 게시글 수
+		
+		bPageInfo pi = getPageInfo(currentPage, listCount, pageLimit, boardLimit);
 		
 		ArrayList<Board> list = bService.selectSearchListNotice(pi, search);
 		
@@ -465,7 +476,10 @@ public class BoardController {
 			
 		int listCount = bService.getListCountFAQ();
 			
-		bPageInfo pi = getPageInfo(currentPage, listCount);
+		int pageLimit = 10; // 보여질 페이지 총 갯수
+		int boardLimit =10; // 게시판 한 페이지에 뿌려질 게시글 수
+		
+		bPageInfo pi = getPageInfo(currentPage, listCount, pageLimit, boardLimit);
 			
 
 		ArrayList<Board> list = bService.selectListFAQ(pi);
@@ -615,7 +629,10 @@ public class BoardController {
 						
 						int listCount = bService.getListCountFAQ();
 						
-						bPageInfo pi = getPageInfo(currentPage, listCount);
+						int pageLimit = 10; // 보여질 페이지 총 갯수
+						int boardLimit =10; // 게시판 한 페이지에 뿌려질 게시글 수
+						
+						bPageInfo pi = getPageInfo(currentPage, listCount, pageLimit, boardLimit);
 						
 						ArrayList<Board> list = bService.selectListFAQ(pi);
 						
@@ -673,7 +690,10 @@ public class BoardController {
 					
 					int listCount = bService.getListCountFAQ();
 					
-					bPageInfo pi = getPageInfo(currentPage, listCount);
+					int pageLimit = 10; // 보여질 페이지 총 갯수
+					int boardLimit =10; // 게시판 한 페이지에 뿌려질 게시글 수
+					
+					bPageInfo pi = getPageInfo(currentPage, listCount, pageLimit, boardLimit);
 					
 					ArrayList<Board> list = bService.selectSearchListFAQ(pi, search);
 					
@@ -713,7 +733,10 @@ public class BoardController {
 					
 					int listCount = bService.getListCountFAQ();
 					
-					bPageInfo pi = getPageInfo(currentPage, listCount);
+					int pageLimit = 10; // 보여질 페이지 총 갯수
+					int boardLimit =10; // 게시판 한 페이지에 뿌려질 게시글 수
+					
+					bPageInfo pi = getPageInfo(currentPage, listCount, pageLimit, boardLimit);
 					
 					ArrayList<Board> list = bService.selectSearchListFAQ(pi, search);
 					
@@ -769,7 +792,10 @@ public class BoardController {
 		
 		int listCount = bService.getListCountProductProposal();
 		
-		bPageInfo pi = getPageInfo(currentPage, listCount);
+		int pageLimit = 100; // 보여질 페이지 총 갯수
+		int boardLimit =10; // 게시판 한 페이지에 뿌려질 게시글 수
+		
+		bPageInfo pi = getPageInfo(currentPage, listCount, pageLimit, boardLimit);
 		
 
 		ArrayList<Board> list = bService.selectListProductProposal(pi);
@@ -891,7 +917,10 @@ public class BoardController {
 					
 					int listCount = bService.getListCountProductProposal();
 					
-					bPageInfo pi = getPageInfo(currentPage, listCount);
+					int pageLimit = 100; // 보여질 페이지 총 갯수
+					int boardLimit =10; // 게시판 한 페이지에 뿌려질 게시글 수
+					
+					bPageInfo pi = getPageInfo(currentPage, listCount, pageLimit, boardLimit);
 					
 					ArrayList<Board> list = bService.selectListProductProposal(pi);
 					
@@ -950,7 +979,10 @@ public class BoardController {
 				
 				int listCount = bService.getListCountProductProposal();
 				
-				bPageInfo pi = getPageInfo(currentPage, listCount);
+				int pageLimit = 100; // 보여질 페이지 총 갯수
+				int boardLimit =10; // 게시판 한 페이지에 뿌려질 게시글 수
+				
+				bPageInfo pi = getPageInfo(currentPage, listCount, pageLimit, boardLimit);
 				
 				ArrayList<Board> list = bService.selectSearchListProductProposal(pi, search);
 				
@@ -990,7 +1022,10 @@ public class BoardController {
 				
 				int listCount = bService.getListCountProductProposal();
 				
-				bPageInfo pi = getPageInfo(currentPage, listCount);
+				int pageLimit = 100; // 보여질 페이지 총 갯수
+				int boardLimit =10; // 게시판 한 페이지에 뿌려질 게시글 수
+				
+				bPageInfo pi = getPageInfo(currentPage, listCount, pageLimit, boardLimit);
 				
 				ArrayList<Board> list = bService.selectSearchListProductProposal(pi, search);
 				
@@ -1052,7 +1087,10 @@ public class BoardController {
 				
 				int listCount = bService.getListCountInquiry();
 				
-				bPageInfo pi = getPageInfo(currentPage, listCount);
+				int pageLimit = 100; // 보여질 페이지 총 갯수
+				int boardLimit =10; // 게시판 한 페이지에 뿌려질 게시글 수
+				
+				bPageInfo pi = getPageInfo(currentPage, listCount, pageLimit, boardLimit);
 				
 
 				ArrayList<Board> list1 = bService.selectListInquiry1(pi);
@@ -1220,7 +1258,10 @@ public class BoardController {
 					
 					int listCount = bService.getListCountInquiry();
 					
-					bPageInfo pi = getPageInfo(currentPage, listCount);
+					int pageLimit = 100; // 보여질 페이지 총 갯수
+					int boardLimit =10; // 게시판 한 페이지에 뿌려질 게시글 수
+					
+					bPageInfo pi = getPageInfo(currentPage, listCount, pageLimit, boardLimit);
 					
 					ArrayList<Board> list1 = bService.selectListInquiry1(pi);
 					ArrayList<secret> list2 = bService.selectListInquiry2(pi);
@@ -1290,7 +1331,10 @@ public class BoardController {
 				
 				int listCount = bService.getListCountInquiry();
 				
-				bPageInfo pi = getPageInfo(currentPage, listCount);
+				int pageLimit = 100; // 보여질 페이지 총 갯수
+				int boardLimit =10; // 게시판 한 페이지에 뿌려질 게시글 수
+				
+				bPageInfo pi = getPageInfo(currentPage, listCount, pageLimit, boardLimit);
 				
 				ArrayList<Board> list1 = bService.selectSearchListInquiry1(pi, search);
 				ArrayList<secret> list2 = bService.selectSearchListInquiry2(pi, search);
@@ -1340,7 +1384,10 @@ public class BoardController {
 				
 				int listCount = bService.getListCountInquiry();
 				
-				bPageInfo pi = getPageInfo(currentPage, listCount);
+				int pageLimit = 100; // 보여질 페이지 총 갯수
+				int boardLimit =10; // 게시판 한 페이지에 뿌려질 게시글 수
+				
+				bPageInfo pi = getPageInfo(currentPage, listCount, pageLimit, boardLimit);
 				
 				ArrayList<Board> list1 = bService.selectSearchListInquiry1(pi, search);
 				ArrayList<secret> list2 = bService.selectSearchListInquiry2(pi, search);
@@ -1406,7 +1453,10 @@ public class BoardController {
 				
 				int listCount = bService.getListCountEvent();
 				
-				bPageInfo pi = getPageInfo(currentPage, listCount);
+				int pageLimit = 10; // 보여질 페이지 총 갯수
+				int boardLimit =10; // 게시판 한 페이지에 뿌려질 게시글 수
+				
+				bPageInfo pi = getPageInfo(currentPage, listCount, pageLimit, boardLimit);
 				
 				// 페이징 처리가 끝나면 게시글을 추려오자
 				ArrayList<Board> list1 = bService.selectListEvent1(pi);
@@ -1701,7 +1751,10 @@ public class BoardController {
 					
 					int listCount = bService.getListCountEvent();
 					
-					bPageInfo pi = getPageInfo(currentPage, listCount);
+					int pageLimit = 10; // 보여질 페이지 총 갯수
+					int boardLimit =10; // 게시판 한 페이지에 뿌려질 게시글 수
+					
+					bPageInfo pi = getPageInfo(currentPage, listCount, pageLimit, boardLimit);
 					
 					// 페이징 처리가 끝나면 게시글을 추려오자
 					ArrayList<Board> list1 = bService.selectListEvent1(pi);
@@ -1817,7 +1870,10 @@ public class BoardController {
 					
 					int listCount = bService.getListCountEventSearch();
 					
-					bPageInfo pi = getPageInfo(currentPage, listCount);
+					int pageLimit = 10; // 보여질 페이지 총 갯수
+					int boardLimit =10; // 게시판 한 페이지에 뿌려질 게시글 수
+					
+					bPageInfo pi = getPageInfo(currentPage, listCount, pageLimit, boardLimit);
 					
 					ArrayList<Board> list1 = bService.selectSearchListEvent1(pi, search);
 					
@@ -1863,7 +1919,10 @@ public class BoardController {
 					
 					int listCount = bService.getListCountEvent();
 					
-					bPageInfo pi = getPageInfo(currentPage, listCount);
+					int pageLimit = 10; // 보여질 페이지 총 갯수
+					int boardLimit =10; // 게시판 한 페이지에 뿌려질 게시글 수
+					
+					bPageInfo pi = getPageInfo(currentPage, listCount, pageLimit, boardLimit);
 					
 					ArrayList<Board> list1 = bService.selectSearchListEvent1(pi, search);
 					
@@ -1934,7 +1993,10 @@ public class BoardController {
 		
 		int listCount = bService.getListCountNotice();
 		
-		bPageInfo pi = getPageInfo(currentPage, listCount);
+		int pageLimit = 10; // 보여질 페이지 총 갯수
+		int boardLimit =10; // 게시판 한 페이지에 뿌려질 게시글 수
+		
+		bPageInfo pi = getPageInfo(currentPage, listCount, pageLimit, boardLimit);
 		
 
 		ArrayList<Board> list = bService.selectListNotice(pi);
@@ -1992,7 +2054,10 @@ public class BoardController {
 		
 		System.out.println(listCount);
 		
-		bPageInfo pi = getPageInfo(currentPage, listCount);
+		int pageLimit = 10; // 보여질 페이지 총 갯수
+		int boardLimit =10; // 게시판 한 페이지에 뿌려질 게시글 수
+		
+		bPageInfo pi = getPageInfo(currentPage, listCount, pageLimit, boardLimit);
 		
 		ArrayList<Board> list = bService.selectSearchListNotice(pi, search);
 		
@@ -2024,7 +2089,10 @@ public class BoardController {
 		
 		int listCount = bService.getListCountFAQ();
 		
-		bPageInfo pi = getPageInfo(currentPage, listCount);
+		int pageLimit = 10; // 보여질 페이지 총 갯수
+		int boardLimit =10; // 게시판 한 페이지에 뿌려질 게시글 수
+		
+		bPageInfo pi = getPageInfo(currentPage, listCount, pageLimit, boardLimit);
 		
 		
 		ArrayList<Board> list = bService.selectListFAQ(pi);
@@ -2081,7 +2149,10 @@ public class BoardController {
 			
 			int listCount = bService.getListCountFAQ();
 			
-			bPageInfo pi = getPageInfo(currentPage, listCount);
+			int pageLimit = 10; // 보여질 페이지 총 갯수
+			int boardLimit =10; // 게시판 한 페이지에 뿌려질 게시글 수
+			
+			bPageInfo pi = getPageInfo(currentPage, listCount, pageLimit, boardLimit);
 			
 			ArrayList<Board> list = bService.selectSearchListFAQ(pi, search);
 			
@@ -2112,7 +2183,10 @@ public class BoardController {
 			
 			int listCount = bService.getListCountProductProposal();
 			
-			bPageInfo pi = getPageInfo(currentPage, listCount);
+			int pageLimit = 100; // 보여질 페이지 총 갯수
+			int boardLimit =10; // 게시판 한 페이지에 뿌려질 게시글 수
+			
+			bPageInfo pi = getPageInfo(currentPage, listCount, pageLimit, boardLimit);
 			
 
 			ArrayList<Board> list = bService.selectListProductProposal(pi);
@@ -2323,7 +2397,10 @@ public class BoardController {
 			
 			int listCount = bService.getListCountProductProposal();
 			
-			bPageInfo pi = getPageInfo(currentPage, listCount);
+			int pageLimit = 100; // 보여질 페이지 총 갯수
+			int boardLimit =10; // 게시판 한 페이지에 뿌려질 게시글 수
+			
+			bPageInfo pi = getPageInfo(currentPage, listCount, pageLimit, boardLimit);
 			
 			ArrayList<Board> list = bService.selectSearchListProductProposal(pi, search);
 			
@@ -2356,7 +2433,10 @@ public class BoardController {
 			
 			int listCount = bService.getListCountInquiry();
 			
-			bPageInfo pi = getPageInfo(currentPage, listCount);
+			int pageLimit = 100; // 보여질 페이지 총 갯수
+			int boardLimit =10; // 게시판 한 페이지에 뿌려질 게시글 수
+			
+			bPageInfo pi = getPageInfo(currentPage, listCount, pageLimit, boardLimit);
 			
 
 			ArrayList<Board> list1 = bService.selectListInquiry1(pi);
@@ -2676,7 +2756,10 @@ public class BoardController {
 					
 					int listCount = bService.getListCountInquiry();
 					
-					bPageInfo pi = getPageInfo(currentPage, listCount);
+					int pageLimit = 100; // 보여질 페이지 총 갯수
+					int boardLimit =10; // 게시판 한 페이지에 뿌려질 게시글 수
+					
+					bPageInfo pi = getPageInfo(currentPage, listCount, pageLimit, boardLimit);
 					
 					ArrayList<Board> list1 = bService.selectSearchListsInquiry1(pi, search);
 					ArrayList<secret> list2 = bService.selectSearchListsInquiry2(pi, search);
@@ -2715,7 +2798,10 @@ public class BoardController {
 					
 					int listCount = bService.getListCountEvent();
 					
-					bPageInfo pi = getPageInfo(currentPage, listCount);
+					int pageLimit = 10; // 보여질 페이지 총 갯수
+					int boardLimit =10; // 게시판 한 페이지에 뿌려질 게시글 수
+					
+					bPageInfo pi = getPageInfo(currentPage, listCount, pageLimit, boardLimit);
 					
 					// 페이징 처리가 끝나면 게시글을 추려오자
 					ArrayList<Board> list1 = bService.selectListEvent1(pi);
