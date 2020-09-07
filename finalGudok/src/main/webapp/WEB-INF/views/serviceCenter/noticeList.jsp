@@ -128,21 +128,20 @@
       </div>
       <div class="col-9">
         	
-            <form id="noticeListSearch" method="post" onsubmit="return validate();">
             <div style="font-size: 30px;">공지사항</div>
+          <form action="searchsNoticeList.do" method="post" enctype="multipart/form-data">
           <div class="input-group">
-            <select class="custom-select" id="inputGroupSelect04" style="margin-left: 500px; width:100px">
-              <option selected>모두</option>
-              <option value="1">제목</option>
-              <option value="2">내용</option>
-              <option value="3">제목+내용</option>
+            <select class="custom-select" id="inputGroupSelect04" id="searchType" name="searchType" style="margin-left: 500px; width:100px">
+              <option value="titleContent">모두</option>
+              <option value="title">제목</option>
+              <option value="content">내용</option>
             </select>
-            <input type="text" class="form-control" style="float:right; width:170px;height: 38px;">
+            <input type="text" class="form-control" id="keyword" name="keyword" value="" style="float:right; width:170px;height: 38px;">
             <div class="input-group-append" style="float:right; width: 55px; height: 38px;">
-              <input type="button" value="검색" class="btn btn-primary" >
+              <input type="submit" value="검색" id="searchBtn" name="searchBtn" class="btn btn-primary">
             </div>
             </div>
-            
+            </form>
     
       
 
@@ -182,13 +181,10 @@
 				</c:choose>
       		</tbody>
     	</table>
-    	</form>
     	<br><br>
    
     <!------페이징 처리----->
                 <div class="page-center">
-                    <c:choose>
-	      			<c:when test="${fn:length(list)>0 }">
                     <ul class="pagination-t">
                        <!-- 이전 -->
                         <c:if test="${pi.currentPage eq 1 }">
@@ -242,11 +238,6 @@
 							</svg></a></li>
                   		</c:if>
                     </ul>
-					</c:when>
-					<c:otherwise>
-
-					</c:otherwise>
-				</c:choose>
                 </div>
 	
     

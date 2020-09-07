@@ -326,9 +326,9 @@
 			           <c:param name="page" value="1"/>
 			           <c:param name="memberNo" value="${loginUser.memberNo }"/>
 			        </c:url>
-		          <tr class="go_Item" style="cursor:pointer" onclick="location.href='${idetail}'">
-		            <td>${r.reviewDate}</td>
-		            <td>${r.reviewContent}</td>
+		          <tr style="cursor:pointer">
+		            <td onclick="location.href='${idetail}'">${r.reviewDate}</td>
+		            <td onclick="location.href='${idetail}'">${r.reviewContent}</td>
 		            <c:url var="rdelete" value="mreviewDelete.do">
 		            	<c:param name="reviewNo" value="${r.reviewNo}"/>
 		            </c:url>

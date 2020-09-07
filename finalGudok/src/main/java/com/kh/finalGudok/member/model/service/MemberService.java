@@ -55,7 +55,7 @@ public interface MemberService {
 
 	int updateSubscribe(int subscribeNo);
 
-	Review selectReview(Integer reviewNo);
+	Review selectReview(int reviewNo);
 
 	int deleteReview(Integer reviewNo);
 
@@ -222,5 +222,11 @@ public interface MemberService {
 	ArrayList<AdminBoard> selectNoticeMain();
 
 	ArrayList<BannerItem> selectEventMain();
+
+	int deleteReviewImage(int reviewNo);
+
+	int checkImage(int reviewNo);
+
+	int imageDelete(int reviewNo);
 
 }

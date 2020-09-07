@@ -288,6 +288,26 @@ public class BoardDao {
 		
 		return (ArrayList)sqlSessionTemplate.selectList("boardMapper.selectSearchListInquiry3", search, rowBounds);
 	}
+	
+	// Inquiry ServiceCenter
+	public ArrayList<Board> selectSearchListsInquiry1(bPageInfo pi, Search search) {
+		int offset = (pi.getCurrentPage() - 1)*pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return (ArrayList)sqlSessionTemplate.selectList("boardMapper.selectSearchListsInquiry1", search, rowBounds);
+	}
+	public ArrayList<secret> selectSearchListsInquiry2(bPageInfo pi, Search search) {
+		int offset = (pi.getCurrentPage() - 1)*pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return (ArrayList)sqlSessionTemplate.selectList("boardMapper.selectSearchListsInquiry2", search, rowBounds);
+	}
+	public ArrayList<Inquiry> selectSearchListsInquiry3(bPageInfo pi, Search search) {
+		int offset = (pi.getCurrentPage() - 1)*pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return (ArrayList)sqlSessionTemplate.selectList("boardMapper.selectSearchListsInquiry3", search, rowBounds);
+	}
 
 	
 	
@@ -310,5 +330,26 @@ public class BoardDao {
 	public int getListCountEventSearch() {
 		return sqlSessionTemplate.selectOne("boardMapper.getListCountEventSearch");
 	}
+
+	
+
+	
+	
+
+	
+
+
+
+	
+	
+
+	
+
+
+
+	
+	
+
+
 
 }
