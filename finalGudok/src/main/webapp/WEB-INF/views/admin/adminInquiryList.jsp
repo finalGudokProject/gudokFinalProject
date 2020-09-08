@@ -150,7 +150,8 @@
             <br><br><br>
 
                     <div class="page-center">
-   					
+   					<c:choose>
+		      		<c:when test="${fn:length(list1)>0 }">
                     <ul class="pagination-t">
                     
                        <!-- 이전 -->
@@ -205,7 +206,11 @@
 							</svg></a></li>
                   		</c:if>
                     </ul>
+					</c:when>
+					<c:otherwise>
 					
+					</c:otherwise>
+					</c:choose>
                 </div>
                 <br><br><br>
 

@@ -132,6 +132,8 @@
                   
       			<!------페이징 처리----->
                 <div class="page-center">
+                	<c:choose>
+		      		<c:when test="${fn:length(list1)>0 }">
                     <ul class="pagination-t">
                        <!-- 이전 -->
                         <c:if test="${pi.currentPage eq 1 }">
@@ -185,6 +187,11 @@
 							</svg></a></li>
                   		</c:if>
                     </ul>
+                    </c:when>
+                    <c:otherwise>
+                    
+                    </c:otherwise>
+                    </c:choose>
                 </div>
 
     </div><!--하얀박스 있는부분 끝-->
